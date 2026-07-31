@@ -148,6 +148,17 @@ export class ContentApiClient {
     return this.requestJson("/api/v1/portal/auth/login", "POST", credentials);
   }
 
+  registerUser(details: {
+    name: string;
+    email: string;
+    phone: string;
+    company: string;
+    country: string;
+    password: string;
+  }): Promise<{ session_id: string; user: PortalUser }> {
+    return this.requestJson("/api/v1/portal/auth/register", "POST", details);
+  }
+
   getPortalOrders(): Promise<{ data: PortalOrder[] }> {
     return this.requestJson("/api/v1/portal/orders", "GET");
   }

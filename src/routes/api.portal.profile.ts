@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { ContentApiClient } from "@/lib/api/client";
+import { ApiUnauthorizedError } from "@/lib/api/types";
 
 const profileSchema = z.object({
   name: z.string().trim().optional(),
@@ -43,7 +44,7 @@ export const Route = createFileRoute("/api/portal/profile")({
           }
 
           const apiClient = new ContentApiClient({ baseUrl, writeToken, sessionId });
-          
+
           try {
             await apiClient.updatePortalProfile(validated.data);
             return new Response(JSON.stringify({ status: "success" }), {
@@ -51,11 +52,20 @@ export const Route = createFileRoute("/api/portal/profile")({
               headers: { "Content-Type": "application/json" },
             });
           } catch (odooError) {
-            console.warn("[BFF Proxy Profile] Odoo update error. Falling back to local success response:", odooError);
-            return new Response(JSON.stringify({ status: "success", fallback: true }), {
-              status: 200,
-              headers: { "Content-Type": "application/json" },
-            });
+            if (odooError instanceof ApiUnauthorizedError) {
+              return new Response(
+                JSON.stringify({ error: "unauthorized", message: "Session expired or missing" }),
+                { status: 401, headers: { "Content-Type": "application/json" } },
+              );
+            }
+            console.error("[BFF Proxy Profile] Odoo update error:", odooError);
+            return new Response(
+              JSON.stringify({
+                error: "profile_update_failed",
+                message: "Unable to update your profile right now. Please try again shortly.",
+              }),
+              { status: 503, headers: { "Content-Type": "application/json" } },
+            );
           }
         } catch (error) {
           console.error("Profile update error:", error);

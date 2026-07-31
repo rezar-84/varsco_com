@@ -50,7 +50,8 @@ export const Route = createFileRoute("/api/auth/login")({
             return new Response(
               JSON.stringify({
                 error: "auth_service_unavailable",
-                message: "Authentication service is temporarily unavailable. Please try again shortly.",
+                message:
+                  "Authentication service is temporarily unavailable. Please try again shortly.",
               }),
               { status: 503, headers: { "Content-Type": "application/json" } },
             );
@@ -77,7 +78,7 @@ export const Route = createFileRoute("/api/auth/login")({
           };
 
           // Build HTTP-Only cookie header
-          const cookieValue = `vars_session=${sessionId}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`;
+          const cookieValue = `vars_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000`;
 
           return new Response(
             JSON.stringify({
