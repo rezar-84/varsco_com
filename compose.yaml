@@ -1,0 +1,38 @@
+name: ${COMPOSE_PROJECT_NAME}
+
+services:
+  app:
+    image: ${APP_IMAGE_NAME}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      VITE_ODOO_BASE_URL: ${VITE_ODOO_BASE_URL}
+      ODOO_WRITE_TOKEN: ${ODOO_WRITE_TOKEN}
+      VITE_SITE_URL: ${VITE_SITE_URL}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+    expose:
+      - "3000"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - dokploy-network
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+networks:
+  dokploy-network:
+    external: true

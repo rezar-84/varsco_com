@@ -1,0 +1,485 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* VARS Aquaculture — Brand tokens
+ * Palette (hex → oklch):
+ *  Navy   #001e40 → oklch(0.229 0.079 254.5)
+ *  Green  #006d36 → oklch(0.464 0.129 155.5)
+ *  Teal   #86b9b6 → oklch(0.755 0.041 190)
+ *  Mint   #00c853 → oklch(0.735 0.221 145)
+ *  Ink    #212529 → oklch(0.24 0.006 268)
+ *  Alt bg #f4f7f9 → oklch(0.972 0.006 240)
+ */
+
+@theme inline {
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-navy: var(--brand-navy);
+  --color-mint: var(--brand-mint);
+  --color-teal: var(--brand-teal);
+  --color-ink: var(--brand-ink);
+  --color-surface-alt: var(--surface-alt);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans:
+    "Inter", "Noto Sans Arabic", "Noto Sans JP", "Noto Sans KR", "Noto Sans", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display:
+    "Space Grotesk", "Inter", "Noto Sans Arabic", "Noto Sans JP", "Noto Sans KR", ui-sans-serif,
+    sans-serif;
+}
+
+:root {
+  --radius: 8px;
+
+  --brand-navy: oklch(0.229 0.079 254.5);
+  --brand-green: oklch(0.464 0.129 155.5);
+  --brand-teal: oklch(0.755 0.041 190);
+  --brand-mint: oklch(0.735 0.221 145);
+  --brand-ink: oklch(0.24 0.006 268);
+  --surface-alt: oklch(0.972 0.006 240);
+
+  --background: oklch(1 0 0);
+  --foreground: var(--brand-ink);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--brand-ink);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--brand-ink);
+
+  --primary: var(--brand-green);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: var(--brand-navy);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: var(--surface-alt);
+  --muted-foreground: oklch(0.45 0.02 255);
+  --accent: var(--brand-teal);
+  --accent-foreground: var(--brand-navy);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.9 0.008 255);
+  --input: oklch(0.9 0.008 255);
+  --ring: var(--brand-green);
+
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: var(--brand-ink);
+  --sidebar-primary: var(--brand-green);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: var(--surface-alt);
+  --sidebar-accent-foreground: var(--brand-navy);
+  --sidebar-border: oklch(0.9 0.008 255);
+  --sidebar-ring: var(--brand-green);
+}
+
+.dark {
+  --background: var(--brand-navy);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.28 0.06 255);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.28 0.06 255);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: var(--brand-mint);
+  --primary-foreground: var(--brand-navy);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    color: var(--brand-navy);
+  }
+}
+
+/* Design System Utilities */
+@utility glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 30, 64, 0.08);
+}
+
+@utility glass-nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 30, 64, 0.08);
+}
+
+@utility glass-panel-dark {
+  background: rgba(0, 30, 64, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+@utility card-flat {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px -2px rgba(0, 30, 64, 0.04);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 12px 24px -6px rgba(0, 30, 64, 0.1);
+  }
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-mint);
+
+  &::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    background: var(--brand-mint);
+    display: inline-block;
+    border-radius: 999px;
+  }
+}
+
+@utility section-band {
+  background: var(--surface-alt);
+}
+
+@utility gradient-hero {
+  background: linear-gradient(
+    135deg,
+    oklch(0.2 0.08 255) 0%,
+    oklch(0.28 0.1 240) 50%,
+    oklch(0.22 0.06 200) 100%
+  );
+}
+
+@utility gradient-mint {
+  background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-mint) 100%);
+}
+
+/* Animations */
+@keyframes cart-bump {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.25);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+}
+.cart-bump {
+  animation: cart-bump 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0.5deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes scanLine {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@utility animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@utility animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@utility animate-float-delayed {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@utility animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Traveling flow markers for SVG diagrams (straight connector lines) */
+@keyframes flowRight {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(116px);
+    opacity: 0;
+  }
+}
+
+@utility animate-flow-right {
+  animation: flowRight 2.2s ease-in-out infinite;
+}
+
+/* Traveling flow marker tracing the shipping arc's cubic-bezier curve */
+@keyframes flowArc {
+  0% {
+    transform: translate(0px, 0px);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  25% {
+    transform: translate(36.7px, -22.5px);
+  }
+  50% {
+    transform: translate(76px, -30px);
+  }
+  75% {
+    transform: translate(115.3px, -22.5px);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(152px, 0px);
+    opacity: 0;
+  }
+}
+
+@utility animate-flow-arc {
+  animation: flowArc 2.8s ease-in-out infinite;
+}
+
+/* Swimming motion: horizontal glide + gentle body undulation */
+@keyframes swim {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  25% {
+    transform: translate(7px, -2px) rotate(4deg);
+  }
+  50% {
+    transform: translate(12px, 0px) rotate(0deg);
+  }
+  75% {
+    transform: translate(7px, 2px) rotate(-4deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+
+@utility animate-swim {
+  animation: swim 3.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@utility animate-swim-delayed {
+  animation: swim 3.2s ease-in-out infinite;
+  animation-delay: 1.4s;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Short traveling flow marker for compact diagrams (small viewBox connectors) */
+@keyframes flowShort {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(11px);
+    opacity: 0;
+  }
+}
+
+@utility animate-flow-short {
+  animation: flowShort 1.8s ease-in-out infinite;
+}
+
+@utility animate-flow-short-delayed {
+  animation: flowShort 1.8s ease-in-out infinite;
+  animation-delay: 0.9s;
+}
+
+/* Long return flow marker closing a compact diagram's cycle loop */
+@keyframes flowReturn {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-70px);
+    opacity: 0;
+  }
+}
+
+/* Raster scan: sweeps left-to-right, then drops to the next line (fixed upright orientation) */
+@keyframes scanGlobe {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  18% {
+    transform: translate(56px, 0px);
+  }
+  20% {
+    transform: translate(0px, 20px);
+  }
+  38% {
+    transform: translate(56px, 20px);
+  }
+  40% {
+    transform: translate(0px, 40px);
+  }
+  58% {
+    transform: translate(56px, 40px);
+  }
+  62% {
+    transform: translate(56px, 40px);
+  }
+  64% {
+    transform: translate(0px, 0px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@utility animate-scan-globe {
+  animation: scanGlobe 4.5s ease-in-out infinite;
+}
+
+@utility animate-flow-return {
+  animation: flowReturn 3.6s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-alt);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.7 0.04 220);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-green);
+}

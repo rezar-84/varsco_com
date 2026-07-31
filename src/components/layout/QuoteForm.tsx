@@ -1,0 +1,587 @@
+import { useState, useEffect, type ReactNode } from "react";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useI18n } from "@/context/I18nContext";
+import { PRODUCTS, CATEGORIES } from "@/lib/mock/products";
+import type { Product } from "@/lib/types";
+import {
+  ShieldCheck,
+  Package,
+  Plane,
+  Thermometer,
+  Truck,
+  Check,
+  Sliders,
+  AlertCircle,
+} from "lucide-react";
+
+export interface QuoteFormData {
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  country: string;
+  productSlug?: string;
+  productTitle?: string;
+  customFields?: Record<string, string>;
+  message: string;
+}
+
+const buildSchema = (t: (k: string) => string) =>
+  z.object({
+    name: z.string().trim().min(1, t("quote.err.name")).max(100, t("quote.err.max")),
+    company: z.string().trim().min(1, t("quote.err.company")).max(120, t("quote.err.max")),
+    email: z.string().trim().email(t("quote.err.email")).max(200, t("quote.err.max")),
+    phone: z.string().trim().min(6, t("quote.err.phone")).max(30, t("quote.err.max")),
+    country: z.string().trim().max(80).optional().default(""),
+    productSlug: z.string().optional().default(""),
+    message: z.string().trim().max(1000).optional().default(""),
+    consent: z.literal("on", { message: t("quote.err.consent") }),
+  });
+
+interface Props {
+  busy: boolean;
+  initialProductSlug?: string;
+  onSubmit: (data: QuoteFormData) => void | Promise<void>;
+  Footer?: (props: { children: ReactNode }) => ReactNode;
+}
+
+export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props) {
+  const { t } = useI18n();
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [selectedSlug, setSelectedSlug] = useState<string>(initialProductSlug || "");
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(
+    initialProductSlug ? PRODUCTS.find((p) => p.slug === initialProductSlug) : undefined,
+  );
+
+  // Dynamic Custom Specs Fields
+  const [customSpecs, setCustomSpecs] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (initialProductSlug) {
+      const prod = PRODUCTS.find((p) => p.slug === initialProductSlug);
+      if (prod) {
+        setSelectedSlug(prod.slug);
+        setSelectedProduct(prod);
+      }
+    }
+  }, [initialProductSlug]);
+
+  const handleProductChange = (slug: string) => {
+    setSelectedSlug(slug);
+    const prod = PRODUCTS.find((p) => p.slug === slug);
+    setSelectedProduct(prod);
+    setCustomSpecs({}); // Reset dynamic specs when product changes
+  };
+
+  // Falls back to the English default when no translation override exists.
+  const tp = (product: Product, field: "title" | "tagline"): string => {
+    const key = `product.${product.slug}.${field}`;
+    const res = t(key);
+    return res === key ? product[field] : res;
+  };
+
+  const schema = buildSchema(t);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const raw = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    const parsed = schema.safeParse(raw);
+
+    if (!parsed.success) {
+      const errs: Record<string, string> = {};
+      for (const i of parsed.error.issues) errs[String(i.path[0])] = i.message;
+      setErrors(errs);
+      return;
+    }
+
+    setErrors({});
+    const { consent: _c, ...data } = parsed.data;
+
+    // Combine custom category-specific requirements into the submission
+    const finalData: QuoteFormData = {
+      ...data,
+      productSlug: selectedSlug,
+      productTitle: selectedProduct?.title || "General Inquiry",
+      customFields: customSpecs,
+      message: `${selectedProduct ? `[PRODUCT REQUEST: ${tp(selectedProduct, "title")}] ` : ""}${data.message}${
+        Object.keys(customSpecs).length > 0
+          ? `\n\nCustom Specs: ${JSON.stringify(customSpecs)}`
+          : ""
+      }`,
+    };
+
+    await onSubmit(finalData);
+  };
+
+  // Determine Product Type for Dynamic Form Fields.
+  // Matched against actual product slugs/categories (not fragile slug substring
+  // guesses) so fields never mismatch after a product is recategorized.
+  const SALMON_EGG_SLUGS = ["atlantic-salmon-egg", "coho-salmon-egg"];
+  const SHRIMP_SLUGS = ["shrimp"];
+  const OTHER_SEAFOOD_SLUGS = ["oyster", "blue-crab"];
+
+  const isSalmonOva = !!selectedProduct && SALMON_EGG_SLUGS.includes(selectedProduct.slug);
+  const isLiveFeed =
+    !!selectedProduct &&
+    (selectedProduct.category === "live-feed-aquaculture" ||
+      selectedProduct.slug === "decapsulated-dry-artemia-cysts");
+  const isFeedAdditive = selectedProduct?.category === "feed-additives";
+  const isShrimp = !!selectedProduct && SHRIMP_SLUGS.includes(selectedProduct.slug);
+  const isOtherSeafood = !!selectedProduct && OTHER_SEAFOOD_SLUGS.includes(selectedProduct.slug);
+  // All whole/fillet finfish (sea bass, sea bream, trout, amberjack, olive flounder,
+  // brown meagre) share the same "Whole Round / D&G / Dressed / Fillets" formats,
+  // so they're grouped as one segment instead of branching per species.
+  const isFinfish =
+    !!selectedProduct && selectedProduct.category === "seafood" && !isShrimp && !isOtherSeafood;
+
+  // Real packaging/format spec for the selected product, used as placeholder text
+  // so the form always reflects what that exact product actually ships in.
+  const specValue = (labelIncludes: string) =>
+    selectedProduct?.specifications.find((s) =>
+      s.label.toLowerCase().includes(labelIncludes.toLowerCase()),
+    )?.value;
+
+  const submitBtn = (
+    <Button
+      type="submit"
+      disabled={busy}
+      className="w-full h-12 rounded-xl font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg text-sm transition-all hover:scale-[1.01]"
+    >
+      {busy
+        ? t("quote.submitting")
+        : selectedProduct
+          ? `Request Quote for ${tp(selectedProduct, "title")} →`
+          : "Submit B2B Commercial Inquiry →"}
+    </Button>
+  );
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Step Indicator Header */}
+      <div className="flex items-center justify-between border-b border-border/80 pb-4">
+        <div>
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-mint">
+            B2B Commercial RFQ
+          </span>
+          <h3 className="font-display text-lg font-bold text-navy">
+            {selectedProduct
+              ? `Quotation: ${tp(selectedProduct, "title")}`
+              : t("quoteForm.generalInquiry")}
+          </h3>
+        </div>
+        <div className="hidden sm:flex items-center gap-2 rounded-full bg-surface-alt px-3 py-1 text-[11px] font-bold text-navy border border-border/80">
+          <span className="h-2 w-2 rounded-full bg-mint animate-pulse" />
+          <span>{t("quoteForm.sla")}</span>
+        </div>
+      </div>
+
+      {/* Product Selection & Context Card */}
+      <div className="space-y-3">
+        <Label
+          htmlFor="productSelect"
+          className="font-bold text-navy text-xs uppercase tracking-wider flex items-center justify-between"
+        >
+          <span>{t("quoteForm.step1")}</span>
+          <span className="text-[11px] font-normal text-muted-foreground">
+            {t("quoteForm.required")}
+          </span>
+        </Label>
+        <select
+          id="productSelect"
+          value={selectedSlug}
+          onChange={(e) => handleProductChange(e.target.value)}
+          className="w-full h-11 rounded-xl border border-border/80 bg-background px-3 text-xs font-semibold text-navy shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        >
+          <option value="">{t("quoteForm.generalInquiryOption")}</option>
+          {CATEGORIES.map((cat) => (
+            <optgroup
+              key={cat.slug}
+              label={t(`cat.${cat.slug}`) === `cat.${cat.slug}` ? cat.title : t(`cat.${cat.slug}`)}
+            >
+              {PRODUCTS.filter((p) => p.category === cat.slug).map((p) => (
+                <option key={p.slug} value={p.slug}>
+                  {tp(p, "title")}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+
+        {/* Selected Product Context Banner */}
+        {selectedProduct && (
+          <div className="glass-card rounded-2xl p-4 border border-mint/40 bg-mint/5 flex items-center gap-4 transition-all">
+            {selectedProduct.image ? (
+              <img
+                src={selectedProduct.image}
+                alt={tp(selectedProduct, "title")}
+                className="h-16 w-16 rounded-xl object-contain border border-border/60 bg-background shrink-0 p-1"
+              />
+            ) : (
+              <div className="h-16 w-16 rounded-xl bg-navy text-white font-bold flex items-center justify-center text-xs shrink-0">
+                {selectedProduct.title.slice(0, 2)}
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-mint">
+                <ShieldCheck className="h-3.5 w-3.5" /> Certified Product Selected
+              </div>
+              <h4 className="font-display text-sm font-bold text-navy truncate">
+                {tp(selectedProduct, "title")}
+              </h4>
+              <p className="text-[11px] text-muted-foreground line-clamp-1">
+                {tp(selectedProduct, "tagline")}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* DYNAMIC CATEGORY-SPECIFIC REQUIREMENTS */}
+      {selectedProduct && (
+        <div className="p-4 rounded-2xl bg-surface-alt/70 border border-border/80 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs font-bold text-navy uppercase tracking-wider">
+              <Sliders className="h-4 w-4 text-mint" /> Technical & Delivery Parameters
+            </div>
+            <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+              Customized Form
+            </span>
+          </div>
+
+          {/* Type A: Salmon Ova Parameters */}
+          {isSalmonOva && (
+            <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div>
+                <Label htmlFor="deliveryWeek" className="text-[11px] font-bold text-navy">
+                  Target Delivery Week / Month
+                </Label>
+                <Input
+                  id="deliveryWeek"
+                  placeholder="e.g. Week 14, 2026"
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, deliveryWeek: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <Label
+                  htmlFor="requiredCertifications"
+                  className="text-[11px] font-bold text-navy flex items-center gap-1.5"
+                >
+                  <ShieldCheck className="h-3.5 w-3.5 text-mint" />
+                  {t("quoteForm.certificationsLabel")}
+                </Label>
+                <Input
+                  id="requiredCertifications"
+                  placeholder={t("quoteForm.certificationsPlaceholder")}
+                  onChange={(e) =>
+                    setCustomSpecs({ ...customSpecs, requiredCertifications: e.target.value })
+                  }
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+              <div>
+                <Label htmlFor="airportEntry" className="text-[11px] font-bold text-navy">
+                  Air Freight Destination Airport
+                </Label>
+                <Input
+                  id="airportEntry"
+                  placeholder="e.g. Incheon (ICN) / Narita (NRT) / Istanbul (IST)"
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, airportEntry: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+              <div>
+                <Label htmlFor="incubationTemp" className="text-[11px] font-bold text-navy">
+                  Hatchery Water Temp (°C)
+                </Label>
+                <Input
+                  id="incubationTemp"
+                  placeholder="e.g. 4.0 °C to 6.0 °C"
+                  onChange={(e) =>
+                    setCustomSpecs({ ...customSpecs, incubationTemp: e.target.value })
+                  }
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Type B: Live Feed & Microalgae Parameters */}
+          {isLiveFeed && (
+            <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div>
+                <Label htmlFor="packFormat" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.packagingLabel")}
+                </Label>
+                <Input
+                  id="packFormat"
+                  placeholder={
+                    specValue("Packaging") ? `e.g. ${specValue("Packaging")}` : undefined
+                  }
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, packFormat: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+              <div>
+                <Label htmlFor="tankCapacity" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.tankCapacityLabel")}
+                </Label>
+                <Input
+                  id="tankCapacity"
+                  placeholder={t("quoteForm.tankCapacityPlaceholder")}
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, tankCapacity: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Type C: Additives & Raw Materials */}
+          {isFeedAdditive && (
+            <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div>
+                <Label htmlFor="containerVolume" className="text-[11px] font-bold text-navy">
+                  Target Order Volume
+                </Label>
+                <select
+                  id="containerVolume"
+                  onChange={(e) =>
+                    setCustomSpecs({ ...customSpecs, containerVolume: e.target.value })
+                  }
+                  className="w-full h-9 rounded-md border border-border/80 bg-background px-2 text-xs font-medium"
+                >
+                  <option value="20ft FCL">20ft Full Container Load (FCL)</option>
+                  <option value="40ft FCL">40ft Full Container Load (FCL)</option>
+                  <option value="Bulk Bags">800 kg Jumbo Bags</option>
+                </select>
+                {specValue("Packaging") && (
+                  <p className="mt-1 text-[10px] text-muted-foreground">
+                    Standard packaging: {specValue("Packaging")}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="destinationPort" className="text-[11px] font-bold text-navy">
+                  Destination Sea Port (CIF/FOB)
+                </Label>
+                <Input
+                  id="destinationPort"
+                  placeholder="e.g. Port of Rotterdam / Busan / Jebel Ali"
+                  onChange={(e) =>
+                    setCustomSpecs({ ...customSpecs, destinationPort: e.target.value })
+                  }
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Type D: Finfish — sea bass, sea bream, trout, amberjack, olive flounder, brown meagre */}
+          {isFinfish && (
+            <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div>
+                <Label htmlFor="portionSpec" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.portionLabel")}
+                </Label>
+                <Input
+                  id="portionSpec"
+                  placeholder={
+                    specValue("Product form") ? `e.g. ${specValue("Product form")}` : undefined
+                  }
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, portionSpec: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+              <div>
+                <Label htmlFor="gccDestination" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.destinationLabel")}
+                </Label>
+                <Input
+                  id="gccDestination"
+                  placeholder={t("quoteForm.destinationPlaceholder")}
+                  onChange={(e) =>
+                    setCustomSpecs({ ...customSpecs, gccDestination: e.target.value })
+                  }
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Type E: Shrimp */}
+          {isShrimp && (
+            <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div>
+                <Label htmlFor="portionSpec" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.portionLabel")}
+                </Label>
+                <Input
+                  id="portionSpec"
+                  placeholder={specValue("Formats") ? `e.g. ${specValue("Formats")}` : undefined}
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, portionSpec: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+                {specValue("Size grades") && (
+                  <p className="mt-1 text-[10px] text-muted-foreground">
+                    Size grades: {specValue("Size grades")}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="gccDestination" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.destinationLabel")}
+                </Label>
+                <Input
+                  id="gccDestination"
+                  placeholder={t("quoteForm.destinationPlaceholder")}
+                  onChange={(e) =>
+                    setCustomSpecs({ ...customSpecs, gccDestination: e.target.value })
+                  }
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Type F: Other seafood — oyster, blue crab */}
+          {isOtherSeafood && (
+            <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div>
+                <Label htmlFor="portionSpec" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.portionLabel")}
+                </Label>
+                <Input
+                  id="portionSpec"
+                  placeholder={specValue("Formats") ? `e.g. ${specValue("Formats")}` : undefined}
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, portionSpec: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+              <div>
+                <Label htmlFor="gccDestination" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.destinationLabel")}
+                </Label>
+                <Input
+                  id="gccDestination"
+                  placeholder={t("quoteForm.destinationPlaceholder")}
+                  onChange={(e) =>
+                    setCustomSpecs({ ...customSpecs, gccDestination: e.target.value })
+                  }
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* INCOTERM PREFERENCE & SAMPLE OPTION */}
+      <div className="p-4 rounded-2xl bg-background border border-border/80 space-y-3">
+        <Label className="font-bold text-navy text-xs uppercase tracking-wider block">
+          {t("quoteForm.step2")}
+        </Label>
+        <div className="grid gap-3 sm:grid-cols-3 text-xs">
+          <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
+            <input
+              type="radio"
+              name="incoterm"
+              value="CIF"
+              defaultChecked
+              className="text-primary"
+            />
+            <span className="font-bold text-navy">{t("quoteForm.incoterm.cif")}</span>
+          </label>
+          <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
+            <input type="radio" name="incoterm" value="FOB" className="text-primary" />
+            <span className="font-bold text-navy">{t("quoteForm.incoterm.fob")}</span>
+          </label>
+          <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
+            <input type="radio" name="incoterm" value="EXW" className="text-primary" />
+            <span className="font-bold text-navy">{t("quoteForm.incoterm.exw")}</span>
+          </label>
+        </div>
+
+        <label className="flex items-center gap-2.5 text-xs text-navy font-semibold pt-1">
+          <input
+            type="checkbox"
+            name="requestSample"
+            onChange={(e) =>
+              setCustomSpecs({
+                ...customSpecs,
+                sampleRequested: e.target.checked ? "Yes (Include 500g Test Batch)" : "No",
+              })
+            }
+            className="rounded border-border text-primary focus:ring-primary h-4 w-4"
+          />
+          <span>{t("quoteForm.sampleTrial")}</span>
+        </label>
+      </div>
+
+      {/* STANDARD CONTACT INFORMATION FIELDS */}
+      <div className="space-y-3">
+        <Label className="font-bold text-navy text-xs uppercase tracking-wider block">
+          {t("quoteForm.step3")}
+        </Label>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label={t("quote.name")} name="name" error={errors.name} required />
+          <Field label={t("quote.company")} name="company" error={errors.company} required />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label={t("quote.email")} name="email" type="email" error={errors.email} required />
+          <Field label={t("quote.phone")} name="phone" error={errors.phone} required />
+        </div>
+        <Field label={t("quote.country")} name="country" error={errors.country} />
+      </div>
+
+      <div>
+        <Label htmlFor="message" className="text-xs font-bold text-navy">
+          {t("quote.message")}
+        </Label>
+        <Textarea
+          id="message"
+          name="message"
+          rows={3}
+          placeholder={t("quote.messagePh")}
+          maxLength={1000}
+          className="text-xs"
+        />
+      </div>
+
+      <label className="flex items-start gap-2 text-xs text-muted-foreground">
+        <input type="checkbox" name="consent" value="on" className="mt-0.5" />
+        <span>{t("quote.consent")}</span>
+      </label>
+      {errors.consent && <p className="text-xs text-destructive">{errors.consent}</p>}
+      {Footer ? <Footer>{submitBtn}</Footer> : <div className="pt-2">{submitBtn}</div>}
+    </form>
+  );
+}
+
+function Field({
+  label,
+  name,
+  type = "text",
+  error,
+  required,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  error?: string;
+  required?: boolean;
+}) {
+  return (
+    <div>
+      <Label htmlFor={name} className="text-xs font-bold text-navy">
+        {label}
+        {required && <span className="text-destructive"> *</span>}
+      </Label>
+      <Input id={name} name={name} type={type} aria-required={required} className="h-10 text-xs" />
+      {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
+    </div>
+  );
+}

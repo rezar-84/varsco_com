@@ -1,0 +1,229 @@
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import type { LangCode } from "@/lib/types";
+import { useLocation } from "@tanstack/react-router";
+
+import en from "@/lib/locales/en.json";
+import tr from "@/lib/locales/tr.json";
+import ar from "@/lib/locales/ar.json";
+import ru from "@/lib/locales/ru.json";
+import de from "@/lib/locales/de.json";
+import ja from "@/lib/locales/ja.json";
+import ko from "@/lib/locales/ko.json";
+import zh from "@/lib/locales/zh.json";
+import es from "@/lib/locales/es.json";
+
+export interface LanguageInfo {
+  code: LangCode;
+  label: string;
+  nativeName: string;
+  flag: string;
+  dir: "ltr" | "rtl";
+}
+
+export const LANGUAGES: LanguageInfo[] = [
+  { code: "en", label: "EN", nativeName: "English", flag: "🇬🇧", dir: "ltr" },
+  { code: "tr", label: "TR", nativeName: "Türkçe", flag: "🇹🇷", dir: "ltr" },
+  { code: "ar", label: "AR", nativeName: "العربية", flag: "🇸🇦", dir: "rtl" },
+  { code: "de", label: "DE", nativeName: "Deutsch", flag: "🇩🇪", dir: "ltr" },
+  { code: "ru", label: "RU", nativeName: "Русский", flag: "🇷🇺", dir: "ltr" },
+  { code: "ja", label: "JA", nativeName: "日本語", flag: "🇯🇵", dir: "ltr" },
+  { code: "ko", label: "KO", nativeName: "한국어", flag: "🇰🇷", dir: "ltr" },
+  { code: "zh", label: "ZH", nativeName: "简体中文", flag: "🇨🇳", dir: "ltr" },
+  { code: "es", label: "ES", nativeName: "Español", flag: "🇪🇸", dir: "ltr" },
+];
+
+type Dict = Record<string, string>;
+
+const DICTS: Record<LangCode, Dict> = {
+  en,
+  tr,
+  ar,
+  ru,
+  de,
+  ja,
+  ko,
+  zh,
+  es,
+};
+
+interface I18nContextValue {
+  lang: LangCode;
+  dir: "ltr" | "rtl";
+  setLang: (l: LangCode) => void;
+  t: (key: string) => string;
+  languages: LanguageInfo[];
+  currentLanguage: LanguageInfo;
+}
+
+const I18nContext = createContext<I18nContextValue | null>(null);
+const STORAGE_KEY = "vars.lang";
+
+export function detectLangFromUrl(pathname: string, search: string | Record<string, any>): LangCode {
+  let qLang: LangCode | null = null;
+  if (typeof search === "string") {
+    const params = new URLSearchParams(search);
+    qLang = params.get("lang") as LangCode | null;
+  } else if (search && typeof search === "object") {
+    qLang = search.lang as LangCode | null;
+  }
+  
+  if (qLang && DICTS[qLang]) return qLang;
+
+  const pathParts = pathname.split("/").filter(Boolean);
+  if (pathParts.length > 0) {
+    const maybeLang = pathParts[0].toLowerCase() as LangCode;
+    if (DICTS[maybeLang]) return maybeLang;
+  }
+  return "en";
+}
+
+export function detectLangFromLocation(): LangCode {
+  if (typeof window === "undefined") return "en";
+
+  // 1. URL check
+  const urlLang = detectLangFromUrl(window.location.pathname, window.location.search);
+  if (urlLang !== "en") return urlLang;
+
+  // 2. LocalStorage check
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY) as LangCode | null;
+    if (stored && DICTS[stored]) return stored;
+  } catch (err) {
+    // ignore
+  }
+
+  // 3. Browser preference
+  const navLang = navigator.language.slice(0, 2).toLowerCase() as LangCode;
+  if (DICTS[navLang]) return navLang;
+
+  return "en";
+}
+
+export function I18nProvider({ children }: { children: ReactNode }) {
+  const location = useLocation();
+
+  // Initialize state based strictly on the URL (and server storage on SSR) to match server-side render exactly!
+  const [lang, setLangState] = useState<LangCode>(() => {
+    if (typeof window === "undefined") {
+      const storage = (globalThis as unknown as Record<string, unknown>).serverStorage as
+        { getStore: () => { lang?: string } | undefined } | undefined;
+      const store = storage?.getStore();
+      if (store?.lang) return store.lang as LangCode;
+      return "en";
+    }
+    return detectLangFromUrl(window.location.pathname, window.location.search);
+  });
+
+  // Keep state in sync with route location changes reactively (e.g. when clicking regular links)
+  useEffect(() => {
+    const currentPath = typeof window !== "undefined" ? window.location.pathname : location.pathname;
+    const currentSearch = typeof window !== "undefined" ? window.location.search : location.search;
+    const urlLang = detectLangFromUrl(currentPath, currentSearch);
+    if (urlLang !== lang) {
+      setLangState(urlLang);
+    }
+  }, [location.pathname, location.search, lang]);
+
+  useEffect(() => {
+    const currentInfo = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
+    const dir = currentInfo.dir;
+
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("dir", dir);
+      document.documentElement.setAttribute("lang", lang);
+    }
+  }, [lang]);
+
+  useEffect(() => {
+    // On client mount, check if we need to redirect due to preferred language (e.g. from localStorage)
+    const preferred = detectLangFromLocation();
+    const urlLang = detectLangFromUrl(window.location.pathname, window.location.search);
+
+    if (preferred !== urlLang) {
+      const prefix = preferred === "en" ? "" : `/${preferred}`;
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      let restOfPath = "";
+      if (parts.length > 0) {
+        const firstPart = parts[0].toLowerCase();
+        if (DICTS[firstPart as LangCode]) {
+          restOfPath = "/" + parts.slice(1).join("/");
+        } else {
+          restOfPath = "/" + parts.join("/");
+        }
+      } else {
+        restOfPath = "/";
+      }
+
+      const newPath = `${prefix}${restOfPath === "/" ? "" : restOfPath}` || "/";
+
+      if (window.location.pathname !== newPath) {
+        setLangState(preferred);
+        window.history.replaceState(null, "", newPath);
+        window.dispatchEvent(new PopStateEvent("popstate"));
+      }
+    }
+  }, []);
+
+  const setLang = (l: LangCode) => {
+    if (!DICTS[l]) return;
+    setLangState(l);
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(STORAGE_KEY, l);
+      } catch {
+        /* ignore */
+      }
+
+      // Sync URL prefix
+      const currentPath = window.location.pathname;
+      const parts = currentPath.split("/").filter(Boolean);
+      let restOfPath = "";
+      if (parts.length > 0) {
+        const firstPart = parts[0].toLowerCase();
+        const validLangs = ["tr", "ar", "de", "ru", "ja", "ko", "en", "zh", "es"];
+        if (validLangs.includes(firstPart)) {
+          restOfPath = "/" + parts.slice(1).join("/");
+        } else {
+          restOfPath = "/" + parts.join("/");
+        }
+      } else {
+        restOfPath = "/";
+      }
+
+      const prefix = l === "en" ? "" : `/${l}`;
+      const newPath = `${prefix}${restOfPath === "/" ? "" : restOfPath}` || "/";
+
+      if (window.location.pathname !== newPath) {
+        window.history.pushState(null, "", newPath);
+        window.dispatchEvent(new PopStateEvent("popstate"));
+      }
+    }
+  };
+
+  const t = (key: string): string => {
+    return DICTS[lang]?.[key] ?? DICTS.en?.[key] ?? key;
+  };
+
+  const currentLanguage = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
+
+  return (
+    <I18nContext.Provider
+      value={{
+        lang,
+        dir: currentLanguage.dir,
+        setLang,
+        t,
+        languages: LANGUAGES,
+        currentLanguage,
+      }}
+    >
+      {children}
+    </I18nContext.Provider>
+  );
+}
+
+export function useI18n() {
+  const ctx = useContext(I18nContext);
+  if (!ctx) throw new Error("useI18n must be used inside I18nProvider");
+  return ctx;
+}

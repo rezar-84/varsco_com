@@ -1,0 +1,69 @@
+schema_version: 1
+
+project:
+  slug: aqua-bloom-portal
+  owner: varsco
+  criticality: medium
+  data_classification: internal
+
+source:
+  repository: git@github.com:rezar-84/aqua-bloom-portal.git
+  branch: main
+  commit: set-at-release-time
+
+runtime:
+  type: docker-compose
+  web_service: app
+  internal_port: 3000
+  health_path: /api/health
+  package_manager: npm
+  node_major: 22
+
+services:
+  postgres: false
+  redis: false
+  workers: []
+  scheduled_jobs: []
+
+persistence:
+  named_volumes: []
+  object_storage_paths: []
+  uploaded_files_are_ephemeral: true
+
+database:
+  engine: none
+  migration_command: null
+  rollback_strategy: not-applicable
+
+resources:
+  app_memory: 512M
+  app_cpus: "1.0"
+  database_memory: null
+  redis_memory: null
+
+domains:
+  - hostname: varsco.com
+    cloudflare_zone: varsco.com
+    proxied: true
+
+secrets:
+  required_names:
+    - APP_IMAGE_NAME
+    - VITE_ODOO_BASE_URL
+    - ODOO_WRITE_TOKEN
+    - VITE_SITE_URL
+    - ALLOWED_ORIGINS
+  owner: platform-operator
+  storage: dokploy-runtime-and-company-password-manager
+
+backup:
+  database_schedule: not-applicable
+  volume_schedule: not-applicable
+  offsite: false
+  last_restore_test: null
+
+release:
+  production_approval_required: true
+  migration_approval_required: false
+  dns_approval_required: true
+  last_known_good_commit: null

@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Merged into the build's auto-generated wrangler.json (nitro's cloudflare-module
+  // preset owns `main`/`assets` — do not set those here, they're computed at build time
+  // from .output/server). This file only pins the settings that must stay stable across
+  // builds/machines.
+  "name": "aqua-bloom-portal",
+  "compatibility_date": "2026-07-31",
+  "compatibility_flags": [
+    "nodejs_compat",
+    // Without this, process.env.* (ODOO_WRITE_TOKEN, ALLOWED_ORIGINS, etc.) reads as
+    // undefined at runtime even though nodejs_compat is on — the two flags are separate.
+    "nodejs_compat_populate_process_env"
+  ]
+  // Non-secret vars (VITE_ODOO_BASE_URL, VITE_SITE_URL, ALLOWED_ORIGINS) and the
+  // ODOO_WRITE_TOKEN secret are set in the Cloudflare dashboard (Workers & Pages →
+  // this Worker → Settings → Variables and Secrets), not committed here.
+}
