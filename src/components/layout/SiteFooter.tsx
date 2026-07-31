@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Globe, Check, ArrowRight, ShieldCheck } from "luci
 import { useI18n } from "@/context/I18nContext";
 import { VarsLogo } from "./VarsLogo";
 import { Button } from "@/components/ui/button";
+import { odooAssetUrl } from "@/lib/odoo-asset";
 
 export function SiteFooter() {
   const { t, languages, lang, setLang, currentLanguage } = useI18n();
@@ -244,7 +245,7 @@ export function SiteFooter() {
           {/* iyzico Payment Partner Band */}
           <div className="flex flex-col items-center md:items-end gap-1.5 shrink-0">
             <img
-              src="https://varsco.com/web/image/8921-bb62da9e/logo_band_white%403x.webp"
+              src={odooAssetUrl("/web/image/8921-bb62da9e/logo_band_white%403x.webp")}
               alt="iyzico Secure Payment Gateway — Visa, Mastercard, Troy, American Express"
               className="h-7 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
               loading="lazy"

@@ -30,12 +30,13 @@ export const Route = createFileRoute("/blog/$category/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData?.post) return {};
     const post = loaderData.post;
+    const siteUrl = import.meta.env.VITE_SITE_URL || "https://varsco.com";
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       headline: post.title,
       description: post.excerpt,
-      image: post.image ? `https://varsco.com${post.image}` : undefined,
+      image: post.image ? `${siteUrl}${post.image}` : undefined,
       datePublished: post.date,
       author: {
         "@type": "Person",
@@ -51,12 +52,12 @@ export const Route = createFileRoute("/blog/$category/$slug")({
         name: "VARS Aquaculture",
         logo: {
           "@type": "ImageObject",
-          url: "https://varsco.com/assets/logo.png",
+          url: `${siteUrl}/vars-logo.png`,
         },
       },
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": `https://varsco.com/blog/${post.categorySlug}/${post.slug}`,
+        "@id": `${siteUrl}/blog/${post.categorySlug}/${post.slug}`,
       },
     };
     return {
@@ -100,7 +101,7 @@ function Article() {
     if (typeof window !== "undefined") {
       window.open(
         `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`,
-        "_blank"
+        "_blank",
       );
     }
   };
@@ -109,7 +110,7 @@ function Article() {
     if (typeof window !== "undefined") {
       window.open(
         `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
-        "_blank"
+        "_blank",
       );
     }
   };
@@ -123,7 +124,11 @@ function Article() {
 
   // Determine CTA block based on category
   const getCtaBlock = () => {
-    if (post.categorySlug === "feed-nutrition" || post.categorySlug === "feed-innovation-sustainability-8" || post.categorySlug === "hatchery-feed-design-6") {
+    if (
+      post.categorySlug === "feed-nutrition" ||
+      post.categorySlug === "feed-innovation-sustainability-8" ||
+      post.categorySlug === "hatchery-feed-design-6"
+    ) {
       return (
         <div className="glass-panel-dark rounded-3xl border border-mint/20 p-8 relative overflow-hidden shadow-2xl my-10">
           <div className="absolute top-0 right-0 w-36 h-36 bg-mint/10 rounded-full blur-2xl pointer-events-none" />
@@ -135,15 +140,24 @@ function Article() {
               Optimize Hatchery Live Feed Yields Up to 8x
             </h3>
             <p className="text-sm text-white/80 leading-relaxed">
-              Schedule a live consultation with our biotech feed specialists to audit your current rotifer and Artemia hatching protocols. Receive a customized SV12 Chlorella trial plan.
+              Schedule a live consultation with our biotech feed specialists to audit your current
+              rotifer and Artemia hatching protocols. Receive a customized SV12 Chlorella trial
+              plan.
             </p>
             <div className="pt-2 flex flex-wrap gap-4">
-              <Button asChild className="bg-mint text-navy hover:bg-mint/90 font-bold rounded-xl px-6">
+              <Button
+                asChild
+                className="bg-mint text-navy hover:bg-mint/90 font-bold rounded-xl px-6"
+              >
                 <Link to="/contactus" search={{ inquiry: "live-feed" }}>
                   Request Protocol Consultation
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="border-white/20 hover:bg-white/10 text-white rounded-xl px-6">
+              <Button
+                asChild
+                variant="outline"
+                className="border-white/20 hover:bg-white/10 text-white rounded-xl px-6"
+              >
                 <Link to="/products" search={{ category: "live-feed-aquaculture" }}>
                   Explore Live Feed Range
                 </Link>
@@ -166,15 +180,23 @@ function Article() {
               Secure Your Eyed Salmon Ova Allocation
             </h3>
             <p className="text-sm text-white/80 leading-relaxed">
-              Ensure genetic optimization and biosecure cold-chain logistics for Atlantic or Coho salmon eggs. Coordinate shipping slots with our global compliance directors.
+              Ensure genetic optimization and biosecure cold-chain logistics for Atlantic or Coho
+              salmon eggs. Coordinate shipping slots with our global compliance directors.
             </p>
             <div className="pt-2 flex flex-wrap gap-4">
-              <Button asChild className="bg-mint text-navy hover:bg-mint/90 font-bold rounded-xl px-6">
+              <Button
+                asChild
+                className="bg-mint text-navy hover:bg-mint/90 font-bold rounded-xl px-6"
+              >
                 <Link to="/contactus" search={{ inquiry: "salmon-ova" }}>
                   Secure Allocation Slot
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="border-white/20 hover:bg-white/10 text-white rounded-xl px-6">
+              <Button
+                asChild
+                variant="outline"
+                className="border-white/20 hover:bg-white/10 text-white rounded-xl px-6"
+              >
                 <Link to="/products" search={{ category: "hatchery-solutions" }}>
                   View Genetics Specifications
                 </Link>
@@ -196,18 +218,22 @@ function Article() {
             Schedule a Global Export Consultation
           </h3>
           <p className="text-sm text-white/80 leading-relaxed">
-            Audit your Incoterm pathways, custom veterinary certifications, and cold-chain compliance with our regional export managers.
+            Audit your Incoterm pathways, custom veterinary certifications, and cold-chain
+            compliance with our regional export managers.
           </p>
           <div className="pt-2 flex flex-wrap gap-4">
-            <Button asChild className="bg-mint text-navy hover:bg-mint/90 font-bold rounded-xl px-6">
-              <Link to="/request-quote">
-                Request Custom Quote
-              </Link>
+            <Button
+              asChild
+              className="bg-mint text-navy hover:bg-mint/90 font-bold rounded-xl px-6"
+            >
+              <Link to="/request-quote">Request Custom Quote</Link>
             </Button>
-            <Button asChild variant="outline" className="border-white/20 hover:bg-white/10 text-white rounded-xl px-6">
-              <Link to="/contactus">
-                Contact Regional Director
-              </Link>
+            <Button
+              asChild
+              variant="outline"
+              className="border-white/20 hover:bg-white/10 text-white rounded-xl px-6"
+            >
+              <Link to="/contactus">Contact Regional Director</Link>
             </Button>
           </div>
         </div>

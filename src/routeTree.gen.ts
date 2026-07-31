@@ -43,6 +43,7 @@ import { Route as ApiHealthRouteImport } from './routes/api.health'
 import { Route as ApiQuotesRouteImport } from './routes/api.quotes'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as ApiAssetsOdooRouteImport } from './routes/api.assets.odoo'
 import { Route as ApiAuthLoginRouteImport } from './routes/api.auth.login'
 import { Route as ApiAuthLogoutRouteImport } from './routes/api.auth.logout'
 import { Route as ApiAuthMeRouteImport } from './routes/api.auth.me'
@@ -229,6 +230,11 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
   path: '/products/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAssetsOdooRoute = ApiAssetsOdooRouteImport.update({
+  id: '/api/assets/odoo',
+  path: '/api/assets/odoo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
   id: '/api/auth/login',
   path: '/api/auth/login',
@@ -320,6 +326,7 @@ export interface FileRoutesByFullPath {
   '/account/': typeof AccountIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/products/': typeof ProductsIndexRoute
+  '/api/assets/odoo': typeof ApiAssetsOdooRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
   '/api/auth/me': typeof ApiAuthMeRoute
@@ -366,6 +373,7 @@ export interface FileRoutesByTo {
   '/account': typeof AccountIndexRoute
   '/blog': typeof BlogIndexRoute
   '/products': typeof ProductsIndexRoute
+  '/api/assets/odoo': typeof ApiAssetsOdooRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
   '/api/auth/me': typeof ApiAuthMeRoute
@@ -414,6 +422,7 @@ export interface FileRoutesById {
   '/account/': typeof AccountIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/products/': typeof ProductsIndexRoute
+  '/api/assets/odoo': typeof ApiAssetsOdooRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
   '/api/auth/me': typeof ApiAuthMeRoute
@@ -463,6 +472,7 @@ export interface FileRouteTypes {
     | '/account/'
     | '/blog/'
     | '/products/'
+    | '/api/assets/odoo'
     | '/api/auth/login'
     | '/api/auth/logout'
     | '/api/auth/me'
@@ -509,6 +519,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/blog'
     | '/products'
+    | '/api/assets/odoo'
     | '/api/auth/login'
     | '/api/auth/logout'
     | '/api/auth/me'
@@ -556,6 +567,7 @@ export interface FileRouteTypes {
     | '/account/'
     | '/blog/'
     | '/products/'
+    | '/api/assets/odoo'
     | '/api/auth/login'
     | '/api/auth/logout'
     | '/api/auth/me'
@@ -600,6 +612,7 @@ export interface RootRouteChildren {
   ApiQuotesRoute: typeof ApiQuotesRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
+  ApiAssetsOdooRoute: typeof ApiAssetsOdooRoute
   ApiAuthLoginRoute: typeof ApiAuthLoginRoute
   ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
   ApiAuthMeRoute: typeof ApiAuthMeRoute
@@ -853,6 +866,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/assets/odoo': {
+      id: '/api/assets/odoo'
+      path: '/api/assets/odoo'
+      fullPath: '/api/assets/odoo'
+      preLoaderRoute: typeof ApiAssetsOdooRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/login': {
       id: '/api/auth/login'
       path: '/api/auth/login'
@@ -981,6 +1001,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiQuotesRoute: ApiQuotesRoute,
   BlogIndexRoute: BlogIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
+  ApiAssetsOdooRoute: ApiAssetsOdooRoute,
   ApiAuthLoginRoute: ApiAuthLoginRoute,
   ApiAuthLogoutRoute: ApiAuthLogoutRoute,
   ApiAuthMeRoute: ApiAuthMeRoute,

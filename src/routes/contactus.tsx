@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import turkeyFlagSvg from "@/assets/icons/turkey-flag.svg";
+import { odooAssetUrl } from "@/lib/odoo-asset";
 
 import { useI18n } from "@/context/I18nContext";
 
@@ -380,7 +381,9 @@ function Contact() {
                 </div>
                 <div className="relative h-28 w-full overflow-hidden rounded-xl bg-slate-950/40 p-2 flex items-center justify-center border border-white/10">
                   <img
-                    src="https://varsco.com/web/image/9761-682cbfc6/customized_Skyscrapers_in_Izmir_-_Turkey_7cc6f255-112b-42c5-a530-2ac66e31671c.svg"
+                    src={odooAssetUrl(
+                      "/web/image/9761-682cbfc6/customized_Skyscrapers_in_Izmir_-_Turkey_7cc6f255-112b-42c5-a530-2ac66e31671c.svg",
+                    )}
                     alt={t("contact.form.card.alt")}
                     className="h-full w-full object-contain filter drop-shadow-md brightness-110 contrast-125"
                   />

@@ -1,4 +1,5 @@
 import type { Product, ProductCategory } from "../types";
+import { odooAssetUrl, odooDirectUrl } from "../odoo-asset";
 
 // Product image assets (Locally hosted authentic VARS photography & 3D packaging)
 import reviveDecapImg from "@/assets/products/revive-artemia-decap.png";
@@ -37,48 +38,60 @@ const emeraldChlorella = { url: emeraldChlorellaImg, gallery: [emeraldChlorellaO
 
 // Salmon eggs requested default image URL
 const salmonEggs = {
-  url: "https://varsco.com/web/image/product.image/8/image_1920/Blog%20Post%20%27Fertilized%20Salmon%20Eggs_%20Where%20Every%20Salmon%20Farming%20Journey%20Begins%27%20cover%20image.webp?unique=ea15b07",
+  url: odooAssetUrl(
+    "/web/image/product.image/8/image_1920/Blog%20Post%20%27Fertilized%20Salmon%20Eggs_%20Where%20Every%20Salmon%20Farming%20Journey%20Begins%27%20cover%20image.webp?unique=ea15b07",
+  ),
   gallery: [salmonEggsScaleImg, salmonEggsThermoImg, salmonTraysImg],
 };
 
 // Feed Additives requested default image URLs
 const fishMeal = {
-  url: "https://varsco.com/web/image/product.product/63/image_1024/Fish%20Meal?unique=23330ef",
+  url: odooAssetUrl("/web/image/product.product/63/image_1024/Fish%20Meal?unique=23330ef"),
   gallery: [fishMealImg],
 };
 
 const wheatGluten = {
-  url: "https://varsco.com/web/image/product.product/47/image_1024/Vital%20Wheat%20Gluten?unique=563ed38",
+  url: odooAssetUrl(
+    "/web/image/product.product/47/image_1024/Vital%20Wheat%20Gluten?unique=563ed38",
+  ),
   gallery: [wheatGlutenImg],
 };
 
 // Seafood requested default image URLs from varsco.com/products/seafood
 const seaBassImg = {
-  url: "https://varsco.com/web/image/9727-c596f7d9/levrek4_edited.webp",
+  url: odooAssetUrl("/web/image/9727-c596f7d9/levrek4_edited.webp"),
   gallery: [seaBassImgFile],
 };
 
 const seaBream = {
-  url: "https://varsco.com/web/image/8924-1adb113f/customized_-c3-87-c3-bcpura_edited_e2c17a7c-48c8-4d84-b89a-0a1e054ae7ed.webp",
+  url: odooAssetUrl(
+    "/web/image/8924-1adb113f/customized_-c3-87-c3-bcpura_edited_e2c17a7c-48c8-4d84-b89a-0a1e054ae7ed.webp",
+  ),
   gallery: [seaBreamImgFile],
 };
 
 const oliveFlounder = {
-  url: "https://varsco.com/web/image/9726-522f2377/olive-flounder.webp",
+  url: odooAssetUrl("/web/image/9726-522f2377/olive-flounder.webp"),
   gallery: [oliveFlounderImg],
 };
 
 const brownMeagre = {
-  url: "https://varsco.com/web/image/8933-f0ca00b6/customized_d678439dec7544b2a9dca505d6cf86fb_brown_meagre_edited_72d89622-98a2-4f05-8dbd-6ba6dea548f9.webp",
+  url: odooAssetUrl(
+    "/web/image/8933-f0ca00b6/customized_d678439dec7544b2a9dca505d6cf86fb_brown_meagre_edited_72d89622-98a2-4f05-8dbd-6ba6dea548f9.webp",
+  ),
 };
 
 const amberjack = {
-  url: "https://varsco.com/web/image/8934-e1f13b3d/customized_d609f1c9314a409bb53bb323d57a9f54_amberjack_3c6a5d1b-0622-4a86-acbf-d70dc78ddd23.webp",
+  url: odooAssetUrl(
+    "/web/image/8934-e1f13b3d/customized_d609f1c9314a409bb53bb323d57a9f54_amberjack_3c6a5d1b-0622-4a86-acbf-d70dc78ddd23.webp",
+  ),
   gallery: [amberjackImg],
 };
 
 const rainbowTrout = {
-  url: "https://varsco.com/web/image/8925-5db3df07/customized_alabal_edited_cd262b88-b15a-427c-a7b5-03f89c23bd6c.webp",
+  url: odooAssetUrl(
+    "/web/image/8925-5db3df07/customized_alabal_edited_cd262b88-b15a-427c-a7b5-03f89c23bd6c.webp",
+  ),
 };
 
 const shrimp = {
@@ -561,8 +574,9 @@ export const PRODUCTS: Product[] = [
     storage: "Store below 4 °C. Vacuum-sealed cans remain viable for up to 36 months.",
     image: reviveCysts.url,
     gallery: reviveCysts.gallery,
-    pdfUrl:
-      "https://varsco.com/web/content/12514?unique=24692c2e204e6066d0f586050b3232512eef996c&download=true&access_token=574dfe3e-ca12-4943-884d-45a1fa2396ea",
+    pdfUrl: odooAssetUrl(
+      "/web/content/12514?unique=24692c2e204e6066d0f586050b3232512eef996c&download=true&access_token=574dfe3e-ca12-4943-884d-45a1fa2396ea",
+    ),
     pdfLabel: "Artemia Cysts Incubation Procedure (PDF)",
     seoKeywords: [
       "Artemia cysts",
@@ -676,8 +690,9 @@ export const PRODUCTS: Product[] = [
       "Refrigerated 2–6 °C, keep away from direct light. Use as directed for continuous rotifer culture.",
     image: sv12.url,
     gallery: sv12.gallery,
-    pdfUrl:
-      "https://varsco.com/web/content/12196?unique=5277fa90217f35f33cb218e8be14e6eaf5099a9e&download=true&access_token=6519fa24-e835-4945-865c-2dadb4e8cba0",
+    pdfUrl: odooAssetUrl(
+      "/web/content/12196?unique=5277fa90217f35f33cb218e8be14e6eaf5099a9e&download=true&access_token=6519fa24-e835-4945-865c-2dadb4e8cba0",
+    ),
     pdfLabel: "Super Fresh Chlorella SV-12 Datasheet (PDF)",
     seoKeywords: [
       "Super Fresh Chlorella V12",
@@ -878,7 +893,7 @@ export const PRODUCTS: Product[] = [
     storage:
       "Optimal preservation at 0 °C to +2 °C for fresh variants; −18 °C for deep-frozen fillets.",
     image: seaBream.url,
-    pdfUrl: "https://varsco.com/odoo/documents/7xL4XfbBRhmb9LH2LJF86Qo287",
+    pdfUrl: odooDirectUrl("/odoo/documents/7xL4XfbBRhmb9LH2LJF86Qo287"),
     pdfLabel: "VARS Seafood Catalogue",
     culinaryInfo: {
       whyChooseTitle: "Why Choose VARS Sea Bream?",
@@ -1068,7 +1083,7 @@ export const PRODUCTS: Product[] = [
     applications: ["Sushi & sashimi", "Fine dining HORECA", "Premium retail"],
     storage: "Hold at 0 – 2 °C on flake ice; strict cold-chain from harvest to delivery.",
     image: oliveFlounder.url,
-    pdfUrl: "https://varsco.com/odoo/documents/7xL4XfbBRhmb9LH2LJF86Qo287",
+    pdfUrl: odooDirectUrl("/odoo/documents/7xL4XfbBRhmb9LH2LJF86Qo287"),
     pdfLabel: "VARS Seafood Catalogue",
     seoKeywords: [
       "Korean Olive Flounder",
