@@ -1473,6 +1473,7 @@
   "store.category.backToShop": "Back to Store",
   "store.detail.addToCart": "Add to Cart",
   "store.detail.qty": "Quantity",
+  "store.detail.qtyAvailableSuffix": "in stock",
   "store.detail.description": "Description",
   "store.detail.specifications": "Specifications",
   "store.detail.relatedProducts": "You May Also Like",

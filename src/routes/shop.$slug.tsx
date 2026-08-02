@@ -24,9 +24,12 @@ export const Route = createFileRoute("/shop/$slug")({
     if (result.status === "unavailable")
       return { product: null, unavailable: true, related: [], reviews: [] as ProductReview[] };
 
-    let related: CatalogItemSummary[] = [];
+    // Prefer Odoo's own curated alternative_product_ids (an admin explicitly
+    // chose these) over the category-based heuristic — only fall back to
+    // "same category" when nothing's been curated for this product yet.
+    let related: CatalogItemSummary[] = result.data.alternative_products ?? [];
     const categorySlug = result.data.category?.slug;
-    if (categorySlug) {
+    if (related.length === 0 && categorySlug) {
       const { data: allProducts } = await loadStoreProducts();
       related = allProducts
         .filter((p) => p.slug !== params.slug && p.category?.slug === categorySlug)
@@ -143,7 +146,18 @@ function ShopProductDetail() {
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div className="space-y-3">
-          <div className="aspect-square rounded-3xl overflow-hidden bg-surface-alt border border-border/80 flex items-center justify-center">
+          <div className="relative aspect-square rounded-3xl overflow-hidden bg-surface-alt border border-border/80 flex items-center justify-center">
+            {product.ribbon && (
+              <span
+                className="absolute top-3.5 left-3.5 z-10 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider shadow-md"
+                style={{
+                  backgroundColor: product.ribbon.bg_color,
+                  color: product.ribbon.text_color,
+                }}
+              >
+                {product.ribbon.name}
+              </span>
+            )}
             {activeImage?.url ? (
               <img
                 src={activeImage.url}
@@ -206,6 +220,18 @@ function ShopProductDetail() {
               </div>
             )}
             <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{product.summary}</p>
+            {product.tags && product.tags.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {product.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-lg bg-navy/5 px-2.5 py-1 text-[10px] font-extrabold text-navy/90 border border-navy/10"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="text-2xl font-display font-bold text-navy">
@@ -272,6 +298,22 @@ function ShopProductDetail() {
               </button>
             )}
           </div>
+
+          {product.purchase && product.purchase.qty_available <= 0 && (
+            <p
+              className={cn(
+                "text-xs font-semibold",
+                product.purchase.available ? "text-amber-600" : "text-destructive",
+              )}
+            >
+              {product.purchase.out_of_stock_message || t("store.card.outOfStock")}
+            </p>
+          )}
+          {product.purchase?.show_qty && product.purchase.qty_available > 0 && (
+            <p className="text-xs font-semibold text-mint">
+              {product.purchase.qty_available} {t("store.detail.qtyAvailableSuffix")}
+            </p>
+          )}
 
           {descriptionText && (
             <div className="border-t border-border/60 pt-6 space-y-2">

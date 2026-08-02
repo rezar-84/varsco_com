@@ -50,15 +50,25 @@ export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
         )}
       </Link>
 
-      {product.category && (
-        <Link
-          to="/shop/category/$slug"
-          params={{ slug: product.category.slug }}
-          className="absolute top-3.5 left-3.5 z-10 px-3 py-1 rounded-full bg-navy/90 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border border-white/10 shadow-sm hover:bg-navy transition-colors"
-        >
-          {product.category.name}
-        </Link>
-      )}
+      <div className="absolute top-3.5 left-3.5 z-10 flex flex-col items-start gap-1.5">
+        {product.ribbon && (
+          <span
+            className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider shadow-md"
+            style={{ backgroundColor: product.ribbon.bg_color, color: product.ribbon.text_color }}
+          >
+            {product.ribbon.name}
+          </span>
+        )}
+        {product.category && (
+          <Link
+            to="/shop/category/$slug"
+            params={{ slug: product.category.slug }}
+            className="px-3 py-1 rounded-full bg-navy/90 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border border-white/10 shadow-sm hover:bg-navy transition-colors"
+          >
+            {product.category.name}
+          </Link>
+        )}
+      </div>
 
       <div className="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1.5">
         {user && productId && (
@@ -84,11 +94,13 @@ export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
         {product.purchase && (
           <div
             className={cn(
-              "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold shadow-md",
+              "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold shadow-md max-w-[10rem] truncate",
               product.purchase.available ? "bg-mint text-navy" : "bg-destructive/90 text-white",
             )}
           >
-            {product.purchase.available ? t("store.card.inStock") : t("store.card.outOfStock")}
+            {product.purchase.available
+              ? t("store.card.inStock")
+              : product.purchase.out_of_stock_message || t("store.card.outOfStock")}
           </div>
         )}
       </div>
@@ -113,6 +125,19 @@ export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
         <p className="flex-1 text-xs text-navy/80 leading-relaxed line-clamp-2 font-normal">
           {product.summary}
         </p>
+
+        {product.tags && product.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {product.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="rounded-lg bg-navy/5 px-2 py-0.5 text-[10px] font-extrabold text-navy/90 border border-navy/10"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
 
         <div className="text-sm font-bold text-navy">
           {price ?? (

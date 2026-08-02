@@ -164,8 +164,20 @@ export interface StorePurchase {
   product_id: number;
   amount: number;
   currency: string;
+  /** qty_available > 0 OR sell_when_out_of_stock — a backorderable item stays "available" at zero stock. */
   available: boolean;
   qty_available: number;
+  sell_when_out_of_stock?: boolean;
+  show_qty?: boolean;
+  out_of_stock_message?: string;
+}
+
+export interface ProductRibbon {
+  name: string;
+  bg_color: string;
+  text_color: string;
+  style: string;
+  position: string;
 }
 
 export interface CatalogItemSummary {
@@ -182,6 +194,8 @@ export interface CatalogItemSummary {
   /** Only present on real /shop store products — the curated /products portfolio doesn't carry reviews. */
   rating_avg?: number | null;
   rating_count?: number;
+  ribbon?: ProductRibbon | null;
+  tags?: string[];
 }
 
 export interface ProductReview {
@@ -207,6 +221,10 @@ export interface CatalogItemDetail extends CatalogItemSummary {
   media: ContentMedia[];
   specification_groups: { heading?: string; items: SpecificationItem[] }[];
   quote_cta_enabled: boolean;
+  /** Odoo's own curated cross-sell relations — only present on real /shop store products. */
+  alternative_products?: CatalogItemSummary[];
+  accessory_products?: CatalogItemSummary[];
+  optional_products?: CatalogItemSummary[];
 }
 
 export interface RedirectRule {
