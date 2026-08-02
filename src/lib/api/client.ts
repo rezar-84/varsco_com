@@ -40,7 +40,7 @@ export class ContentApiClient {
    */
   private async requestJson<T>(
     path: string,
-    method: "GET" | "POST" | "PUT" = "GET",
+    method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
     body?: unknown,
   ): Promise<T> {
     const fetchImpl = this.options.fetchImpl ?? fetch;
@@ -155,6 +155,19 @@ export class ContentApiClient {
       "POST",
       review,
     );
+  }
+
+  /** All three wishlist methods are session-authenticated — no guest wishlist. */
+  listWishlist(): Promise<{ data: CatalogItemSummary[] }> {
+    return this.requestJson("/api/v1/store/wishlist");
+  }
+
+  addToWishlist(productId: number): Promise<{ data: CatalogItemSummary }> {
+    return this.requestJson("/api/v1/store/wishlist", "POST", { product_id: productId });
+  }
+
+  removeFromWishlist(productId: number): Promise<{ status: string }> {
+    return this.requestJson(`/api/v1/store/wishlist/${productId}`, "DELETE");
   }
 
   // ==========================================

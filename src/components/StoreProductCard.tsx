@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Plus, Check, ArrowRight } from "lucide-react";
+import { Plus, Check, ArrowRight, Heart } from "lucide-react";
 import { useState } from "react";
 import type { CatalogItemSummary } from "@/lib/api/types";
 import { useStoreCart } from "@/context/StoreCartContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/StarRating";
 import { cn } from "@/lib/utils";
@@ -11,10 +13,14 @@ import { formatPrice } from "@/lib/utils/price";
 
 export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
   const { add, openDrawer } = useStoreCart();
+  const { user } = useAuth();
+  const { isWishlisted, toggle } = useWishlist();
   const { t } = useI18n();
   const [added, setAdded] = useState(false);
   const price = formatPrice(product.purchase);
   const canAddToCart = Boolean(product.purchase?.available);
+  const productId = product.purchase?.product_id;
+  const wishlisted = productId ? isWishlisted(productId) : false;
 
   return (
     <div className="group relative glass-card rounded-3xl flex flex-col overflow-hidden transition-all duration-300 hover:border-primary/60 hover:shadow-2xl bg-background border border-border/80">
@@ -42,24 +48,50 @@ export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
             {product.name.slice(0, 2)}
           </div>
         )}
+      </Link>
 
-        {product.category && (
-          <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-navy/90 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border border-white/10 shadow-sm">
-            {product.category.name}
-          </div>
+      {product.category && (
+        <Link
+          to="/shop/category/$slug"
+          params={{ slug: product.category.slug }}
+          className="absolute top-3.5 left-3.5 z-10 px-3 py-1 rounded-full bg-navy/90 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border border-white/10 shadow-sm hover:bg-navy transition-colors"
+        >
+          {product.category.name}
+        </Link>
+      )}
+
+      <div className="absolute top-3.5 right-3.5 z-10 flex flex-col items-end gap-1.5">
+        {user && productId && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              toggle(product);
+            }}
+            aria-label={
+              wishlisted ? t("store.card.removeFromWishlist") : t("store.card.addToWishlist")
+            }
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/90 backdrop-blur-md border border-white/60 shadow-md hover:scale-110 transition-transform"
+          >
+            <Heart
+              className={cn(
+                "h-3.5 w-3.5",
+                wishlisted ? "fill-destructive text-destructive" : "text-navy/70",
+              )}
+            />
+          </button>
         )}
-
         {product.purchase && (
           <div
             className={cn(
-              "absolute top-3.5 right-3.5 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold shadow-md",
+              "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold shadow-md",
               product.purchase.available ? "bg-mint text-navy" : "bg-destructive/90 text-white",
             )}
           >
             {product.purchase.available ? t("store.card.inStock") : t("store.card.outOfStock")}
           </div>
         )}
-      </Link>
+      </div>
 
       <div className="flex flex-1 flex-col p-6 space-y-4">
         <div>

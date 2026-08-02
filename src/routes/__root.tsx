@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { StoreCartProvider } from "@/context/StoreCartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 import { I18nProvider } from "@/context/I18nContext";
 import { SiteShell } from "@/components/layout/SiteShell";
 
@@ -223,9 +224,11 @@ function RootComponent() {
         <AuthProvider>
           <CartProvider>
             <StoreCartProvider>
-              <SiteShell>
-                <Outlet />
-              </SiteShell>
+              <WishlistProvider>
+                <SiteShell>
+                  <Outlet />
+                </SiteShell>
+              </WishlistProvider>
             </StoreCartProvider>
           </CartProvider>
         </AuthProvider>

@@ -1,12 +1,13 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Plus, Check, ShoppingBag, Loader2 } from "lucide-react";
+import { ArrowLeft, ChevronRight, Plus, Check, ShoppingBag, Loader2, Heart } from "lucide-react";
 import { Section } from "@/components/layout/Page";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { StoreProductCard } from "@/components/StoreProductCard";
 import { StarRating } from "@/components/StarRating";
 import { useStoreCart } from "@/context/StoreCartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
 import { loadStoreProduct, loadStoreProducts, loadProductReviews } from "@/lib/api/store-data";
@@ -87,6 +88,8 @@ function ShopProductDetail() {
   const { t } = useI18n();
   const { product, unavailable, related, reviews } = Route.useLoaderData();
   const { add, openDrawer } = useStoreCart();
+  const { user } = useAuth();
+  const { isWishlisted, toggle } = useWishlist();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -110,18 +113,33 @@ function ShopProductDetail() {
 
   const price = formatPrice(product.purchase);
   const canAddToCart = Boolean(product.purchase?.available);
+  const productId = product.purchase?.product_id;
+  const wishlisted = productId ? isWishlisted(productId) : false;
   const media = product.media ?? [];
   const activeImage = media[activeImageIndex] ?? media[0];
   const descriptionText = product.description_html?.replace(/<[^>]*>/g, "").trim();
 
   return (
     <Section>
-      <Link
-        to="/shop"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline mb-8"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" /> {t("store.detail.backToShop")}
-      </Link>
+      <nav className="flex items-center flex-wrap gap-1.5 text-xs font-semibold text-muted-foreground mb-8">
+        <Link to="/shop" className="hover:text-primary transition-colors flex items-center gap-1.5">
+          <ArrowLeft className="h-3.5 w-3.5" /> {t("store.detail.backToShop")}
+        </Link>
+        {product.category && (
+          <>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <Link
+              to="/shop/category/$slug"
+              params={{ slug: product.category.slug }}
+              className="hover:text-primary transition-colors"
+            >
+              {product.category.name}
+            </Link>
+          </>
+        )}
+        <ChevronRight className="h-3.5 w-3.5" />
+        <span className="text-navy">{product.name}</span>
+      </nav>
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div className="space-y-3">
@@ -169,9 +187,13 @@ function ShopProductDetail() {
         <div className="space-y-6">
           <div>
             {product.category && (
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">
+              <Link
+                to="/shop/category/$slug"
+                params={{ slug: product.category.slug }}
+                className="text-xs font-bold uppercase tracking-wider text-primary hover:underline"
+              >
                 {product.category.name}
-              </span>
+              </Link>
             )}
             <h1 className="font-display text-3xl font-bold text-navy mt-1">{product.name}</h1>
             {Boolean(product.rating_count) && (
@@ -231,6 +253,24 @@ function ShopProductDetail() {
                 </span>
               )}
             </Button>
+
+            {user && productId && (
+              <button
+                type="button"
+                onClick={() => toggle(product)}
+                aria-label={
+                  wishlisted ? t("store.card.removeFromWishlist") : t("store.card.addToWishlist")
+                }
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-background hover:bg-muted transition-colors"
+              >
+                <Heart
+                  className={cn(
+                    "h-5 w-5",
+                    wishlisted ? "fill-destructive text-destructive" : "text-navy/70",
+                  )}
+                />
+              </button>
+            )}
           </div>
 
           {descriptionText && (
