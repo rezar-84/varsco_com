@@ -72,6 +72,24 @@ internal `3000/tcp`, per Dokploy's expectations).
   `compose.yaml` (single `app` service, `dokploy-network` only, healthcheck on
   `/api/health`, no host ports published), `deployment/project.yaml` (Gate 1 done).
 
+## Environments
+
+Three tiers, same repo/branch and the same `Dockerfile`/`compose.yaml` for staging and
+production — only the runtime variable values and the Dokploy application/domain differ.
+No separate git branch for staging; it deploys from `main` like production does.
+
+| Env | Frontend | Odoo backend | Approval gate |
+|---|---|---|---|
+| local | `npm run dev` on a developer machine | `~/Development/odoo19-dev` (see its own `AGENTS.md`) | none |
+| staging | Dokploy app `aqua-bloom-portal-staging`, domain `staging.varsco.com` (`deployment/project.staging.yaml`) | `varsco_odoo_staging` repo, Dokploy-hosted Docker Odoo, domain `staging-erp.varsco.com` — fresh/empty data, never a copy of production | none required (agent-triggerable once explicitly enabled, per `dokploy-agent-deployment/AGENTS.md`) |
+| production | Dokploy app per `deployment/project.yaml`, domain `varsco.com` | Existing Hetzner + Plesk install, domain `erp.varsco.com` | human approval required for every deploy |
+
+To stand up staging in Dokploy (human-driven, same shape as Gate 4 below):
+1. Create a **second** Dokploy application (not a second environment on the existing one) — same repo (`git@github.com:rezar-84/varsco_com.git`), same `main` branch.
+2. Set runtime variables from `.env.staging.example` (names only there — real values go straight into Dokploy/the password manager, same as production).
+3. Domain `staging.varsco.com`, Cloudflare-proxied, same TLS sequence as `docs/05` (DNS-only during first cert issuance, proxied after).
+4. No production-approval gate — `deployment/project.staging.yaml` sets `release.production_approval_required: false`, matching what the binding deployment contract allows for staging once you've enabled agent-triggered deploys.
+
 ## Remaining before production
 
 1. Confirm whether `ODOO_WRITE_TOKEN` needs rotating given the exposure above — **human
