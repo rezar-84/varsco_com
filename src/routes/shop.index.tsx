@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search, ShoppingBag, Filter, X } from "lucide-react";
+import { Search, ShoppingBag, X, SlidersHorizontal } from "lucide-react";
 import { Section, PageHero } from "@/components/layout/Page";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
 import {
   Select,
   SelectContent,
@@ -16,6 +18,7 @@ import { StoreProductCard } from "@/components/StoreProductCard";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
 import { loadStoreProducts } from "@/lib/api/store-data";
+import { formatPrice } from "@/lib/utils/price";
 import type { CatalogItemSummary } from "@/lib/api/types";
 
 type SortOption = "featured" | "name-asc" | "price-asc" | "price-desc";
@@ -38,13 +41,32 @@ export const Route = createFileRoute("/shop/")({
   component: ShopIndex,
 });
 
+function priceBoundsOf(products: CatalogItemSummary[]): [number, number] {
+  const amounts = products
+    .map((p) => p.purchase?.amount)
+    .filter((n): n is number => typeof n === "number");
+  if (amounts.length === 0) return [0, 0];
+  return [Math.floor(Math.min(...amounts)), Math.ceil(Math.max(...amounts))];
+}
+
+function currencyOf(products: CatalogItemSummary[]): string {
+  return products.find((p) => p.purchase)?.purchase?.currency ?? "USD";
+}
+
 function ShopIndex() {
   const { t } = useI18n();
   const { products, placeholder } = Route.useLoaderData();
   const [query, setQuery] = useState("");
-  const [activeCat, setActiveCat] = useState("all");
+  const [selectedCats, setSelectedCats] = useState<Set<string>>(new Set());
   const [inStockOnly, setInStockOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("featured");
+
+  const fullPriceBounds = useMemo(() => priceBoundsOf(products), [products]);
+  const productsCurrency = useMemo(() => currencyOf(products), [products]);
+  const [priceRange, setPriceRange] = useState<[number, number]>(fullPriceBounds);
+  const hasPriceFilter = fullPriceBounds[0] !== fullPriceBounds[1];
+  const activePriceRange =
+    priceRange[0] === 0 && priceRange[1] === 0 ? fullPriceBounds : priceRange;
 
   const categories = useMemo(() => {
     const map = new Map<string, { slug: string; name: string }>();
@@ -54,13 +76,43 @@ function ShopIndex() {
     return Array.from(map.values());
   }, [products]);
 
+  const toggleCategory = (slug: string) => {
+    setSelectedCats((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) next.delete(slug);
+      else next.add(slug);
+      return next;
+    });
+  };
+
+  const clearAllFilters = () => {
+    setQuery("");
+    setSelectedCats(new Set());
+    setInStockOnly(false);
+    setSortBy("featured");
+    setPriceRange(fullPriceBounds);
+  };
+
+  const hasActiveFilters =
+    query !== "" ||
+    selectedCats.size > 0 ||
+    inStockOnly ||
+    (hasPriceFilter &&
+      (activePriceRange[0] !== fullPriceBounds[0] || activePriceRange[1] !== fullPriceBounds[1]));
+
   const filtered = useMemo(() => {
     const matches = products.filter((p) => {
-      const matchesCat = activeCat === "all" || p.category?.slug === activeCat;
+      const matchesCat =
+        selectedCats.size === 0 || (p.category && selectedCats.has(p.category.slug));
       const q = query.toLowerCase().trim();
       const matchesQuery = !q || `${p.name} ${p.summary}`.toLowerCase().includes(q);
       const matchesStock = !inStockOnly || Boolean(p.purchase?.available);
-      return matchesCat && matchesQuery && matchesStock;
+      const amount = p.purchase?.amount;
+      const matchesPrice =
+        !hasPriceFilter ||
+        amount === undefined ||
+        (amount >= activePriceRange[0] && amount <= activePriceRange[1]);
+      return matchesCat && matchesQuery && matchesStock && matchesPrice;
     });
 
     const sorted = [...matches];
@@ -79,7 +131,7 @@ function ShopIndex() {
         break;
     }
     return sorted;
-  }, [products, activeCat, query, inStockOnly, sortBy]);
+  }, [products, selectedCats, query, inStockOnly, sortBy, hasPriceFilter, activePriceRange]);
 
   return (
     <>
@@ -108,16 +160,85 @@ function ShopIndex() {
             </Button>
           </div>
         ) : (
-          <div className="space-y-8">
-            <div className="glass-card rounded-3xl p-6 border border-border/80 bg-background shadow-md space-y-6">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="grid gap-8 lg:grid-cols-[260px_1fr] items-start">
+            <aside className="glass-card rounded-3xl border border-border/80 bg-background shadow-md p-6 space-y-6 lg:sticky lg:top-24">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Filter className="h-4 w-4 text-primary" />
-                  <h2 className="font-display text-lg font-bold text-navy">
-                    {t("store.toolbar.title")}
+                  <SlidersHorizontal className="h-4 w-4 text-primary" />
+                  <h2 className="font-display text-base font-bold text-navy">
+                    {t("store.filter.heading")}
                   </h2>
                 </div>
-                <div className="relative w-full md:w-80">
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="text-[11px] font-bold text-primary hover:underline"
+                  >
+                    {t("store.filter.clearAll")}
+                  </button>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  {t("store.filter.categoriesHeading")}
+                </h3>
+                <div className="space-y-2">
+                  {categories.map((c) => {
+                    const count = products.filter((p) => p.category?.slug === c.slug).length;
+                    return (
+                      <label
+                        key={c.slug}
+                        className="flex items-center justify-between gap-2 cursor-pointer group"
+                      >
+                        <span className="flex items-center gap-2 text-xs font-semibold text-navy/80 group-hover:text-navy">
+                          <Checkbox
+                            checked={selectedCats.has(c.slug)}
+                            onCheckedChange={() => toggleCategory(c.slug)}
+                          />
+                          {c.name}
+                        </span>
+                        <span className="text-[11px] text-muted-foreground">({count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {hasPriceFilter && (
+                <div className="space-y-3 border-t border-border/60 pt-5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    {t("store.filter.priceHeading")}
+                  </h3>
+                  <Slider
+                    min={fullPriceBounds[0]}
+                    max={fullPriceBounds[1]}
+                    step={1}
+                    value={activePriceRange}
+                    onValueChange={(v) => setPriceRange(v as [number, number])}
+                  />
+                  <div className="flex items-center justify-between text-[11px] font-bold text-navy">
+                    <span>
+                      {formatPrice({ amount: activePriceRange[0], currency: productsCurrency })}
+                    </span>
+                    <span>
+                      {formatPrice({ amount: activePriceRange[1], currency: productsCurrency })}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              <div className="border-t border-border/60 pt-5">
+                <label className="flex items-center gap-2 text-xs font-semibold text-navy/80 cursor-pointer">
+                  <Switch checked={inStockOnly} onCheckedChange={setInStockOnly} />
+                  {t("store.filter.inStockOnly")}
+                </label>
+              </div>
+            </aside>
+
+            <div className="space-y-6 min-w-0">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="relative flex-1">
                   <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     value={query}
@@ -134,47 +255,9 @@ function ShopIndex() {
                     </button>
                   )}
                 </div>
-              </div>
-
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-                <button
-                  onClick={() => setActiveCat("all")}
-                  className={cn(
-                    "px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap",
-                    activeCat === "all"
-                      ? "bg-primary text-primary-foreground shadow-md scale-105"
-                      : "bg-surface-alt text-navy/80 hover:bg-muted hover:text-navy border border-border/60",
-                  )}
-                >
-                  {t("store.filter.allProducts")} ({products.length})
-                </button>
-                {categories.map((c) => {
-                  const count = products.filter((p) => p.category?.slug === c.slug).length;
-                  return (
-                    <button
-                      key={c.slug}
-                      onClick={() => setActiveCat(c.slug)}
-                      className={cn(
-                        "px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap",
-                        activeCat === c.slug
-                          ? "bg-primary text-primary-foreground shadow-md scale-105"
-                          : "bg-surface-alt text-navy/80 hover:bg-muted hover:text-navy border border-border/60",
-                      )}
-                    >
-                      {c.name} ({count})
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-                <label className="flex items-center gap-2 text-xs font-semibold text-navy/80">
-                  <Switch checked={inStockOnly} onCheckedChange={setInStockOnly} />
-                  {t("store.filter.inStockOnly")}
-                </label>
 
                 <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                  <SelectTrigger className="w-full sm:w-56 h-9 rounded-xl border-border/80 bg-background text-xs font-semibold">
+                  <SelectTrigger className="w-full sm:w-56 h-10 rounded-xl border-border/80 bg-background text-xs font-semibold shrink-0">
                     <SelectValue placeholder={t("store.sort.label")} />
                   </SelectTrigger>
                   <SelectContent>
@@ -185,41 +268,36 @@ function ShopIndex() {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
 
-            <div className="flex items-center justify-between pb-2 border-b border-border/60">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                {t("store.results.prefix")} {filtered.length} {t("store.results.suffix")}
-              </span>
-            </div>
-
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((p) => (
-                <StoreProductCard key={p.slug} product={p} />
-              ))}
-            </div>
-
-            {filtered.length === 0 && (
-              <div className="text-center py-16 space-y-4 glass-card rounded-3xl p-8 border border-border">
-                <ShoppingBag className="h-12 w-12 text-muted-foreground mx-auto" />
-                <h3 className="font-display text-xl font-bold text-navy">
-                  {t("store.empty.title")}
-                </h3>
-                <p className="text-xs text-muted-foreground">{t("store.empty.body")}</p>
-                <Button
-                  onClick={() => {
-                    setQuery("");
-                    setActiveCat("all");
-                    setInStockOnly(false);
-                    setSortBy("featured");
-                  }}
-                  variant="outline"
-                  className="rounded-xl font-bold"
-                >
-                  {t("store.empty.cta")}
-                </Button>
+              <div className="flex items-center justify-between pb-2 border-b border-border/60">
+                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  {t("store.results.prefix")} {filtered.length} {t("store.results.suffix")}
+                </span>
               </div>
-            )}
+
+              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                {filtered.map((p) => (
+                  <StoreProductCard key={p.slug} product={p} />
+                ))}
+              </div>
+
+              {filtered.length === 0 && (
+                <div className="text-center py-16 space-y-4 glass-card rounded-3xl p-8 border border-border">
+                  <ShoppingBag className="h-12 w-12 text-muted-foreground mx-auto" />
+                  <h3 className="font-display text-xl font-bold text-navy">
+                    {t("store.empty.title")}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">{t("store.empty.body")}</p>
+                  <Button
+                    onClick={clearAllFilters}
+                    variant="outline"
+                    className="rounded-xl font-bold"
+                  >
+                    {t("store.empty.cta")}
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </Section>
