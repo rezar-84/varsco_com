@@ -60,10 +60,10 @@ export const Route = createFileRoute("/sitemap.xml")({
         try {
           const baseUrl = process.env.VITE_ODOO_BASE_URL || "http://localhost:8069";
           const apiClient = new ContentApiClient({ baseUrl });
-          const { data } = await apiClient.listProducts("en");
+          const { data } = await apiClient.listStoreProducts("en");
           const shopCategorySlugs = new Set<string>();
           data.forEach((p) => {
-            shopCategorySlugs.add(p.category.slug);
+            if (p.category) shopCategorySlugs.add(p.category.slug);
             shopPaths.push({ path: `/shop/${p.slug}`, changefreq: "monthly", priority: "0.7" });
           });
           shopCategorySlugs.forEach((slug) => {

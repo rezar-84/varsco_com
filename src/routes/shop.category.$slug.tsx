@@ -13,10 +13,14 @@ export const Route = createFileRoute("/shop/category/$slug")({
       return { products: [], categoryName: params.slug, placeholder: true };
     }
 
-    const products = allProducts.filter((p) => p.category.slug === params.slug);
+    const products = allProducts.filter((p) => p.category?.slug === params.slug);
     if (products.length === 0) throw notFound();
 
-    return { products, categoryName: products[0].category.name, placeholder: false };
+    return {
+      products,
+      categoryName: products[0].category?.name ?? params.slug,
+      placeholder: false,
+    };
   },
   head: ({ loaderData }) => ({
     meta: [

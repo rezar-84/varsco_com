@@ -35,14 +35,14 @@ function ShopIndex() {
 
   const categories = useMemo(() => {
     const map = new Map<string, { slug: string; name: string }>();
-    products.forEach((p) =>
-      map.set(p.category.slug, { slug: p.category.slug, name: p.category.name }),
-    );
+    products.forEach((p) => {
+      if (p.category) map.set(p.category.slug, { slug: p.category.slug, name: p.category.name });
+    });
     return Array.from(map.values());
   }, [products]);
 
   const filtered = products.filter((p) => {
-    const matchesCat = activeCat === "all" || p.category.slug === activeCat;
+    const matchesCat = activeCat === "all" || p.category?.slug === activeCat;
     const q = query.toLowerCase().trim();
     const matchesQuery = !q || `${p.name} ${p.summary}`.toLowerCase().includes(q);
     return matchesCat && matchesQuery;
@@ -116,7 +116,7 @@ function ShopIndex() {
                   {t("store.filter.allProducts")} ({products.length})
                 </button>
                 {categories.map((c) => {
-                  const count = products.filter((p) => p.category.slug === c.slug).length;
+                  const count = products.filter((p) => p.category?.slug === c.slug).length;
                   return (
                     <button
                       key={c.slug}

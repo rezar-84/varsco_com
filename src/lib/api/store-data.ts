@@ -19,7 +19,7 @@ export async function getStoreProducts(
   locale: LocaleCode,
 ): Promise<{ data: CatalogItemSummary[]; placeholder: boolean }> {
   try {
-    const response = await getApiClient().listProducts(locale);
+    const response = await getApiClient().listStoreProducts(locale);
     return { data: response.data, placeholder: false };
   } catch (error) {
     console.warn("[Store Data] Odoo product list error:", error);
@@ -31,35 +31,18 @@ export type StoreProductResult =
   { status: "ok"; data: CatalogItemDetail } | { status: "not_found" } | { status: "unavailable" };
 
 /**
- * The detail endpoint (GET /api/v1/products/{locale}/{url_path}) matches
- * against varsco.catalog.item's raw `url_path` field (e.g.
- * "products/live-feed/artemia-cysts") — NOT the bare item slug our flat
- * /shop/$slug route uses. The list endpoint only returns the *display*
- * url_path (locale-prefixed, e.g. "/tr/products/live-feed/artemia-cysts"
- * for a non-default locale). Strip the same locale prefix server.ts already
- * applies (ADR-003's scheme: unprefixed default locale "en", "/xx" for
- * every other locale) to recover the raw path the detail route expects.
+ * Unlike the curated /products endpoint, the shop detail route
+ * (GET /api/v1/store/products/{locale}/{url_path}) resolves the trailing
+ * slug straight to a product id via Odoo's own ir.http._unslug() — no
+ * list-then-match dance needed, the bare slug from our flat /shop/$slug
+ * route works directly.
  */
-function toRawUrlPath(displayUrlPath: string, locale: LocaleCode): string {
-  const prefix = locale === "en" ? "" : `/${locale}`;
-  const withoutLocale =
-    prefix && displayUrlPath.startsWith(prefix)
-      ? displayUrlPath.slice(prefix.length)
-      : displayUrlPath;
-  return withoutLocale.replace(/^\/+/, "");
-}
-
 export async function getStoreProduct(
   locale: LocaleCode,
   slug: string,
 ): Promise<StoreProductResult> {
   try {
-    const client = getApiClient();
-    const { data: summaries } = await client.listProducts(locale);
-    const match = summaries.find((item) => item.slug === slug);
-    if (!match) return { status: "not_found" };
-
-    const response = await client.getProduct(locale, toRawUrlPath(match.url_path, locale));
+    const response = await getApiClient().getStoreProduct(locale, slug);
     return { status: "ok", data: response.data };
   } catch (error) {
     if (error instanceof ApiNotFoundError) return { status: "not_found" };

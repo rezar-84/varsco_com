@@ -42,9 +42,11 @@ export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
           </div>
         )}
 
-        <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-navy/90 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border border-white/10 shadow-sm">
-          {product.category.name}
-        </div>
+        {product.category && (
+          <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-navy/90 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border border-white/10 shadow-sm">
+            {product.category.name}
+          </div>
+        )}
 
         {product.purchase && (
           <div

@@ -24,7 +24,7 @@ export const Route = createFileRoute("/shop/$slug")({
           name: product.name,
           image: product.media?.map((m) => m.url) ?? [],
           description: product.description_html?.replace(/<[^>]*>/g, "") ?? product.summary,
-          category: product.category.name,
+          ...(product.category ? { category: product.category.name } : {}),
           brand: { "@type": "Brand", name: "VARS Aquaculture" },
           ...(product.purchase
             ? {
@@ -110,9 +110,11 @@ function ShopProductDetail() {
 
         <div className="space-y-6">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              {product.category.name}
-            </span>
+            {product.category && (
+              <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                {product.category.name}
+              </span>
+            )}
             <h1 className="font-display text-3xl font-bold text-navy mt-1">{product.name}</h1>
             <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{product.summary}</p>
           </div>

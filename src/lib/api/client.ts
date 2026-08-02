@@ -121,6 +121,21 @@ export class ContentApiClient {
     return this.requestJson(`/api/v1/products/${locale}/${encodedUrlPath}`);
   }
 
+  /**
+   * Real Odoo storefront products (product.template, gated on is_published
+   * via website_sale) — the data behind /shop. Distinct from listProducts()/
+   * getProduct() above, which read the separate curated varsco.catalog.item
+   * model behind the informational /products portfolio.
+   */
+  listStoreProducts(locale: LocaleCode): Promise<ListEnvelope<CatalogItemSummary>> {
+    return this.requestJson(`/api/v1/store/products/${locale}`);
+  }
+
+  getStoreProduct(locale: LocaleCode, urlPath: string): Promise<DetailEnvelope<CatalogItemDetail>> {
+    const encodedUrlPath = this.encodeNestedPath(urlPath);
+    return this.requestJson(`/api/v1/store/products/${locale}/${encodedUrlPath}`);
+  }
+
   // ==========================================
   // 2. LEAD SUBMISSIONS
   // ==========================================

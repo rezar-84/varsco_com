@@ -173,7 +173,8 @@ export interface CatalogItemSummary {
   name: string;
   summary: string;
   url_path: string;
-  category: CatalogCategorySummary;
+  /** null when the product has no website category assigned (e.g. Odoo's public_categ_ids is empty). */
+  category: CatalogCategorySummary | null;
   primary_media: ContentMedia | null;
   updated_at: string | null;
   /** null for quote-only (informational / purchasable_later) items — render "Contact for Pricing" when null. */
