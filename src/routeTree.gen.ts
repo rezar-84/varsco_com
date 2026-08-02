@@ -62,6 +62,7 @@ import { Route as ProductsCategoryIndexRouteImport } from './routes/products.$ca
 import { Route as ProductsCategorySlugRouteImport } from './routes/products.$category.$slug'
 import { Route as ShopCategorySlugRouteImport } from './routes/shop.category.$slug'
 import { Route as ApiStoreProductsSlugRouteImport } from './routes/api.store.products.$slug'
+import { Route as ApiStoreProductsSlugReviewsRouteImport } from './routes/api.store.products.$slug.reviews'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -332,6 +333,12 @@ const ApiStoreProductsSlugRoute = ApiStoreProductsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ApiStoreProductsRoute,
 } as any)
+const ApiStoreProductsSlugReviewsRoute =
+  ApiStoreProductsSlugReviewsRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => ApiStoreProductsSlugRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -386,7 +393,8 @@ export interface FileRoutesByFullPath {
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
   '/products/$category/': typeof ProductsCategoryIndexRoute
-  '/api/store/products/$slug': typeof ApiStoreProductsSlugRoute
+  '/api/store/products/$slug': typeof ApiStoreProductsSlugRouteWithChildren
+  '/api/store/products/$slug/reviews': typeof ApiStoreProductsSlugReviewsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -440,7 +448,8 @@ export interface FileRoutesByTo {
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category': typeof BlogCategoryIndexRoute
   '/products/$category': typeof ProductsCategoryIndexRoute
-  '/api/store/products/$slug': typeof ApiStoreProductsSlugRoute
+  '/api/store/products/$slug': typeof ApiStoreProductsSlugRouteWithChildren
+  '/api/store/products/$slug/reviews': typeof ApiStoreProductsSlugReviewsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -496,7 +505,8 @@ export interface FileRoutesById {
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
   '/products/$category/': typeof ProductsCategoryIndexRoute
-  '/api/store/products/$slug': typeof ApiStoreProductsSlugRoute
+  '/api/store/products/$slug': typeof ApiStoreProductsSlugRouteWithChildren
+  '/api/store/products/$slug/reviews': typeof ApiStoreProductsSlugReviewsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -554,6 +564,7 @@ export interface FileRouteTypes {
     | '/blog/$category/'
     | '/products/$category/'
     | '/api/store/products/$slug'
+    | '/api/store/products/$slug/reviews'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -608,6 +619,7 @@ export interface FileRouteTypes {
     | '/blog/$category'
     | '/products/$category'
     | '/api/store/products/$slug'
+    | '/api/store/products/$slug/reviews'
   id:
     | '__root__'
     | '/'
@@ -663,6 +675,7 @@ export interface FileRouteTypes {
     | '/blog/$category/'
     | '/products/$category/'
     | '/api/store/products/$slug'
+    | '/api/store/products/$slug/reviews'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1089,6 +1102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStoreProductsSlugRouteImport
       parentRoute: typeof ApiStoreProductsRoute
     }
+    '/api/store/products/$slug/reviews': {
+      id: '/api/store/products/$slug/reviews'
+      path: '/reviews'
+      fullPath: '/api/store/products/$slug/reviews'
+      preLoaderRoute: typeof ApiStoreProductsSlugReviewsRouteImport
+      parentRoute: typeof ApiStoreProductsSlugRoute
+    }
   }
 }
 
@@ -1109,12 +1129,23 @@ const AccountRouteChildren: AccountRouteChildren = {
 const AccountRouteWithChildren =
   AccountRoute._addFileChildren(AccountRouteChildren)
 
+interface ApiStoreProductsSlugRouteChildren {
+  ApiStoreProductsSlugReviewsRoute: typeof ApiStoreProductsSlugReviewsRoute
+}
+
+const ApiStoreProductsSlugRouteChildren: ApiStoreProductsSlugRouteChildren = {
+  ApiStoreProductsSlugReviewsRoute: ApiStoreProductsSlugReviewsRoute,
+}
+
+const ApiStoreProductsSlugRouteWithChildren =
+  ApiStoreProductsSlugRoute._addFileChildren(ApiStoreProductsSlugRouteChildren)
+
 interface ApiStoreProductsRouteChildren {
-  ApiStoreProductsSlugRoute: typeof ApiStoreProductsSlugRoute
+  ApiStoreProductsSlugRoute: typeof ApiStoreProductsSlugRouteWithChildren
 }
 
 const ApiStoreProductsRouteChildren: ApiStoreProductsRouteChildren = {
-  ApiStoreProductsSlugRoute: ApiStoreProductsSlugRoute,
+  ApiStoreProductsSlugRoute: ApiStoreProductsSlugRouteWithChildren,
 }
 
 const ApiStoreProductsRouteWithChildren =

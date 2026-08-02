@@ -179,6 +179,26 @@ export interface CatalogItemSummary {
   updated_at: string | null;
   /** null for quote-only (informational / purchasable_later) items — render "Contact for Pricing" when null. */
   purchase: StorePurchase | null;
+  /** Only present on real /shop store products — the curated /products portfolio doesn't carry reviews. */
+  rating_avg?: number | null;
+  rating_count?: number;
+}
+
+export interface ProductReview {
+  id: number;
+  author_name: string;
+  rating: number;
+  feedback: string;
+  created_at: string | null;
+}
+
+export interface ReviewsListEnvelope {
+  data: ProductReview[];
+  meta: {
+    locale: LocaleCode;
+    rating_avg: number | null;
+    rating_count: number;
+  };
 }
 
 export interface CatalogItemDetail extends CatalogItemSummary {

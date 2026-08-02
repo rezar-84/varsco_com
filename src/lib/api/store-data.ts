@@ -1,6 +1,11 @@
 import { ContentApiClient } from "@/lib/api/client";
 import { ApiNotFoundError } from "@/lib/api/types";
-import type { CatalogItemDetail, CatalogItemSummary, LocaleCode } from "@/lib/api/types";
+import type {
+  CatalogItemDetail,
+  CatalogItemSummary,
+  LocaleCode,
+  ReviewsListEnvelope,
+} from "@/lib/api/types";
 import { getCurrentLocale } from "@/lib/utils/locale";
 
 /**
@@ -75,4 +80,28 @@ export async function loadStoreProduct(slug: string): Promise<StoreProductResult
   if (!res.ok) return { status: "unavailable" };
   const body = (await res.json()) as { data: CatalogItemDetail };
   return { status: "ok", data: body.data };
+}
+
+export async function getProductReviews(
+  locale: LocaleCode,
+  slug: string,
+): Promise<ReviewsListEnvelope | null> {
+  try {
+    return await getApiClient().listProductReviews(locale, slug);
+  } catch (error) {
+    console.warn("[Store Data] Odoo reviews list error:", error);
+    return null;
+  }
+}
+
+export async function loadProductReviews(slug: string): Promise<ReviewsListEnvelope | null> {
+  const locale = getCurrentLocale();
+  if (typeof window === "undefined") {
+    return getProductReviews(locale as LocaleCode, slug);
+  }
+  const res = await fetch(
+    `/api/store/products/${encodeURIComponent(slug)}/reviews?locale=${locale}`,
+  );
+  if (!res.ok) return null;
+  return (await res.json()) as ReviewsListEnvelope;
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { CatalogItemSummary } from "@/lib/api/types";
 import { useStoreCart } from "@/context/StoreCartContext";
 import { Button } from "@/components/ui/button";
+import { StarRating } from "@/components/StarRating";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
 import { formatPrice } from "@/lib/utils/price";
@@ -67,6 +68,14 @@ export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
               {product.name}
             </Link>
           </h3>
+          {Boolean(product.rating_count) && (
+            <div className="mt-1 flex items-center gap-1.5">
+              <StarRating value={product.rating_avg ?? 0} />
+              <span className="text-[11px] font-semibold text-muted-foreground">
+                ({product.rating_count})
+              </span>
+            </div>
+          )}
         </div>
 
         <p className="flex-1 text-xs text-navy/80 leading-relaxed line-clamp-2 font-normal">

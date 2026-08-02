@@ -16,6 +16,8 @@ import {
   type PortalUser,
   type PortalOrder,
   type PortalCustomsFile,
+  type ReviewsListEnvelope,
+  type ProductReview,
 } from "./types";
 
 export interface ContentApiClientOptions {
@@ -134,6 +136,25 @@ export class ContentApiClient {
   getStoreProduct(locale: LocaleCode, urlPath: string): Promise<DetailEnvelope<CatalogItemDetail>> {
     const encodedUrlPath = this.encodeNestedPath(urlPath);
     return this.requestJson(`/api/v1/store/products/${locale}/${encodedUrlPath}`);
+  }
+
+  listProductReviews(locale: LocaleCode, urlPath: string): Promise<ReviewsListEnvelope> {
+    const encodedUrlPath = this.encodeNestedPath(urlPath);
+    return this.requestJson(`/api/v1/store/products/${locale}/${encodedUrlPath}/reviews`);
+  }
+
+  /** Session-authenticated — the caller must set sessionId on this client instance. */
+  submitProductReview(
+    locale: LocaleCode,
+    urlPath: string,
+    review: { rating: number; feedback?: string },
+  ): Promise<{ data: ProductReview }> {
+    const encodedUrlPath = this.encodeNestedPath(urlPath);
+    return this.requestJson(
+      `/api/v1/store/products/${locale}/${encodedUrlPath}/reviews`,
+      "POST",
+      review,
+    );
   }
 
   // ==========================================

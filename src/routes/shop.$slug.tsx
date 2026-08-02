@@ -1,15 +1,18 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Plus, Check, ShoppingBag } from "lucide-react";
+import { ArrowLeft, Plus, Check, ShoppingBag, Loader2 } from "lucide-react";
 import { Section } from "@/components/layout/Page";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { StoreProductCard } from "@/components/StoreProductCard";
+import { StarRating } from "@/components/StarRating";
 import { useStoreCart } from "@/context/StoreCartContext";
+import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
-import { loadStoreProduct, loadStoreProducts } from "@/lib/api/store-data";
+import { loadStoreProduct, loadStoreProducts, loadProductReviews } from "@/lib/api/store-data";
 import { formatPrice } from "@/lib/utils/price";
 import { cn } from "@/lib/utils";
-import type { CatalogItemSummary } from "@/lib/api/types";
+import type { CatalogItemSummary, ProductReview } from "@/lib/api/types";
 
 const MAX_RELATED = 4;
 
@@ -17,7 +20,8 @@ export const Route = createFileRoute("/shop/$slug")({
   loader: async ({ params }) => {
     const result = await loadStoreProduct(params.slug);
     if (result.status === "not_found") throw notFound();
-    if (result.status === "unavailable") return { product: null, unavailable: true, related: [] };
+    if (result.status === "unavailable")
+      return { product: null, unavailable: true, related: [], reviews: [] as ProductReview[] };
 
     let related: CatalogItemSummary[] = [];
     const categorySlug = result.data.category?.slug;
@@ -28,7 +32,14 @@ export const Route = createFileRoute("/shop/$slug")({
         .slice(0, MAX_RELATED);
     }
 
-    return { product: result.data, unavailable: false, related };
+    const reviewsResult = await loadProductReviews(params.slug);
+
+    return {
+      product: result.data,
+      unavailable: false,
+      related,
+      reviews: reviewsResult?.data ?? [],
+    };
   },
   head: ({ loaderData }) => {
     const product = loaderData?.product;
@@ -74,7 +85,7 @@ export const Route = createFileRoute("/shop/$slug")({
 
 function ShopProductDetail() {
   const { t } = useI18n();
-  const { product, unavailable, related } = Route.useLoaderData();
+  const { product, unavailable, related, reviews } = Route.useLoaderData();
   const { add, openDrawer } = useStoreCart();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -163,6 +174,15 @@ function ShopProductDetail() {
               </span>
             )}
             <h1 className="font-display text-3xl font-bold text-navy mt-1">{product.name}</h1>
+            {Boolean(product.rating_count) && (
+              <div className="mt-1.5 flex items-center gap-2">
+                <StarRating value={product.rating_avg ?? 0} />
+                <span className="text-xs font-semibold text-muted-foreground">
+                  {product.rating_avg?.toFixed(1)} ({product.rating_count}{" "}
+                  {t("store.reviews.reviewCountSuffix")})
+                </span>
+              </div>
+            )}
             <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{product.summary}</p>
           </div>
 
@@ -254,6 +274,8 @@ function ShopProductDetail() {
         </div>
       </div>
 
+      <ReviewsSection slug={product.slug} initialReviews={reviews} />
+
       {related.length > 0 && (
         <div className="mt-16 border-t border-border/60 pt-10">
           <h2 className="font-display text-xl font-bold text-navy mb-6">
@@ -267,5 +289,145 @@ function ShopProductDetail() {
         </div>
       )}
     </Section>
+  );
+}
+
+function ReviewsSection({
+  slug,
+  initialReviews,
+}: {
+  slug: string;
+  initialReviews: ProductReview[];
+}) {
+  const { t } = useI18n();
+  const { user } = useAuth();
+  const [reviews, setReviews] = useState(initialReviews);
+  const [ratingInput, setRatingInput] = useState(0);
+  const [feedbackInput, setFeedbackInput] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (ratingInput < 1) {
+      setFormError(t("store.reviews.form.ratingRequired"));
+      return;
+    }
+    setSubmitting(true);
+    setFormError(null);
+    try {
+      const res = await fetch(`/api/store/products/${encodeURIComponent(slug)}/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          rating: ratingInput,
+          feedback: feedbackInput.trim() || undefined,
+        }),
+      });
+      const body = await res.json();
+      if (!res.ok) {
+        setFormError(body.message || t("store.reviews.form.genericError"));
+        return;
+      }
+      setReviews((prev) => [body.data as ProductReview, ...prev]);
+      setSubmitted(true);
+      setRatingInput(0);
+      setFeedbackInput("");
+    } catch {
+      setFormError(t("store.reviews.form.networkError"));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="mt-16 border-t border-border/60 pt-10">
+      <h2 className="font-display text-xl font-bold text-navy mb-6">
+        {t("store.reviews.heading")}
+        {reviews.length > 0 ? ` (${reviews.length})` : ""}
+      </h2>
+
+      <div className="grid gap-10 lg:grid-cols-3">
+        <div className="lg:col-span-2 space-y-4">
+          {reviews.length === 0 ? (
+            <p className="text-sm text-muted-foreground">{t("store.reviews.empty")}</p>
+          ) : (
+            reviews.map((r) => (
+              <div
+                key={r.id}
+                className="rounded-2xl border border-border/80 p-5 glass-card space-y-2"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <StarRating value={r.rating} />
+                    <span className="text-sm font-bold text-navy">{r.author_name}</span>
+                  </div>
+                  {r.created_at && (
+                    <span className="text-[11px] text-muted-foreground whitespace-nowrap">
+                      {new Date(r.created_at).toLocaleDateString()}
+                    </span>
+                  )}
+                </div>
+                {r.feedback && (
+                  <p className="text-sm text-muted-foreground leading-relaxed">{r.feedback}</p>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-4 h-fit">
+          <h3 className="font-display text-base font-bold text-navy">
+            {t("store.reviews.form.heading")}
+          </h3>
+
+          {!user ? (
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <p>{t("store.reviews.form.loginPrompt")}</p>
+              <Button asChild size="sm" className="rounded-xl font-bold">
+                <Link to="/login" search={{ redirect: `/shop/${slug}` }}>
+                  {t("store.reviews.form.loginCta")}
+                </Link>
+              </Button>
+            </div>
+          ) : submitted ? (
+            <p className="text-sm text-mint font-semibold">{t("store.reviews.form.thankYou")}</p>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div>
+                <label className="text-xs font-bold text-navy uppercase tracking-wider block mb-1.5">
+                  {t("store.reviews.form.ratingLabel")}
+                </label>
+                <StarRating value={ratingInput} size="lg" interactive onChange={setRatingInput} />
+              </div>
+              <Textarea
+                value={feedbackInput}
+                onChange={(e) => setFeedbackInput(e.target.value)}
+                placeholder={t("store.reviews.form.feedbackPlaceholder")}
+                className="min-h-24 rounded-xl border-border/80 bg-background text-sm"
+                maxLength={2000}
+              />
+              {formError && <p className="text-xs text-destructive font-semibold">{formError}</p>}
+              <Button
+                type="submit"
+                disabled={submitting}
+                size="sm"
+                className="w-full rounded-xl font-bold"
+              >
+                {submitting ? (
+                  <span className="flex items-center gap-1.5">
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    {t("store.reviews.form.submitting")}
+                  </span>
+                ) : (
+                  t("store.reviews.form.submit")
+                )}
+              </Button>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
