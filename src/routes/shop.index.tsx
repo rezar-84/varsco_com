@@ -4,10 +4,21 @@ import { Search, ShoppingBag, Filter, X } from "lucide-react";
 import { Section, PageHero } from "@/components/layout/Page";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { StoreProductCard } from "@/components/StoreProductCard";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
 import { loadStoreProducts } from "@/lib/api/store-data";
+import type { CatalogItemSummary } from "@/lib/api/types";
+
+type SortOption = "featured" | "name-asc" | "price-asc" | "price-desc";
 
 export const Route = createFileRoute("/shop/")({
   loader: async () => {
@@ -32,6 +43,8 @@ function ShopIndex() {
   const { products, placeholder } = Route.useLoaderData();
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState("all");
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>("featured");
 
   const categories = useMemo(() => {
     const map = new Map<string, { slug: string; name: string }>();
@@ -41,12 +54,32 @@ function ShopIndex() {
     return Array.from(map.values());
   }, [products]);
 
-  const filtered = products.filter((p) => {
-    const matchesCat = activeCat === "all" || p.category?.slug === activeCat;
-    const q = query.toLowerCase().trim();
-    const matchesQuery = !q || `${p.name} ${p.summary}`.toLowerCase().includes(q);
-    return matchesCat && matchesQuery;
-  });
+  const filtered = useMemo(() => {
+    const matches = products.filter((p) => {
+      const matchesCat = activeCat === "all" || p.category?.slug === activeCat;
+      const q = query.toLowerCase().trim();
+      const matchesQuery = !q || `${p.name} ${p.summary}`.toLowerCase().includes(q);
+      const matchesStock = !inStockOnly || Boolean(p.purchase?.available);
+      return matchesCat && matchesQuery && matchesStock;
+    });
+
+    const sorted = [...matches];
+    const priceOf = (p: CatalogItemSummary) => p.purchase?.amount ?? Number.POSITIVE_INFINITY;
+    switch (sortBy) {
+      case "name-asc":
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "price-asc":
+        sorted.sort((a, b) => priceOf(a) - priceOf(b));
+        break;
+      case "price-desc":
+        sorted.sort((a, b) => priceOf(b) - priceOf(a));
+        break;
+      default:
+        break;
+    }
+    return sorted;
+  }, [products, activeCat, query, inStockOnly, sortBy]);
 
   return (
     <>
@@ -133,6 +166,25 @@ function ShopIndex() {
                   );
                 })}
               </div>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+                <label className="flex items-center gap-2 text-xs font-semibold text-navy/80">
+                  <Switch checked={inStockOnly} onCheckedChange={setInStockOnly} />
+                  {t("store.filter.inStockOnly")}
+                </label>
+
+                <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+                  <SelectTrigger className="w-full sm:w-56 h-9 rounded-xl border-border/80 bg-background text-xs font-semibold">
+                    <SelectValue placeholder={t("store.sort.label")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="featured">{t("store.sort.featured")}</SelectItem>
+                    <SelectItem value="name-asc">{t("store.sort.nameAsc")}</SelectItem>
+                    <SelectItem value="price-asc">{t("store.sort.priceAsc")}</SelectItem>
+                    <SelectItem value="price-desc">{t("store.sort.priceDesc")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="flex items-center justify-between pb-2 border-b border-border/60">
@@ -158,6 +210,8 @@ function ShopIndex() {
                   onClick={() => {
                     setQuery("");
                     setActiveCat("all");
+                    setInStockOnly(false);
+                    setSortBy("featured");
                   }}
                   variant="outline"
                   className="rounded-xl font-bold"

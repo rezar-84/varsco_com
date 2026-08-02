@@ -74,6 +74,8 @@ export const Route = createFileRoute("/api/auth/login")({
             email: odooAuth.user.email || email,
             company: odooAuth.user.company || "",
             phone: odooAuth.user.phone || "",
+            street: odooAuth.user.street || "",
+            city: odooAuth.user.city || "",
             country: odooAuth.user.country || "",
           };
 

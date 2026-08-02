@@ -3,18 +3,32 @@ import { useState } from "react";
 import { ArrowLeft, Plus, Check, ShoppingBag } from "lucide-react";
 import { Section } from "@/components/layout/Page";
 import { Button } from "@/components/ui/button";
+import { StoreProductCard } from "@/components/StoreProductCard";
 import { useStoreCart } from "@/context/StoreCartContext";
 import { useI18n } from "@/context/I18nContext";
-import { loadStoreProduct } from "@/lib/api/store-data";
+import { loadStoreProduct, loadStoreProducts } from "@/lib/api/store-data";
 import { formatPrice } from "@/lib/utils/price";
 import { cn } from "@/lib/utils";
+import type { CatalogItemSummary } from "@/lib/api/types";
+
+const MAX_RELATED = 4;
 
 export const Route = createFileRoute("/shop/$slug")({
   loader: async ({ params }) => {
     const result = await loadStoreProduct(params.slug);
     if (result.status === "not_found") throw notFound();
-    if (result.status === "unavailable") return { product: null, unavailable: true };
-    return { product: result.data, unavailable: false };
+    if (result.status === "unavailable") return { product: null, unavailable: true, related: [] };
+
+    let related: CatalogItemSummary[] = [];
+    const categorySlug = result.data.category?.slug;
+    if (categorySlug) {
+      const { data: allProducts } = await loadStoreProducts();
+      related = allProducts
+        .filter((p) => p.slug !== params.slug && p.category?.slug === categorySlug)
+        .slice(0, MAX_RELATED);
+    }
+
+    return { product: result.data, unavailable: false, related };
   },
   head: ({ loaderData }) => {
     const product = loaderData?.product;
@@ -60,7 +74,7 @@ export const Route = createFileRoute("/shop/$slug")({
 
 function ShopProductDetail() {
   const { t } = useI18n();
-  const { product, unavailable } = Route.useLoaderData();
+  const { product, unavailable, related } = Route.useLoaderData();
   const { add, openDrawer } = useStoreCart();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -87,6 +101,7 @@ function ShopProductDetail() {
   const canAddToCart = Boolean(product.purchase?.available);
   const media = product.media ?? [];
   const activeImage = media[activeImageIndex] ?? media[0];
+  const descriptionText = product.description_html?.replace(/<[^>]*>/g, "").trim();
 
   return (
     <Section>
@@ -198,6 +213,17 @@ function ShopProductDetail() {
             </Button>
           </div>
 
+          {descriptionText && (
+            <div className="border-t border-border/60 pt-6 space-y-2">
+              <h3 className="font-display text-lg font-bold text-navy">
+                {t("store.detail.description")}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                {descriptionText}
+              </p>
+            </div>
+          )}
+
           {product.specification_groups && product.specification_groups.length > 0 && (
             <div className="border-t border-border/60 pt-6 space-y-4">
               <h3 className="font-display text-lg font-bold text-navy">
@@ -227,6 +253,19 @@ function ShopProductDetail() {
           )}
         </div>
       </div>
+
+      {related.length > 0 && (
+        <div className="mt-16 border-t border-border/60 pt-10">
+          <h2 className="font-display text-xl font-bold text-navy mb-6">
+            {t("store.detail.relatedProducts")}
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {related.map((p) => (
+              <StoreProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </div>
+      )}
     </Section>
   );
 }

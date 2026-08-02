@@ -29,6 +29,8 @@ function Profile() {
       company: data.company || user?.company,
       email: data.email || user?.email,
       phone: data.phone || user?.phone,
+      street: data.street || user?.street,
+      city: data.city || user?.city,
       country: data.country || user?.country,
     };
 
@@ -57,8 +59,13 @@ function Profile() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="font-display text-3xl font-black text-navy">{t("account.profile.title") || "Corporate Profile"}</h1>
-        <p className="mt-2 text-muted-foreground text-sm font-medium">{t("account.profile.subtitle") || "Update your company representative contacts and billing destination details."}</p>
+        <h1 className="font-display text-3xl font-black text-navy">
+          {t("account.profile.title") || "Corporate Profile"}
+        </h1>
+        <p className="mt-2 text-muted-foreground text-sm font-medium">
+          {t("account.profile.subtitle") ||
+            "Update your company representative contacts and billing destination details."}
+        </p>
       </div>
 
       <div className="glass-card rounded-2xl border border-border/60 p-6 sm:p-8 max-w-2xl shadow-sm">
@@ -68,34 +75,109 @@ function Profile() {
               <UserIcon className="h-5 w-5" />
             </div>
             <div>
-              <div className="font-bold text-navy text-sm uppercase tracking-wider">{t("account.profile.section.partnerInfo") || "Partner Information"}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">{t("account.profile.section.partnerDesc") || "Provide official details linked to your ERP registration."}</div>
+              <div className="font-bold text-navy text-sm uppercase tracking-wider">
+                {t("account.profile.section.partnerInfo") || "Partner Information"}
+              </div>
+              <div className="text-xs text-muted-foreground mt-0.5">
+                {t("account.profile.section.partnerDesc") ||
+                  "Provide official details linked to your ERP registration."}
+              </div>
             </div>
           </div>
 
           <div>
-            <Label htmlFor="name" className="text-xs font-bold text-navy uppercase tracking-wider">{t("account.profile.fullName") || "Representative Name"}</Label>
-            <Input id="name" name="name" defaultValue={user?.name} className="mt-1.5 rounded-xl border-border bg-white shadow-sm" required />
+            <Label htmlFor="name" className="text-xs font-bold text-navy uppercase tracking-wider">
+              {t("account.profile.fullName") || "Representative Name"}
+            </Label>
+            <Input
+              id="name"
+              name="name"
+              defaultValue={user?.name}
+              className="mt-1.5 rounded-xl border-border bg-white shadow-sm"
+              required
+            />
           </div>
           <div>
-            <Label htmlFor="company" className="text-xs font-bold text-navy uppercase tracking-wider">{t("account.profile.company") || "Registered Company"}</Label>
-            <Input id="company" name="company" defaultValue={user?.company} className="mt-1.5 rounded-xl border-border bg-white shadow-sm" required />
+            <Label
+              htmlFor="company"
+              className="text-xs font-bold text-navy uppercase tracking-wider"
+            >
+              {t("account.profile.company") || "Registered Company"}
+            </Label>
+            <Input
+              id="company"
+              name="company"
+              defaultValue={user?.company}
+              className="mt-1.5 rounded-xl border-border bg-white shadow-sm"
+              required
+            />
           </div>
           <div>
-            <Label htmlFor="email" className="text-xs font-bold text-navy uppercase tracking-wider">{t("account.profile.email") || "B2B Email Address"}</Label>
-            <Input id="email" name="email" type="email" defaultValue={user?.email} className="mt-1.5 rounded-xl border-border bg-white shadow-sm" required />
+            <Label htmlFor="email" className="text-xs font-bold text-navy uppercase tracking-wider">
+              {t("account.profile.email") || "B2B Email Address"}
+            </Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              defaultValue={user?.email}
+              className="mt-1.5 rounded-xl border-border bg-white shadow-sm"
+              required
+            />
           </div>
           <div>
-            <Label htmlFor="phone" className="text-xs font-bold text-navy uppercase tracking-wider">{t("account.profile.phone") || "Business Phone"}</Label>
-            <Input id="phone" name="phone" defaultValue={user?.phone ?? ""} className="mt-1.5 rounded-xl border-border bg-white shadow-sm" />
+            <Label htmlFor="phone" className="text-xs font-bold text-navy uppercase tracking-wider">
+              {t("account.profile.phone") || "Business Phone"}
+            </Label>
+            <Input
+              id="phone"
+              name="phone"
+              defaultValue={user?.phone ?? ""}
+              className="mt-1.5 rounded-xl border-border bg-white shadow-sm"
+            />
           </div>
           <div className="sm:col-span-2">
-            <Label htmlFor="country" className="text-xs font-bold text-navy uppercase tracking-wider">{t("account.profile.country") || "Operation Country"}</Label>
-            <Input id="country" name="country" defaultValue={user?.country ?? ""} className="mt-1.5 rounded-xl border-border bg-white shadow-sm" />
+            <Label
+              htmlFor="street"
+              className="text-xs font-bold text-navy uppercase tracking-wider"
+            >
+              {t("account.profile.street") || "Billing / Shipping Street Address"}
+            </Label>
+            <Input
+              id="street"
+              name="street"
+              defaultValue={user?.street ?? ""}
+              className="mt-1.5 rounded-xl border-border bg-white shadow-sm"
+            />
           </div>
-          
-          <Button 
-            className="sm:col-span-2 justify-self-start mt-2 rounded-xl font-bold px-6 py-2.5 shadow-sm inline-flex items-center gap-2 cursor-pointer transition-all hover:scale-[1.01]" 
+          <div>
+            <Label htmlFor="city" className="text-xs font-bold text-navy uppercase tracking-wider">
+              {t("account.profile.city") || "City"}
+            </Label>
+            <Input
+              id="city"
+              name="city"
+              defaultValue={user?.city ?? ""}
+              className="mt-1.5 rounded-xl border-border bg-white shadow-sm"
+            />
+          </div>
+          <div>
+            <Label
+              htmlFor="country"
+              className="text-xs font-bold text-navy uppercase tracking-wider"
+            >
+              {t("account.profile.country") || "Operation Country"}
+            </Label>
+            <Input
+              id="country"
+              name="country"
+              defaultValue={user?.country ?? ""}
+              className="mt-1.5 rounded-xl border-border bg-white shadow-sm"
+            />
+          </div>
+
+          <Button
+            className="sm:col-span-2 justify-self-start mt-2 rounded-xl font-bold px-6 py-2.5 shadow-sm inline-flex items-center gap-2 cursor-pointer transition-all hover:scale-[1.01]"
             type="submit"
             disabled={saving}
           >

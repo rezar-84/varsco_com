@@ -68,6 +68,8 @@ export interface User {
   email: string;
   company: string;
   phone?: string;
+  street?: string;
+  city?: string;
   country?: string;
 }
 

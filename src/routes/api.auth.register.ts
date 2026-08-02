@@ -100,6 +100,8 @@ export const Route = createFileRoute("/api/auth/register")({
             email: odooAuth.user.email || email,
             company: odooAuth.user.company || company,
             phone: odooAuth.user.phone || phone,
+            street: odooAuth.user.street || "",
+            city: odooAuth.user.city || "",
             country: odooAuth.user.country || country,
           };
 

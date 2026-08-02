@@ -7,6 +7,8 @@ const profileSchema = z.object({
   name: z.string().trim().optional(),
   company: z.string().trim().optional(),
   phone: z.string().trim().optional(),
+  street: z.string().trim().optional(),
+  city: z.string().trim().optional(),
   country: z.string().trim().optional(),
   email: z.string().trim().email().optional(),
 });
