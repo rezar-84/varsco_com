@@ -1,14 +1,20 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import type { CartItem, Product, QuoteRequest } from "@/lib/types";
 
+/**
+ * Unwired from varsco_com's live UI on 2026-08-02 — kept working and intact
+ * for potential reuse in a future project, not deleted. This is a multi-item
+ * "quote cart" (add several products, submit one combined quote request),
+ * distinct from the real transactional cart at StoreCartContext.tsx (which
+ * backs /shop and stays live). It used to be consumed by:
+ *   - src/components/ProductCard.tsx ("Add to Cart" button, now removed)
+ *   - src/routes/products.$category.$slug.tsx ("Add to Quote Cart" button, now removed)
+ *   - src/components/layout/SiteHeader.tsx (header cart badge, now points at useStoreCart())
+ *   - src/components/FloatingQuoteCTA.tsx (no longer mounted in SiteShell.tsx)
+ * CartProvider is still mounted at the root, so /cart, CartDrawer, and
+ * FloatingQuoteCTA all still work standalone if reconnected — nothing here
+ * was deleted, only unlinked from navigation and product pages.
+ */
 interface CartContextValue {
   items: CartItem[];
   count: number;
@@ -26,24 +32,23 @@ interface CartContextValue {
 const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "vars.cart.v1";
 
+function readStoredItems(): CartItem[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(readStoredItems);
   const [isOpen, setIsOpen] = useState(false);
   const [bumping, setBumping] = useState(false);
-  const isLoadedRef = useRef(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw));
-    } catch {
-      /* noop */
-    }
-    isLoadedRef.current = true;
-  }, []);
-
-  useEffect(() => {
-    if (isLoadedRef.current && typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     }
   }, [items]);
@@ -120,8 +125,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
             }),
           });
           if (!response.ok) {
-            const errBody = (await response.json().catch(() => ({}))) as { error?: string };
-            throw new Error(errBody.error || "Failed to submit quote request");
+            const errBody = (await response.json().catch(() => ({}))) as {
+              error?: string;
+              message?: string;
+            };
+            throw new Error(errBody.message || "Failed to submit quote request");
           }
           clear();
         },

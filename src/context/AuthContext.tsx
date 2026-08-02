@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { User } from "@/lib/types";
 
 interface AuthContextValue {
@@ -28,13 +28,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Bumped by persistUser() on every login/register/logout. checkSession()
+  // captures the generation it started with and discards its own result if
+  // that generation has since moved on — otherwise its response, which reads
+  // whatever cookies existed BEFORE the mount-time fetch was sent, can land
+  // after a same-session login() call and clobber the freshly authenticated
+  // state back to null (the intermittent "login doesn't redirect" bug).
+  const authGenerationRef = useRef(0);
+
   useEffect(() => {
     let isMounted = true;
+    const startGeneration = authGenerationRef.current;
+    const isStale = () => authGenerationRef.current !== startGeneration;
+
     async function checkSession() {
       try {
         const res = await fetch("/api/auth/me");
         if (res.ok) {
           const data = await res.json();
+          if (isStale()) return;
           if (data.authenticated) {
             // Restore saved user metadata from localStorage or fallback to server user
             const raw = localStorage.getItem(STORAGE_KEY);
@@ -53,6 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
         }
       } catch {
+        if (isStale()) return;
         // Fallback to local storage state if offline
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
@@ -72,6 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const persistUser = (u: User | null) => {
+    authGenerationRef.current += 1;
     setUser(u);
     if (typeof window !== "undefined") {
       try {

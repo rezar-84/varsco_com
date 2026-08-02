@@ -2,7 +2,6 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import {
   Download,
-  Plus,
   Check,
   ChevronRight,
   ShieldCheck,
@@ -33,7 +32,6 @@ import {
 import { Section } from "@/components/layout/Page";
 import { AnimatedIncubationCone } from "@/components/visuals/AnimatedIncubationCone";
 import { getProduct, getCategory } from "@/lib/mock/products";
-import { useCart } from "@/context/CartContext";
 import { createWhatsAppUrl } from "@/lib/utils/whatsapp";
 import type { Product, ProductCategory } from "@/lib/types";
 import { RelatedProductsWidget } from "@/components/RelatedProductsWidget";
@@ -148,8 +146,6 @@ function ProductDetail() {
       };
     });
   };
-  const { add, openDrawer } = useCart();
-  const [added, setAdded] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   // Combine product main image and gallery images into a unique list
@@ -398,18 +394,16 @@ function ProductDetail() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button
                     size="lg"
-                    onClick={() => {
-                      add(product);
-                      openDrawer();
-                      setAdded(true);
-                      setTimeout(() => setAdded(false), 1500);
-                    }}
+                    asChild
                     className="rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 shadow-lg shadow-primary/20 py-6 text-base"
                   >
-                    {added ? <Check className="mr-2 h-5 w-5" /> : <Plus className="mr-2 h-5 w-5" />}
-                    {added
-                      ? t("productDetail.actions.addedToCart")
-                      : t("productDetail.actions.addToQuoteCart")}
+                    <Link
+                      to="/request-quote"
+                      search={{ product: product.slug, category: product.category }}
+                    >
+                      <ArrowRight className="mr-2 h-5 w-5" />
+                      {t("productCard.quote")}
+                    </Link>
                   </Button>
 
                   <a

@@ -55,9 +55,14 @@ export const Route = createFileRoute("/api/store/checkout")({
           // (rather than trusting it blindly through to a browser redirect)
           // costs nothing and fails closed if it's ever malformed/unexpected.
           if (result.payment_url && !result.payment_url.startsWith(baseUrl)) {
-            console.warn(
-              "[BFF Proxy Store Checkout] Dropping payment_url that doesn't match VITE_ODOO_BASE_URL:",
+            console.error(
+              "[BFF Proxy Store Checkout] Dropping payment_url — its origin doesn't match " +
+                "VITE_ODOO_BASE_URL. This silently hides a valid payment link from every " +
+                "checkout until fixed. Expected origin (VITE_ODOO_BASE_URL):",
+              baseUrl,
+              "Actual payment_url returned by Odoo:",
               result.payment_url,
+              "— confirm VITE_ODOO_BASE_URL matches Odoo's own web.base.url system parameter.",
             );
             delete result.payment_url;
           }

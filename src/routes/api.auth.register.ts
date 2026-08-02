@@ -103,7 +103,9 @@ export const Route = createFileRoute("/api/auth/register")({
             country: odooAuth.user.country || country,
           };
 
-          const cookieValue = `vars_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000`;
+          // Max-Age matches Odoo's own default server-side session lifetime
+          // (7 days) — see api.auth.login.ts for the same fix and rationale.
+          const cookieValue = `vars_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`;
 
           return new Response(
             JSON.stringify({

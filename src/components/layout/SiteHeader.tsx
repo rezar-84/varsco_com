@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import { useCart } from "@/context/CartContext";
+import { useStoreCart } from "@/context/StoreCartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
 import { CATEGORIES, PRODUCTS } from "@/lib/mock/products";
@@ -53,7 +53,7 @@ const BLOG_CATEGORIES = [
 ];
 
 export function SiteHeader() {
-  const { count, openDrawer } = useCart();
+  const { count, openDrawer, bumping } = useStoreCart();
   const { user, logout } = useAuth();
   const { lang, setLang, t, languages } = useI18n();
 
@@ -65,18 +65,7 @@ export function SiteHeader() {
   const [solutionsMegaOpen, setSolutionsMegaOpen] = useState(false);
   const [resourcesMegaOpen, setResourcesMegaOpen] = useState(false);
   const [activeCat, setActiveCat] = useState<string | null>(CATEGORIES[0].slug);
-  const [bumping, setBumping] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const prevCount = useRef(count);
-  useEffect(() => {
-    if (count > prevCount.current) {
-      setBumping(true);
-      const t = setTimeout(() => setBumping(false), 300);
-      return () => clearTimeout(t);
-    }
-    prevCount.current = count;
-  }, [count]);
 
   // Lock background scroll and signal other fixed-position widgets (floating
   // quote bar, WhatsApp button) to hide while the full-screen mobile menu is open.

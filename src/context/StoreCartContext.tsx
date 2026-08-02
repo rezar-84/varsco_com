@@ -1,12 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import type { CatalogItemDetail, CatalogItemSummary, StorePrice } from "@/lib/api/types";
 
 export interface StoreCartItem {
@@ -42,24 +34,23 @@ interface StoreCartContextValue {
 const StoreCartContext = createContext<StoreCartContextValue | null>(null);
 const STORAGE_KEY = "vars.store-cart.v1";
 
+function readStoredItems(): StoreCartItem[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
 export function StoreCartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<StoreCartItem[]>([]);
+  const [items, setItems] = useState<StoreCartItem[]>(readStoredItems);
   const [isOpen, setIsOpen] = useState(false);
   const [bumping, setBumping] = useState(false);
-  const isLoadedRef = useRef(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw));
-    } catch {
-      /* noop */
-    }
-    isLoadedRef.current = true;
-  }, []);
-
-  useEffect(() => {
-    if (isLoadedRef.current && typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     }
   }, [items]);
@@ -137,8 +128,11 @@ export function StoreCartProvider({ children }: { children: ReactNode }) {
             }),
           });
           if (!response.ok) {
-            const errBody = (await response.json().catch(() => ({}))) as { error?: string };
-            throw new Error(errBody.error || "Failed to submit order");
+            const errBody = (await response.json().catch(() => ({}))) as {
+              error?: string;
+              message?: string;
+            };
+            throw new Error(errBody.message || "Failed to submit order");
           }
           const result = (await response.json()) as StoreCheckoutResult;
           clear();

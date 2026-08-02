@@ -22,8 +22,14 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { VarsLogo } from "@/components/layout/VarsLogo";
+import { safeRedirectTarget } from "@/lib/utils/redirect";
+
+const registerSearchSchema = z.object({
+  redirect: z.string().optional(),
+});
 
 export const Route = createFileRoute("/register")({
+  validateSearch: (search) => registerSearchSchema.parse(search),
   head: () => ({
     meta: [
       { title: "B2B Partner Registration — VARS Aquaculture" },
@@ -44,6 +50,8 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const search = Route.useSearch();
+  const redirectTo = safeRedirectTarget(search.redirect);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,7 +81,7 @@ function Register() {
     setIsSubmitting(false);
 
     if (res.success) {
-      router.navigate({ to: "/account" });
+      router.navigate({ to: redirectTo as "/account" });
     } else if (res.error) {
       setFormError(res.error);
     }
@@ -232,7 +240,11 @@ function Register() {
 
           <div className="mt-8 pt-6 border-t border-border/60 text-center text-xs text-muted-foreground">
             {t("auth.register.haveAccount")}{" "}
-            <Link to="/login" className="font-bold text-primary hover:underline">
+            <Link
+              to="/login"
+              search={search.redirect ? { redirect: search.redirect } : undefined}
+              className="font-bold text-primary hover:underline"
+            >
               {t("auth.register.signIn")}
             </Link>
           </div>

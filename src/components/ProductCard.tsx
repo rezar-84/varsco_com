@@ -1,21 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { Plus, Check, ShieldCheck, ArrowRight, Zap } from "lucide-react";
-import { useState } from "react";
+import { ShieldCheck, ArrowRight } from "lucide-react";
 import type { Product } from "@/lib/types";
-import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
 
 export function ProductCard({ product }: { product: Product }) {
-  const { add, openDrawer } = useCart();
   const { t } = useI18n();
   const tp = (field: string, defaultValue: string): string => {
     const key = `product.${product.slug}.${field}`;
     const res = t(key);
     return res === key ? defaultValue : res;
   };
-  const [added, setAdded] = useState(false);
 
   return (
     <div className="group relative glass-card rounded-3xl flex flex-col overflow-hidden transition-all duration-300 hover:border-primary/60 hover:shadow-2xl bg-background border border-border/80">
@@ -110,11 +105,11 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Action Button Bar */}
-        <div className="relative z-10 pt-4 border-t border-border/60 grid grid-cols-2 gap-2">
+        <div className="relative z-10 pt-4 border-t border-border/60">
           <Button
             size="sm"
             asChild
-            className="rounded-xl text-xs font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
+            className="w-full rounded-xl text-xs font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
           >
             <Link
               to="/request-quote"
@@ -122,31 +117,6 @@ export function ProductCard({ product }: { product: Product }) {
             >
               {t("productCard.quote")} <ArrowRight className="ml-1 h-3.5 w-3.5" />
             </Link>
-          </Button>
-
-          <Button
-            size="sm"
-            variant={added ? "outline" : "outline"}
-            onClick={() => {
-              add(product);
-              openDrawer();
-              setAdded(true);
-              setTimeout(() => setAdded(false), 1500);
-            }}
-            className={cn(
-              "rounded-xl text-xs font-bold transition-all border-border/80 hover:bg-navy hover:text-white",
-              added && "bg-mint/20 text-navy border-mint/50 font-extrabold",
-            )}
-          >
-            {added ? (
-              <span className="flex items-center gap-1 text-navy font-extrabold">
-                <Check className="h-3.5 w-3.5 text-primary" /> {t("productCard.addedToQuoteCart")}
-              </span>
-            ) : (
-              <span className="flex items-center gap-1">
-                <Plus className="h-3.5 w-3.5" /> {t("productCard.addToCart")}
-              </span>
-            )}
           </Button>
         </div>
       </div>

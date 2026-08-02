@@ -7,6 +7,7 @@ import { useStoreCart } from "@/context/StoreCartContext";
 import { useI18n } from "@/context/I18nContext";
 import { loadStoreProduct } from "@/lib/api/store-data";
 import { formatPrice } from "@/lib/utils/price";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/shop/$slug")({
   loader: async ({ params }) => {
@@ -63,6 +64,7 @@ function ShopProductDetail() {
   const { add, openDrawer } = useStoreCart();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   if (unavailable || !product) {
     return (
@@ -83,6 +85,8 @@ function ShopProductDetail() {
 
   const price = formatPrice(product.purchase);
   const canAddToCart = Boolean(product.purchase?.available);
+  const media = product.media ?? [];
+  const activeImage = media[activeImageIndex] ?? media[0];
 
   return (
     <Section>
@@ -94,16 +98,44 @@ function ShopProductDetail() {
       </Link>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <div className="aspect-square rounded-3xl overflow-hidden bg-surface-alt border border-border/80 flex items-center justify-center">
-          {product.media?.[0]?.url ? (
-            <img
-              src={product.media[0].url}
-              alt={product.media[0].alt || product.name}
-              className="h-full w-full object-contain"
-            />
-          ) : (
-            <div className="text-6xl font-display font-bold text-navy/10">
-              {product.name.slice(0, 2)}
+        <div className="space-y-3">
+          <div className="aspect-square rounded-3xl overflow-hidden bg-surface-alt border border-border/80 flex items-center justify-center">
+            {activeImage?.url ? (
+              <img
+                src={activeImage.url}
+                alt={activeImage.alt || product.name}
+                className="h-full w-full object-contain"
+              />
+            ) : (
+              <div className="text-6xl font-display font-bold text-navy/10">
+                {product.name.slice(0, 2)}
+              </div>
+            )}
+          </div>
+
+          {media.length > 1 && (
+            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+              {media.map((item, index) => (
+                <button
+                  key={item.url}
+                  type="button"
+                  onClick={() => setActiveImageIndex(index)}
+                  className={cn(
+                    "h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-surface-alt transition-colors",
+                    index === activeImageIndex
+                      ? "border-primary"
+                      : "border-border/60 hover:border-border",
+                  )}
+                  aria-label={item.alt || `${product.name} ${index + 1}`}
+                  aria-current={index === activeImageIndex}
+                >
+                  <img
+                    src={item.url}
+                    alt={item.alt || product.name}
+                    className="h-full w-full object-contain"
+                  />
+                </button>
+              ))}
             </div>
           )}
         </div>

@@ -19,8 +19,14 @@ import {
   Loader2,
 } from "lucide-react";
 import { VarsLogo } from "@/components/layout/VarsLogo";
+import { safeRedirectTarget } from "@/lib/utils/redirect";
+
+const loginSearchSchema = z.object({
+  redirect: z.string().optional(),
+});
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (search) => loginSearchSchema.parse(search),
   head: () => ({
     meta: [
       { title: "Sign In — VARS Aquaculture B2B Portal" },
@@ -41,12 +47,8 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Search parameters check for redirection target
-  const searchParams = new URLSearchParams(
-    typeof window !== "undefined" ? window.location.search : "",
-  );
-  const redirectTo = searchParams.get("redirect") || "/account";
+  const search = Route.useSearch();
+  const redirectTo = safeRedirectTarget(search.redirect);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -228,7 +230,11 @@ function Login() {
 
             <div className="mt-8 pt-6 border-t border-border/60 text-center text-xs text-muted-foreground">
               {t("auth.login.newPartner")}{" "}
-              <Link to="/register" className="font-bold text-primary hover:underline">
+              <Link
+                to="/register"
+                search={search.redirect ? { redirect: search.redirect } : undefined}
+                className="font-bold text-primary hover:underline"
+              >
                 {t("auth.login.createAccount")}
               </Link>
             </div>

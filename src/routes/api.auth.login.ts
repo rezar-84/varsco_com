@@ -77,8 +77,11 @@ export const Route = createFileRoute("/api/auth/login")({
             country: odooAuth.user.country || "",
           };
 
-          // Build HTTP-Only cookie header
-          const cookieValue = `vars_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000`;
+          // Build HTTP-Only cookie header. Max-Age matches Odoo's own default
+          // server-side session lifetime (7 days) — a longer browser cookie
+          // would outlive the Odoo session, making the browser look "logged
+          // in" while every request 401s server-side.
+          const cookieValue = `vars_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`;
 
           return new Response(
             JSON.stringify({
