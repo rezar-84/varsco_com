@@ -8,18 +8,12 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
 import { formatPrice } from "@/lib/utils/price";
 
-const AVAILABILITY_KEY: Record<string, string> = {
-  in_stock: "store.card.inStock",
-  made_to_order: "store.card.madeToOrder",
-  out_of_stock: "store.card.outOfStock",
-};
-
 export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
   const { add, openDrawer } = useStoreCart();
   const { t } = useI18n();
   const [added, setAdded] = useState(false);
-  const price = formatPrice(product.price);
-  const canAddToCart = Boolean(product.product_id);
+  const price = formatPrice(product.purchase);
+  const canAddToCart = Boolean(product.purchase?.available);
 
   return (
     <div className="group relative glass-card rounded-3xl flex flex-col overflow-hidden transition-all duration-300 hover:border-primary/60 hover:shadow-2xl bg-background border border-border/80">
@@ -52,16 +46,14 @@ export function StoreProductCard({ product }: { product: CatalogItemSummary }) {
           {product.category.name}
         </div>
 
-        {product.availability && (
+        {product.purchase && (
           <div
             className={cn(
               "absolute top-3.5 right-3.5 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold shadow-md",
-              product.availability === "out_of_stock"
-                ? "bg-destructive/90 text-white"
-                : "bg-mint text-navy",
+              product.purchase.available ? "bg-mint text-navy" : "bg-destructive/90 text-white",
             )}
           >
-            {t(AVAILABILITY_KEY[product.availability])}
+            {product.purchase.available ? t("store.card.inStock") : t("store.card.outOfStock")}
           </div>
         )}
       </Link>

@@ -48,6 +48,20 @@ export const Route = createFileRoute("/api/store/checkout")({
 
         try {
           const result = await apiClient.submitCheckout({ items: validated.data.items });
+
+          // Trust boundary: only forward payment_url if it actually points at
+          // our configured Odoo instance. The value always originates from
+          // Odoo's own response, never client input, but validating it here
+          // (rather than trusting it blindly through to a browser redirect)
+          // costs nothing and fails closed if it's ever malformed/unexpected.
+          if (result.payment_url && !result.payment_url.startsWith(baseUrl)) {
+            console.warn(
+              "[BFF Proxy Store Checkout] Dropping payment_url that doesn't match VITE_ODOO_BASE_URL:",
+              result.payment_url,
+            );
+            delete result.payment_url;
+          }
+
           return new Response(JSON.stringify(result), {
             status: 201,
             headers: { "Content-Type": "application/json" },

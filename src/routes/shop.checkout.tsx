@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Loader2, Minus, Plus, Trash2, ShieldCheck, ShoppingBag } from "lucide-react";
+import { Loader2, Minus, Plus, Trash2, ShieldCheck, ShoppingBag, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, PageHero } from "@/components/layout/Page";
 import { useStoreCart } from "@/context/StoreCartContext";
@@ -23,6 +23,7 @@ function ShopCheckoutPage() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -42,7 +43,12 @@ function ShopCheckoutPage() {
     setSubmitting(true);
     setResult(null);
     try {
-      await submitOrder();
+      const checkoutResult = await submitOrder();
+      if (checkoutResult.payment_url) {
+        setPaymentUrl(checkoutResult.payment_url);
+        window.location.href = checkoutResult.payment_url;
+        return;
+      }
       setResult({ ok: true, message: t("store.checkout.success.body") });
     } catch (err) {
       setResult({
@@ -63,7 +69,20 @@ function ShopCheckoutPage() {
       />
 
       <Section>
-        {result?.ok ? (
+        {paymentUrl ? (
+          <div className="glass-card rounded-2xl p-12 text-center max-w-xl mx-auto border border-border/80 shadow-md space-y-4">
+            <CreditCard className="h-12 w-12 text-primary mx-auto animate-pulse" />
+            <h3 className="font-display text-xl font-bold text-navy">
+              {t("store.checkout.redirectingToPayment.title")}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              {t("store.checkout.redirectingToPayment.body")}
+            </p>
+            <a href={paymentUrl} className="text-xs font-semibold text-primary hover:underline">
+              {t("store.checkout.manualPaymentLink")}
+            </a>
+          </div>
+        ) : result?.ok ? (
           <div className="glass-card rounded-2xl p-12 text-center max-w-xl mx-auto border border-border/80 shadow-md space-y-4">
             <ShieldCheck className="h-12 w-12 text-mint mx-auto" />
             <h3 className="font-display text-xl font-bold text-navy">

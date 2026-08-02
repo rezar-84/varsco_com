@@ -149,11 +149,23 @@ export interface CatalogCategorySummary {
   url_path: string;
 }
 
-export type StoreAvailability = "in_stock" | "made_to_order" | "out_of_stock";
-
 export interface StorePrice {
   amount: number;
   currency: string;
+}
+
+/**
+ * Mirrors varsco_content_api's `varsco.catalog.item._public_commerce_fields()`
+ * exactly: null unless the item's item_type is "purchasable_now". Never
+ * flatten these onto the parent object — the real API nests them under a
+ * single `purchase` key.
+ */
+export interface StorePurchase {
+  product_id: number;
+  amount: number;
+  currency: string;
+  available: boolean;
+  qty_available: number;
 }
 
 export interface CatalogItemSummary {
@@ -164,11 +176,8 @@ export interface CatalogItemSummary {
   category: CatalogCategorySummary;
   primary_media: ContentMedia | null;
   updated_at: string | null;
-  /** Only present once the Odoo product endpoint exposes pricing; render "Contact for Pricing" when absent. */
-  price?: StorePrice | null;
-  availability?: StoreAvailability | null;
-  /** Numeric Odoo product id, required to add this item to a store checkout payload. */
-  product_id?: number | null;
+  /** null for quote-only (informational / purchasable_later) items — render "Contact for Pricing" when null. */
+  purchase: StorePurchase | null;
 }
 
 export interface CatalogItemDetail extends CatalogItemSummary {

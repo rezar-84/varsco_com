@@ -184,7 +184,13 @@ export class ContentApiClient {
     shipping_partner_id?: number;
     billing_partner_id?: number;
     items: { product_id: number; qty: number }[];
-  }): Promise<{ order_id: number; amount_total: number; currency: string }> {
+  }): Promise<{
+    order_id: number;
+    amount_total: number;
+    currency: string;
+    /** Absolute URL to Odoo's customer-portal "Pay Now" page — present only when a compatible payment.provider is configured. */
+    payment_url?: string;
+  }> {
     return this.requestJson("/api/v1/store/checkout", "POST", checkoutData);
   }
 

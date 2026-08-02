@@ -22,6 +22,7 @@ export interface StoreCheckoutResult {
   order_id: number;
   amount_total: number;
   currency: string;
+  payment_url?: string;
 }
 
 interface StoreCartContextValue {
@@ -70,8 +71,12 @@ export function StoreCartProvider({ children }: { children: ReactNode }) {
 
   const add = useCallback(
     (product: CatalogItemSummary | CatalogItemDetail, qty = 1) => {
-      if (!product.product_id) return;
-      const productId = product.product_id;
+      if (!product.purchase?.available) return;
+      const productId = product.purchase.product_id;
+      const price: StorePrice = {
+        amount: product.purchase.amount,
+        currency: product.purchase.currency,
+      };
       setItems((prev) => {
         const existing = prev.find((i) => i.productId === productId);
         if (existing) {
@@ -86,7 +91,7 @@ export function StoreCartProvider({ children }: { children: ReactNode }) {
             slug: product.slug,
             name: product.name,
             image: product.primary_media?.url ?? null,
-            price: product.price ?? null,
+            price,
             quantity: qty,
           },
         ];

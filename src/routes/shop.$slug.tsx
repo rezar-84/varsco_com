@@ -26,16 +26,15 @@ export const Route = createFileRoute("/shop/$slug")({
           description: product.description_html?.replace(/<[^>]*>/g, "") ?? product.summary,
           category: product.category.name,
           brand: { "@type": "Brand", name: "VARS Aquaculture" },
-          ...(product.price
+          ...(product.purchase
             ? {
                 offers: {
                   "@type": "Offer",
-                  priceCurrency: product.price.currency,
-                  price: product.price.amount,
-                  availability:
-                    product.availability === "out_of_stock"
-                      ? "https://schema.org/OutOfStock"
-                      : "https://schema.org/InStock",
+                  priceCurrency: product.purchase.currency,
+                  price: product.purchase.amount,
+                  availability: product.purchase.available
+                    ? "https://schema.org/InStock"
+                    : "https://schema.org/OutOfStock",
                   seller: { "@type": "Organization", name: "VARS Aquaculture" },
                 },
               }
@@ -82,8 +81,8 @@ function ShopProductDetail() {
     );
   }
 
-  const price = formatPrice(product.price);
-  const canAddToCart = Boolean(product.product_id);
+  const price = formatPrice(product.purchase);
+  const canAddToCart = Boolean(product.purchase?.available);
 
   return (
     <Section>

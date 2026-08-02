@@ -2,7 +2,7 @@
 
 This document defines the REST API contract required from the Odoo 19 ERP to support the headless Aqua Bloom Portal.
 
-The reference implementation module at `/home/rubuntu/Projects/varsco_front/odoo/addons/varsco_content_api` is the baseline API module. This specification outlines its structure and extensions needed for portals, auth, and checkout.
+The reference implementation module is the sibling `varsco_content_api` Odoo addon (`git@github.com:rezar-84/varsco_content_api.git`) — the actual, currently-deployed source of truth for this contract; this document is a mirror of it maintained on the frontend side, and the two must be kept in sync (see that repo's own `docs/architecture.md` §5).
 
 ---
 
@@ -31,12 +31,35 @@ These endpoints are cacheable at the CDN edge and are used for static generation
 | ------------------------------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | `GET /api/v1/pages/{locale}`               | List pages for static route generation | `[ { slug, url_path, title, updated_at } ]`                                                                                       |
 | `GET /api/v1/pages/{locale}/{url_path}`    | Detail page contents                   | `{ slug, url_path, title, body_html, sections: [ { type, content } ], seo: { title, description, canonical, hreflang, jsonld } }` |
-| `GET /api/v1/products/{locale}`            | List catalog items                     | `[ { slug, url_path, name, category, image_url } ]`                                                                               |
-| `GET /api/v1/products/{locale}/{url_path}` | Catalog detail specs                   | `{ slug, name, description, specifications: [ { label, value } ], image_urls, related_products }`                                 |
+| `GET /api/v1/products/{locale}`            | List catalog items                     | `{ data: [ CatalogItemSummary ], meta: { locale, updated_at } }` — see shape below                                                |
+| `GET /api/v1/products/{locale}/{url_path}` | Catalog detail specs                   | `{ data: CatalogItemDetail, meta, seo }` — `CatalogItemDetail` extends `CatalogItemSummary` with `eyebrow`, `description_html`, `media`, `specification_groups`, `quote_cta_enabled` |
 | `GET /api/v1/posts/{locale}`               | Blog listing                           | `[ { slug, title, excerpt, date, author } ]`                                                                                      |
 | `GET /api/v1/posts/{locale}/{slug}`        | Blog article detail                    | `{ slug, title, content, date, author, category, seo }`                                                                           |
 | `GET /api/v1/menu/{locale}`                | Navigation menu items                  | `[ { label, target_url, children } ]`                                                                                             |
 | `GET /api/v1/redirects`                    | 301 Redirect map for retired URLs      | `[ { source_path, target_path, status_code } ]`                                                                                   |
+
+**`CatalogItemSummary` shape** (each entry in the products list, and the base of the detail response):
+
+```json
+{
+  "slug": "artemia-cysts-500g",
+  "name": "Artemia Cysts 500g",
+  "summary": "...",
+  "url_path": "products/live-feed/artemia-cysts-500g",
+  "category": { "slug": "live-feed", "name": "Live Feed", "url_path": "products/live-feed" },
+  "primary_media": { "url": "...", "alt": "..." },
+  "updated_at": "2026-08-02T00:00:00Z",
+  "purchase": {
+    "product_id": 42,
+    "amount": 42.5,
+    "currency": "TRY",
+    "available": true,
+    "qty_available": 10.0
+  }
+}
+```
+
+`purchase` is `null` for quote-only items (`item_type` `informational`/`purchasable_later` on the Odoo side) — render "Contact for Pricing" and hide Add to Cart when null. Only `purchasable_now` items ever carry a `purchase` block, and `purchase.product_id` is the only place a raw Odoo product id is exposed publicly — it's required to submit that item in `POST /api/v1/store/checkout`'s `items[].product_id`.
 
 ### 2.2 Secure Server-to-Server Endpoint (`auth="public"`, POST with Token)
 
@@ -133,5 +156,6 @@ Used for authenticated portal panels under `/account/*`. The Astro server acts a
 }
 ```
 
-- **Odoo Action**: Resolves partner discounts/pricelist tier, checks stock availability, calculates sales tax and logistics shipping fee, and creates a draft Sales Order (`sale.order`).
-- **Response**: `{ "order_id": 1021, "amount_total": 9800.0, "currency": "TRY" }`
+- **Odoo Action**: Re-validates every line against `item_type == "purchasable_now"` and live stock, resolves the ordering partner from the session (both `shipping_partner_id`/`billing_partner_id` are optional overrides — omit them to default to the authenticated partner), and creates a draft Sales Order (`sale.order`).
+- **Response**: `{ "order_id": 1021, "amount_total": 9800.0, "currency": "TRY", "payment_url": "https://erp.varsco.com/my/orders/1021?access_token=..." }`
+  - `payment_url` is **optional** — present only when a compatible `payment.provider` (e.g. Iyzico) is configured for the order. When present, it's the order's Odoo customer-portal URL: redirect the browser there to complete payment (Odoo's own `payment`/`payment_iyzico` modules handle the entire redirect/webhook/confirmation cycle natively — nothing else to implement on the frontend side for that flow). When absent, treat the order the same as before: a draft order was created, no online payment is available for it, and a human follow-up completes the sale.
