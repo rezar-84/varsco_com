@@ -12,6 +12,7 @@ import {
   Star,
   Package,
   TrendingUp,
+  ShoppingBag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/layout/Page";
@@ -647,6 +648,33 @@ function Index() {
             >
               <Link to="/products">
                 {t("home.cats.all")} <ArrowRight className="ms-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        {/* Shop Online CTA Banner — transactional counterpart to the browse-only catalog above */}
+        <div className="mt-6 glass-card rounded-3xl p-6 sm:p-8 border-2 border-mint/50 bg-navy text-white flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-3 rounded-2xl bg-mint text-navy shrink-0">
+              <ShoppingBag className="h-6 w-6" />
+            </div>
+            <div>
+              <div className="font-display text-base font-bold text-white">
+                {t("home.shopBanner.title")}
+              </div>
+              <div className="text-xs text-white/70">{t("home.shopBanner.body")}</div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              size="lg"
+              asChild
+              className="rounded-xl font-bold bg-mint text-navy hover:bg-mint/90 shadow-md"
+            >
+              <Link to="/shop">
+                {t("home.shopBanner.cta")} <ArrowRight className="ms-2 h-4 w-4" />
               </Link>
             </Button>
           </div>

@@ -83,6 +83,14 @@ export function SiteFooter() {
             <ul className="space-y-2.5 text-sm text-white/75">
               <li>
                 <Link
+                  to="/shop"
+                  className="hover:text-white transition-colors text-mint font-semibold"
+                >
+                  {t("footer.shopOnline")}
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/products/$category"
                   params={{ category: "feed-additives" }}
                   className="hover:text-white transition-colors"
