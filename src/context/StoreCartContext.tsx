@@ -1,0 +1,153 @@
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import type { CatalogItemDetail, CatalogItemSummary, StorePrice } from "@/lib/api/types";
+
+export interface StoreCartItem {
+  productId: number;
+  slug: string;
+  name: string;
+  image?: string | null;
+  price?: StorePrice | null;
+  quantity: number;
+}
+
+export interface StoreCheckoutResult {
+  order_id: number;
+  amount_total: number;
+  currency: string;
+}
+
+interface StoreCartContextValue {
+  items: StoreCartItem[];
+  count: number;
+  isOpen: boolean;
+  bumping: boolean;
+  add: (product: CatalogItemSummary | CatalogItemDetail, qty?: number) => void;
+  remove: (productId: number) => void;
+  updateQty: (productId: number, qty: number) => void;
+  clear: () => void;
+  openDrawer: () => void;
+  closeDrawer: () => void;
+  submitOrder: () => Promise<StoreCheckoutResult>;
+}
+
+const StoreCartContext = createContext<StoreCartContextValue | null>(null);
+const STORAGE_KEY = "vars.store-cart.v1";
+
+export function StoreCartProvider({ children }: { children: ReactNode }) {
+  const [items, setItems] = useState<StoreCartItem[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [bumping, setBumping] = useState(false);
+  const isLoadedRef = useRef(false);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) setItems(JSON.parse(raw));
+    } catch {
+      /* noop */
+    }
+    isLoadedRef.current = true;
+  }, []);
+
+  useEffect(() => {
+    if (isLoadedRef.current && typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    }
+  }, [items]);
+
+  const bump = useCallback(() => {
+    setBumping(true);
+    setTimeout(() => setBumping(false), 450);
+  }, []);
+
+  const add = useCallback(
+    (product: CatalogItemSummary | CatalogItemDetail, qty = 1) => {
+      if (!product.product_id) return;
+      const productId = product.product_id;
+      setItems((prev) => {
+        const existing = prev.find((i) => i.productId === productId);
+        if (existing) {
+          return prev.map((i) =>
+            i.productId === productId ? { ...i, quantity: i.quantity + qty } : i,
+          );
+        }
+        return [
+          ...prev,
+          {
+            productId,
+            slug: product.slug,
+            name: product.name,
+            image: product.primary_media?.url ?? null,
+            price: product.price ?? null,
+            quantity: qty,
+          },
+        ];
+      });
+      bump();
+    },
+    [bump],
+  );
+
+  const remove = (productId: number) =>
+    setItems((prev) => prev.filter((i) => i.productId !== productId));
+
+  const updateQty = (productId: number, qty: number) =>
+    setItems((prev) =>
+      prev.map((i) => (i.productId === productId ? { ...i, quantity: Math.max(1, qty) } : i)),
+    );
+
+  const clear = () => setItems([]);
+
+  const count = items.reduce((n, i) => n + i.quantity, 0);
+
+  return (
+    <StoreCartContext.Provider
+      value={{
+        items,
+        count,
+        isOpen,
+        bumping,
+        add,
+        remove,
+        updateQty,
+        clear,
+        openDrawer: () => setIsOpen(true),
+        closeDrawer: () => setIsOpen(false),
+        submitOrder: async () => {
+          const response = await fetch("/api/store/checkout", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              items: items.map((i) => ({ product_id: i.productId, qty: i.quantity })),
+            }),
+          });
+          if (!response.ok) {
+            const errBody = (await response.json().catch(() => ({}))) as { error?: string };
+            throw new Error(errBody.error || "Failed to submit order");
+          }
+          const result = (await response.json()) as StoreCheckoutResult;
+          clear();
+          return result;
+        },
+      }}
+    >
+      {children}
+    </StoreCartContext.Provider>
+  );
+}
+
+export function useStoreCart() {
+  const ctx = useContext(StoreCartContext);
+  if (!ctx) throw new Error("useStoreCart must be used inside StoreCartProvider");
+  return ctx;
+}

@@ -43,6 +43,9 @@ import { Route as ApiHealthRouteImport } from './routes/api.health'
 import { Route as ApiQuotesRouteImport } from './routes/api.quotes'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as ShopIndexRouteImport } from './routes/shop.index'
+import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
+import { Route as ShopCheckoutRouteImport } from './routes/shop.checkout'
 import { Route as ApiAssetsOdooRouteImport } from './routes/api.assets.odoo'
 import { Route as ApiAuthLoginRouteImport } from './routes/api.auth.login'
 import { Route as ApiAuthLogoutRouteImport } from './routes/api.auth.logout'
@@ -51,10 +54,14 @@ import { Route as ApiAuthRegisterRouteImport } from './routes/api.auth.register'
 import { Route as ApiPortalCustomsRouteImport } from './routes/api.portal.customs'
 import { Route as ApiPortalOrdersRouteImport } from './routes/api.portal.orders'
 import { Route as ApiPortalProfileRouteImport } from './routes/api.portal.profile'
+import { Route as ApiStoreCheckoutRouteImport } from './routes/api.store.checkout'
+import { Route as ApiStoreProductsRouteImport } from './routes/api.store.products'
 import { Route as BlogCategoryIndexRouteImport } from './routes/blog.$category.index'
 import { Route as BlogCategorySlugRouteImport } from './routes/blog.$category.$slug'
 import { Route as ProductsCategoryIndexRouteImport } from './routes/products.$category.index'
 import { Route as ProductsCategorySlugRouteImport } from './routes/products.$category.$slug'
+import { Route as ShopCategorySlugRouteImport } from './routes/shop.category.$slug'
+import { Route as ApiStoreProductsSlugRouteImport } from './routes/api.store.products.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -230,6 +237,21 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
   path: '/products/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShopIndexRoute = ShopIndexRouteImport.update({
+  id: '/shop/',
+  path: '/shop/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopSlugRoute = ShopSlugRouteImport.update({
+  id: '/shop/$slug',
+  path: '/shop/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopCheckoutRoute = ShopCheckoutRouteImport.update({
+  id: '/shop/checkout',
+  path: '/shop/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAssetsOdooRoute = ApiAssetsOdooRouteImport.update({
   id: '/api/assets/odoo',
   path: '/api/assets/odoo',
@@ -270,6 +292,16 @@ const ApiPortalProfileRoute = ApiPortalProfileRouteImport.update({
   path: '/api/portal/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiStoreCheckoutRoute = ApiStoreCheckoutRouteImport.update({
+  id: '/api/store/checkout',
+  path: '/api/store/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStoreProductsRoute = ApiStoreProductsRouteImport.update({
+  id: '/api/store/products',
+  path: '/api/store/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogCategoryIndexRoute = BlogCategoryIndexRouteImport.update({
   id: '/blog/$category/',
   path: '/blog/$category/',
@@ -289,6 +321,16 @@ const ProductsCategorySlugRoute = ProductsCategorySlugRouteImport.update({
   id: '/products/$category/$slug',
   path: '/products/$category/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ShopCategorySlugRoute = ShopCategorySlugRouteImport.update({
+  id: '/shop/category/$slug',
+  path: '/shop/category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStoreProductsSlugRoute = ApiStoreProductsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ApiStoreProductsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -323,9 +365,12 @@ export interface FileRoutesByFullPath {
   '/account/profile': typeof AccountProfileRoute
   '/api/health': typeof ApiHealthRoute
   '/api/quotes': typeof ApiQuotesRoute
+  '/shop/$slug': typeof ShopSlugRoute
+  '/shop/checkout': typeof ShopCheckoutRoute
   '/account/': typeof AccountIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/products/': typeof ProductsIndexRoute
+  '/shop/': typeof ShopIndexRoute
   '/api/assets/odoo': typeof ApiAssetsOdooRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
@@ -334,10 +379,14 @@ export interface FileRoutesByFullPath {
   '/api/portal/customs': typeof ApiPortalCustomsRoute
   '/api/portal/orders': typeof ApiPortalOrdersRoute
   '/api/portal/profile': typeof ApiPortalProfileRoute
+  '/api/store/checkout': typeof ApiStoreCheckoutRoute
+  '/api/store/products': typeof ApiStoreProductsRouteWithChildren
   '/blog/$category/$slug': typeof BlogCategorySlugRoute
   '/products/$category/$slug': typeof ProductsCategorySlugRoute
+  '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
   '/products/$category/': typeof ProductsCategoryIndexRoute
+  '/api/store/products/$slug': typeof ApiStoreProductsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -370,9 +419,12 @@ export interface FileRoutesByTo {
   '/account/profile': typeof AccountProfileRoute
   '/api/health': typeof ApiHealthRoute
   '/api/quotes': typeof ApiQuotesRoute
+  '/shop/$slug': typeof ShopSlugRoute
+  '/shop/checkout': typeof ShopCheckoutRoute
   '/account': typeof AccountIndexRoute
   '/blog': typeof BlogIndexRoute
   '/products': typeof ProductsIndexRoute
+  '/shop': typeof ShopIndexRoute
   '/api/assets/odoo': typeof ApiAssetsOdooRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
@@ -381,10 +433,14 @@ export interface FileRoutesByTo {
   '/api/portal/customs': typeof ApiPortalCustomsRoute
   '/api/portal/orders': typeof ApiPortalOrdersRoute
   '/api/portal/profile': typeof ApiPortalProfileRoute
+  '/api/store/checkout': typeof ApiStoreCheckoutRoute
+  '/api/store/products': typeof ApiStoreProductsRouteWithChildren
   '/blog/$category/$slug': typeof BlogCategorySlugRoute
   '/products/$category/$slug': typeof ProductsCategorySlugRoute
+  '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category': typeof BlogCategoryIndexRoute
   '/products/$category': typeof ProductsCategoryIndexRoute
+  '/api/store/products/$slug': typeof ApiStoreProductsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -419,9 +475,12 @@ export interface FileRoutesById {
   '/account/profile': typeof AccountProfileRoute
   '/api/health': typeof ApiHealthRoute
   '/api/quotes': typeof ApiQuotesRoute
+  '/shop/$slug': typeof ShopSlugRoute
+  '/shop/checkout': typeof ShopCheckoutRoute
   '/account/': typeof AccountIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/products/': typeof ProductsIndexRoute
+  '/shop/': typeof ShopIndexRoute
   '/api/assets/odoo': typeof ApiAssetsOdooRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
@@ -430,10 +489,14 @@ export interface FileRoutesById {
   '/api/portal/customs': typeof ApiPortalCustomsRoute
   '/api/portal/orders': typeof ApiPortalOrdersRoute
   '/api/portal/profile': typeof ApiPortalProfileRoute
+  '/api/store/checkout': typeof ApiStoreCheckoutRoute
+  '/api/store/products': typeof ApiStoreProductsRouteWithChildren
   '/blog/$category/$slug': typeof BlogCategorySlugRoute
   '/products/$category/$slug': typeof ProductsCategorySlugRoute
+  '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
   '/products/$category/': typeof ProductsCategoryIndexRoute
+  '/api/store/products/$slug': typeof ApiStoreProductsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -469,9 +532,12 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/api/health'
     | '/api/quotes'
+    | '/shop/$slug'
+    | '/shop/checkout'
     | '/account/'
     | '/blog/'
     | '/products/'
+    | '/shop/'
     | '/api/assets/odoo'
     | '/api/auth/login'
     | '/api/auth/logout'
@@ -480,10 +546,14 @@ export interface FileRouteTypes {
     | '/api/portal/customs'
     | '/api/portal/orders'
     | '/api/portal/profile'
+    | '/api/store/checkout'
+    | '/api/store/products'
     | '/blog/$category/$slug'
     | '/products/$category/$slug'
+    | '/shop/category/$slug'
     | '/blog/$category/'
     | '/products/$category/'
+    | '/api/store/products/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -516,9 +586,12 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/api/health'
     | '/api/quotes'
+    | '/shop/$slug'
+    | '/shop/checkout'
     | '/account'
     | '/blog'
     | '/products'
+    | '/shop'
     | '/api/assets/odoo'
     | '/api/auth/login'
     | '/api/auth/logout'
@@ -527,10 +600,14 @@ export interface FileRouteTypes {
     | '/api/portal/customs'
     | '/api/portal/orders'
     | '/api/portal/profile'
+    | '/api/store/checkout'
+    | '/api/store/products'
     | '/blog/$category/$slug'
     | '/products/$category/$slug'
+    | '/shop/category/$slug'
     | '/blog/$category'
     | '/products/$category'
+    | '/api/store/products/$slug'
   id:
     | '__root__'
     | '/'
@@ -564,9 +641,12 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/api/health'
     | '/api/quotes'
+    | '/shop/$slug'
+    | '/shop/checkout'
     | '/account/'
     | '/blog/'
     | '/products/'
+    | '/shop/'
     | '/api/assets/odoo'
     | '/api/auth/login'
     | '/api/auth/logout'
@@ -575,10 +655,14 @@ export interface FileRouteTypes {
     | '/api/portal/customs'
     | '/api/portal/orders'
     | '/api/portal/profile'
+    | '/api/store/checkout'
+    | '/api/store/products'
     | '/blog/$category/$slug'
     | '/products/$category/$slug'
+    | '/shop/category/$slug'
     | '/blog/$category/'
     | '/products/$category/'
+    | '/api/store/products/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -610,8 +694,11 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiQuotesRoute: typeof ApiQuotesRoute
+  ShopSlugRoute: typeof ShopSlugRoute
+  ShopCheckoutRoute: typeof ShopCheckoutRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
+  ShopIndexRoute: typeof ShopIndexRoute
   ApiAssetsOdooRoute: typeof ApiAssetsOdooRoute
   ApiAuthLoginRoute: typeof ApiAuthLoginRoute
   ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
@@ -620,8 +707,11 @@ export interface RootRouteChildren {
   ApiPortalCustomsRoute: typeof ApiPortalCustomsRoute
   ApiPortalOrdersRoute: typeof ApiPortalOrdersRoute
   ApiPortalProfileRoute: typeof ApiPortalProfileRoute
+  ApiStoreCheckoutRoute: typeof ApiStoreCheckoutRoute
+  ApiStoreProductsRoute: typeof ApiStoreProductsRouteWithChildren
   BlogCategorySlugRoute: typeof BlogCategorySlugRoute
   ProductsCategorySlugRoute: typeof ProductsCategorySlugRoute
+  ShopCategorySlugRoute: typeof ShopCategorySlugRoute
   BlogCategoryIndexRoute: typeof BlogCategoryIndexRoute
   ProductsCategoryIndexRoute: typeof ProductsCategoryIndexRoute
 }
@@ -866,6 +956,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shop/': {
+      id: '/shop/'
+      path: '/shop'
+      fullPath: '/shop/'
+      preLoaderRoute: typeof ShopIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop/$slug': {
+      id: '/shop/$slug'
+      path: '/shop/$slug'
+      fullPath: '/shop/$slug'
+      preLoaderRoute: typeof ShopSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop/checkout': {
+      id: '/shop/checkout'
+      path: '/shop/checkout'
+      fullPath: '/shop/checkout'
+      preLoaderRoute: typeof ShopCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/assets/odoo': {
       id: '/api/assets/odoo'
       path: '/api/assets/odoo'
@@ -922,6 +1033,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPortalProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/store/checkout': {
+      id: '/api/store/checkout'
+      path: '/api/store/checkout'
+      fullPath: '/api/store/checkout'
+      preLoaderRoute: typeof ApiStoreCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/store/products': {
+      id: '/api/store/products'
+      path: '/api/store/products'
+      fullPath: '/api/store/products'
+      preLoaderRoute: typeof ApiStoreProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$category/': {
       id: '/blog/$category/'
       path: '/blog/$category'
@@ -950,6 +1075,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shop/category/$slug': {
+      id: '/shop/category/$slug'
+      path: '/shop/category/$slug'
+      fullPath: '/shop/category/$slug'
+      preLoaderRoute: typeof ShopCategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/store/products/$slug': {
+      id: '/api/store/products/$slug'
+      path: '/$slug'
+      fullPath: '/api/store/products/$slug'
+      preLoaderRoute: typeof ApiStoreProductsSlugRouteImport
+      parentRoute: typeof ApiStoreProductsRoute
+    }
   }
 }
 
@@ -969,6 +1108,17 @@ const AccountRouteChildren: AccountRouteChildren = {
 
 const AccountRouteWithChildren =
   AccountRoute._addFileChildren(AccountRouteChildren)
+
+interface ApiStoreProductsRouteChildren {
+  ApiStoreProductsSlugRoute: typeof ApiStoreProductsSlugRoute
+}
+
+const ApiStoreProductsRouteChildren: ApiStoreProductsRouteChildren = {
+  ApiStoreProductsSlugRoute: ApiStoreProductsSlugRoute,
+}
+
+const ApiStoreProductsRouteWithChildren =
+  ApiStoreProductsRoute._addFileChildren(ApiStoreProductsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -999,8 +1149,11 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiQuotesRoute: ApiQuotesRoute,
+  ShopSlugRoute: ShopSlugRoute,
+  ShopCheckoutRoute: ShopCheckoutRoute,
   BlogIndexRoute: BlogIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
+  ShopIndexRoute: ShopIndexRoute,
   ApiAssetsOdooRoute: ApiAssetsOdooRoute,
   ApiAuthLoginRoute: ApiAuthLoginRoute,
   ApiAuthLogoutRoute: ApiAuthLogoutRoute,
@@ -1009,8 +1162,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPortalCustomsRoute: ApiPortalCustomsRoute,
   ApiPortalOrdersRoute: ApiPortalOrdersRoute,
   ApiPortalProfileRoute: ApiPortalProfileRoute,
+  ApiStoreCheckoutRoute: ApiStoreCheckoutRoute,
+  ApiStoreProductsRoute: ApiStoreProductsRouteWithChildren,
   BlogCategorySlugRoute: BlogCategorySlugRoute,
   ProductsCategorySlugRoute: ProductsCategorySlugRoute,
+  ShopCategorySlugRoute: ShopCategorySlugRoute,
   BlogCategoryIndexRoute: BlogCategoryIndexRoute,
   ProductsCategoryIndexRoute: ProductsCategoryIndexRoute,
 }

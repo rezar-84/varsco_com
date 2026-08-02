@@ -225,10 +225,15 @@ export function SiteHeader() {
     };
   }, []);
 
-
-
-  const NAV: { to: string; label: string; hasMega?: boolean; hasSolutionsMega?: boolean; hasResourcesMega?: boolean }[] = [
+  const NAV: {
+    to: string;
+    label: string;
+    hasMega?: boolean;
+    hasSolutionsMega?: boolean;
+    hasResourcesMega?: boolean;
+  }[] = [
     { to: "/products", label: t("nav.products"), hasMega: true },
+    { to: "/shop", label: t("nav.store") },
     { to: "/services-solutions", label: t("nav.solutions"), hasSolutionsMega: true },
     { to: "/projects", label: t("nav.projects") },
     { to: "/blog", label: t("nav.resources"), hasResourcesMega: true },
@@ -1083,6 +1088,14 @@ export function SiteHeader() {
                   </Link>
                 </div>
               )}
+
+              <Link
+                to="/shop"
+                onClick={() => setMobileOpen(false)}
+                className="block rounded-xl px-4 py-3 text-sm font-bold text-navy hover:bg-surface-alt"
+              >
+                {t("nav.store")}
+              </Link>
 
               {/* Services & Solutions — mirrors the desktop Solutions mega menu */}
               <button

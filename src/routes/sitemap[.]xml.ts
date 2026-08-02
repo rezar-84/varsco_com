@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { PRODUCTS, CATEGORIES } from "@/lib/mock/products";
 import { BLOG_POSTS } from "@/lib/mock/blog";
+import { ContentApiClient } from "@/lib/api/client";
 
 const BASE_URL = process.env.VITE_SITE_URL || "https://varsco.com";
 const LANGS = ["en", "tr", "ar", "de", "ru", "ja", "ko", "zh", "es"] as const;
@@ -52,7 +53,31 @@ export const Route = createFileRoute("/sitemap.xml")({
           priority: "0.5",
         }));
 
-        const entries = [...staticPaths, ...catPaths, ...productPaths, ...blogPaths];
+        // Store catalog is live-fetched from Odoo, not static mock data — skip
+        // gracefully (sitemap still generates the static+portfolio+blog URLs)
+        // if the backend isn't reachable yet.
+        const shopPaths: Entry[] = [{ path: "/shop", changefreq: "weekly", priority: "0.9" }];
+        try {
+          const baseUrl = process.env.VITE_ODOO_BASE_URL || "http://localhost:8069";
+          const apiClient = new ContentApiClient({ baseUrl });
+          const { data } = await apiClient.listProducts("en");
+          const shopCategorySlugs = new Set<string>();
+          data.forEach((p) => {
+            shopCategorySlugs.add(p.category.slug);
+            shopPaths.push({ path: `/shop/${p.slug}`, changefreq: "monthly", priority: "0.7" });
+          });
+          shopCategorySlugs.forEach((slug) => {
+            shopPaths.push({
+              path: `/shop/category/${slug}`,
+              changefreq: "weekly",
+              priority: "0.8",
+            });
+          });
+        } catch {
+          // Store backend not live yet — /shop index still gets listed above.
+        }
+
+        const entries = [...staticPaths, ...catPaths, ...productPaths, ...shopPaths, ...blogPaths];
 
         const urls = entries
           .map((e) => {

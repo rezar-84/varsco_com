@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { CartDrawer } from "./CartDrawer";
+import { StoreCartDrawer } from "./StoreCartDrawer";
 import { FloatingQuoteCTA } from "./FloatingQuoteCTA";
 import { WhatsAppWidget } from "./WhatsAppWidget";
 import { Toaster } from "@/components/ui/sonner";
@@ -13,6 +14,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <SiteFooter />
       <CartDrawer />
+      <StoreCartDrawer />
       <FloatingQuoteCTA />
       <WhatsAppWidget />
       <Toaster position="top-right" />

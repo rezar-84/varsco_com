@@ -175,9 +175,14 @@ export class ContentApiClient {
   // 4. STORE CHECKOUTS
   // ==========================================
 
+  /**
+   * shipping/billing partner ids are optional overrides — when omitted, Odoo
+   * resolves the ordering partner from the session cookie, same as the other
+   * `auth="user"` portal endpoints (getPortalOrders, updatePortalProfile).
+   */
   submitCheckout(checkoutData: {
-    shipping_partner_id: number;
-    billing_partner_id: number;
+    shipping_partner_id?: number;
+    billing_partner_id?: number;
     items: { product_id: number; qty: number }[];
   }): Promise<{ order_id: number; amount_total: number; currency: string }> {
     return this.requestJson("/api/v1/store/checkout", "POST", checkoutData);

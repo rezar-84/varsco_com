@@ -149,6 +149,13 @@ export interface CatalogCategorySummary {
   url_path: string;
 }
 
+export type StoreAvailability = "in_stock" | "made_to_order" | "out_of_stock";
+
+export interface StorePrice {
+  amount: number;
+  currency: string;
+}
+
 export interface CatalogItemSummary {
   slug: string;
   name: string;
@@ -157,6 +164,11 @@ export interface CatalogItemSummary {
   category: CatalogCategorySummary;
   primary_media: ContentMedia | null;
   updated_at: string | null;
+  /** Only present once the Odoo product endpoint exposes pricing; render "Contact for Pricing" when absent. */
+  price?: StorePrice | null;
+  availability?: StoreAvailability | null;
+  /** Numeric Odoo product id, required to add this item to a store checkout payload. */
+  product_id?: number | null;
 }
 
 export interface CatalogItemDetail extends CatalogItemSummary {

@@ -3,6 +3,7 @@ import "./lib/error-capture";
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 import { validateCors, checkRateLimit } from "./lib/api/middleware";
+import { resolveLegacyRedirect } from "./lib/legacy-redirects";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -88,6 +89,15 @@ export default {
         }
       }
       const path = new URL(rewrittenRequest.url).pathname;
+
+      // 3. Legacy /shop/* redirects — retired URLs indexed under the old
+      // Odoo website_sale shop, must 301 rather than 404.
+      const legacyTarget = resolveLegacyRedirect(path);
+      if (legacyTarget) {
+        const localePrefix = lang === "en" ? "" : `/${lang}`;
+        const destination = new URL(`${localePrefix}${legacyTarget}`, url.origin);
+        return new Response(null, { status: 301, headers: { Location: destination.toString() } });
+      }
 
       const handler = await getServerEntry();
       const response = await serverStorage.run({ lang, path }, () =>

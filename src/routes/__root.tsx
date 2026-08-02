@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
+import { StoreCartProvider } from "@/context/StoreCartContext";
 import { I18nProvider } from "@/context/I18nContext";
 import { SiteShell } from "@/components/layout/SiteShell";
 
@@ -110,7 +111,10 @@ const ALTERNATE_LANGS = ["en", "tr", "ar", "de", "ru", "ja", "ko", "zh", "es"] a
 function getContentPath(): string {
   if (typeof window !== "undefined") {
     const parts = window.location.pathname.split("/").filter(Boolean);
-    if (parts.length > 0 && (ALTERNATE_LANGS as readonly string[]).includes(parts[0].toLowerCase())) {
+    if (
+      parts.length > 0 &&
+      (ALTERNATE_LANGS as readonly string[]).includes(parts[0].toLowerCase())
+    ) {
       return "/" + parts.slice(1).join("/");
     }
     return window.location.pathname;
@@ -126,69 +130,69 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     const pathSuffix = contentPath === "/" ? "" : contentPath;
 
     return {
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal" },
-      {
-        name: "description",
-        content:
-          "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
-      },
-      { name: "author", content: "VARS Aquaculture" },
-      {
-        name: "keywords",
-        content:
-          "aquaculture, live feed, artemia, chlorella, salmon eggs, seafood export, B2B, Türkiye",
-      },
-      { property: "og:site_name", content: "VARS Aquaculture" },
-      {
-        property: "og:title",
-        content: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal",
-      },
-      {
-        property: "og:description",
-        content:
-          "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "en_US" },
-      { property: "og:locale:alternate", content: "tr_TR" },
-      { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "twitter:title",
-        content: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal",
-      },
-      {
-        name: "twitter:description",
-        content:
-          "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
-      },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
-      { rel: "alternate icon", href: "/favicon.ico", type: "image/x-icon" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap",
-      },
-      { rel: "canonical", href: `${SITE_URL}${pathSuffix}` },
-      ...ALTERNATE_LANGS.map((l) => ({
-        rel: "alternate",
-        hrefLang: l,
-        href: `${SITE_URL}${l === "en" ? "" : "/" + l}${pathSuffix}`,
-      })),
-      { rel: "alternate", hrefLang: "x-default", href: `${SITE_URL}${pathSuffix}` },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(organizationSchema),
-      },
-    ],
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal" },
+        {
+          name: "description",
+          content:
+            "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
+        },
+        { name: "author", content: "VARS Aquaculture" },
+        {
+          name: "keywords",
+          content:
+            "aquaculture, live feed, artemia, chlorella, salmon eggs, seafood export, B2B, Türkiye",
+        },
+        { property: "og:site_name", content: "VARS Aquaculture" },
+        {
+          property: "og:title",
+          content: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal",
+        },
+        {
+          property: "og:description",
+          content:
+            "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "en_US" },
+        { property: "og:locale:alternate", content: "tr_TR" },
+        { name: "twitter:card", content: "summary_large_image" },
+        {
+          name: "twitter:title",
+          content: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal",
+        },
+        {
+          name: "twitter:description",
+          content:
+            "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
+        },
+      ],
+      links: [
+        { rel: "stylesheet", href: appCss },
+        { rel: "icon", href: "/favicon.png", type: "image/png" },
+        { rel: "alternate icon", href: "/favicon.ico", type: "image/x-icon" },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap",
+        },
+        { rel: "canonical", href: `${SITE_URL}${pathSuffix}` },
+        ...ALTERNATE_LANGS.map((l) => ({
+          rel: "alternate",
+          hrefLang: l,
+          href: `${SITE_URL}${l === "en" ? "" : "/" + l}${pathSuffix}`,
+        })),
+        { rel: "alternate", hrefLang: "x-default", href: `${SITE_URL}${pathSuffix}` },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(organizationSchema),
+        },
+      ],
     };
   },
   shellComponent: RootShell,
@@ -218,9 +222,11 @@ function RootComponent() {
       <I18nProvider>
         <AuthProvider>
           <CartProvider>
-            <SiteShell>
-              <Outlet />
-            </SiteShell>
+            <StoreCartProvider>
+              <SiteShell>
+                <Outlet />
+              </SiteShell>
+            </StoreCartProvider>
           </CartProvider>
         </AuthProvider>
       </I18nProvider>
