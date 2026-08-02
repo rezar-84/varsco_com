@@ -47,7 +47,7 @@ function isH3SwallowedErrorBody(body: string): boolean {
 
 import { AsyncLocalStorage } from "node:async_hooks";
 
-const serverStorage = new AsyncLocalStorage<{ lang: string }>();
+const serverStorage = new AsyncLocalStorage<{ lang: string; path: string }>();
 (globalThis as unknown as Record<string, unknown>).serverStorage = serverStorage;
 
 function deLocalizeRequest(request: Request): Request {
@@ -87,9 +87,10 @@ export default {
           lang = firstPart;
         }
       }
+      const path = new URL(rewrittenRequest.url).pathname;
 
       const handler = await getServerEntry();
-      const response = await serverStorage.run({ lang }, () =>
+      const response = await serverStorage.run({ lang, path }, () =>
         handler.fetch(rewrittenRequest, env, ctx),
       );
       return await normalizeCatastrophicSsrResponse(response);

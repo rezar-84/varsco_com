@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /account
+Disallow: /account/
+Disallow: /panel
+Disallow: /cart
+Disallow: /login
+Disallow: /register
+Disallow: /api/
 
-Sitemap: /sitemap.xml
+Sitemap: https://varsco.com/sitemap.xml

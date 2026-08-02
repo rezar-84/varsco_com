@@ -101,8 +101,31 @@ const organizationSchema = {
   },
 };
 
+const SITE_URL = "https://varsco.com";
+const ALTERNATE_LANGS = ["en", "tr", "ar", "de", "ru", "ja", "ko", "zh", "es"] as const;
+
+// Content path is the URL with any /<lang> prefix stripped — used to build
+// self-referencing canonical + hreflang links that match how server.ts
+// rewrites localized requests (see deLocalizeRequest).
+function getContentPath(): string {
+  if (typeof window !== "undefined") {
+    const parts = window.location.pathname.split("/").filter(Boolean);
+    if (parts.length > 0 && (ALTERNATE_LANGS as readonly string[]).includes(parts[0].toLowerCase())) {
+      return "/" + parts.slice(1).join("/");
+    }
+    return window.location.pathname;
+  }
+  const storage = (globalThis as unknown as Record<string, unknown>).serverStorage as
+    { getStore: () => { path?: string } | undefined } | undefined;
+  return storage?.getStore()?.path ?? "/";
+}
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
+  head: () => {
+    const contentPath = getContentPath();
+    const pathSuffix = contentPath === "/" ? "" : contentPath;
+
+    return {
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -152,9 +175,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap",
       },
-      { rel: "alternate", hrefLang: "en", href: "/" },
-      { rel: "alternate", hrefLang: "tr", href: "/" },
-      { rel: "alternate", hrefLang: "x-default", href: "/" },
+      { rel: "canonical", href: `${SITE_URL}${pathSuffix}` },
+      ...ALTERNATE_LANGS.map((l) => ({
+        rel: "alternate",
+        hrefLang: l,
+        href: `${SITE_URL}${l === "en" ? "" : "/" + l}${pathSuffix}`,
+      })),
+      { rel: "alternate", hrefLang: "x-default", href: `${SITE_URL}${pathSuffix}` },
     ],
     scripts: [
       {
@@ -162,7 +189,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify(organizationSchema),
       },
     ],
-  }),
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

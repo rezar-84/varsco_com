@@ -42,7 +42,6 @@ export const Route = createFileRoute("/request-quote")({
       { property: "og:url", content: "/request-quote" },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "/request-quote" }],
   }),
   component: RequestQuotePage,
 });

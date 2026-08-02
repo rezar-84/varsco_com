@@ -1,0 +1,34 @@
+# VARS Aquaculture
+
+> VARS Aquaculture is a B2B supplier of bio-enhanced live feed, hatchery inputs, certified salmon eggs, and Mediterranean seafood, shipped worldwide from Türkiye. Customers are hatcheries, fish farms, feed producers, and seafood importers.
+
+VARS Aquaculture (varsco.com) supplies: fish meal, vital wheat gluten, potato protein meal, and krill meal for feed formulation; certified fertilized Atlantic and Coho salmon eggs plus decapsulated Artemia cysts for hatcheries; live Artemia cysts and Chlorella microalgae for larval rearing; and fresh Mediterranean seafood (sea bass, sea bream, amberjack, trout, flounder, shrimp, blue crab, oyster) for export. The company is based in İzmir, Türkiye, and serves international B2B buyers with cold-chain logistics and TRACES-compliant export documentation. The site is available in English, Turkish, Arabic, German, Russian, Japanese, Korean, Chinese, and Spanish (path-prefixed, e.g. /tr/, /de/).
+
+## Company
+
+- [About Us](https://varsco.com/about-us): Company background, hatchery sourcing, biosecurity protocols, and supply chain.
+- [Services & Solutions](https://varsco.com/services-solutions): B2B services offered.
+- [Projects](https://varsco.com/projects): Case studies and field trials.
+- [Seafood Export](https://varsco.com/seafood-export): Fresh Mediterranean seafood export overview.
+- [Seafood Export from Turkey to Europe](https://varsco.com/seafood-export-from-turkey-to-europe): Regional export logistics detail.
+- [Contact Us](https://varsco.com/contactus)
+- [Request a Quote](https://varsco.com/request-quote): B2B proforma quote request form.
+
+## Products
+
+- [Full Catalog](https://varsco.com/products)
+- [Additives & Raw Materials](https://varsco.com/products/feed-additives): Fish meal, vital wheat gluten, potato protein, krill meal.
+- [Hatchery Solutions & Inputs](https://varsco.com/products/hatchery-solutions): Certified Atlantic and Coho salmon eggs, decapsulated Artemia.
+- [Live Feed for Aquaculture](https://varsco.com/products/live-feed-aquaculture): Artemia cysts, Chlorella microalgae.
+- [Seafood Export](https://varsco.com/products/seafood): Sea bass, sea bream, amberjack, trout, flounder, shrimp, blue crab, oyster.
+
+## Technical Journal
+
+- [Aqua MAG Blog](https://varsco.com/blog): Technical articles on hatchery engineering, live feed nutrition, rotifer culture, and aquaculture biosecurity.
+
+## Optional
+
+- [FAQs](https://varsco.com/faqs)
+- [Privacy Policy](https://varsco.com/privacy)
+- [Terms](https://varsco.com/terms)
+- [Sitemap](https://varsco.com/sitemap.xml)

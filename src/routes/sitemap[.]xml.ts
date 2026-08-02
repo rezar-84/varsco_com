@@ -4,7 +4,7 @@ import { PRODUCTS, CATEGORIES } from "@/lib/mock/products";
 import { BLOG_POSTS } from "@/lib/mock/blog";
 
 const BASE_URL = process.env.VITE_SITE_URL || "https://varsco.com";
-const LANGS = ["en", "tr", "ar", "de", "ru", "ja", "ko"] as const;
+const LANGS = ["en", "tr", "ar", "de", "ru", "ja", "ko", "zh", "es"] as const;
 
 interface Entry {
   path: string;
@@ -58,7 +58,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           .map((e) => {
             const alternates = LANGS.map(
               (l) =>
-                `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE_URL}${e.path}?lang=${l}" />`,
+                `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE_URL}${l === "en" ? "" : "/" + l}${e.path}" />`,
             ).join("\n");
             return [
               `  <url>`,
