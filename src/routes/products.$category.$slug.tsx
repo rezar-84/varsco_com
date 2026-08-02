@@ -368,16 +368,18 @@ function ProductDetail() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {tpMetrics(product.metrics).map((m) => (
-                <div key={m.label} className="glass-card rounded-xl p-4 border border-border/80">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                    {m.label}
+            {product.category !== "seafood" && (
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {tpMetrics(product.metrics).map((m) => (
+                  <div key={m.label} className="glass-card rounded-xl p-4 border border-border/80">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                      {m.label}
+                    </div>
+                    <div className="mt-1 font-display text-xl font-bold text-navy">{m.value}</div>
                   </div>
-                  <div className="mt-1 font-display text-xl font-bold text-navy">{m.value}</div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             <div className="rounded-2xl bg-background p-5 border border-border/80 shadow-sm space-y-4">
               <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -459,6 +461,11 @@ function ProductDetail() {
             <TabsTrigger value="specs" className="rounded-lg font-bold text-xs">
               {t("productDetail.tabs.specifications")}
             </TabsTrigger>
+            {product.category === "seafood" && product.metrics?.length > 0 && (
+              <TabsTrigger value="nutrition" className="rounded-lg font-bold text-xs">
+                {t("productDetail.tabs.nutrition")}
+              </TabsTrigger>
+            )}
             {PRODUCT_DETAILED_TABLES[product.slug] && (
               <TabsTrigger value="composition" className="rounded-lg font-bold text-xs">
                 {t("productDetail.tabs.composition")}
@@ -503,6 +510,32 @@ function ProductDetail() {
               </div>
             </div>
           </TabsContent>
+
+          {product.category === "seafood" && product.metrics?.length > 0 && (
+            <TabsContent value="nutrition" className="mt-6">
+              <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-4">
+                <h3 className="font-display text-lg font-bold text-navy">
+                  {t("productDetail.nutrition.heading")}
+                </h3>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {tpMetrics(product.metrics).map((m) => (
+                    <div
+                      key={m.label}
+                      className="rounded-xl bg-surface-alt/60 border border-border/40 p-4"
+                    >
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                        {m.label}
+                      </div>
+                      <div className="mt-1 font-display text-xl font-bold text-navy">{m.value}</div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed border-t border-border/60 pt-4">
+                  {t("productDetail.nutrition.disclaimer")}
+                </p>
+              </div>
+            </TabsContent>
+          )}
 
           {PRODUCT_DETAILED_TABLES[product.slug] && (
             <TabsContent value="composition" className="mt-6">
