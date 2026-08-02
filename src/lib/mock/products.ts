@@ -106,7 +106,7 @@ export const CATEGORIES: ProductCategory[] = [
     slug: "feed-additives",
     title: "Additives & Raw Materials",
     description:
-      "High-protein feed ingredients and raw materials — fish meal, vital wheat gluten, potato protein and krill meal — engineered for aquaculture growth, digestibility and pellet stability.",
+      "High-protein feed ingredients and raw materials — fish meal, vital wheat gluten and potato protein — engineered for aquaculture growth, digestibility and pellet stability.",
     image: fishMeal.url,
   },
   {
@@ -191,7 +191,7 @@ export const PRODUCTS: Product[] = [
       "anchovy meal",
       "aquafeed protein",
     ],
-    relatedProducts: ["vital-wheat-gluten", "potato-protein-meal", "krill-meal-bio-additives"],
+    relatedProducts: ["vital-wheat-gluten", "potato-protein-meal"],
   },
   {
     slug: "vital-wheat-gluten",
@@ -251,7 +251,7 @@ export const PRODUCTS: Product[] = [
       "plant protein binder",
       "gluten powder",
     ],
-    relatedProducts: ["potato-protein-meal", "fish-meal", "krill-meal-bio-additives"],
+    relatedProducts: ["potato-protein-meal", "fish-meal"],
   },
   {
     slug: "potato-protein-meal",
@@ -306,52 +306,6 @@ export const PRODUCTS: Product[] = [
       "non gmo plant protein",
     ],
   },
-  {
-    slug: "krill-meal-bio-additives",
-    category: "feed-additives",
-    title: "Krill Meal & Bio-Additives",
-    tagline:
-      "Natural astaxanthin, omega-3 phospholipids and palatability stimulant for premium marine feeds.",
-    tags: ["Astaxanthin 150ppm", "Phospholipids 40%", "Palatability Enhancer"],
-    description:
-      "Krill Meal & Bio-Additives deliver natural astaxanthin pigmentation, marine phospholipids and powerful feeding attractants. Essential for broodstock conditioning, fry transition diets, and fillet color enhancement in salmon and trout.",
-    highlights: [
-      "Natural Astaxanthin ≥ 150 ppm",
-      "Phospholipid-bound Omega-3 fatty acids",
-      "Stimulates feeding response in stressed larvae",
-      "Enhances skin & fillet pigmentation naturally",
-    ],
-    metrics: [
-      { label: "Protein", value: "≥ 60%" },
-      { label: "Fat (Lipids)", value: "≥ 22%" },
-      { label: "Astaxanthin", value: "150 ppm" },
-      { label: "Ash", value: "≤ 11%" },
-    ],
-    specifications: [
-      { label: "Product Form", value: "Fine marine meal powder" },
-      { label: "Packaging", value: "20 kg nitrogen-flushed vacuum bags" },
-      { label: "Storage Temp.", value: "Cool warehouse < 15 °C" },
-    ],
-    applications: ["Broodstock conditioning", "Larval weaning diets", "Salmonid pigmentation"],
-    storage:
-      "Store in cool, dark place. Nitrogen-flushed packaging recommended to prevent lipid oxidation.",
-    image: fishMeal.url,
-    seoKeywords: [
-      "krill meal wholesale",
-      "astaxanthin aquafeed",
-      "marine phospholipids",
-      "broodstock attractant",
-      "salmonid pigmentation meal",
-    ],
-    searchSynonyms: [
-      "krill powder",
-      "natural astaxanthin",
-      "palatability enhancer",
-      "krill bio-additive",
-      "feeding attractant",
-    ],
-  },
-
   // ────────────────── Hatchery Solutions ──────────────────
   {
     slug: "atlantic-salmon-egg",
