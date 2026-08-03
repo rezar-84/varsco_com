@@ -27,7 +27,12 @@ export const Route = createFileRoute("/shop/$slug")({
     // Prefer Odoo's own curated alternative_product_ids (an admin explicitly
     // chose these) over the category-based heuristic — only fall back to
     // "same category" when nothing's been curated for this product yet.
-    let related: CatalogItemSummary[] = result.data.alternative_products ?? [];
+    // Excludes self defensively: nothing stops an admin from curating a
+    // product into its own alternative_product_ids in Odoo, which would
+    // otherwise render this exact product a second time on its own page.
+    let related: CatalogItemSummary[] = (result.data.alternative_products ?? []).filter(
+      (p) => p.slug !== params.slug,
+    );
     const categorySlug = result.data.category?.slug;
     if (related.length === 0 && categorySlug) {
       const { data: allProducts } = await loadStoreProducts();

@@ -1,6 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { Search, ShoppingBag, X, SlidersHorizontal } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Search,
+  ShoppingBag,
+  X,
+  SlidersHorizontal,
+  LayoutGrid,
+  List,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Section, PageHero } from "@/components/layout/Page";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,6 +31,9 @@ import { formatPrice } from "@/lib/utils/price";
 import type { CatalogItemSummary } from "@/lib/api/types";
 
 type SortOption = "featured" | "name-asc" | "price-asc" | "price-desc";
+type ViewMode = "grid" | "list";
+
+const PAGE_SIZE = 12;
 
 export const Route = createFileRoute("/shop/")({
   loader: async () => {
@@ -60,6 +72,8 @@ function ShopIndex() {
   const [selectedCats, setSelectedCats] = useState<Set<string>>(new Set());
   const [inStockOnly, setInStockOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("featured");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [page, setPage] = useState(1);
 
   const fullPriceBounds = useMemo(() => priceBoundsOf(products), [products]);
   const productsCurrency = useMemo(() => currencyOf(products), [products]);
@@ -130,6 +144,23 @@ function ShopIndex() {
     }
     return sorted;
   }, [products, selectedCats, query, inStockOnly, sortBy, hasPriceFilter, priceRange]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+
+  // Any filter/sort change can shrink the result set below the current
+  // page's range — reset to page 1 rather than showing an empty page.
+  useEffect(() => {
+    setPage(1);
+  }, [selectedCats, query, inStockOnly, sortBy, priceRange]);
+
+  useEffect(() => {
+    if (page > pageCount) setPage(pageCount);
+  }, [page, pageCount]);
+
+  const paginated = useMemo(
+    () => filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [filtered, page],
+  );
 
   return (
     <>
@@ -265,6 +296,37 @@ function ShopIndex() {
                     <SelectItem value="price-desc">{t("store.sort.priceDesc")}</SelectItem>
                   </SelectContent>
                 </Select>
+
+                <div className="flex shrink-0 items-center gap-1 rounded-xl border border-border/80 bg-background p-1 shadow-sm">
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("grid")}
+                    aria-label={t("store.view.grid")}
+                    aria-pressed={viewMode === "grid"}
+                    className={cn(
+                      "rounded-lg p-1.5 transition-colors",
+                      viewMode === "grid"
+                        ? "bg-navy text-white"
+                        : "text-navy/60 hover:bg-muted hover:text-navy",
+                    )}
+                  >
+                    <LayoutGrid className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("list")}
+                    aria-label={t("store.view.list")}
+                    aria-pressed={viewMode === "list"}
+                    className={cn(
+                      "rounded-lg p-1.5 transition-colors",
+                      viewMode === "list"
+                        ? "bg-navy text-white"
+                        : "text-navy/60 hover:bg-muted hover:text-navy",
+                    )}
+                  >
+                    <List className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center justify-between pb-2 border-b border-border/60">
@@ -273,11 +335,50 @@ function ShopIndex() {
                 </span>
               </div>
 
-              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                {filtered.map((p) => (
-                  <StoreProductCard key={p.slug} product={p} />
+              <div className={cn(viewMode === "grid" ? "grid gap-6 sm:grid-cols-2" : "space-y-4")}>
+                {paginated.map((p) => (
+                  <StoreProductCard key={p.slug} product={p} layout={viewMode} />
                 ))}
               </div>
+
+              {pageCount > 1 && (
+                <div className="flex items-center justify-center gap-1.5 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    aria-label={t("store.pagination.previous")}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-border/80 bg-background text-navy hover:bg-muted disabled:opacity-40 disabled:pointer-events-none"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      onClick={() => setPage(n)}
+                      aria-current={n === page}
+                      className={cn(
+                        "inline-flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold transition-colors",
+                        n === page
+                          ? "bg-navy text-white"
+                          : "border border-border/80 bg-background text-navy hover:bg-muted",
+                      )}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                    disabled={page === pageCount}
+                    aria-label={t("store.pagination.next")}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-border/80 bg-background text-navy hover:bg-muted disabled:opacity-40 disabled:pointer-events-none"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
 
               {filtered.length === 0 && (
                 <div className="text-center py-16 space-y-4 glass-card rounded-3xl p-8 border border-border">
