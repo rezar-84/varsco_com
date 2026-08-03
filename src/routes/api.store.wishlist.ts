@@ -1,21 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { ContentApiClient } from "@/lib/api/client";
 import { ApiError, ApiNotFoundError, ApiUnauthorizedError } from "@/lib/api/types";
+import { sessionIdFrom, sessionApiClient } from "@/lib/api/bff-session";
 
 const addSchema = z.object({ product_id: z.number() });
-
-function sessionIdFrom(request: Request): string | null {
-  const cookieHeader = request.headers.get("cookie") || "";
-  const match = cookieHeader.match(/vars_session=([^;]+)/);
-  return match ? match[1] : null;
-}
-
-function apiClient(sessionId: string) {
-  const baseUrl = process.env.VITE_ODOO_BASE_URL || "http://localhost:8069";
-  const writeToken = process.env.ODOO_WRITE_TOKEN;
-  return new ContentApiClient({ baseUrl, writeToken, sessionId });
-}
 
 export const Route = createFileRoute("/api/store/wishlist")({
   server: {
@@ -32,7 +20,7 @@ export const Route = createFileRoute("/api/store/wishlist")({
           );
         }
         try {
-          const result = await apiClient(sessionId).listWishlist();
+          const result = await sessionApiClient(sessionId).listWishlist();
           return new Response(JSON.stringify(result), {
             status: 200,
             headers: { "Content-Type": "application/json" },
@@ -77,7 +65,7 @@ export const Route = createFileRoute("/api/store/wishlist")({
         }
 
         try {
-          const result = await apiClient(sessionId).addToWishlist(validated.data.product_id);
+          const result = await sessionApiClient(sessionId).addToWishlist(validated.data.product_id);
           return new Response(JSON.stringify(result), {
             status: 201,
             headers: { "Content-Type": "application/json" },

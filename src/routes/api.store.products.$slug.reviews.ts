@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { ContentApiClient } from "@/lib/api/client";
 import { ApiError, ApiNotFoundError, ApiUnauthorizedError } from "@/lib/api/types";
 import { getProductReviews } from "@/lib/api/store-data";
+import { sessionIdFrom, sessionApiClient } from "@/lib/api/bff-session";
 import type { LocaleCode } from "@/lib/api/types";
 
 const reviewSchema = z.object({
@@ -34,10 +34,8 @@ export const Route = createFileRoute("/api/store/products/$slug/reviews")({
       },
 
       POST: async ({ request, params }) => {
-        const cookieHeader = request.headers.get("cookie") || "";
-        const sessionMatch = cookieHeader.match(/vars_session=([^;]+)/);
-
-        if (!sessionMatch) {
+        const sessionId = sessionIdFrom(request);
+        if (!sessionId) {
           return new Response(
             JSON.stringify({ error: "unauthorized", message: "Please log in to write a review" }),
             { status: 401, headers: { "Content-Type": "application/json" } },
@@ -58,13 +56,13 @@ export const Route = createFileRoute("/api/store/products/$slug/reviews")({
 
         const url = new URL(request.url);
         const locale = (url.searchParams.get("locale") || "en") as LocaleCode;
-        const sessionId = sessionMatch[1];
-        const baseUrl = process.env.VITE_ODOO_BASE_URL || "http://localhost:8069";
-        const writeToken = process.env.ODOO_WRITE_TOKEN;
-        const apiClient = new ContentApiClient({ baseUrl, writeToken, sessionId });
 
         try {
-          const result = await apiClient.submitProductReview(locale, params.slug, validated.data);
+          const result = await sessionApiClient(sessionId).submitProductReview(
+            locale,
+            params.slug,
+            validated.data,
+          );
           return new Response(JSON.stringify(result), {
             status: 201,
             headers: { "Content-Type": "application/json" },

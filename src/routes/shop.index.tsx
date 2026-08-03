@@ -65,8 +65,6 @@ function ShopIndex() {
   const productsCurrency = useMemo(() => currencyOf(products), [products]);
   const [priceRange, setPriceRange] = useState<[number, number]>(fullPriceBounds);
   const hasPriceFilter = fullPriceBounds[0] !== fullPriceBounds[1];
-  const activePriceRange =
-    priceRange[0] === 0 && priceRange[1] === 0 ? fullPriceBounds : priceRange;
 
   const categories = useMemo(() => {
     const map = new Map<string, { slug: string; name: string }>();
@@ -98,7 +96,7 @@ function ShopIndex() {
     selectedCats.size > 0 ||
     inStockOnly ||
     (hasPriceFilter &&
-      (activePriceRange[0] !== fullPriceBounds[0] || activePriceRange[1] !== fullPriceBounds[1]));
+      (priceRange[0] !== fullPriceBounds[0] || priceRange[1] !== fullPriceBounds[1]));
 
   const filtered = useMemo(() => {
     const matches = products.filter((p) => {
@@ -111,7 +109,7 @@ function ShopIndex() {
       const matchesPrice =
         !hasPriceFilter ||
         amount === undefined ||
-        (amount >= activePriceRange[0] && amount <= activePriceRange[1]);
+        (amount >= priceRange[0] && amount <= priceRange[1]);
       return matchesCat && matchesQuery && matchesStock && matchesPrice;
     });
 
@@ -131,7 +129,7 @@ function ShopIndex() {
         break;
     }
     return sorted;
-  }, [products, selectedCats, query, inStockOnly, sortBy, hasPriceFilter, activePriceRange]);
+  }, [products, selectedCats, query, inStockOnly, sortBy, hasPriceFilter, priceRange]);
 
   return (
     <>
@@ -214,15 +212,15 @@ function ShopIndex() {
                     min={fullPriceBounds[0]}
                     max={fullPriceBounds[1]}
                     step={1}
-                    value={activePriceRange}
+                    value={priceRange}
                     onValueChange={(v) => setPriceRange(v as [number, number])}
                   />
                   <div className="flex items-center justify-between text-[11px] font-bold text-navy">
                     <span>
-                      {formatPrice({ amount: activePriceRange[0], currency: productsCurrency })}
+                      {formatPrice({ amount: priceRange[0], currency: productsCurrency })}
                     </span>
                     <span>
-                      {formatPrice({ amount: activePriceRange[1], currency: productsCurrency })}
+                      {formatPrice({ amount: priceRange[1], currency: productsCurrency })}
                     </span>
                   </div>
                 </div>

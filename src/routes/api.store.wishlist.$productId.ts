@@ -1,14 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentApiClient } from "@/lib/api/client";
 import { ApiUnauthorizedError } from "@/lib/api/types";
+import { sessionIdFrom, sessionApiClient } from "@/lib/api/bff-session";
 
 export const Route = createFileRoute("/api/store/wishlist/$productId")({
   server: {
     handlers: {
       DELETE: async ({ request, params }) => {
-        const cookieHeader = request.headers.get("cookie") || "";
-        const sessionMatch = cookieHeader.match(/vars_session=([^;]+)/);
-        if (!sessionMatch) {
+        const sessionId = sessionIdFrom(request);
+        if (!sessionId) {
           return new Response(
             JSON.stringify({
               error: "unauthorized",
@@ -26,12 +25,8 @@ export const Route = createFileRoute("/api/store/wishlist/$productId")({
           });
         }
 
-        const baseUrl = process.env.VITE_ODOO_BASE_URL || "http://localhost:8069";
-        const writeToken = process.env.ODOO_WRITE_TOKEN;
-        const apiClient = new ContentApiClient({ baseUrl, writeToken, sessionId: sessionMatch[1] });
-
         try {
-          const result = await apiClient.removeFromWishlist(productId);
+          const result = await sessionApiClient(sessionId).removeFromWishlist(productId);
           return new Response(JSON.stringify(result), {
             status: 200,
             headers: { "Content-Type": "application/json" },
