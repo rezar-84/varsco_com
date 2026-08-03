@@ -28,7 +28,10 @@ interface StoreCartContextValue {
   clear: () => void;
   openDrawer: () => void;
   closeDrawer: () => void;
-  submitOrder: () => Promise<StoreCheckoutResult>;
+  submitOrder: (addresses?: {
+    shipping_partner_id?: number;
+    billing_partner_id?: number;
+  }) => Promise<StoreCheckoutResult>;
 }
 
 const StoreCartContext = createContext<StoreCartContextValue | null>(null);
@@ -117,7 +120,7 @@ export function StoreCartProvider({ children }: { children: ReactNode }) {
         clear,
         openDrawer: () => setIsOpen(true),
         closeDrawer: () => setIsOpen(false),
-        submitOrder: async () => {
+        submitOrder: async (addresses) => {
           const response = await fetch("/api/store/checkout", {
             method: "POST",
             headers: {
@@ -125,6 +128,8 @@ export function StoreCartProvider({ children }: { children: ReactNode }) {
             },
             body: JSON.stringify({
               items: items.map((i) => ({ product_id: i.productId, qty: i.quantity })),
+              shipping_partner_id: addresses?.shipping_partner_id,
+              billing_partner_id: addresses?.billing_partner_id,
             }),
           });
           if (!response.ok) {

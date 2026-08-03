@@ -215,6 +215,36 @@ export interface ReviewsListEnvelope {
   };
 }
 
+export type AddressType = "invoice" | "delivery";
+
+export interface Address {
+  id: number;
+  type: AddressType;
+  name: string;
+  street: string;
+  street2: string;
+  city: string;
+  zip: string;
+  state: string;
+  country: string;
+  phone: string;
+}
+
+export interface AddressInput {
+  type: AddressType;
+  name: string;
+  street: string;
+  street2?: string;
+  city: string;
+  zip?: string;
+  country: string;
+  phone?: string;
+}
+
+export interface AddressListEnvelope {
+  data: Address[];
+}
+
 export interface CatalogItemDetail extends CatalogItemSummary {
   eyebrow: string;
   description_html: string;

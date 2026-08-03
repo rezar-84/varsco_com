@@ -36,6 +36,7 @@ import { Route as ServicesSolutionsRouteImport } from './routes/services-solutio
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
+import { Route as AccountAddressesRouteImport } from './routes/account.addresses'
 import { Route as AccountCustomsRouteImport } from './routes/account.customs'
 import { Route as AccountOrdersRouteImport } from './routes/account.orders'
 import { Route as AccountProfileRouteImport } from './routes/account.profile'
@@ -55,6 +56,7 @@ import { Route as ApiAuthRegisterRouteImport } from './routes/api.auth.register'
 import { Route as ApiPortalCustomsRouteImport } from './routes/api.portal.customs'
 import { Route as ApiPortalOrdersRouteImport } from './routes/api.portal.orders'
 import { Route as ApiPortalProfileRouteImport } from './routes/api.portal.profile'
+import { Route as ApiStoreAddressesRouteImport } from './routes/api.store.addresses'
 import { Route as ApiStoreCheckoutRouteImport } from './routes/api.store.checkout'
 import { Route as ApiStoreProductsRouteImport } from './routes/api.store.products'
 import { Route as ApiStoreWishlistRouteImport } from './routes/api.store.wishlist'
@@ -63,6 +65,7 @@ import { Route as BlogCategorySlugRouteImport } from './routes/blog.$category.$s
 import { Route as ProductsCategoryIndexRouteImport } from './routes/products.$category.index'
 import { Route as ProductsCategorySlugRouteImport } from './routes/products.$category.$slug'
 import { Route as ShopCategorySlugRouteImport } from './routes/shop.category.$slug'
+import { Route as ApiStoreAddressesIdRouteImport } from './routes/api.store.addresses.$id'
 import { Route as ApiStoreProductsSlugRouteImport } from './routes/api.store.products.$slug'
 import { Route as ApiStoreWishlistProductIdRouteImport } from './routes/api.store.wishlist.$productId'
 import { Route as ApiStoreProductsSlugReviewsRouteImport } from './routes/api.store.products.$slug.reviews'
@@ -206,6 +209,11 @@ const AccountIndexRoute = AccountIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AccountRoute,
 } as any)
+const AccountAddressesRoute = AccountAddressesRouteImport.update({
+  id: '/addresses',
+  path: '/addresses',
+  getParentRoute: () => AccountRoute,
+} as any)
 const AccountCustomsRoute = AccountCustomsRouteImport.update({
   id: '/customs',
   path: '/customs',
@@ -301,6 +309,11 @@ const ApiPortalProfileRoute = ApiPortalProfileRouteImport.update({
   path: '/api/portal/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiStoreAddressesRoute = ApiStoreAddressesRouteImport.update({
+  id: '/api/store/addresses',
+  path: '/api/store/addresses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiStoreCheckoutRoute = ApiStoreCheckoutRouteImport.update({
   id: '/api/store/checkout',
   path: '/api/store/checkout',
@@ -340,6 +353,11 @@ const ShopCategorySlugRoute = ShopCategorySlugRouteImport.update({
   id: '/shop/category/$slug',
   path: '/shop/category/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStoreAddressesIdRoute = ApiStoreAddressesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiStoreAddressesRoute,
 } as any)
 const ApiStoreProductsSlugRoute = ApiStoreProductsSlugRouteImport.update({
   id: '/$slug',
@@ -386,6 +404,7 @@ export interface FileRoutesByFullPath {
   '/services-solutions': typeof ServicesSolutionsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/account/addresses': typeof AccountAddressesRoute
   '/account/customs': typeof AccountCustomsRoute
   '/account/orders': typeof AccountOrdersRoute
   '/account/profile': typeof AccountProfileRoute
@@ -406,6 +425,7 @@ export interface FileRoutesByFullPath {
   '/api/portal/customs': typeof ApiPortalCustomsRoute
   '/api/portal/orders': typeof ApiPortalOrdersRoute
   '/api/portal/profile': typeof ApiPortalProfileRoute
+  '/api/store/addresses': typeof ApiStoreAddressesRouteWithChildren
   '/api/store/checkout': typeof ApiStoreCheckoutRoute
   '/api/store/products': typeof ApiStoreProductsRouteWithChildren
   '/api/store/wishlist': typeof ApiStoreWishlistRouteWithChildren
@@ -414,6 +434,7 @@ export interface FileRoutesByFullPath {
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
   '/products/$category/': typeof ProductsCategoryIndexRoute
+  '/api/store/addresses/$id': typeof ApiStoreAddressesIdRoute
   '/api/store/products/$slug': typeof ApiStoreProductsSlugRouteWithChildren
   '/api/store/wishlist/$productId': typeof ApiStoreWishlistProductIdRoute
   '/api/store/products/$slug/reviews': typeof ApiStoreProductsSlugReviewsRoute
@@ -444,6 +465,7 @@ export interface FileRoutesByTo {
   '/services-solutions': typeof ServicesSolutionsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/account/addresses': typeof AccountAddressesRoute
   '/account/customs': typeof AccountCustomsRoute
   '/account/orders': typeof AccountOrdersRoute
   '/account/profile': typeof AccountProfileRoute
@@ -464,6 +486,7 @@ export interface FileRoutesByTo {
   '/api/portal/customs': typeof ApiPortalCustomsRoute
   '/api/portal/orders': typeof ApiPortalOrdersRoute
   '/api/portal/profile': typeof ApiPortalProfileRoute
+  '/api/store/addresses': typeof ApiStoreAddressesRouteWithChildren
   '/api/store/checkout': typeof ApiStoreCheckoutRoute
   '/api/store/products': typeof ApiStoreProductsRouteWithChildren
   '/api/store/wishlist': typeof ApiStoreWishlistRouteWithChildren
@@ -472,6 +495,7 @@ export interface FileRoutesByTo {
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category': typeof BlogCategoryIndexRoute
   '/products/$category': typeof ProductsCategoryIndexRoute
+  '/api/store/addresses/$id': typeof ApiStoreAddressesIdRoute
   '/api/store/products/$slug': typeof ApiStoreProductsSlugRouteWithChildren
   '/api/store/wishlist/$productId': typeof ApiStoreWishlistProductIdRoute
   '/api/store/products/$slug/reviews': typeof ApiStoreProductsSlugReviewsRoute
@@ -504,6 +528,7 @@ export interface FileRoutesById {
   '/services-solutions': typeof ServicesSolutionsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/account/addresses': typeof AccountAddressesRoute
   '/account/customs': typeof AccountCustomsRoute
   '/account/orders': typeof AccountOrdersRoute
   '/account/profile': typeof AccountProfileRoute
@@ -524,6 +549,7 @@ export interface FileRoutesById {
   '/api/portal/customs': typeof ApiPortalCustomsRoute
   '/api/portal/orders': typeof ApiPortalOrdersRoute
   '/api/portal/profile': typeof ApiPortalProfileRoute
+  '/api/store/addresses': typeof ApiStoreAddressesRouteWithChildren
   '/api/store/checkout': typeof ApiStoreCheckoutRoute
   '/api/store/products': typeof ApiStoreProductsRouteWithChildren
   '/api/store/wishlist': typeof ApiStoreWishlistRouteWithChildren
@@ -532,6 +558,7 @@ export interface FileRoutesById {
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
   '/products/$category/': typeof ProductsCategoryIndexRoute
+  '/api/store/addresses/$id': typeof ApiStoreAddressesIdRoute
   '/api/store/products/$slug': typeof ApiStoreProductsSlugRouteWithChildren
   '/api/store/wishlist/$productId': typeof ApiStoreWishlistProductIdRoute
   '/api/store/products/$slug/reviews': typeof ApiStoreProductsSlugReviewsRoute
@@ -565,6 +592,7 @@ export interface FileRouteTypes {
     | '/services-solutions'
     | '/sitemap.xml'
     | '/terms'
+    | '/account/addresses'
     | '/account/customs'
     | '/account/orders'
     | '/account/profile'
@@ -585,6 +613,7 @@ export interface FileRouteTypes {
     | '/api/portal/customs'
     | '/api/portal/orders'
     | '/api/portal/profile'
+    | '/api/store/addresses'
     | '/api/store/checkout'
     | '/api/store/products'
     | '/api/store/wishlist'
@@ -593,6 +622,7 @@ export interface FileRouteTypes {
     | '/shop/category/$slug'
     | '/blog/$category/'
     | '/products/$category/'
+    | '/api/store/addresses/$id'
     | '/api/store/products/$slug'
     | '/api/store/wishlist/$productId'
     | '/api/store/products/$slug/reviews'
@@ -623,6 +653,7 @@ export interface FileRouteTypes {
     | '/services-solutions'
     | '/sitemap.xml'
     | '/terms'
+    | '/account/addresses'
     | '/account/customs'
     | '/account/orders'
     | '/account/profile'
@@ -643,6 +674,7 @@ export interface FileRouteTypes {
     | '/api/portal/customs'
     | '/api/portal/orders'
     | '/api/portal/profile'
+    | '/api/store/addresses'
     | '/api/store/checkout'
     | '/api/store/products'
     | '/api/store/wishlist'
@@ -651,6 +683,7 @@ export interface FileRouteTypes {
     | '/shop/category/$slug'
     | '/blog/$category'
     | '/products/$category'
+    | '/api/store/addresses/$id'
     | '/api/store/products/$slug'
     | '/api/store/wishlist/$productId'
     | '/api/store/products/$slug/reviews'
@@ -682,6 +715,7 @@ export interface FileRouteTypes {
     | '/services-solutions'
     | '/sitemap.xml'
     | '/terms'
+    | '/account/addresses'
     | '/account/customs'
     | '/account/orders'
     | '/account/profile'
@@ -702,6 +736,7 @@ export interface FileRouteTypes {
     | '/api/portal/customs'
     | '/api/portal/orders'
     | '/api/portal/profile'
+    | '/api/store/addresses'
     | '/api/store/checkout'
     | '/api/store/products'
     | '/api/store/wishlist'
@@ -710,6 +745,7 @@ export interface FileRouteTypes {
     | '/shop/category/$slug'
     | '/blog/$category/'
     | '/products/$category/'
+    | '/api/store/addresses/$id'
     | '/api/store/products/$slug'
     | '/api/store/wishlist/$productId'
     | '/api/store/products/$slug/reviews'
@@ -757,6 +793,7 @@ export interface RootRouteChildren {
   ApiPortalCustomsRoute: typeof ApiPortalCustomsRoute
   ApiPortalOrdersRoute: typeof ApiPortalOrdersRoute
   ApiPortalProfileRoute: typeof ApiPortalProfileRoute
+  ApiStoreAddressesRoute: typeof ApiStoreAddressesRouteWithChildren
   ApiStoreCheckoutRoute: typeof ApiStoreCheckoutRoute
   ApiStoreProductsRoute: typeof ApiStoreProductsRouteWithChildren
   ApiStoreWishlistRoute: typeof ApiStoreWishlistRouteWithChildren
@@ -958,6 +995,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountIndexRouteImport
       parentRoute: typeof AccountRoute
     }
+    '/account/addresses': {
+      id: '/account/addresses'
+      path: '/addresses'
+      fullPath: '/account/addresses'
+      preLoaderRoute: typeof AccountAddressesRouteImport
+      parentRoute: typeof AccountRoute
+    }
     '/account/customs': {
       id: '/account/customs'
       path: '/customs'
@@ -1091,6 +1135,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPortalProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/store/addresses': {
+      id: '/api/store/addresses'
+      path: '/api/store/addresses'
+      fullPath: '/api/store/addresses'
+      preLoaderRoute: typeof ApiStoreAddressesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/store/checkout': {
       id: '/api/store/checkout'
       path: '/api/store/checkout'
@@ -1147,6 +1198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/store/addresses/$id': {
+      id: '/api/store/addresses/$id'
+      path: '/$id'
+      fullPath: '/api/store/addresses/$id'
+      preLoaderRoute: typeof ApiStoreAddressesIdRouteImport
+      parentRoute: typeof ApiStoreAddressesRoute
+    }
     '/api/store/products/$slug': {
       id: '/api/store/products/$slug'
       path: '/$slug'
@@ -1172,6 +1230,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AccountRouteChildren {
+  AccountAddressesRoute: typeof AccountAddressesRoute
   AccountCustomsRoute: typeof AccountCustomsRoute
   AccountOrdersRoute: typeof AccountOrdersRoute
   AccountProfileRoute: typeof AccountProfileRoute
@@ -1180,6 +1239,7 @@ interface AccountRouteChildren {
 }
 
 const AccountRouteChildren: AccountRouteChildren = {
+  AccountAddressesRoute: AccountAddressesRoute,
   AccountCustomsRoute: AccountCustomsRoute,
   AccountOrdersRoute: AccountOrdersRoute,
   AccountProfileRoute: AccountProfileRoute,
@@ -1189,6 +1249,17 @@ const AccountRouteChildren: AccountRouteChildren = {
 
 const AccountRouteWithChildren =
   AccountRoute._addFileChildren(AccountRouteChildren)
+
+interface ApiStoreAddressesRouteChildren {
+  ApiStoreAddressesIdRoute: typeof ApiStoreAddressesIdRoute
+}
+
+const ApiStoreAddressesRouteChildren: ApiStoreAddressesRouteChildren = {
+  ApiStoreAddressesIdRoute: ApiStoreAddressesIdRoute,
+}
+
+const ApiStoreAddressesRouteWithChildren =
+  ApiStoreAddressesRoute._addFileChildren(ApiStoreAddressesRouteChildren)
 
 interface ApiStoreProductsSlugRouteChildren {
   ApiStoreProductsSlugReviewsRoute: typeof ApiStoreProductsSlugReviewsRoute
@@ -1265,6 +1336,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPortalCustomsRoute: ApiPortalCustomsRoute,
   ApiPortalOrdersRoute: ApiPortalOrdersRoute,
   ApiPortalProfileRoute: ApiPortalProfileRoute,
+  ApiStoreAddressesRoute: ApiStoreAddressesRouteWithChildren,
   ApiStoreCheckoutRoute: ApiStoreCheckoutRoute,
   ApiStoreProductsRoute: ApiStoreProductsRouteWithChildren,
   ApiStoreWishlistRoute: ApiStoreWishlistRouteWithChildren,

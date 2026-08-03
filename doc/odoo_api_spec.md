@@ -170,3 +170,27 @@ Used for authenticated portal panels under `/account/*`. The Astro server acts a
 - **Odoo Action**: Re-validates every line against `item_type == "purchasable_now"` and live stock, resolves the ordering partner from the session (both `shipping_partner_id`/`billing_partner_id` are optional overrides — omit them to default to the authenticated partner), and creates a draft Sales Order (`sale.order`).
 - **Response**: `{ "order_id": 1021, "amount_total": 9800.0, "currency": "TRY", "payment_url": "https://erp.varsco.com/my/orders/1021?access_token=..." }`
   - `payment_url` is **optional** — present only when a compatible `payment.provider` (e.g. Iyzico) is configured for the order. When present, it's the order's Odoo customer-portal URL: redirect the browser there to complete payment (Odoo's own `payment`/`payment_iyzico` modules handle the entire redirect/webhook/confirmation cycle natively — nothing else to implement on the frontend side for that flow). When absent, treat the order the same as before: a draft order was created, no online payment is available for it, and a human follow-up completes the sale.
+
+### 2.5 Address Book Endpoints (Session-Cookie Authenticated)
+
+Backed by plain `res.partner` child contacts (`type` in `invoice`/`delivery`) of the authenticated partner — not a new model. These are the *extra* addresses a buyer can save and pick between; the buyer's own partner record (used by default when `shipping_partner_id`/`billing_partner_id` are omitted from checkout) is managed separately via `PUT /api/v1/portal/profile`.
+
+#### `GET /api/v1/store/addresses`
+
+- **Response**: `{ "data": [{ "id": 501, "type": "delivery", "name": "Warehouse A", "street": "123 Harbor Rd", "street2": "", "city": "Izmir", "zip": "", "state": "", "country": "Türkiye", "phone": "" }] }`
+- 401 if not authenticated.
+
+#### `POST /api/v1/store/addresses`
+
+- **Request Payload**: `{ "type": "delivery", "name": "Warehouse A", "street": "123 Harbor Rd", "street2": "", "city": "Izmir", "zip": "", "country": "Türkiye", "phone": "" }`
+  - `type` (`invoice`|`delivery`), `name`, `street`, `city`, `country` are required. `country` is free-text, resolved the same way `portal_register`/`portal_profile_update` already do (exact name match, a couple of known aliases, then ISO alpha-2 code as a last resort).
+- **Response**: `201` + the created address in the same shape as the list endpoint. `400` for a missing required field, invalid `type`, or unresolvable `country`. `401` if not authenticated.
+
+#### `PUT /api/v1/store/addresses/{id}`
+
+- **Request Payload**: any subset of the writable fields above.
+- **Response**: `200` + the updated address. `404` if `{id}` isn't a child contact of the authenticated partner (never leaks whether an address belongs to someone else). `401` if not authenticated.
+
+#### `DELETE /api/v1/store/addresses/{id}`
+
+- **Response**: `200` on success. `404` for the same ownership reason as `PUT`. `409 address_in_use` if the address is still referenced as a `shipping_partner_id`/`billing_partner_id` on an existing sales order — archive/reassign that order first, the address book has no force-delete.

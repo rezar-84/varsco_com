@@ -2,11 +2,25 @@ import { createFileRoute, Link, useRouter, useRouterState } from "@tanstack/reac
 import { useEffect, useState } from "react";
 import { Loader2, Minus, Plus, Trash2, ShieldCheck, ShoppingBag, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Section, PageHero } from "@/components/layout/Page";
 import { useStoreCart } from "@/context/StoreCartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
 import { formatPrice } from "@/lib/utils/price";
+import type { Address } from "@/lib/api/types";
+
+const DEFAULT_ADDRESS_VALUE = "default";
+
+function addressLabel(address: Address) {
+  return `${address.name} — ${address.street}, ${address.city}`;
+}
 
 export const Route = createFileRoute("/shop/checkout")({
   head: () => ({
@@ -24,12 +38,23 @@ function ShopCheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
+  const [addresses, setAddresses] = useState<Address[]>([]);
+  const [shippingId, setShippingId] = useState<string>(DEFAULT_ADDRESS_VALUE);
+  const [billingId, setBillingId] = useState<string>(DEFAULT_ADDRESS_VALUE);
 
   useEffect(() => {
     if (!isLoading && !user) {
       router.navigate({ to: "/login", search: { redirect: pathname } as Record<string, string> });
     }
   }, [user, isLoading, router, pathname]);
+
+  useEffect(() => {
+    if (!user) return;
+    fetch("/api/store/addresses")
+      .then((r) => (r.ok ? r.json() : { data: [] }))
+      .then((payload) => setAddresses(payload.data ?? []))
+      .catch(() => setAddresses([]));
+  }, [user]);
 
   if (isLoading || !user) {
     return (
@@ -43,7 +68,10 @@ function ShopCheckoutPage() {
     setSubmitting(true);
     setResult(null);
     try {
-      const checkoutResult = await submitOrder();
+      const checkoutResult = await submitOrder({
+        shipping_partner_id: shippingId === DEFAULT_ADDRESS_VALUE ? undefined : Number(shippingId),
+        billing_partner_id: billingId === DEFAULT_ADDRESS_VALUE ? undefined : Number(billingId),
+      });
       if (checkoutResult.payment_url) {
         setPaymentUrl(checkoutResult.payment_url);
         window.location.href = checkoutResult.payment_url;
@@ -198,6 +226,51 @@ function ShopCheckoutPage() {
                   <span className="font-bold">{items.length}</span>
                 </div>
               </div>
+
+              {addresses.length > 0 && (
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      {t("store.checkout.shippingAddress")}
+                    </label>
+                    <Select value={shippingId} onValueChange={setShippingId}>
+                      <SelectTrigger className="mt-1.5 h-10 rounded-xl border-border/80 bg-background text-xs font-semibold">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value={DEFAULT_ADDRESS_VALUE}>
+                          {t("store.checkout.useAccountAddress")}
+                        </SelectItem>
+                        {addresses.map((address) => (
+                          <SelectItem key={address.id} value={String(address.id)}>
+                            {addressLabel(address)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      {t("store.checkout.billingAddress")}
+                    </label>
+                    <Select value={billingId} onValueChange={setBillingId}>
+                      <SelectTrigger className="mt-1.5 h-10 rounded-xl border-border/80 bg-background text-xs font-semibold">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value={DEFAULT_ADDRESS_VALUE}>
+                          {t("store.checkout.useAccountAddress")}
+                        </SelectItem>
+                        {addresses.map((address) => (
+                          <SelectItem key={address.id} value={String(address.id)}>
+                            {addressLabel(address)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
 
               {result && !result.ok && (
                 <p className="text-xs font-semibold text-destructive">{result.message}</p>

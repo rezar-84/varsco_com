@@ -1,6 +1,14 @@
 import { createFileRoute, Link, Outlet, useRouter, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LayoutDashboard, Package, User as UserIcon, FileText, Heart, Loader2 } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  User as UserIcon,
+  FileText,
+  Heart,
+  Loader2,
+  MapPin,
+} from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
 import { cn } from "@/lib/utils";
@@ -23,6 +31,7 @@ const LINKS: { to: string; labelKey: string; icon: typeof LayoutDashboard; exact
   { to: "/account", labelKey: "account.nav.dashboard", icon: LayoutDashboard, exact: true },
   { to: "/account/orders", labelKey: "account.nav.orders", icon: Package },
   { to: "/account/wishlist", labelKey: "account.nav.wishlist", icon: Heart },
+  { to: "/account/addresses", labelKey: "account.nav.addresses", icon: MapPin },
   { to: "/account/profile", labelKey: "account.nav.profile", icon: UserIcon },
   { to: "/account/customs", labelKey: "account.nav.customs", icon: FileText },
 ];

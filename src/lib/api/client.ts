@@ -18,6 +18,9 @@ import {
   type PortalCustomsFile,
   type ReviewsListEnvelope,
   type ProductReview,
+  type Address,
+  type AddressInput,
+  type AddressListEnvelope,
 } from "./types";
 
 export interface ContentApiClientOptions {
@@ -168,6 +171,23 @@ export class ContentApiClient {
 
   removeFromWishlist(productId: number): Promise<{ status: string }> {
     return this.requestJson(`/api/v1/store/wishlist/${productId}`, "DELETE");
+  }
+
+  /** All four address-book methods are session-authenticated. */
+  listAddresses(): Promise<AddressListEnvelope> {
+    return this.requestJson("/api/v1/store/addresses");
+  }
+
+  createAddress(address: AddressInput): Promise<{ data: Address }> {
+    return this.requestJson("/api/v1/store/addresses", "POST", address);
+  }
+
+  updateAddress(id: number, address: Partial<AddressInput>): Promise<{ data: Address }> {
+    return this.requestJson(`/api/v1/store/addresses/${id}`, "PUT", address);
+  }
+
+  deleteAddress(id: number): Promise<{ status: string }> {
+    return this.requestJson(`/api/v1/store/addresses/${id}`, "DELETE");
   }
 
   // ==========================================

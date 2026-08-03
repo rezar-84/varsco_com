@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { ContentApiClient } from "@/lib/api/client";
-import { ApiNotFoundError, ApiUnauthorizedError } from "@/lib/api/types";
+import { ApiError, ApiNotFoundError, ApiUnauthorizedError } from "@/lib/api/types";
 
 const checkoutSchema = z.object({
   items: z
@@ -12,6 +12,8 @@ const checkoutSchema = z.object({
       }),
     )
     .min(1, "Cart is empty"),
+  shipping_partner_id: z.number().optional(),
+  billing_partner_id: z.number().optional(),
 });
 
 export const Route = createFileRoute("/api/store/checkout")({
@@ -47,7 +49,11 @@ export const Route = createFileRoute("/api/store/checkout")({
         const apiClient = new ContentApiClient({ baseUrl, writeToken, sessionId });
 
         try {
-          const result = await apiClient.submitCheckout({ items: validated.data.items });
+          const result = await apiClient.submitCheckout({
+            items: validated.data.items,
+            shipping_partner_id: validated.data.shipping_partner_id,
+            billing_partner_id: validated.data.billing_partner_id,
+          });
 
           // Trust boundary: only forward payment_url if it actually points at
           // our configured Odoo instance. The value always originates from
@@ -76,6 +82,19 @@ export const Route = createFileRoute("/api/store/checkout")({
             return new Response(
               JSON.stringify({ error: "unauthorized", message: "Session expired or missing" }),
               { status: 401, headers: { "Content-Type": "application/json" } },
+            );
+          }
+          if (error instanceof ApiError && error.status === 400) {
+            // Most commonly a stale shipping_partner_id/billing_partner_id —
+            // e.g. the address was deleted in another tab after the
+            // checkout page loaded. Surface it plainly rather than the
+            // generic 503 below, which would mask a fixable input error.
+            return new Response(
+              JSON.stringify({
+                error: "invalid_checkout_request",
+                message: "That order couldn't be placed — please re-check the selected address.",
+              }),
+              { status: 400, headers: { "Content-Type": "application/json" } },
             );
           }
           if (error instanceof ApiNotFoundError) {
