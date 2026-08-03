@@ -14,21 +14,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/artemia-cysts-incubation-guide")({
-  head: () => ({
-    meta: [
-      {
-        title:
-          "Artemia Cysts Hatching & Incubation Guide — Salinity, pH & Temperature Protocol | VARS",
-      },
-      {
-        name: "description",
-        content:
-          "Master Artemia cysts hatching & incubation: optimal salinity (25-35 ppt), temperature (28-30°C), pH (8.0-8.5), aeration, CPG calculations, and nauplii separation for commercial hatcheries and aquarists.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("artemiaGuide") }),
   component: ArtemiaIncubationGuide,
 });
 

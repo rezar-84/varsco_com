@@ -17,6 +17,8 @@ import { StoreCartProvider } from "@/context/StoreCartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { I18nProvider } from "@/context/I18nContext";
 import { SiteShell } from "@/components/layout/SiteShell";
+import { getLocalizedPageMeta } from "@/lib/utils/seo";
+import type { SeoPage } from "@/lib/utils/seo";
 
 function NotFoundComponent() {
   return (
@@ -105,6 +107,35 @@ const organizationSchema = {
 
 const SITE_URL = "https://varsco.com";
 const ALTERNATE_LANGS = ["en", "tr", "ar", "de", "ru", "ja", "ko", "zh", "es"] as const;
+const OG_IMAGE = `${SITE_URL}/vars-logo-header.png`;
+
+function getRootPageSeo(path: string) {
+  const page = path.replace(/^\//, "").split("/")[0];
+  const pageMap: Record<string, SeoPage> = {
+    "services-solutions": "services",
+    projects: "projects",
+    "seafood-export": "seafood",
+    "seafood-export-from-turkey-to-europe": "seafoodEurope",
+    contactus: "contact",
+    "request-quote": "quote",
+    faqs: "faq",
+    "salmonid-ova-solutions": "salmonOva",
+    "coho-salmon-eggs": "coho",
+    "artemia-cysts-incubation-guide": "artemiaGuide",
+    "decapsulated-artemia-guide": "decapGuide",
+    "horeca-seafood-middle-east": "horeca",
+    "regional-trade-middle-east-europe": "regionalTrade",
+    "aquariums-and-hobbyists": "aquariums",
+    privacy: "privacy",
+    terms: "terms",
+    login: "login",
+    register: "register",
+    account: "account",
+    cart: "cart",
+    shop: "shop",
+  };
+  return pageMap[page] ? getLocalizedPageMeta(pageMap[page]) : getLocalizedPageMeta("home");
+}
 
 // Content path is the URL with any /<lang> prefix stripped — used to build
 // self-referencing canonical + hreflang links that match how server.ts
@@ -129,46 +160,70 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => {
     const contentPath = getContentPath();
     const pathSuffix = contentPath === "/" ? "" : contentPath;
+    const pageMeta = getRootPageSeo(contentPath);
+    const isPrivate =
+      /^(\/account(?:\/|$)|\/panel(?:\/|$)|\/cart$|\/login$|\/register$|\/shop\/checkout$)/.test(
+        contentPath,
+      );
+    const localeMap: Record<string, string> = {
+      en: "en_US",
+      tr: "tr_TR",
+      ar: "ar_SA",
+      de: "de_DE",
+      ru: "ru_RU",
+      ja: "ja_JP",
+      ko: "ko_KR",
+      zh: "zh_CN",
+      es: "es_ES",
+    };
+    const storage = (globalThis as unknown as Record<string, unknown>).serverStorage as
+      { getStore: () => { lang?: string } | undefined } | undefined;
+    const lang = storage?.getStore()?.lang ?? "en";
 
     return {
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal" },
+        { title: pageMeta.title },
         {
           name: "description",
-          content:
-            "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
+          content: pageMeta.description,
         },
         { name: "author", content: "VARS Aquaculture" },
         {
           name: "keywords",
           content:
-            "aquaculture, live feed, artemia, chlorella, salmon eggs, seafood export, B2B, Türkiye",
+            "aquaculture, live feed, Artemia, Chlorella, salmon eggs, seafood export, B2B, Türkiye",
         },
         { property: "og:site_name", content: "VARS Aquaculture" },
         {
           property: "og:title",
-          content: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal",
+          content: pageMeta.title,
         },
         {
           property: "og:description",
-          content:
-            "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
+          content: pageMeta.description,
         },
         { property: "og:type", content: "website" },
-        { property: "og:locale", content: "en_US" },
-        { property: "og:locale:alternate", content: "tr_TR" },
+        { property: "og:locale", content: localeMap[lang] ?? "en_US" },
+        ...ALTERNATE_LANGS.filter((l) => l !== lang).map((l) => ({
+          property: "og:locale:alternate",
+          content: localeMap[l],
+        })),
+        { property: "og:url", content: `${SITE_URL}${pathSuffix}` },
+        { property: "og:image", content: OG_IMAGE },
+        { property: "og:image:alt", content: "VARS Aquaculture" },
         { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:title",
-          content: "VARS Aquaculture — Premium B2B Aquaculture & Seafood Portal",
+          content: pageMeta.title,
         },
         {
           name: "twitter:description",
-          content:
-            "Certified salmon eggs, artemia, chlorella, feed additives and Mediterranean seafood — shipped worldwide from Türkiye.",
+          content: pageMeta.description,
         },
+        { name: "twitter:image", content: OG_IMAGE },
+        ...(isPrivate ? [{ name: "robots", content: "noindex, nofollow" }] : []),
       ],
       links: [
         { rel: "stylesheet", href: appCss },
@@ -204,7 +259,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang={getServerLang()}>
       <head>
         <HeadContent />
       </head>
@@ -214,6 +269,12 @@ function RootShell({ children }: { children: ReactNode }) {
       </body>
     </html>
   );
+}
+
+function getServerLang() {
+  const storage = (globalThis as unknown as Record<string, unknown>).serverStorage as
+    { getStore: () => { lang?: string } | undefined } | undefined;
+  return storage?.getStore()?.lang ?? "en";
 }
 
 function RootComponent() {

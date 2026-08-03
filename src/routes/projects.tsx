@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 import salmonEggs from "@/assets/salmon-eggs.jpg";
 import artemia from "@/assets/artemia.jpg";
@@ -33,16 +34,7 @@ import salmonTunaIcon from "@/assets/icons/salmon-tuna.svg";
 import hatcheryBuildingIcon from "@/assets/icons/hatchery-building.svg";
 
 export const Route = createFileRoute("/projects")({
-  head: () => ({
-    meta: [
-      { title: "Authentic Global Field Projects & Supply Chain | VARS Aquaculture" },
-      {
-        name: "description",
-        content:
-          "Explore VARS Aquaculture's real-world projects: Aegean hatchery SV12 rotifer 8X biomass optimization, first-ever Atlantic salmon egg shipping to South Korea, salmon ova exports to Japan, and BlueGen Korea Olive Flounder megafarm supply chain collaboration.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("projects") }),
   component: Projects,
 });
 

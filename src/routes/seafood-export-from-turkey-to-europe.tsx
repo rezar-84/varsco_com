@@ -12,18 +12,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/seafood-export-from-turkey-to-europe")({
-  head: () => ({
-    meta: [
-      { title: "Seafood Export from Türkiye to Europe — EU Certified Logistics | VARS" },
-      {
-        name: "description",
-        content:
-          "EU-approved establishment numbers, TRACES certificates, and 36-hour express cold-chain reefer shipments of sea bass, sea bream, and trout from İzmir to Milan, Frankfurt, and Madrid.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("seafoodEurope") }),
   component: EUExportPage,
 });
 

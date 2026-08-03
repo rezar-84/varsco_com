@@ -68,6 +68,72 @@ function deLocalizeRequest(request: Request): Request {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const requestUrl = new URL(request.url);
+
+      // Consolidate the historical www host into the canonical host used by
+      // canonicals, sitemap, and hreflang. Keep path and query intact.
+      if (requestUrl.hostname.toLowerCase() === "www.varsco.com") {
+        requestUrl.hostname = "varsco.com";
+        return new Response(null, {
+          status: 301,
+          headers: { Location: requestUrl.toString(), "Cache-Control": "public, max-age=86400" },
+        });
+      }
+
+      const rawParts = requestUrl.pathname.split("/").filter(Boolean);
+      const rawLocale = rawParts[0]?.toLowerCase();
+      const legacyLocale = rawLocale === "ko_kr" || rawLocale === "ko-kr";
+      const supportedLocale = ["tr", "ar", "de", "ru", "ja", "ko", "en", "zh", "es"].includes(
+        rawLocale ?? "",
+      );
+
+      // Google has historical Odoo-style Korean URLs using ko_KR. Redirect
+      // them to the current /ko URL space instead of allowing a 404/duplicate.
+      if (legacyLocale) {
+        const rest = rawParts.slice(1).join("/");
+        const destination = new URL(`/ko${rest ? `/${rest}` : ""}`, requestUrl.origin);
+        destination.search = requestUrl.search;
+        return new Response(null, {
+          status: 301,
+          headers: { Location: destination.toString(), "Cache-Control": "public, max-age=86400" },
+        });
+      }
+
+      // /en is not a canonical public prefix: English is the default locale.
+      // Also normalize uppercase locale spellings before routing.
+      if (supportedLocale && rawLocale === "en") {
+        const rest = rawParts.slice(1).join("/");
+        const destination = new URL(`/${rest}`, requestUrl.origin);
+        destination.search = requestUrl.search;
+        return new Response(null, {
+          status: 301,
+          headers: { Location: destination.toString(), "Cache-Control": "public, max-age=86400" },
+        });
+      }
+
+      if (rawParts[0] && rawParts[0] !== rawLocale && supportedLocale) {
+        const rest = rawParts.slice(1).join("/");
+        const destination = new URL(`/${rawLocale}${rest ? `/${rest}` : ""}`, requestUrl.origin);
+        destination.search = requestUrl.search;
+        return new Response(null, {
+          status: 301,
+          headers: { Location: destination.toString(), "Cache-Control": "public, max-age=86400" },
+        });
+      }
+
+      // Retire high-volume legacy Odoo login URLs without exposing them to
+      // search engines as application pages.
+      if (requestUrl.pathname === "/web/login" || requestUrl.pathname === "/web/login/") {
+        const destination = new URL("/login", requestUrl.origin);
+        const redirectTarget = requestUrl.searchParams.get("redirect");
+        if (redirectTarget?.startsWith("/"))
+          destination.searchParams.set("redirect", redirectTarget);
+        return new Response(null, {
+          status: 301,
+          headers: { Location: destination.toString(), "Cache-Control": "public, max-age=86400" },
+        });
+      }
+
       // 1. Run CORS check
       const corsResponse = validateCors(request);
       if (corsResponse) return corsResponse;
@@ -103,6 +169,9 @@ export default {
       const response = await serverStorage.run({ lang, path }, () =>
         handler.fetch(rewrittenRequest, env, ctx),
       );
+      if (requestUrl.pathname === "/web" || requestUrl.pathname.startsWith("/web/")) {
+        response.headers.set("X-Robots-Tag", "noindex, nofollow");
+      }
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
       console.error(error);

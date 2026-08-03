@@ -15,18 +15,10 @@ import {
 import { Button } from "@/components/ui/button";
 import reviveDecapImg from "@/assets/products/revive-artemia-decap.png";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/decapsulated-artemia-guide")({
-  head: () => ({
-    meta: [
-      { title: "Standard vs Decapsulated Artemia Cysts | Compare & Choose | VARS" },
-      {
-        name: "description",
-        content:
-          "Compare shell-on Standard Artemia Cysts and shell-free Decapsulated Artemia — nutritional profile, handling, and the right use case for hatcheries, public aquariums, retailers, and hobbyists.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("decapGuide") }),
   component: DecapsulatedArtemiaGuide,
 });
 

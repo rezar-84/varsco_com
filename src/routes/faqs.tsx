@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 import { PageHero, Section } from "@/components/layout/Page";
 import {
   Accordion,
@@ -9,16 +10,7 @@ import {
 import { useI18n } from "@/context/I18nContext";
 
 export const Route = createFileRoute("/faqs")({
-  head: () => ({
-    meta: [
-      { title: "Frequently Asked Questions | VARS Aquaculture B2B" },
-      {
-        name: "description",
-        content:
-          "Find answers regarding B2B orders, salmon ova cold-chain delivery, minimum order quantities (MOQ), TRACES certification, and international shipping protocols.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("faq") }),
   component: FAQs,
 });
 

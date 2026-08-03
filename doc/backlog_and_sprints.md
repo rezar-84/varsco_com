@@ -81,7 +81,7 @@ This document details the backlog of tasks and sprint plans mapped against the S
 
 ### Sprint 8 — SEO & Cutover Deployment
 
-- [ ] Generate dynamic `sitemap.xml` containing all active storefront routes, catalog products, and blog posts.
+- [x] Generate dynamic `sitemap.xml` containing all active storefront routes, catalog products, and blog posts.
 - [ ] Conduct automated E2E test runs checking form submission, user logins, and catalog filters.
 - [ ] Run Lighthouse audits and fix performance bottlenecks (e.g. image optimization, script deferring).
 - [ ] Perform DNS cutover pointing `varsco.com` (or `aquabloom.com`) to the headless frontend and `erp.` to the Odoo instance.

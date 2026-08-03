@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 import seaBassImgFile from "@/assets/products/seabass.png";
 import seaBreamImgFile from "@/assets/products/sea-bream.png";
@@ -37,16 +38,7 @@ import reeferTruckIcon from "@/assets/icons/reefer-truck.svg";
 import iceColdchainIcon from "@/assets/icons/ice-coldchain.svg";
 
 export const Route = createFileRoute("/horeca-seafood-middle-east")({
-  head: () => ({
-    meta: [
-      { title: "Middle East HORECA Seafood & Shrimp Direct Supply | VARS Aquaculture" },
-      {
-        name: "description",
-        content:
-          "Direct B2B supply of Mediterranean Sea Bass, Sea Bream, Jumbo Black Tiger & Vannamei Shrimps for hotel chains, fine dining restaurants, and catering in Dubai, KSA, Qatar, Oman & GCC. Daily 0°C air freight, Halal & SFDA/SASO certified.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("horeca") }),
   component: HorecaSeafoodMiddleEast,
 });
 

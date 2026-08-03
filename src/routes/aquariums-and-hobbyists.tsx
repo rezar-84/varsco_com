@@ -14,18 +14,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/aquariums-and-hobbyists")({
-  head: () => ({
-    meta: [
-      { title: "Public Aquariums, Shops & Reef Aquarists Live Feed | VARS Aquaculture" },
-      {
-        name: "description",
-        content:
-          "Professional live feed, Artemia cysts, Decapsulated Artemia, and liquid Chlorella microalgae for Public Aquariums, Pet Shops, Fish Breeders, and Reef Tank Hobbyists worldwide.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("aquariums") }),
   component: AquariumsAndHobbyistsPage,
 });
 

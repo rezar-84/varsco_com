@@ -17,27 +17,10 @@ import { AnimatedHorecaMiddleEastMap } from "@/components/visuals/AnimatedHoreca
 import { AnimatedGlobalShipping } from "@/components/visuals/AnimatedGlobalShipping";
 import turkeyFlagSvg from "@/assets/icons/turkey-flag.svg";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/seafood-export")({
-  head: () => ({
-    meta: [
-      { title: "Seafood Export — From Türkiye to the World | VARS Aquaculture" },
-      {
-        name: "description",
-        content:
-          "Premium seafood export from Türkiye to Europe, the Middle East, Far East and North America. ASC, BRC and EU-certified production with full customs and reefer logistics support.",
-      },
-      {
-        property: "og:title",
-        content: "Seafood Export — B2B Global Fish Sourcing from Türkiye",
-      },
-      {
-        property: "og:description",
-        content:
-          "Reliable sourcing, export expertise, compliance management and flexible delivery across Europe, MENA, Asia and North America.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("seafood") }),
   component: SeafoodExport,
 });
 

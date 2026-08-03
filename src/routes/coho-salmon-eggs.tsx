@@ -13,18 +13,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/coho-salmon-eggs")({
-  head: () => ({
-    meta: [
-      { title: "Coho Fertilized Salmon Eggs (Oncorhynchus kisutch) — SPF Certified Ova | VARS" },
-      {
-        name: "description",
-        content:
-          "SPF certified fertilized Coho Salmon eggs (Oncorhynchus kisutch) for RAS and cold-water hatcheries. High hatching rate (≥ 95%), rapid early fry growth, disease-free status, and air-freight logistics.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("coho") }),
   component: CohoSalmonEggsPage,
 });
 

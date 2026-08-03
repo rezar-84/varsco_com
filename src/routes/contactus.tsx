@@ -25,18 +25,10 @@ import turkeyFlagSvg from "@/assets/icons/turkey-flag.svg";
 import { odooAssetUrl } from "@/lib/odoo-asset";
 
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/contactus")({
-  head: () => ({
-    meta: [
-      { title: "Contact VARS Aquaculture — Global B2B Export Desk & İzmir HQ" },
-      {
-        name: "description",
-        content:
-          "Connect directly with VARS Aquaculture's export desk in İzmir, Türkiye. Inquire about certified salmon eggs, artemia live feed, seafood exports, or RAS technical engineering.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("contact") }),
   component: Contact,
 });
 

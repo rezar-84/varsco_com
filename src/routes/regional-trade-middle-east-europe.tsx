@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 import { PageHero, Section } from "@/components/layout/Page";
 import { InteractiveSupplyMap } from "@/components/InteractiveSupplyMap";
 import { ShieldCheck, Globe2, Truck, Plane, CheckCircle2, MessageCircle } from "lucide-react";
@@ -6,16 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
 
 export const Route = createFileRoute("/regional-trade-middle-east-europe")({
-  head: () => ({
-    meta: [
-      { title: "Regional Trade Strategy — Middle East (Dubai, KSA, Oman, Qatar) & Europe | VARS" },
-      {
-        name: "description",
-        content:
-          "Exporting high-performance aquaculture live feeds, Artemia, microalgae, salmon eggs, and Mediterranean seafood from İzmir, Türkiye to Dubai, Oman, Qatar, Saudi Arabia, and European Union destinations.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("regionalTrade") }),
   component: RegionalTradePage,
 });
 

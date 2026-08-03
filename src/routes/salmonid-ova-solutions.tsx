@@ -16,18 +16,10 @@ import { useI18n } from "@/context/I18nContext";
 import { AnimatedOriginSourcing } from "@/components/visuals/AnimatedOriginSourcing";
 import { AnimatedLabVerification } from "@/components/visuals/AnimatedLabVerification";
 import { AnimatedGlobalShipping } from "@/components/visuals/AnimatedGlobalShipping";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/salmonid-ova-solutions")({
-  head: () => ({
-    meta: [
-      { title: "Salmonid Ova Solutions — Atlantic, Coho & Trout Fertilized Eggs | VARS" },
-      {
-        name: "description",
-        content:
-          "Leading global supplier of fertilized Atlantic Salmon eggs (Salmo salar), Coho Salmon eggs (Oncorhynchus kisutch), and Rainbow Trout ova. Certified disease-free SPF status, temperature-logged cold chain, and continuous year-round availability.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("salmonOva") }),
   component: SalmonidOvaHubPage,
 });
 

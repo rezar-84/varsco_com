@@ -27,18 +27,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useI18n } from "@/context/I18nContext";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/services-solutions")({
-  head: () => ({
-    meta: [
-      { title: "Expert Aquaculture Consulting, Advisory & Sourcing — 30+ Years Experience | VARS" },
-      {
-        name: "description",
-        content:
-          "Guided by industry experts with 30+ years of hands-on experience, VARS Aquaculture delivers expert investor guidance, equipment & feed sourcing facilitation, RAS hatchery design, operational troubleshooting, and export readiness.",
-      },
-    ],
-  }),
+  head: () => ({ meta: getLocalizedMeta("services") }),
   component: ServicesPage,
 });
 

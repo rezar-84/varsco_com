@@ -8,5 +8,13 @@ Disallow: /shop/checkout
 Disallow: /login
 Disallow: /register
 Disallow: /api/
+Disallow: /web/
+Disallow: /*/account
+Disallow: /*/account/
+Disallow: /*/panel
+Disallow: /*/cart
+Disallow: /*/shop/checkout
+Disallow: /*/login
+Disallow: /*/register
 
 Sitemap: https://varsco.com/sitemap.xml

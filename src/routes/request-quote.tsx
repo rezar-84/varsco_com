@@ -17,6 +17,7 @@ import {
   Headphones,
 } from "lucide-react";
 import { z } from "zod";
+import { getLocalizedMeta } from "@/lib/utils/seo";
 
 const quoteSearchSchema = z.object({
   product: z.string().optional(),
@@ -26,22 +27,7 @@ const quoteSearchSchema = z.object({
 export const Route = createFileRoute("/request-quote")({
   validateSearch: (search) => quoteSearchSchema.parse(search),
   head: () => ({
-    meta: [
-      { title: "Request a B2B Proforma Quote & Sample — VARS Aquaculture" },
-      {
-        name: "description",
-        content:
-          "Request a tailored B2B quote for live feed, salmon eggs, feed additives, or seafood export. 24-hour SLA response in English, Turkish, Arabic, German, Japanese, Korean & Russian.",
-      },
-      { property: "og:title", content: "Request a B2B Quote — VARS Aquaculture" },
-      {
-        property: "og:description",
-        content:
-          "Direct B2B supply quotes for hatcheries and importers. Global cold-chain air freight and TRACES compliance.",
-      },
-      { property: "og:url", content: "/request-quote" },
-      { property: "og:type", content: "website" },
-    ],
+    meta: [...getLocalizedMeta("quote"), { property: "og:type", content: "website" }],
   }),
   component: RequestQuotePage,
 });
