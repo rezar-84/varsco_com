@@ -120,7 +120,6 @@ function ShopProductDetail() {
   const wishlisted = productId ? isWishlisted(productId) : false;
   const media = product.media ?? [];
   const activeImage = media[activeImageIndex] ?? media[0];
-  const descriptionText = product.description_html?.replace(/<[^>]*>/g, "").trim();
 
   return (
     <Section>
@@ -313,17 +312,6 @@ function ShopProductDetail() {
             <p className="text-xs font-semibold text-mint">
               {product.purchase.qty_available} {t("store.detail.qtyAvailableSuffix")}
             </p>
-          )}
-
-          {descriptionText && (
-            <div className="border-t border-border/60 pt-6 space-y-2">
-              <h3 className="font-display text-lg font-bold text-navy">
-                {t("store.detail.description")}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                {descriptionText}
-              </p>
-            </div>
           )}
 
           {product.specification_groups && product.specification_groups.length > 0 && (
