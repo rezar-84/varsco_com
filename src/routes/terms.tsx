@@ -1,18 +1,37 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LegalPage } from "@/components/layout/Page";
+import { useI18n } from "@/context/I18nContext";
+import { getCurrentLocale } from "@/lib/utils/locale";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({
-    meta: [
-      { title: "Terms of Service (ToS) | VARS Aquaculture" },
-      {
-        name: "description",
-        content:
-          "Official Terms of Service of VARS SU ÜRÜNLERİ İTHALAT İHRACAT SANAYİ VE TİCARET LİMİTED ŞİRKETİ governing B2B commercial transactions and website usage.",
-      },
-    ],
-  }),
-  component: () => (
+  head: () => {
+    const tr = getCurrentLocale() === "tr";
+    return {
+      meta: [
+        {
+          title: tr
+            ? "Kullanım Koşulları | VARS Aquaculture"
+            : "Terms of Service (ToS) | VARS Aquaculture",
+        },
+        {
+          name: "description",
+          content: tr
+            ? "VARS SU ÜRÜNLERİ İTHALAT İHRACAT SANAYİ VE TİCARET LİMİTED ŞİRKETİ'nin B2B ticari işlemlerini ve web sitesi kullanımını düzenleyen resmî Kullanım Koşulları."
+            : "Official Terms of Service of VARS SU ÜRÜNLERİ İTHALAT İHRACAT SANAYİ VE TİCARET LİMİTED ŞİRKETİ governing B2B commercial transactions and website usage.",
+        },
+      ],
+    };
+  },
+  component: TermsPage,
+});
+
+function TermsPage() {
+  const { lang } = useI18n();
+  return lang === "tr" ? <TermsTr /> : <TermsEn />;
+}
+
+function TermsEn() {
+  return (
     <LegalPage title="Terms of Service (ToS)">
       <p className="text-xs text-muted-foreground font-semibold">Effective Date: 01/08/2025</p>
 
@@ -197,5 +216,210 @@ export const Route = createFileRoute("/terms")({
         or +90 232 290 57 56.
       </p>
     </LegalPage>
-  ),
-});
+  );
+}
+
+/**
+ * Turkish version. Authoritative for Turkish counterparties: VARS is an İzmir
+ * company, clause 17 places disputes with the İzmir courts, and the referenced
+ * instruments (KVKK Law No. 6698, the Distance Sales Agreement) are Turkish
+ * law. Statutory identifiers match the English version and the other legal
+ * routes exactly.
+ */
+function TermsTr() {
+  return (
+    <LegalPage title="Kullanım Koşulları">
+      <p className="text-xs text-muted-foreground font-semibold">Yürürlük Tarihi: 01/08/2025</p>
+
+      <h2>1. Giriş</h2>
+      <p>
+        İşbu Kullanım Koşulları (“Koşullar”),{" "}
+        <strong>VARS SU ÜRÜNLERİ İTHALAT İHRACAT SANAYİ VE TİCARET LİMİTED ŞİRKETİ</strong> (“VARS”,
+        “biz”) tarafından sağlanan web sitesine ve ticari hizmetlere erişiminizi ve bunları
+        kullanımınızı düzenler.
+      </p>
+      <p>
+        <a
+          href="https://varsco.com"
+          className="text-primary font-bold hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          varsco.com
+        </a>{" "}
+        adresine erişerek veya satın alma siparişi göndererek aşağıdakilere uymayı kabul edersiniz:
+      </p>
+      <ul>
+        <li>İşbu Kullanım Koşulları</li>
+        <li>
+          Gizlilik Politikamız:{" "}
+          <Link to="/privacy" className="text-primary font-bold hover:underline">
+            /privacy
+          </Link>
+        </li>
+        <li>
+          KVKK Aydınlatma Metnimiz:{" "}
+          <Link to="/kvkk-disclosure-text" className="text-primary font-bold hover:underline">
+            /kvkk-disclosure-text
+          </Link>
+        </li>
+        <li>
+          Mesafeli Satış Sözleşmemiz (uygulanabildiği ölçüde):{" "}
+          <Link to="/distance-sales-agreement" className="text-primary font-bold hover:underline">
+            /distance-sales-agreement
+          </Link>
+        </li>
+      </ul>
+
+      <h2>2. Şirket Bilgileri</h2>
+      <p>
+        <strong>Şirket Unvanı:</strong> VARS SU ÜRÜNLERİ İTHALAT İHRACAT SANAYİ VE TİCARET LİMİTED
+        ŞİRKETİ
+      </p>
+      <p>
+        <strong>Adres:</strong> İsmet Kaptan Mah., Şair Eşref Blv. No:6 D:304/B, Konak, İzmir,
+        35210, Türkiye
+      </p>
+      <p>
+        <strong>Vergi Dairesi ve Vergi No:</strong> Konak V.D. 9240533729 |{" "}
+        <strong>MERSİS No:</strong> 0924053372900001
+      </p>
+      <p>
+        <strong>E-posta:</strong>{" "}
+        <a href="mailto:info@varsco.com" className="text-primary font-bold">
+          info@varsco.com
+        </a>{" "}
+        | <strong>Telefon:</strong> +90 232 290 57 56
+      </p>
+
+      <h2>3. Hizmetlerin Kapsamı</h2>
+      <p>
+        VARS, aşağıdakiler dâhil olmak üzere kurumsal düzeyde B2B su ürünleri yetiştiriciliği
+        girdileri ve hizmetleri sunmaktadır:
+      </p>
+      <ul>
+        <li>
+          Yüksek performanslı canlı yem (Artemia kistleri, dekapsüle Artemia, Chlorella, rotifer
+          zenginleştiricileri)
+        </li>
+        <li>
+          Sertifikalı salmonid yumurtası ve döllenmiş Atlantik / Coho / Gökkuşağı alabalığı
+          yumurtaları
+        </li>
+        <li>Yem katkı maddeleri ve hammaddeler (buğday gluteni, balık unu/yağı ikame ürünleri)</li>
+        <li>Ticari su ürünleri ihracatı (Ege levreği, çipura, alabalık, ton balığı yemi)</li>
+        <li>
+          Kuluçkahane mühendislik tasarımı ve Kapalı Devre Su Ürünleri Yetiştiriciliği (RAS)
+          danışmanlığı
+        </li>
+      </ul>
+
+      <h2>4. Diğer Sözleşmelerle İlişki</h2>
+      <p>
+        Belirli ticari işlemler; münferit proforma faturalar, satış sözleşmeleri veya mesafeli satış
+        sözleşmeleri ile düzenlenebilir. Çelişki hâlinde imzalanmış özel ticari sözleşmeler
+        öncelikli olarak uygulanır.
+      </p>
+
+      <h2>5. Kullanıcı Yükümlülükleri</h2>
+      <p>
+        Kullanıcılar ve satın alma yetkilileri; doğru kurumsal kayıt bilgilerini sunmayı, erişim
+        bilgilerini güvenli şekilde muhafaza etmeyi ve ürünleri yalnızca meşru su ürünleri
+        yetiştiriciliği faaliyetlerinde kullanmayı kabul eder.
+      </p>
+
+      <h2>6. Siparişler ve Ticari Şartlar</h2>
+      <p>
+        Tüm teklif talepleri, proforma faturalar ve satın alma siparişleri, VARS ihracat yönetiminin
+        yazılı kabulü ve doğrulaması üzerine kesinleşir.
+      </p>
+
+      <h2>7. Ödeme Koşulları</h2>
+      <p>
+        Çevrimiçi ödemeler, başlıca kredi kartlarını (Visa, Mastercard, Troy, AMEX) kabul eden{" "}
+        <strong>iyzico PCI-DSS Seviye 1 altyapısı</strong> üzerinden güvenli şekilde işlenir. Ticari
+        banka havaleleri (SWIFT / EFT / Wire) resmî proforma fatura numarasına atıf yapmalıdır.
+      </p>
+
+      <h2>8. Sevkiyat ve Riskin Devri</h2>
+      <p>
+        Teslimatlar uluslararası Incoterms kuralları (FOB, CIF, EXW, CIP) çerçevesinde
+        gerçekleştirilir. Risk, belirtilen Incoterm hükmüne göre devrolur. Hava kargo ve soğutmalı
+        konteyner taşımacılığı sırasında soğuk zincir bütünlüğü sıcaklık kayıt cihazlarıyla
+        doğrulanır.
+      </p>
+
+      <h2>9. Ürün Kullanımı ve Teknik Sorumluluk</h2>
+      <p>
+        Canlı yem ve biyolojik girdiler, VARS biyolojik protokollerine uyulmasını gerektirir. VARS
+        teknik kılavuzlar sağlar; ancak nihai işletme yönetimi sorumluluğu alıcıya aittir.
+      </p>
+
+      <h2>10. Fikrî Mülkiyet</h2>
+      <p>
+        Tüm markalar, logolar, REVIVE™ marka varlıkları ve tescilli teknik kılavuzlar münhasıran
+        VARS Su Ürünleri Ltd. Şti.’ye aittir.
+      </p>
+
+      <h2>11. Kişisel Verilerin Korunması (KVKK)</h2>
+      <p>
+        Ticari ilişkiler sırasında toplanan kişisel veriler, Gizlilik Politikamızda ayrıntılı olarak
+        açıklandığı üzere 6698 sayılı KVKK ve GDPR ilkeleri kapsamında işlenir.
+      </p>
+
+      <h2>12. Sorumluluğun Sınırlandırılması</h2>
+      <p>
+        Yürürlükteki mevzuatın izin verdiği azami ölçüde VARS; belirtilen spesifikasyonların dışında
+        kalan hatalı depolama, biyolojik yanlış kullanım veya işletme yönetimi hatalarından
+        kaynaklanan dolaylı, arızi veya sonuç niteliğindeki zararlardan sorumlu değildir.
+      </p>
+
+      <h2>13. Garanti Beyanı</h2>
+      <p>
+        Ürünler, sevkiyat anında beyan edilen laboratuvar sertifikalarına (CoA) uygundur. Canlı
+        yemin biyolojik değişkenliği nedeniyle parti parametreleri sevkiyat öncesinde doğrulanır.
+      </p>
+
+      <h2>14. Mevzuata Uyum</h2>
+      <p>
+        Taraflar; uluslararası ticaret kurallarına, gümrük mevzuatına, veteriner sağlık mevzuatına
+        ve yolsuzlukla mücadele standartlarına uymayı kabul eder.
+      </p>
+
+      <h2>15. Mücbir Sebep</h2>
+      <p>
+        Taraflardan hiçbiri; ağır hava koşulları, hava sahası kapanmaları, salgın kaynaklı karantina
+        veya savaş gibi makul kontrolü dışındaki olaylardan kaynaklanan ifa edememe veya
+        gecikmelerden sorumlu tutulamaz.
+      </p>
+
+      <h2>16. Fesih</h2>
+      <p>
+        VARS; işbu Koşulların esaslı ihlali veya ödemenin yapılmaması hâlinde hizmetleri ya da
+        kullanıcı erişimini askıya alma veya sonlandırma hakkını saklı tutar.
+      </p>
+
+      <h2>17. Uygulanacak Hukuk ve Yetkili Mahkeme</h2>
+      <p>
+        İşbu Koşullar Türkiye Cumhuriyeti hukukuna tabidir ve buna göre yorumlanır. Doğabilecek
+        uyuşmazlıklarda <strong>İzmir Merkez Mahkemeleri ve İcra Daireleri</strong> münhasıran
+        yetkilidir.
+      </p>
+
+      <h2>18. Koşullarda Değişiklik</h2>
+      <p>
+        VARS, işbu Koşulları dilediği zaman değiştirme hakkını saklı tutar. Portalın kullanılmaya
+        devam edilmesi, güncellenmiş Koşulların kabul edildiği anlamına gelir.
+      </p>
+
+      <h2>19. İletişim Bilgileri</h2>
+      <p>
+        Hukuki sorularınız için{" "}
+        <a href="mailto:info@varsco.com" className="text-primary font-bold hover:underline">
+          info@varsco.com
+        </a>{" "}
+        adresinden veya +90 232 290 57 56 numarasından bize ulaşabilirsiniz.
+      </p>
+    </LegalPage>
+  );
+}
