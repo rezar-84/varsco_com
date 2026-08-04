@@ -28,7 +28,20 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MOCK = path.join(ROOT, "src/lib/mock");
 const LANGS = ["tr", "de", "es", "ru", "ar", "ja", "ko", "zh"];
 const STRICT = process.argv.includes("--strict");
-const MIN_RATIO = 0.6;
+
+/**
+ * Minimum translated-length / source-length ratio before a body is called
+ * truncated, per locale.
+ *
+ * Script density differs enormously: CJK carries the same content in roughly
+ * half the characters of English, while Turkish, German and Russian typically
+ * run longer. A single threshold calibrated on Turkish flags every complete
+ * Korean translation as truncated. These floors still sit far above a real
+ * stub — the Turkish stubs this script was written to catch were 0.05-0.32,
+ * with zero headings.
+ */
+const MIN_RATIO = { ja: 0.35, ko: 0.35, zh: 0.3, ar: 0.5 };
+const DEFAULT_MIN_RATIO = 0.6;
 
 const headings = (s) => (s.match(/^#{1,6}\s/gm) || []).length;
 const tableRows = (s) => (s.match(/^\|.*\|\s*$/gm) || []).length;
@@ -69,9 +82,10 @@ for (const lang of LANGS) {
       continue;
     }
     const ratio = translated.length / source.length;
-    if (ratio < MIN_RATIO) {
+    const floor = MIN_RATIO[lang] ?? DEFAULT_MIN_RATIO;
+    if (ratio < floor) {
       problems.push(
-        `${lang}/${slug}: body is ${(ratio * 100).toFixed(0)}% of the English length — likely truncated`,
+        `${lang}/${slug}: body is ${(ratio * 100).toFixed(0)}% of the English length (floor ${(floor * 100).toFixed(0)}%) — likely truncated`,
       );
     }
     if (headings(translated) !== headings(source)) {
