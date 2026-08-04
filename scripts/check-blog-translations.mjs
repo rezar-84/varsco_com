@@ -43,6 +43,68 @@ const STRICT = process.argv.includes("--strict");
 const MIN_RATIO = { ja: 0.35, ko: 0.35, zh: 0.3, ar: 0.5 };
 const DEFAULT_MIN_RATIO = 0.6;
 
+/**
+ * Writing systems that must not appear in a given locale.
+ *
+ * Catches text from a neighbouring translation leaking in — a real mistake
+ * made twice while writing these files (a Cyrillic fragment inside a Japanese
+ * sentence, and an English word left inside a Chinese one). Both rendered as
+ * plausible-looking text that no structural check would have caught.
+ *
+ * Han characters are deliberately not policed: they are native to zh and ja,
+ * and appear legitimately in Korean too.
+ */
+const CYRILLIC = /[Ѐ-ӿ]/;
+const HANGUL = /[가-힯ᄀ-ᇿ]/;
+const KANA = /[぀-ゟ゠-ヿ]/;
+const ARABIC = /[؀-ۿݐ-ݿ]/;
+const FOREIGN_SCRIPTS = {
+  tr: [
+    ["Cyrillic", CYRILLIC],
+    ["Hangul", HANGUL],
+    ["Kana", KANA],
+    ["Arabic", ARABIC],
+  ],
+  de: [
+    ["Cyrillic", CYRILLIC],
+    ["Hangul", HANGUL],
+    ["Kana", KANA],
+    ["Arabic", ARABIC],
+  ],
+  es: [
+    ["Cyrillic", CYRILLIC],
+    ["Hangul", HANGUL],
+    ["Kana", KANA],
+    ["Arabic", ARABIC],
+  ],
+  ru: [
+    ["Hangul", HANGUL],
+    ["Kana", KANA],
+    ["Arabic", ARABIC],
+  ],
+  ar: [
+    ["Cyrillic", CYRILLIC],
+    ["Hangul", HANGUL],
+    ["Kana", KANA],
+  ],
+  ja: [
+    ["Cyrillic", CYRILLIC],
+    ["Hangul", HANGUL],
+    ["Arabic", ARABIC],
+  ],
+  ko: [
+    ["Cyrillic", CYRILLIC],
+    ["Kana", KANA],
+    ["Arabic", ARABIC],
+  ],
+  zh: [
+    ["Cyrillic", CYRILLIC],
+    ["Hangul", HANGUL],
+    ["Kana", KANA],
+    ["Arabic", ARABIC],
+  ],
+};
+
 const headings = (s) => (s.match(/^#{1,6}\s/gm) || []).length;
 const tableRows = (s) => (s.match(/^\|.*\|\s*$/gm) || []).length;
 const links = (s) => (s.match(/\]\(([^)]+)\)/g) || []).map((m) => m.slice(2, -1));
@@ -101,6 +163,14 @@ for (const lang of LANGS) {
     const lost = links(source).filter((l) => !translated.includes(l));
     if (lost.length) {
       problems.push(`${lang}/${slug}: dropped link(s) ${lost.join(", ")}`);
+    }
+    for (const [script, re] of FOREIGN_SCRIPTS[lang] ?? []) {
+      const hit = translated.match(re);
+      if (hit) {
+        problems.push(
+          `${lang}/${slug}: ${script} character "${hit[0]}" in a ${lang} body — text leaked from another translation`,
+        );
+      }
     }
   }
 

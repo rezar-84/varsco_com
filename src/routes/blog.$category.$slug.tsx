@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { Section } from "@/components/layout/Page";
+import { getCurrentLocale } from "@/lib/utils/locale";
 import { getPost, BLOG_POSTS, getLocalizedPost } from "@/lib/mock/blog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -23,7 +24,10 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/blog/$category/$slug")({
   loader: ({ params }) => {
-    const post = getPost(params.slug);
+    // Pass the locale: head() builds the <title>, description, og: tags and
+    // BlogPosting JSON-LD from loaderData, so without it every locale's
+    // metadata stayed English even where the visible article was translated.
+    const post = getPost(params.slug, getCurrentLocale());
     if (!post) throw notFound();
     return { post };
   },
@@ -34,6 +38,7 @@ export const Route = createFileRoute("/blog/$category/$slug")({
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
+      inLanguage: getCurrentLocale(),
       headline: post.title,
       description: post.excerpt,
       image: post.image ? `${siteUrl}${post.image}` : undefined,

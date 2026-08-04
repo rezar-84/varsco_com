@@ -1,6 +1,7 @@
 import type { LangCode } from "@/lib/types";
 import { TR_BODIES } from "./tr";
 import { KO_BODIES } from "./ko";
+import { JA_BODIES } from "./ja";
 
 /**
  * Translated article bodies, by locale then post slug.
@@ -13,4 +14,5 @@ import { KO_BODIES } from "./ko";
 export const BLOG_BODIES: Partial<Record<LangCode, Record<string, string>>> = {
   tr: TR_BODIES,
   ko: KO_BODIES,
+  ja: JA_BODIES,
 };

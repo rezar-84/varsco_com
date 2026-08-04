@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageHero, Section } from "@/components/layout/Page";
+import { getCurrentLocale } from "@/lib/utils/locale";
 import { getPostsByCategory, getLocalizedPost } from "@/lib/mock/blog";
 import type { BlogPost } from "@/lib/types";
 import { Clock, ChevronRight } from "lucide-react";
@@ -7,7 +8,7 @@ import { useI18n } from "@/context/I18nContext";
 
 export const Route = createFileRoute("/blog/$category/")({
   loader: ({ params }) => {
-    const posts = getPostsByCategory(params.category);
+    const posts = getPostsByCategory(params.category, getCurrentLocale());
     if (posts.length === 0) throw notFound();
     return { posts, categoryTitle: posts[0].category };
   },
@@ -25,7 +26,6 @@ function BlogCategory() {
   const { t, lang } = useI18n();
   const posts = rawPosts.map((p) => getLocalizedPost(p, lang));
   const categoryTitle = posts[0]?.category || rawCategoryTitle;
-
 
   return (
     <>
