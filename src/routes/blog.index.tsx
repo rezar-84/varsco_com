@@ -45,10 +45,23 @@ function BlogIndex() {
 
   const CATEGORIES = [
     { id: "all", label: t("blog.categories.all") || "All Journal Articles" },
-    { id: "aquaculture-10", label: t("blog.categories.aquaculture-10") || "Aquaculture 101 & Fundamentals" },
-    { id: "hatchery-feed-design-6", label: t("blog.categories.hatchery-feed-design-6") || "Hatchery & Feed Engineering" },
-    { id: "feed-innovation-sustainability-8", label: t("blog.categories.feed-innovation-sustainability-8") || "Feed Innovation & Microalgae" },
-    { id: "vars-company-1", label: t("blog.categories.vars-company-1") || "Company & Industry Milestones" },
+    {
+      id: "aquaculture-10",
+      label: t("blog.categories.aquaculture-10") || "Aquaculture 101 & Fundamentals",
+    },
+    {
+      id: "hatchery-feed-design-6",
+      label: t("blog.categories.hatchery-feed-design-6") || "Hatchery & Feed Engineering",
+    },
+    {
+      id: "feed-innovation-sustainability-8",
+      label:
+        t("blog.categories.feed-innovation-sustainability-8") || "Feed Innovation & Microalgae",
+    },
+    {
+      id: "vars-company-1",
+      label: t("blog.categories.vars-company-1") || "Company & Industry Milestones",
+    },
     { id: "projects-4", label: t("blog.categories.projects-4") || "Field Projects & Trials" },
   ];
 
@@ -207,7 +220,7 @@ function BlogIndex() {
                       <div>
                         <div className="text-xs font-bold text-navy">{featuredPost.author}</div>
                         <div className="text-[11px] text-muted-foreground">
-                          Technical Editor · Aqua MAG
+                          {t("blog.byline.technicalEditor")}
                         </div>
                       </div>
                     </div>
@@ -359,8 +372,13 @@ function BlogIndex() {
         {/* Expert Editorial Board & Authors */}
         <section className="space-y-8 my-16">
           <div className="border-b border-border pb-4">
-            <h2 className="font-display text-2xl font-bold text-navy">Expert Editorial Board & Authors</h2>
-            <p className="text-sm text-muted-foreground mt-1">Our technical contributors are active commercial aquaculture consultants and biologists.</p>
+            <h2 className="font-display text-2xl font-bold text-navy">
+              Expert Editorial Board & Authors
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Our technical contributors are active commercial aquaculture consultants and
+              biologists.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -369,14 +387,17 @@ function BlogIndex() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-12 w-12">
-                    <AvatarFallback className="bg-navy text-sm font-bold text-white">VA</AvatarFallback>
+                    <AvatarFallback className="bg-navy text-sm font-bold text-white">
+                      VA
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <h3 className="font-display text-sm font-bold text-navy">Vahid A.</h3>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Holds a Master's degree in Biotechnology and brings 30 years of experience in agriculture, bioengineering, and aquaculture.
+                  Holds a Master's degree in Biotechnology and brings 30 years of experience in
+                  agriculture, bioengineering, and aquaculture.
                 </p>
               </div>
               <div className="pt-4 border-t border-border/60 text-xs text-primary font-semibold flex items-center justify-between">
@@ -389,14 +410,17 @@ function BlogIndex() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-12 w-12">
-                    <AvatarFallback className="bg-navy text-sm font-bold text-white">RR</AvatarFallback>
+                    <AvatarFallback className="bg-navy text-sm font-bold text-white">
+                      RR
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <h3 className="font-display text-sm font-bold text-navy">Reza R.</h3>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Project Manager with an extensive background in the tech industry, overseeing cross-functional delivery and international coordination.
+                  Project Manager with an extensive background in the tech industry, overseeing
+                  cross-functional delivery and international coordination.
                 </p>
               </div>
               <div className="pt-4 border-t border-border/60 text-xs text-primary font-semibold flex items-center justify-between">
@@ -409,14 +433,18 @@ function BlogIndex() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-12 w-12">
-                    <AvatarFallback className="bg-navy text-sm font-bold text-white">FA</AvatarFallback>
+                    <AvatarFallback className="bg-navy text-sm font-bold text-white">
+                      FA
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <h3 className="font-display text-sm font-bold text-navy">Faysal</h3>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  One of the most experienced aquaculture experts in Turkey, having worked with the country's top firms. Well known across the community and sector, with more than 30 years of experience in hatchery and aquaculture.
+                  One of the most experienced aquaculture experts in Turkey, having worked with the
+                  country's top firms. Well known across the community and sector, with more than 30
+                  years of experience in hatchery and aquaculture.
                 </p>
               </div>
               <div className="pt-4 border-t border-border/60 text-xs text-muted-foreground font-semibold flex items-center justify-between">

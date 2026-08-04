@@ -1642,5 +1642,17 @@
   "home.telemetry.item1.eta": "预计 14 小时",
   "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
   "common.alt.flagTurkiye": "土耳其国旗",
-  "about.alt.aegeanHub": "爱琴海水产养殖中心"
+  "about.alt.aegeanHub": "爱琴海水产养殖中心",
+  "lifecycle.eyebrow": "四阶段现场实施方法",
+  "lifecycle.title": "交钥匙项目执行周期",
+  "lifecycle.badge": "逾 30 年验证的方法体系",
+  "lifecycle.step1.title": "01. 基线审计与实验室诊断",
+  "lifecycle.step1.desc": "水质分析、现行饲料系数评估、轮虫／丰年虫密度基准比对及病原体筛查。",
+  "lifecycle.step2.title": "02. 定制饲料与循环水养殖方案设计",
+  "lifecycle.step2.desc": "制定小球藻 V12 密度曲线、去壳丰年虫添加比例或 SPF 鲑鱼卵到货排程。",
+  "lifecycle.step3.title": "03. 冷链物流与发运",
+  "lifecycle.step3.desc": "部署配备实时物联网温度记录传感器的控温空运集装箱（4 °C）。",
+  "lifecycle.step4.title": "04. 现场试验与产出验证",
+  "lifecycle.step4.desc": "双周生长跟踪、与对照组的存活率比较，以及每公斤成本优化报告。",
+  "blog.byline.technicalEditor": "技术编辑 · Aqua MAG"
 }

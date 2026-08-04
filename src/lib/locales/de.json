@@ -1642,5 +1642,17 @@
   "home.telemetry.item1.eta": "ETA: 14 Std.",
   "home.telemetry.item2.hufa": "HUFA: 18,2 mg/g",
   "common.alt.flagTurkiye": "Flagge der Türkei",
-  "about.alt.aegeanHub": "Aquakultur-Zentrum in der Ägäis"
+  "about.alt.aegeanHub": "Aquakultur-Zentrum in der Ägäis",
+  "lifecycle.eyebrow": "Vierstufige Methodik der Feldumsetzung",
+  "lifecycle.title": "Lebenszyklus der schlüsselfertigen Projektumsetzung",
+  "lifecycle.badge": "Über 30 Jahre bewährte Methodik",
+  "lifecycle.step1.title": "01. Bestandsaufnahme und Labordiagnostik",
+  "lifecycle.step1.desc": "Wasserqualitätsanalyse, Bewertung der aktuellen Futterverwertung, Benchmarking der Rädertierchen-/Artemia-Dichte und Pathogenscreening.",
+  "lifecycle.step2.title": "02. Entwurf maßgeschneiderter Futter- und Kreislaufanlagen-Protokolle",
+  "lifecycle.step2.desc": "Erstellung spezifischer Dichtekurven für Chlorella V12, Einsatzraten dekapsulierter Artemia oder Anlieferpläne für SPF-Lachseier.",
+  "lifecycle.step3.title": "03. Kühlkettenlogistik und Versand",
+  "lifecycle.step3.desc": "Einsatz temperaturgeführter Luftfrachtcontainer (4 °C) mit IoT-Sensoren zur Temperaturaufzeichnung in Echtzeit.",
+  "lifecycle.step4.title": "04. Feldversuch vor Ort und Ertragsverifizierung",
+  "lifecycle.step4.desc": "Vierzehntägige Wachstumsverfolgung, Vergleich der Überlebensraten mit Kontrollgruppen und Bericht zur Kostenoptimierung je Kilogramm.",
+  "blog.byline.technicalEditor": "Fachredakteur · Aqua MAG"
 }

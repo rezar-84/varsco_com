@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { Compass, CheckCircle2, TrendingUp, ShieldCheck, ArrowRight, Activity } from "lucide-react";
+import { useI18n } from "@/context/I18nContext";
 
 export function AnimatedProjectLifecycle() {
+  const { t } = useI18n();
   const [activeStep, setActiveStep] = useState<number>(0);
 
   const STAGES = [
     {
-      title: "01. Baseline Audit & Lab Diagnostics",
-      desc: "Water quality analysis, current FCR evaluation, rotifer/artemia density benchmarking, and pathogen screening.",
+      titleKey: "lifecycle.step1.title",
+      descKey: "lifecycle.step1.desc",
     },
     {
-      title: "02. Custom Feed & RAS Protocol Design",
-      desc: "Formulating specific Chlorella V12 density curves, decapsulated Artemia inclusion rates, or SPF salmon ova arrival schedules.",
+      titleKey: "lifecycle.step2.title",
+      descKey: "lifecycle.step2.desc",
     },
     {
-      title: "03. Cold-Chain Logistics & Dispatch",
-      desc: "Deploying temperature-controlled air freight containers (4 °C) with real-time IoT temperature logging sensors.",
+      titleKey: "lifecycle.step3.title",
+      descKey: "lifecycle.step3.desc",
     },
     {
-      title: "04. On-Site Field Trial & Yield Verification",
-      desc: "Bi-weekly growth tracking, survival rate comparison against control groups, and cost-per-kg optimization report.",
+      titleKey: "lifecycle.step4.title",
+      descKey: "lifecycle.step4.desc",
     },
   ];
 
@@ -28,15 +30,13 @@ export function AnimatedProjectLifecycle() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border/60">
         <div>
           <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center gap-1.5 mb-1">
-            <Activity className="h-4 w-4" /> 4-Phase Field Implementation Methodology
+            <Activity className="h-4 w-4" /> {t("lifecycle.eyebrow")}
           </span>
-          <h3 className="font-display text-2xl font-bold text-navy">
-            Turn-Key Project Execution Lifecycle
-          </h3>
+          <h3 className="font-display text-2xl font-bold text-navy">{t("lifecycle.title")}</h3>
         </div>
 
         <span className="px-3 py-1 rounded-full bg-mint/20 text-navy font-bold text-xs self-start sm:self-auto">
-          30+ Years Proven Methodology
+          {t("lifecycle.badge")}
         </span>
       </div>
 
@@ -134,13 +134,17 @@ export function AnimatedProjectLifecycle() {
           <div className="text-xs font-bold text-mint uppercase tracking-wider">
             Phase 0{activeStep + 1} of 04
           </div>
-          <h4 className="font-display text-xl font-bold text-navy">{STAGES[activeStep].title}</h4>
-          <p className="text-xs text-muted-foreground leading-relaxed">{STAGES[activeStep].desc}</p>
+          <h4 className="font-display text-xl font-bold text-navy">
+            {t(STAGES[activeStep].titleKey)}
+          </h4>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {t(STAGES[activeStep].descKey)}
+          </p>
 
           <div className="grid grid-cols-4 gap-2 pt-4">
             {STAGES.map((s, idx) => (
               <button
-                key={s.title}
+                key={s.titleKey}
                 onClick={() => setActiveStep(idx)}
                 className={`h-2 rounded-full transition-all ${
                   activeStep === idx ? "bg-primary w-full" : "bg-muted"

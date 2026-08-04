@@ -1642,5 +1642,17 @@
   "home.telemetry.item1.eta": "Tahmini varış: 14 saat",
   "home.telemetry.item2.hufa": "HUFA: 18,2 mg/g",
   "common.alt.flagTurkiye": "Türkiye bayrağı",
-  "about.alt.aegeanHub": "Ege su ürünleri yetiştiriciliği merkezi"
+  "about.alt.aegeanHub": "Ege su ürünleri yetiştiriciliği merkezi",
+  "lifecycle.eyebrow": "4 Aşamalı Saha Uygulama Metodolojisi",
+  "lifecycle.title": "Anahtar Teslim Proje Yürütme Döngüsü",
+  "lifecycle.badge": "30+ Yıllık Kanıtlanmış Metodoloji",
+  "lifecycle.step1.title": "01. Başlangıç Denetimi ve Laboratuvar Analizleri",
+  "lifecycle.step1.desc": "Su kalitesi analizi, mevcut yem dönüşüm oranı değerlendirmesi, rotifer/Artemia yoğunluğu kıyaslaması ve patojen taraması.",
+  "lifecycle.step2.title": "02. Özel Yem ve RAS Protokolü Tasarımı",
+  "lifecycle.step2.desc": "Chlorella V12 için özel yoğunluk eğrileri, dekapsüle Artemia katılım oranları veya SPF somon yumurtası varış takvimlerinin oluşturulması.",
+  "lifecycle.step3.title": "03. Soğuk Zincir Lojistiği ve Sevkiyat",
+  "lifecycle.step3.desc": "Gerçek zamanlı IoT sıcaklık kayıt sensörleriyle donatılmış sıcaklık kontrollü hava kargo konteynerlerinin (4 °C) devreye alınması.",
+  "lifecycle.step4.title": "04. Sahada Deneme ve Verim Doğrulaması",
+  "lifecycle.step4.desc": "İki haftada bir büyüme takibi, kontrol gruplarıyla hayatta kalma oranı karşılaştırması ve kilogram başına maliyet optimizasyon raporu.",
+  "blog.byline.technicalEditor": "Teknik Editör · Aqua MAG"
 }

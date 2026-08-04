@@ -1642,5 +1642,17 @@
   "home.telemetry.item1.eta": "ETA: 14 h",
   "home.telemetry.item2.hufa": "HUFA: 18,2 mg/g",
   "common.alt.flagTurkiye": "Bandera de Türkiye",
-  "about.alt.aegeanHub": "Centro acuícola del Egeo"
+  "about.alt.aegeanHub": "Centro acuícola del Egeo",
+  "lifecycle.eyebrow": "Metodología de implementación en campo en 4 fases",
+  "lifecycle.title": "Ciclo de ejecución de proyectos llave en mano",
+  "lifecycle.badge": "Más de 30 años de metodología probada",
+  "lifecycle.step1.title": "01. Auditoría inicial y diagnóstico de laboratorio",
+  "lifecycle.step1.desc": "Análisis de la calidad del agua, evaluación del FCR actual, comparación de densidades de rotíferos/artemia y cribado de patógenos.",
+  "lifecycle.step2.title": "02. Diseño de protocolos de pienso y RAS a medida",
+  "lifecycle.step2.desc": "Formulación de curvas de densidad específicas de Chlorella V12, tasas de inclusión de artemia decapsulada o calendarios de llegada de ovas de salmón SPF.",
+  "lifecycle.step3.title": "03. Logística de cadena de frío y expedición",
+  "lifecycle.step3.desc": "Despliegue de contenedores aéreos con temperatura controlada (4 °C) y sensores IoT de registro de temperatura en tiempo real.",
+  "lifecycle.step4.title": "04. Ensayo de campo in situ y verificación de rendimiento",
+  "lifecycle.step4.desc": "Seguimiento quincenal del crecimiento, comparación de la supervivencia frente a grupos de control e informe de optimización del coste por kilogramo.",
+  "blog.byline.technicalEditor": "Editor técnico · Aqua MAG"
 }

@@ -1642,5 +1642,17 @@
   "home.telemetry.item1.eta": "ETA: 14 hrs",
   "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
   "common.alt.flagTurkiye": "Flag of Türkiye",
-  "about.alt.aegeanHub": "Aegean aquaculture hub"
+  "about.alt.aegeanHub": "Aegean aquaculture hub",
+  "lifecycle.eyebrow": "4-Phase Field Implementation Methodology",
+  "lifecycle.title": "Turn-Key Project Execution Lifecycle",
+  "lifecycle.badge": "30+ Years Proven Methodology",
+  "lifecycle.step1.title": "01. Baseline Audit & Lab Diagnostics",
+  "lifecycle.step1.desc": "Water quality analysis, current FCR evaluation, rotifer/artemia density benchmarking, and pathogen screening.",
+  "lifecycle.step2.title": "02. Custom Feed & RAS Protocol Design",
+  "lifecycle.step2.desc": "Formulating specific Chlorella V12 density curves, decapsulated Artemia inclusion rates, or SPF salmon ova arrival schedules.",
+  "lifecycle.step3.title": "03. Cold-Chain Logistics & Dispatch",
+  "lifecycle.step3.desc": "Deploying temperature-controlled air freight containers (4 °C) with real-time IoT temperature logging sensors.",
+  "lifecycle.step4.title": "04. On-Site Field Trial & Yield Verification",
+  "lifecycle.step4.desc": "Bi-weekly growth tracking, survival rate comparison against control groups, and cost-per-kg optimization report.",
+  "blog.byline.technicalEditor": "Technical Editor · Aqua MAG"
 }

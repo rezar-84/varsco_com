@@ -1642,5 +1642,17 @@
   "home.telemetry.item1.eta": "도착 예정: 14시간",
   "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
   "common.alt.flagTurkiye": "튀르키예 국기",
-  "about.alt.aegeanHub": "에게해 양식 거점"
+  "about.alt.aegeanHub": "에게해 양식 거점",
+  "lifecycle.eyebrow": "4단계 현장 도입 방법론",
+  "lifecycle.title": "턴키 프로젝트 실행 라이프사이클",
+  "lifecycle.badge": "30년 이상 검증된 방법론",
+  "lifecycle.step1.title": "01. 기초 실사 및 실험실 진단",
+  "lifecycle.step1.desc": "수질 분석, 현행 사료효율 평가, 로티퍼·아르테미아 밀도 벤치마킹, 병원체 스크리닝.",
+  "lifecycle.step2.title": "02. 맞춤 사료 및 순환여과식 시스템 프로토콜 설계",
+  "lifecycle.step2.desc": "클로렐라 V12 밀도 곡선, 탈각 아르테미아 배합률, SPF 연어알 입고 일정의 설계.",
+  "lifecycle.step3.title": "03. 콜드체인 물류 및 출고",
+  "lifecycle.step3.desc": "실시간 IoT 온도 기록 센서를 갖춘 온도 관리 항공 화물 컨테이너(4 °C) 운용.",
+  "lifecycle.step4.title": "04. 현장 실증 시험 및 수율 검증",
+  "lifecycle.step4.desc": "격주 성장 추적, 대조군 대비 생존율 비교, 킬로그램당 원가 최적화 보고서.",
+  "blog.byline.technicalEditor": "기술 에디터 · Aqua MAG"
 }

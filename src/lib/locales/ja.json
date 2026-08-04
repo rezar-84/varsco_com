@@ -1642,5 +1642,17 @@
   "home.telemetry.item1.eta": "到着予定: 14時間",
   "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
   "common.alt.flagTurkiye": "トルコ国旗",
-  "about.alt.aegeanHub": "エーゲ海の養殖拠点"
+  "about.alt.aegeanHub": "エーゲ海の養殖拠点",
+  "lifecycle.eyebrow": "4段階の現場導入メソドロジー",
+  "lifecycle.title": "ターンキー・プロジェクト実行サイクル",
+  "lifecycle.badge": "30年以上の実績あるメソドロジー",
+  "lifecycle.step1.title": "01. 現状監査と検査室診断",
+  "lifecycle.step1.desc": "水質分析、現行の飼料効率評価、ワムシ・アルテミア密度のベンチマーク、病原体スクリーニング。",
+  "lifecycle.step2.title": "02. カスタム飼料および閉鎖循環式システム設計",
+  "lifecycle.step2.desc": "クロレラV12の密度カーブ、殻なしアルテミアの配合率、SPFサーモン卵の入荷スケジュールの設計。",
+  "lifecycle.step3.title": "03. コールドチェーン物流と出荷",
+  "lifecycle.step3.desc": "リアルタイムIoT温度記録センサーを備えた温度管理型航空貨物コンテナ(4 °C)の運用。",
+  "lifecycle.step4.title": "04. 現地実証試験と収量検証",
+  "lifecycle.step4.desc": "隔週の成長追跡、対照群との生残率比較、キログラム単価の最適化レポート。",
+  "blog.byline.technicalEditor": "テクニカルエディター · Aqua MAG"
 }
