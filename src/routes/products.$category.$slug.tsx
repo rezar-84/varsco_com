@@ -619,8 +619,11 @@ function ProductDetail() {
                 <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-4">
                   <h3 className="font-display text-lg font-bold text-navy flex items-center gap-2">
                     <Award className="h-5 w-5 text-amber-500" />
-                    {product.culinaryInfo.whyChooseTitle ??
-                      t("productDetail.culinary.whyChooseDefaultTitle")}
+                    {tp(
+                      "culinary.whyChooseTitle",
+                      product.culinaryInfo.whyChooseTitle ??
+                        t("productDetail.culinary.whyChooseDefaultTitle"),
+                    )}
                   </h3>
                   <div className="grid sm:grid-cols-3 gap-4">
                     {product.culinaryInfo.whyChoosePoints?.map((pt, idx) => (
@@ -628,8 +631,12 @@ function ProductDetail() {
                         key={idx}
                         className="p-4 rounded-xl bg-surface-alt/60 border border-border/40 space-y-1.5"
                       >
-                        <h4 className="font-bold text-sm text-navy">{pt.title}</h4>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{pt.desc}</p>
+                        <h4 className="font-bold text-sm text-navy">
+                          {tp(`culinary.point.${idx}.title`, pt.title)}
+                        </h4>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {tp(`culinary.point.${idx}.desc`, pt.desc)}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -647,7 +654,7 @@ function ProductDetail() {
                         {product.culinaryInfo.cookingSuggestions.map((item, idx) => (
                           <li key={idx} className="flex items-center gap-2 text-navy font-medium">
                             <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                            <span>{item}</span>
+                            <span>{tp(`culinary.cooking.${idx}`, item)}</span>
                           </li>
                         ))}
                       </ul>
@@ -661,7 +668,7 @@ function ProductDetail() {
                         {t("productDetail.culinary.flavorProfileHeading")}
                       </h3>
                       <p className="text-xs text-muted-foreground leading-relaxed">
-                        {product.culinaryInfo.flavorProfile}
+                        {tp("culinary.flavorProfile", product.culinaryInfo.flavorProfile)}
                       </p>
                     </div>
                   )}
@@ -691,10 +698,12 @@ function ProductDetail() {
                         <tbody className="divide-y divide-border/40">
                           {product.culinaryInfo.sizeGroups.map((sg, idx) => (
                             <tr key={idx} className="hover:bg-surface-alt/40 transition-colors">
-                              <td className="px-4 py-2.5 font-semibold text-navy">{sg.group}</td>
+                              <td className="px-4 py-2.5 font-semibold text-navy">
+                                {tp(`culinary.size.${idx}.group`, sg.group)}
+                              </td>
                               <td className="px-4 py-2.5 font-bold text-primary">{sg.weight}</td>
                               <td className="px-4 py-2.5 text-muted-foreground">
-                                {sg.application}
+                                {tp(`culinary.size.${idx}.application`, sg.application)}
                               </td>
                             </tr>
                           ))}
