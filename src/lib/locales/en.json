@@ -1637,5 +1637,10 @@
   "store.ribbon.sale": "Sale",
   "store.ribbon.sold-out": "Sold out",
   "store.ribbon.out-of-stock": "Out of stock",
-  "store.ribbon.new": "New!"
+  "store.ribbon.new": "New!",
+  "home.telemetry.batch": "SYS-OK // Batch 26",
+  "home.telemetry.item1.eta": "ETA: 14 hrs",
+  "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
+  "common.alt.flagTurkiye": "Flag of Türkiye",
+  "about.alt.aegeanHub": "Aegean aquaculture hub"
 }

@@ -210,7 +210,9 @@ function Index() {
                     {t("home.telemetry.title")}
                   </span>
                 </div>
-                <span className="text-[10px] font-mono text-white/50">SYS-OK // Batch 26</span>
+                <span className="text-[10px] font-mono text-white/50">
+                  {t("home.telemetry.batch")}
+                </span>
               </div>
 
               {/* Progress items */}
@@ -229,7 +231,7 @@ function Index() {
                   </div>
                   <div className="mt-2 flex items-center justify-between text-[10px] text-white/60 font-mono">
                     <span>{t("home.telemetry.item1.temp")}</span>
-                    <span>ETA: 14 hrs</span>
+                    <span>{t("home.telemetry.item1.eta")}</span>
                   </div>
                 </div>
 
@@ -247,7 +249,7 @@ function Index() {
                   </div>
                   <div className="mt-2 flex items-center justify-between text-[10px] text-white/60 font-mono">
                     <span>{t("home.telemetry.item2.hatch")}</span>
-                    <span>HUFA: 18.2 mg/g</span>
+                    <span>{t("home.telemetry.item2.hufa")}</span>
                   </div>
                 </div>
 

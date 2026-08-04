@@ -147,7 +147,7 @@ function SeafoodExport() {
               <span className="flex items-center gap-2 text-mint">
                 <img
                   src={turkeyFlagSvg}
-                  alt="Flag of Türkiye"
+                  alt={t("common.alt.flagTurkiye")}
                   className="h-3.5 w-5 rounded object-cover shadow-sm"
                 />
                 <span>{t("export.hero.badge.izmir")}</span>

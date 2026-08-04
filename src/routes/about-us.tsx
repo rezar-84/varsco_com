@@ -186,7 +186,7 @@ function AboutPage() {
           <div className="relative overflow-hidden rounded-2xl border border-border/80 shadow-md">
             <img
               src={heroFarm}
-              alt="Aegean aquaculture hub"
+              alt={t("about.alt.aegeanHub")}
               className="h-64 w-full object-cover md:h-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/30 to-transparent" />

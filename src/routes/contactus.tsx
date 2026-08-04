@@ -126,7 +126,7 @@ function Contact() {
               <span className="flex items-center gap-2 text-mint bg-white/10 px-3 py-1.5 rounded-full border border-white/10">
                 <img
                   src={turkeyFlagSvg}
-                  alt="Flag of Türkiye"
+                  alt={t("common.alt.flagTurkiye")}
                   className="h-3.5 w-5 rounded object-cover shadow-sm"
                 />
                 <span>{t("contact.hero.pill.hq")}</span>
@@ -342,7 +342,7 @@ function Contact() {
                 <div className="flex items-center gap-2">
                   <img
                     src={turkeyFlagSvg}
-                    alt="Flag of Türkiye"
+                    alt={t("common.alt.flagTurkiye")}
                     className="h-5 w-7 rounded object-cover shadow-sm"
                   />
                   <div>
