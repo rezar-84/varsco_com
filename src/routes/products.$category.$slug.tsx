@@ -22,6 +22,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { storeDataKey } from "@/lib/utils/store-i18n";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Accordion,
@@ -106,6 +107,15 @@ function ProductDetail() {
     const key = `product.${product.slug}.${field}`;
     const res = t(key);
     return res === key ? defaultValue : res;
+  };
+
+  // Composition tables repeat nutrient names across products and tables
+  // (Protein, EPA, Lysine...), so they are keyed by the English term rather
+  // than per product — one translation serves every occurrence.
+  const tc = (term: string): string => {
+    const key = `composition.${storeDataKey(term)}`;
+    const res = t(key);
+    return res === key ? term : res;
   };
 
   const tpArray = (field: string, defaultArray: string[]): string[] => {
@@ -545,14 +555,14 @@ function ProductDetail() {
                     key={tIdx}
                     className="rounded-2xl border border-border/80 p-6 glass-card space-y-4"
                   >
-                    <h3 className="font-display text-lg font-bold text-navy">{table.title}</h3>
+                    <h3 className="font-display text-lg font-bold text-navy">{tc(table.title)}</h3>
                     <div className="overflow-x-auto">
                       <table className="w-full text-xs text-left">
                         <thead className="bg-surface-alt text-navy font-bold border-b border-border/60">
                           <tr>
                             {table.headers?.map((h, hIdx) => (
                               <th key={hIdx} className="px-4 py-3">
-                                {h}
+                                {tc(h)}
                               </th>
                             ))}
                           </tr>
@@ -560,7 +570,7 @@ function ProductDetail() {
                         <tbody className="divide-y divide-border/40">
                           {table.rows.map((r, rIdx) => (
                             <tr key={rIdx} className="hover:bg-surface-alt/40 transition-colors">
-                              <td className="px-4 py-2.5 font-semibold text-navy">{r.col1}</td>
+                              <td className="px-4 py-2.5 font-semibold text-navy">{tc(r.col1)}</td>
                               <td className="px-4 py-2.5 font-bold text-primary">{r.col2}</td>
                               {r.col3 && <td className="px-4 py-2.5 text-navy/80">{r.col3}</td>}
                               {r.col4 && (
