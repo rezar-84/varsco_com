@@ -1,3 +1,10 @@
+import salmonEggsColdChainImg from "@/assets/blog/salmon-eggs-cold-chain.webp";
+import salmonFarmingInfographyImg from "@/assets/blog/salmon-farming-infography.webp";
+import atlanticCohoSalmonComparisonImg from "@/assets/blog/atlantic-coho-salmon-comparison.webp";
+import photo20250213_154447Img from "@/assets/blog/photo_2025-02-13_15-44-47.webp";
+import photo20250213_170ff407Img from "@/assets/blog/photo_2025-02-13_17-0ff4-07.webp";
+import photo20250213_17040ff7Img from "@/assets/blog/photo_2025-02-13_17-04-0ff7.webp";
+import photo20250215_162213Img from "@/assets/blog/photo_2025-02-15_16-22-13.webp";
 import salmonEggScotlandImg from "@/assets/blog/salmon-egg-scotlond.webp";
 import seaImg from "@/assets/blog/unsplash_KMn4VEeEPR8_sea.webp";
 /**
@@ -783,4 +790,292 @@ Jeder Lachs, der von Tokio bis Istanbul auf den Markt kommt, beginnt als befruch
 Brutanlagen, die mit VARS Aquaculture arbeiten, entscheiden sich für mehr als Eier. Sie entscheiden sich für Verlässlichkeit, technische Unterstützung und einen Partner, der in ihren langfristigen Erfolg investiert.
 
 Sprechen Sie VARS Aquaculture an, um Ihren nächsten Brutanlagenzyklus mit befruchteten [Lachseiern](/products/hatchery-solutions/atlantic-salmon-egg) zu planen, auf die Sie sich verlassen können.`,
+
+  "overcoming-the-top-10-challenges-in-salmon-egg-sourcing-and-management-16": `Selbst für Brutanlagen der Spitzenklasse sind Beschaffung und Management von [Lachseiern](/products/hatchery-solutions/atlantic-salmon-egg) (Ova) ein Vorhaben mit hohem Einsatz. In einer Branche, in der mikroskopische Variablen millionenschwere Ergebnisse bestimmen, sind gleichbleibende Eiqualität, Biosicherheit und genetische Passung das Fundament eines erfolgreichen Produktionszyklus.
+
+Nachfolgend eine Analyse der entscheidenden Engpässe, mit denen Brutanlagen weltweit konfrontiert sind, und der strategischen Lösungen, die zu ihrer Entschärfung erforderlich sind.
+
+### 1. Saisonale Schwankungen und Lieferengpässe
+
+Die Produktion von Lachseiern verläuft naturgemäß zyklisch. In Spitzenzeiten stehen Brutanlagen häufig vor:
+
+Lieferengpässen: überzeichnete Chargen aus erstklassigen Elterntierbeständen.Preisunelastizität: deutliche Kostenspitzen in der Hochsaison.Logistischen Engpässen: fehlende garantierte Liefertermine.
+
+Die Folge: Unvorhersehbare Lieferketten können Mastpläne ins Stocken bringen und führen zu ungenutzter Anlagenkapazität und entgangenem Umsatz.
+
+### 2. Risikokonzentration: die Single-Source-Falle
+
+Die Abhängigkeit von einer einzigen Herkunft oder einem einzigen Lieferanten schafft einen einzelnen Ausfallpunkt. Regionale Krankheitsausbrüche, regulatorische Änderungen oder Ernteausfälle können die gesamte Jahresproduktion einer Brutanlage stoppen. Diversifizierte Beschaffung ist längst kein Luxus mehr, sondern Voraussetzung für operative Widerstandsfähigkeit.
+
+### 3. Genetische Fehlpassung zu den Umweltparametern
+
+Das Zusammenspiel mit der Umwelt ist entscheidend. Sind die Eier nicht genetisch auf Ihre spezifischen Bedingungen ausgewählt, zeigen sich:
+
+Verschlechterte Futterverwertung (FCR).Höhere Sterblichkeit: besonders in den empfindlichen Jungfisch- und Smoltstadien.Suboptimales Wachstum: Unverträglichkeit mit bestimmten Temperaturen, Salzgehalten oder Systemtypen (etwa Kreislaufanlage gegenüber Offenseekäfig).
+
+### 4. Biosicherheit und Pathogenzertifizierung
+
+Brutanlagen benötigen vollständige Transparenz. Eier müssen als frei von den wichtigsten Erregern zertifiziert sein, darunter:
+
+IPN (infektiöse Pankreasnekrose)BKD (bakterielle Nierenerkrankung)ISA (infektiöse Anämie des Lachses)
+
+Werden strenge, zeitgerechte Gesundheitszeugnisse nicht sichergestellt, droht die Einschleppung katastrophaler Erreger in sterile Kreislaufsysteme.
+
+### 5. Schwankungen im Augenpunktstadium
+
+Qualitätsunterschiede innerhalb einer einzigen Charge — etwa geringe Befruchtungsraten oder brüchige Schalen — führen zu ungleichmäßigen Kohorten. Das Ergebnis sind unvorhersehbarer Sortieraufwand und ein vermindertes Biomassepotenzial bereits vor der ersten Fütterung.
+
+### 6. Kühlkettenlogistik und Transportstress
+
+![Kühlkettenlogistik](${salmonEggsColdChainImg})
+
+
+Ova reagieren äußerst empfindlich auf Temperaturschwankungen und mechanische Erschütterungen. Schlecht gesteuerte Logistik führt zu:
+
+Thermischem Stress: unnatürlich beschleunigte oder verzögerte Entwicklung.Schockmortalität: verursacht durch unsachgemäße Handhabung während des Transports.Austrocknung: Beeinträchtigung der Membranintegrität des Eis.
+
+### 7. Ploidie-Präzision: triploid gegenüber diploid
+
+Die Erfüllung bestimmter Markt- oder Umweltvorgaben erfordert exaktes Ploidie-Management. Ob Sie triploide Eier zur Einhaltung von Umweltauflagen oder diploide Eier für die klassische Mast benötigen — einen Lieferanten zu finden, der 100 % Gleichmäßigkeit garantiert, bleibt eine wiederkehrende Herausforderung.
+
+### 8. Komplexe internationale Einfuhrhürden
+
+Die „Papierwand" ist eine wesentliche Ursache für Lieferverzögerungen. Der Umgang mit Veterinärgesundheitszeugnissen (VHC), Zollanmeldungen und artspezifischen Genehmigungen (Coho, Chinook, Atlantik) erfordert lokale Fachkenntnis, um Zurückweisungen an der Grenze zu vermeiden.
+
+### 9. Industrieller Wettbewerb um hochwertiges Ausgangsmaterial
+
+Mit dem weltweit wachsenden Lachskonsum sichern sich große Marktteilnehmer erstklassige Genetik oft Monate oder Jahre im Voraus. Unabhängige und mittelgroße Brutanlagen haben dadurch Mühe, an das leistungsstärkste Material zu gelangen.
+
+### 10. Die „Ship and Forget"-Mentalität
+
+Viele Lieferanten bieten nach der Lieferung keinerlei Unterstützung. Ohne fachliche Begleitung zu Akklimatisierung, Systemkompatibilität und Frühphasenernährung müssen Brutanlagen Leistungsprobleme allein lösen.
+
+Die Lösung: strategische Beschaffung mit VARS Aquaculture
+
+![Infografik zur Lachszucht](${salmonFarmingInfographyImg})
+
+VARS Aquaculture schlägt die Brücke zwischen erstklassigen Elterntieren und dem Erfolg der Brutanlage. Wir beseitigen Produktionsschwankungen durch:
+
+Multi-Origin-Beschaffung: Redundanz über Ländergrenzen hinweg für ganzjährige Verfügbarkeit.Genetische Optimierung: Wir stimmen bestimmte Linien auf Temperatur, Salzgehalt und Technologie Ihrer Anlage ab (Kreislaufanlage/Käfig).Durchgängige Biosicherheit: vollständige Transparenz und Dokumentation für alle OIE-gelisteten Erreger.Globale Logistikkompetenz: spezialisiertes Kühlkettenmanagement, damit die Eier in bestem physiologischem Zustand ankommen.Technische Partnerschaft: fachliche Begleitung von der Lieferung bis zum Smoltstadium`,
+
+  "vars-aquaculture-the-first-and-largest-supplier-of-salmon-eggs-in-south-korea-17": `Südkoreas Aquakultursektor ist im vergangenen Jahrzehnt rasch gewachsen, und [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) sind zu einem der wichtigsten Betriebsmittel für Brutanlagen geworden, die auf gleichbleibend hochwertige Produktion setzen. Der Markteintritt war nie einfach: strenge Vorschriften, umfangreiche Dokumentationspflichten und saisonale Logistik machten Importe schwierig und unzuverlässig.
+
+VARS Aquaculture hat das verändert.
+
+Mit dem Aufbau der ersten stabilen kommerziellen Importroute für [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) wurde VARS zum frühesten und mit der Zeit größten unabhängigen Lieferanten von [Lachseiern](/products/hatchery-solutions/atlantic-salmon-egg) in Südkorea. Diese Position beruht auf jahrelanger Grundlagenarbeit, technischem Verständnis und enger Abstimmung mit internationalen Erzeugern wie mit lokalen Brutanlagen.
+
+## Eine verlässliche Lieferkette von Grund auf aufgebaut
+
+![Aufbau der Lieferkette](${photo20250213_154447Img})
+
+Als wir erstmals in den koreanischen Markt eintraten, hatten Brutanlagen nur begrenzte Optionen und litten unter häufigen Lieferunterbrechungen. VARS verbrachte Jahre damit, regulatorische Anforderungen zu erschließen, Unterlagen vorzubereiten und mit den Behörden sicherzustellen, dass Importe sämtliche Gesundheits- und Biosicherheitsstandards erfüllen.
+
+Auf dieser Grundlage erhielten koreanische Brutanlagen Zugang zu einer stabilen, planbaren und regelkonformen Lieferkette — die es zuvor nicht gab.
+
+## Warum VARS zum führenden Lachsei-Lieferanten Koreas wurde
+## Multi-Origin-Beschaffung
+VARS arbeitet mit mehreren angesehenen internationalen Erzeugern zusammen und kann dadurch anbieten:
+
+Atlantische [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) (Salmo salar)
+Diploide und triploide Varianten
+Saisonal abgestimmte Lieferungen
+Gleichbleibende Schlupfqualität und Überlebensraten
+
+Dieser Mehrquellenansatz schützt Brutanlagen vor Engpässen und Unterbrechungen.
+
+![Überlebensraten in der Brutanlage](${photo20250213_170ff407Img})
+
+
+Mehr zu unseren Lachsei-Produkten finden Sie in unserem Shop.
+
+## Verlässliche Compliance und Dokumentation
+Jede Sendung wird unter Berücksichtigung sämtlicher regulatorischer Anforderungen vorbereitet, darunter:
+
+Genetik- und GesundheitszeugnisseBiosicherheitsdokumentationAbstimmung von Quarantäne und Zoll
+
+Das sichert die reibungslose Einfuhr nach Korea und minimiert das Risiko für die Brutanlagen.
+
+## Erfahrung, die zu den lokalen Anforderungen passt
+Über die Jahre haben wir koreanischen Brutanlagen geholfen, Handhabungsprotokolle zu verstehen, die richtigen Linien auszuwählen und saisonale Zyklen zu planen. Dieses langfristige Engagement hat ein verlässliches Versorgungssystem etabliert und das Vertrauen in der Branche gestärkt.
+
+## Kontrollierte, schnelle Lieferung
+Sendungen werden per Priority-Luftfracht abgewickelt und von der Abfahrt bis zur Ankunft unter den korrekten Temperaturbedingungen gehalten, was Vitalität und Gesamtleistung schützt.
+
+## Eine über Jahre gewachsene Marktführerschaft
+Heute gilt für VARS Aquaculture:
+
+Wir liefern das größte Volumen an [Lachseiern](/products/hatchery-solutions/atlantic-salmon-egg) nach Südkorea
+Wir haben den ersten durchgängigen kommerziellen Importweg eröffnet
+Wir pflegen langjährige Beziehungen zu Erzeugern und Brutanlagen
+Wir sichern durch diversifizierte Beschaffung eine unterbrechungsfreie Verfügbarkeit
+
+Unser Wachstum in Korea beruhte stets auf stabiler Leistung und verlässlichem Service — nicht auf kurzfristigen Verkäufen oder einmaligen Lieferungen.
+
+![Stabiler Beschaffungsweg](${photo20250213_17040ff7Img})
+
+
+## Die Zukunft der Lachszucht in Korea unterstützen
+Mit dem Ausbau der inländischen Lachsproduktion steigt die Nachfrage nach verlässlichen, zertifizierten und saisonal abgestimmten [Lachseiern](/products/hatchery-solutions/atlantic-salmon-egg) weiter. VARS wird sein Beschaffungsnetz weiter stärken, das Angebot ausbauen und eng mit Brutanlagen zusammenarbeiten, um dieses Wachstum zu begleiten.
+
+## Über VARS Aquaculture
+
+![Das Team von VARS Aquaculture](${photo20250215_162213Img})
+
+VARS Aquaculture ist ein weltweiter Lieferant von Brutanlagenbedarf und Aquakulturlösungen, darunter [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg), [Artemia-Zysten](/products/live-feed-aquaculture/artemia), Chlorella und Spezialfuttermittel. Mit Standorten in Europa, im Nahen Osten und in Asien konzentriert sich VARS auf langfristige Partnerschaften, verlässliche Beschaffung und gleichbleibende Produktqualität.`,
+
+  "understanding-eyed-salmon-eggs-survival-biosecurity-international-hatchery-supply-20": `Einführung
+
+Für kommerzielle Brutanlagen bestimmt die Eiqualität alles Weitere — Schlupfrate, Vitalität der Jungfische, Futtereffizienz und langfristige Überlebensrate. Die Entscheidung, befruchtete atlantische [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) oder befruchtete Coho-[Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) im Augenpunktstadium zu beziehen, ist nicht nur eine logistische, sondern eine biologische Entscheidung.
+
+Das Augenpunktstadium markiert einen entscheidenden Entwicklungsschritt: Der Embryo hat eine sichtbare Augenpigmentierung ausgebildet und strukturelle Widerstandsfähigkeit gewonnen. Dieses Stadium wird für internationale Sendungen bevorzugt, weil es Transportmortalität und Stress gegenüber früheren Stadien deutlich verringert.
+
+Die Wahl des richtigen Lieferanten für [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) im Augenpunktstadium zählt damit zu den wichtigsten strategischen Entscheidungen für die Wirtschaftlichkeit einer Brutanlage.
+
+Was sind Augenpunkteier?
+
+Augenpunkteier sind befruchtete [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg), deren Entwicklung so weit fortgeschritten ist, dass die Augen des Embryos durch das Chorion sichtbar sind. In diesem Stadium gilt:
+
+Der Embryo hat die frühe, empfindliche Entwicklungsphase überstanden
+Die strukturelle Festigkeit ist deutlich höher
+Die Eier vertragen den Transport besser
+Die Schlupfsynchronität wird planbarer
+
+Die Entwicklung von [Lachseiern](/products/hatchery-solutions/atlantic-salmon-egg) wird in Tagesgraden gemessen:
+
+Tagesgrade = Wassertemperatur (°C) × Anzahl der Tage
+
+Atlantische [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) schlüpfen je nach Bebrütungstemperatur und deren Stabilität typischerweise zwischen 480 und 520 Tagesgraden.
+
+Da die Entwicklung temperaturabhängig ist, ist eine kontrollierte Bebrütung vor dem Versand unerlässlich. Hochwertige Lieferanten steuern Temperatur, Sauerstoff und Gasgehalte sorgfältig, um vor der Auslieferung biologische Stabilität sicherzustellen.
+
+Bebrütungsparameter, die den Schlupferfolg bestimmen
+
+Hohe Überlebensraten entstehen lange vor dem Versand. Sie hängen von strenger Umweltkontrolle während der Bebrütung ab.
+
+Temperaturkontrolle
+
+Transporttemperatur: typischerweise 2-5 °CBebrütungstemperatur: in der Regel unter 7,5 °CTemperaturen über 7,5 °C erhöhen das Risiko von MissbildungenTriploide Eier sollten unter 6 °C bleiben
+
+Eine stabile Temperatur verhindert vorzeitigen Schlupf und Skelettanomalien. Plötzliche Schwankungen können stressbedingten Schlupf auslösen und die Überlebensrate senken.
+
+Sauerstoff- und Gasmanagement
+
+Für eine optimale Eientwicklung gilt:
+
+Die Sauerstoffsättigung sollte über 90 % liegenKohlendioxid sollte unter 6 mg/l bleibenDie Gesamtgassättigung darf 100 % nicht überschreiten
+
+Gasübersättigung kann zu Blasenbildung im Gewebe und erhöhter Sterblichkeit führen. Professionelle Lieferanten in Brutanlagenqualität überwachen diese Parameter kontinuierlich.
+
+Wasserdurchfluss während der Bebrütung
+
+Ein optimaler Wasserdurchfluss sichert den Gasaustausch und verhindert Pilzbefall. Zu starke Turbulenzen können die Eier schädigen, ein zu geringer Durchfluss senkt die Überlebensfähigkeit.
+
+Ein konsequentes Bebrütungsmanagement beeinflusst unmittelbar:
+
+Die Schlupfrate
+Die Synchronität der Dottersacklarven
+Die Robustheit nach dem Schlupf
+
+Biosicherheit in der Lieferung befruchteter Lachseier
+
+Eier und Lachse in frühen Stadien sind hochgradig anfällig für Krankheitserreger. Professionelle Eilieferanten arbeiten nach strengen Biosicherheitsprotokollen, um Kontaminationen zu verhindern.
+
+Zentrale Biosicherheitselemente sind:
+
+Desinfektion der Eier nach der Befruchtung
+Kontrollierte Desinfektion der Behälter bei Ankunft
+Eigene biosichere Produktionszonen
+Wassersterilisation mit UV oder Ozon
+Eingeschränkter Personenverkehr
+
+Für internationale Brutanlagen sind Freiheitsbescheinigungen und Ausfuhr-Gesundheitsdokumente entscheidend. Versagen der Biosicherheit im Eistadium kann langfristige Produktionsverluste und regulatorische Schwierigkeiten nach sich ziehen.
+
+Augenpunkteier von Atlantik- und Coho-Lachs
+
+Sowohl Atlantik- als auch Coho-Lachs sind kommerziell wertvolle Arten, die Anforderungen der Brutanlagen können sich jedoch unterscheiden.
+
+Atlantischer Lachs (Salmo salar)
+
+Dominierend in der weltweiten Aquakultur
+Starke Leistung in Kreislaufanlagen
+Hohe Wachstumseffizienz
+International breit gehandelt
+
+Coho-Lachs (Oncorhynchus kisutch)
+
+Hohe Anpassungsfähigkeit
+Gute Robustheit unter wechselnden Bedingungen
+Steigende Nachfrage in bestimmten regionalen Märkten
+Geeignet für kontrollierte und semi-intensive Systeme
+
+Die Wahl zwischen befruchteten Atlantik- und Coho-Eiern hängt von Zielmarkt, Systemauslegung und Wachstumsstrategie ab.
+
+![Vergleich von Atlantik- und Coho-Lachs](${atlanticCohoSalmonComparisonImg})
+
+
+Internationaler Versand von Augenpunkteiern
+
+Der internationale Versand ist einer der Hauptgründe, weshalb Brutanlagen das Augenpunktstadium bevorzugen.
+
+Bewährte Vorgehensweisen umfassen:
+
+Einhaltung von 2-5 °C während des TransportsVermeidung von Temperaturschocks beim Umsetzen 
+Überwachung der Temperaturaufzeichnungen
+Verpackung mit kontrollierter Dichte
+Sofortiges Desinfektionsprotokoll bei Ankunft
+
+Ein sachgerechtes Logistikmanagement beeinflusst die endgültige Schlupfquote unmittelbar. Selbst hochwertige Eier können Verluste erleiden, wenn die Transportbedingungen schlecht gesteuert sind.
+
+Ein professioneller Lieferant sollte bereitstellen:
+
+Aufzeichnungen der Transporttemperatur
+Gesundheitszeugnisse
+Ausfuhrdokumente
+Fachliche Begleitung bei Ankunft
+
+Typische Probleme in Brutanlagen infolge mangelhafter Eiqualität
+
+Minderwertige oder unsachgemäß behandelte befruchtete [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) können führen zu:
+
+Verringerten Schlupfraten
+Missgebildeten Jungfischen
+Dottersackanomalien
+Pilzausbrüchen
+Schwachem Schwimmblasenverhalten
+Schlechter Futterannahme
+
+Diese Probleme hängen häufig mit Temperaturschwankungen, Sauerstoffungleichgewicht oder unzureichender Biosicherheit während der Bebrütung zusammen.
+
+Langfristige Produktionsrentabilität beginnt im Eistadium.
+
+So bewerten Sie einen Lieferanten für Augenpunkteier
+
+Vor dem Kauf befruchteter Atlantik- oder Coho-[Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) sollten Brutanlagen Lieferanten anhand folgender Kriterien beurteilen:
+
+Dokumentierte Biosicherheitsverfahren
+Gesundheits- und Krankheitszertifizierung
+Transparenz der Bebrütungsparameter
+Temperaturgeführte Logistik
+Glaubwürdigkeit des Zuchtprogramms
+Verfügbarkeit technischer Unterstützung
+Unterstützung bei der Exportkonformität
+
+Ein verlässlicher Lieferant versendet nicht nur Eier — er begleitet den Erfolg der Brutanlage von der Bebrütung bis zur ersten Fütterung.
+
+Partnerschaft für verlässliche Brutanlagenleistung
+
+Hochwertige Augenpunkteier sind das biologische Fundament jedes erfolgreichen Lachsbrutbetriebs.
+
+Ob Sie befruchtete atlantische [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) oder befruchtete Coho-[Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) beziehen — Bebrütungskontrolle, Biosicherheitsstandards und Transportmanagement des Lieferanten wirken sich unmittelbar aus auf:
+
+Die Schlupfsynchronität
+Die Robustheit der Jungfische
+Die Planbarkeit der Produktion
+Die langfristige Überlebensrate
+
+Kommerziellen Brutanlagen, die eine verlässliche Eiversorgung suchen, empfehlen wir nachdrücklich eine Produktionskalenderplanung und frühzeitige Abstimmung.
+
+Fragen Sie die Verfügbarkeit befruchteter Atlantik- oder Coho-Augenpunkteier an.
+
+Wenden Sie sich für technische Spezifikationen und kommende Produktionsfenster an unser Aquakultur-Team.`,
 };
