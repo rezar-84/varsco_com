@@ -830,7 +830,7 @@ function ProductDetail() {
 
           {/* Dynamic Technical & Hatchery Widget Column */}
           {(() => {
-            const widget = getProductWidgetData(product);
+            const widget = getProductWidgetData(product, t);
             return (
               <div className="lg:col-span-5 space-y-6">
                 <div className="glass-card rounded-3xl border border-primary/20 bg-gradient-to-b from-teal/10 via-background to-navy/5 p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden">
@@ -1239,11 +1239,11 @@ const PRODUCT_DETAILED_TABLES: Record<string, TableCategory[]> = {
 
 const AQUARIUM_TARGETED_SLUGS = ["artemia", "decapsulated-dry-artemia-cysts"];
 
-function getProductWidgetData(product: Product) {
+function getProductWidgetData(product: Product, t: (key: string) => string) {
   const aquariumCallout = AQUARIUM_TARGETED_SLUGS.includes(product.slug)
     ? {
         secondaryLinkTo: "/aquariums-and-hobbyists",
-        secondaryLinkText: "Also perfect for aquariums & reef tanks",
+        secondaryLinkText: t("widget.aquariumCallout"),
       }
     : {};
 
@@ -1252,19 +1252,18 @@ function getProductWidgetData(product: Product) {
 
   if (isChlorellaProduct) {
     return {
-      badge: "Live Feed Protocol Widget",
-      title: "Rotifer & Microalgae Culture Protocol",
-      description:
-        "Chlorella is the direct feed source for rotifer cultures — access green-water dosing guidance, cell density targets, and stocking parameters for consistent, high-density rotifer production.",
-      metric1Label: "Cell/Nutrient Density",
+      badge: t("widget.liveFeed.badge"),
+      title: t("widget.chlorella.title"),
+      description: t("widget.chlorella.description"),
+      metric1Label: t("widget.chlorella.metric1Label"),
       metric1Value:
         product.metrics.find((m) => m.label.toLowerCase().includes("density"))?.value ??
         product.metrics.find((m) => m.label.includes("Protein"))?.value ??
-        "See specifications",
-      metric2Label: "Feeds",
-      metric2Value: "Rotifer & copepod cultures",
+        t("widget.seeSpecifications"),
+      metric2Label: t("widget.chlorella.metric2Label"),
+      metric2Value: t("widget.chlorella.metric2Value"),
       linkTo: "/artemia-cysts-incubation-guide",
-      buttonText: "View Live Feed Protocol Guide",
+      buttonText: t("widget.chlorella.buttonText"),
       ...aquariumCallout,
     };
   }
@@ -1274,60 +1273,57 @@ function getProductWidgetData(product: Product) {
     product.slug === "decapsulated-dry-artemia-cysts"
   ) {
     return {
-      badge: "Live Feed Protocol Widget",
-      title: "Artemia Hatching Protocol",
-      description:
-        "Access step-by-step scientific incubation parameters — salinity standards (25–35 ppt), temperature limits (28–30 °C), and hatching-cone setup — for consistent, high-yield Artemia nauplii. Artemia is fed directly to fish and shrimp larvae, a separate stage from rotifer culture.",
-      metric1Label: "Salinity Standard",
+      badge: t("widget.liveFeed.badge"),
+      title: t("widget.artemia.title"),
+      description: t("widget.artemia.description"),
+      metric1Label: t("widget.artemia.metric1Label"),
       metric1Value: "25 – 35 ppt",
-      metric2Label: "Hatch Temperature",
+      metric2Label: t("widget.artemia.metric2Label"),
       metric2Value: "28 – 30 °C",
       linkTo: "/artemia-cysts-incubation-guide",
-      buttonText: "View Artemia Incubation Manual",
+      buttonText: t("widget.artemia.buttonText"),
       ...aquariumCallout,
     };
   }
 
   if (product.category === "hatchery-solutions") {
     return {
-      badge: "Hatchery Ova Widget",
-      title: "Salmon Ova Incubation & Cold-Chain Protocol",
-      description:
-        "Explore SPF disease-free salmon ova incubation tray protocols, temperature data logging, smolt vigor optimization, and biosecurity transport.",
-      metric1Label: "Incubation Water Temp",
+      badge: t("widget.hatchery.badge"),
+      title: t("widget.hatchery.title"),
+      description: t("widget.hatchery.description"),
+      metric1Label: t("widget.hatchery.metric1Label"),
       metric1Value: "4 – 8 °C",
-      metric2Label: "Eyed Hatch Rate",
-      metric2Value: "≥ 95% Certified",
+      metric2Label: t("widget.hatchery.metric2Label"),
+      metric2Value: t("widget.hatchery.metric2Value"),
       linkTo: "/salmonid-ova-solutions",
-      buttonText: "View Salmonid Ova Hatchery Guide",
+      buttonText: t("widget.hatchery.buttonText"),
     };
   }
 
   if (product.category === "feed-additives") {
     return {
-      badge: "Feed Technical Widget",
-      title: "Aquafeed Formulation & Extrusion Guide",
-      description:
-        "Review inclusion rate guidelines, protein digestibility parameters (≥ 92%), water absorption binding (≥ 150%), and pellet stability protocols.",
-      metric1Label: "Protein Content",
+      badge: t("widget.feed.badge"),
+      title: t("widget.feed.title"),
+      description: t("widget.feed.description"),
+      metric1Label: t("widget.feed.metric1Label"),
       metric1Value: product.metrics.find((m) => m.label.includes("Protein"))?.value || "55–82%",
-      metric2Label: "Binding / Digestibility",
-      metric2Value: "High Extrusion Rank",
+      metric2Label: t("widget.feed.metric2Label"),
+      metric2Value: t("widget.feed.metric2Value"),
       linkTo: "/services-solutions",
-      buttonText: "View Feed Formulations & Solutions",
+      buttonText: t("widget.feed.buttonText"),
     };
   }
 
   // Seafood Export category
   return {
-    badge: "Seafood Logistics Widget",
-    title: "Cold-Chain Preservation & HORECA Supply",
-    description: `Explore 52-week continuous harvest cycles, ASC & GlobalG.A.P biosecurity standards, and temperature-logged fresh/frozen delivery for ${product.title}.`,
-    metric1Label: "Fresh Storage Temp",
+    badge: t("widget.seafood.badge"),
+    title: t("widget.seafood.title"),
+    description: t("widget.seafood.description").replace("{product}", product.title),
+    metric1Label: t("widget.seafood.metric1Label"),
     metric1Value: "0 °C – 2 °C",
-    metric2Label: "Deep Freeze Standard",
+    metric2Label: t("widget.seafood.metric2Label"),
     metric2Value: "−18 °C",
     linkTo: "/horeca-seafood-middle-east",
-    buttonText: "View HORECA & Trade Logistics Guide",
+    buttonText: t("widget.seafood.buttonText"),
   };
 }
