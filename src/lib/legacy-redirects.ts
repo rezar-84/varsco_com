@@ -19,8 +19,42 @@
  */
 export const LEGACY_SHOP_REDIRECTS: Record<string, string> = {};
 
-/** Matches the delocalized pathname (no /tr, /ar, etc. prefix) against the legacy redirect map. */
+/**
+ * Static paths from the retired Odoo website that have no equivalent route
+ * here and would otherwise 404.
+ *
+ * These are Odoo's own defaults (`website`, `portal`, `website_sale`), not
+ * URLs anyone authored, so they exist on every Odoo install and are the ones
+ * search engines and old bookmarks still point at. Paths that happen to match
+ * a real route are deliberately absent — `/contactus` is a live route here, so
+ * it must not redirect.
+ */
+const LEGACY_ODOO_PATHS: Record<string, string> = {
+  "/aboutus": "/about-us",
+  "/page/aboutus": "/about-us",
+  "/page/about-us": "/about-us",
+  "/page/contactus": "/contactus",
+  "/page/homepage": "/",
+  "/my": "/account",
+  "/my/home": "/account",
+  "/my/account": "/account/profile",
+  "/my/orders": "/account/orders",
+  "/my/quotes": "/account/orders",
+  "/my/addresses": "/account/addresses",
+  "/web/signup": "/register",
+  "/web/reset_password": "/login",
+  "/shop/cart": "/cart",
+};
+
+/**
+ * Matches the delocalized pathname (no /tr, /ar, etc. prefix) against the
+ * legacy redirect maps. Odoo's portal paths are matched by prefix as well, so
+ * deeper URLs like /my/orders/1234 land on the account area rather than 404.
+ */
 export function resolveLegacyRedirect(pathname: string): string | null {
   const normalized = pathname.replace(/\/+$/, "") || "/";
-  return LEGACY_SHOP_REDIRECTS[normalized] ?? null;
+  const direct = LEGACY_SHOP_REDIRECTS[normalized] ?? LEGACY_ODOO_PATHS[normalized];
+  if (direct) return direct;
+  if (normalized === "/my" || normalized.startsWith("/my/")) return "/account";
+  return null;
 }

@@ -49,6 +49,9 @@ function isH3SwallowedErrorBody(body: string): boolean {
 import { AsyncLocalStorage } from "node:async_hooks";
 
 const serverStorage = new AsyncLocalStorage<{ lang: string; path: string }>();
+
+/** Public URL prefixes. Mirrors VALID_LANGS in src/lib/utils/locale.ts. */
+const SUPPORTED_LOCALES = ["tr", "ar", "de", "ru", "ja", "ko", "en", "zh", "es"];
 (globalThis as unknown as Record<string, unknown>).serverStorage = serverStorage;
 
 function deLocalizeRequest(request: Request): Request {
@@ -82,16 +85,23 @@ export default {
 
       const rawParts = requestUrl.pathname.split("/").filter(Boolean);
       const rawLocale = rawParts[0]?.toLowerCase();
-      const legacyLocale = rawLocale === "ko_kr" || rawLocale === "ko-kr";
-      const supportedLocale = ["tr", "ar", "de", "ru", "ja", "ko", "en", "zh", "es"].includes(
-        rawLocale ?? "",
-      );
+      const supportedLocale = SUPPORTED_LOCALES.includes(rawLocale ?? "");
 
-      // Google has historical Odoo-style Korean URLs using ko_KR. Redirect
-      // them to the current /ko URL space instead of allowing a 404/duplicate.
-      if (legacyLocale) {
+      // Odoo publishes its URL space under full locale codes — ko_KR, de_DE,
+      // tr_TR, ru_RU, ja_JP, zh_CN, es_ES, and region-numeric forms like
+      // ar_001 / es_419. This site prefixes with the bare subtag only, so map
+      // any xx_YY / xx-yy form back onto it instead of serving a 404 or a
+      // duplicate. Previously only ko_KR/ko-kr was handled, leaving every
+      // other locale's historical Odoo URLs to 404.
+      const legacyBase = rawLocale?.match(/^([a-z]{2})[_-][a-z0-9]{2,4}$/)?.[1];
+      if (legacyBase && SUPPORTED_LOCALES.includes(legacyBase)) {
         const rest = rawParts.slice(1).join("/");
-        const destination = new URL(`/ko${rest ? `/${rest}` : ""}`, requestUrl.origin);
+        // English is the default locale and carries no public prefix.
+        const prefix = legacyBase === "en" ? "" : `/${legacyBase}`;
+        const destination = new URL(
+          `${prefix}/${rest}`.replace(/\/+$/, "") || "/",
+          requestUrl.origin,
+        );
         destination.search = requestUrl.search;
         return new Response(null, {
           status: 301,

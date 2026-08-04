@@ -76,7 +76,7 @@ These apply to every language, before any language-specific rule below:
 - **Aquaculture Terms:**
   - _Eyed eggs / Eyed ova_ $\rightarrow$ **발안란**
   - _Live feed_ $\rightarrow$ **생먹이**
-  - _Artemia cysts_ $\rightarrow$ **알테미아 내구란 / 알테미아 시스트**
+  - _Artemia cysts_ $\rightarrow$ **아르테미아 내구란 / 아르테미아 시스트** (corrected 2026-08-04: this entry previously read 알테미아, which is the informal hobby-retail spelling. 아르테미아 is the standard Korean transliteration used by [Korean Wikipedia](https://ko.wikipedia.org/wiki/아르테미아) and already used by the `/products` portfolio keys.)
   - _Rotifers_ $\rightarrow$ **로티퍼 / 윤충류**
 - **Localization notes:** CJK line-break and font handling required (see §4).
 
