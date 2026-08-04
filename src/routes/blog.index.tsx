@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { BLOG_POSTS } from "@/lib/mock/blog";
+import { BLOG_POSTS, getLocalizedPosts } from "@/lib/mock/blog";
+import { useI18n } from "@/context/I18nContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   BookOpen,
@@ -33,21 +34,25 @@ export const Route = createFileRoute("/blog/")({
   component: BlogIndex,
 });
 
+type ReactFormEvent = React.FormEvent;
+
 function BlogIndex() {
+  const { lang, t } = useI18n();
+  const localizedPosts = getLocalizedPosts(lang);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const CATEGORIES = [
-    { id: "all", label: "All Journal Articles" },
-    { id: "aquaculture-10", label: "Aquaculture 101 & Fundamentals" },
-    { id: "hatchery-feed-design-6", label: "Hatchery & Feed Engineering" },
-    { id: "feed-innovation-sustainability-8", label: "Feed Innovation & Microalgae" },
-    { id: "vars-company-1", label: "Company & Industry Milestones" },
-    { id: "projects-4", label: "Field Projects & Trials" },
+    { id: "all", label: t("blog.categories.all") || "All Journal Articles" },
+    { id: "aquaculture-10", label: t("blog.categories.aquaculture-10") || "Aquaculture 101 & Fundamentals" },
+    { id: "hatchery-feed-design-6", label: t("blog.categories.hatchery-feed-design-6") || "Hatchery & Feed Engineering" },
+    { id: "feed-innovation-sustainability-8", label: t("blog.categories.feed-innovation-sustainability-8") || "Feed Innovation & Microalgae" },
+    { id: "vars-company-1", label: t("blog.categories.vars-company-1") || "Company & Industry Milestones" },
+    { id: "projects-4", label: t("blog.categories.projects-4") || "Field Projects & Trials" },
   ];
 
-  const filteredPosts = BLOG_POSTS.filter((p) => {
+  const filteredPosts = localizedPosts.filter((p) => {
     const matchesCategory = selectedCategory === "all" || p.categorySlug === selectedCategory;
     const matchesSearch =
       searchQuery.trim() === "" ||
@@ -57,8 +62,9 @@ function BlogIndex() {
     return matchesCategory && matchesSearch;
   });
 
-  const featuredPost = BLOG_POSTS[0]; // First main cover story
-  const editorsPicks = BLOG_POSTS.slice(1, 4); // 3 picks for sidebar
+  const featuredPost = localizedPosts[0]; // First main cover story
+  const editorsPicks = localizedPosts.slice(1, 4); // 3 picks for sidebar
+
   const showFeaturedHero = selectedCategory === "all" && searchQuery.trim() === "";
   const gridPosts = showFeaturedHero
     ? filteredPosts.filter((p) => p.slug !== featuredPost.slug)

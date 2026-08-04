@@ -1,0 +1,14 @@
+import type { LangCode } from "@/lib/types";
+import { TR_BODIES } from "./tr";
+
+/**
+ * Translated article bodies, by locale then post slug.
+ *
+ * Separate from BLOG_TRANSLATIONS (title/excerpt/category) so a locale's bodies
+ * can land independently: bodies are the bulk of the content and are being
+ * translated locale by locale. A slug absent here simply keeps the English
+ * body, via getLocalizedPost()'s `translation.body || post.body` fallback.
+ */
+export const BLOG_BODIES: Partial<Record<LangCode, Record<string, string>>> = {
+  tr: TR_BODIES,
+};

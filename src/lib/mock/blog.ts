@@ -45,8 +45,6 @@ import photo20250213_170ff407Img from "@/assets/blog/photo_2025-02-13_17-0ff4-07
 import photo20250213_17040ff7Img from "@/assets/blog/photo_2025-02-13_17-04-0ff7.webp";
 import photo20250215_162213Img from "@/assets/blog/photo_2025-02-15_16-22-13.webp";
 
-
-
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "beyond-the-brand-the-biological-reality-of-artemia-performance-in-turkiye-19",
@@ -1353,10 +1351,55 @@ Up to 8x increase in rotifer productionEnhanced larval health and consistency�
   },
 ];
 
-export function getPost(slug: string): BlogPost | undefined {
-  return BLOG_POSTS.find((post) => post.slug === slug);
+import type { LangCode } from "../types";
+
+export function getLocalizedPost(post: BlogPost, lang: LangCode): BlogPost {
+  if (!post) return post;
+  const translation = post.translations?.[lang];
+  if (!translation) return post;
+  return {
+    ...post,
+    title: translation.title || post.title,
+    excerpt: translation.excerpt || post.excerpt,
+    body: translation.body || post.body,
+    category: translation.category || post.category,
+  };
 }
 
-export function getPostsByCategory(categorySlug: string): BlogPost[] {
-  return BLOG_POSTS.filter((post) => post.categorySlug === categorySlug);
+export function getLocalizedPosts(lang: LangCode): BlogPost[] {
+  return BLOG_POSTS.map((post) => getLocalizedPost(post, lang));
 }
+
+export function getPost(slug: string, lang?: LangCode): BlogPost | undefined {
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  if (!post) return undefined;
+  if (lang) return getLocalizedPost(post, lang);
+  return post;
+}
+
+export function getPostsByCategory(categorySlug: string, lang?: LangCode): BlogPost[] {
+  const posts = BLOG_POSTS.filter((p) => p.categorySlug === categorySlug);
+  if (lang) return posts.map((p) => getLocalizedPost(p, lang));
+  return posts;
+}
+
+import { BLOG_TRANSLATIONS } from "./blog_translations";
+import { BLOG_BODIES } from "./blog_bodies";
+
+BLOG_POSTS.forEach((post) => {
+  const meta = BLOG_TRANSLATIONS[post.slug];
+  if (!meta) return;
+  // Bodies live in their own per-locale modules and are merged in here, so a
+  // locale that has title/excerpt translated but not its article body still
+  // gets the translated heading with the English body underneath, rather than
+  // being dropped entirely.
+  const merged: NonNullable<BlogPost["translations"]> = {};
+  for (const [lang, entry] of Object.entries(meta) as [
+    LangCode,
+    NonNullable<BlogPost["translations"]>[LangCode],
+  ][]) {
+    if (!entry) continue;
+    merged[lang] = { ...entry, body: BLOG_BODIES[lang]?.[post.slug] ?? entry.body };
+  }
+  post.translations = merged;
+});

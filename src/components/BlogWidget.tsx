@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Clock, BookOpen, Flame } from "lucide-react";
-import { BLOG_POSTS } from "@/lib/mock/blog";
+import { BLOG_POSTS, getLocalizedPosts } from "@/lib/mock/blog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useI18n } from "@/context/I18nContext";
 
 interface BlogWidgetProps {
   title?: string;
@@ -18,9 +19,12 @@ export function BlogWidget({
   category,
   variant = "grid",
 }: BlogWidgetProps) {
+  const { lang } = useI18n();
+  const localizedPosts = getLocalizedPosts(lang);
   const posts = (
-    category ? BLOG_POSTS.filter((p) => p.categorySlug === category) : BLOG_POSTS
+    category ? localizedPosts.filter((p) => p.categorySlug === category) : localizedPosts
   ).slice(0, limit);
+
 
   if (!posts.length) return null;
 

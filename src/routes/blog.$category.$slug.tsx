@@ -1,6 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { Section } from "@/components/layout/Page";
-import { getPost, BLOG_POSTS } from "@/lib/mock/blog";
+import { getPost, BLOG_POSTS, getLocalizedPost } from "@/lib/mock/blog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Share2,
@@ -82,15 +82,17 @@ export const Route = createFileRoute("/blog/$category/$slug")({
 });
 
 function Article() {
-  const { post } = Route.useLoaderData() as { post: BlogPost };
-  const { t } = useI18n();
+  const { post: rawPost } = Route.useLoaderData() as { post: BlogPost };
+  const { t, lang } = useI18n();
+  const post = getLocalizedPost(rawPost, lang);
 
   // Find related articles in same category, or fallback to latest posts
-  let relatedPosts = BLOG_POSTS.filter(
+  const localizedPosts = BLOG_POSTS.map((p) => getLocalizedPost(p, lang));
+  let relatedPosts = localizedPosts.filter(
     (p) => p.categorySlug === post.categorySlug && p.slug !== post.slug,
   );
   if (relatedPosts.length < 3) {
-    const extraPosts = BLOG_POSTS.filter(
+    const extraPosts = localizedPosts.filter(
       (p) => p.slug !== post.slug && !relatedPosts.some((r) => r.slug === p.slug),
     );
     relatedPosts = [...relatedPosts, ...extraPosts].slice(0, 3);
