@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Section } from "@/components/layout/Page";
 import { BlogWidget } from "@/components/BlogWidget";
 import { CATEGORIES, getCategory, getProductsByCategory } from "@/lib/mock/products";
+import { translateStoreSsr } from "@/lib/utils/store-i18n";
 import { ProductCard } from "@/components/ProductCard";
 import { AnimatedCatalogHeader } from "@/components/visuals/AnimatedCatalogHeader";
 import { ArrowRight, Package, ShieldCheck, CheckCircle2, ChevronRight } from "lucide-react";
@@ -14,12 +15,22 @@ export const Route = createFileRoute("/products/$category/")({
     if (!category) throw notFound();
     return { category, products: getProductsByCategory(params.category) };
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.category.title ?? "Category"} | VARS Aquaculture` },
-      { name: "description", content: loaderData?.category.description ?? "" },
-    ],
-  }),
+  head: ({ loaderData }) => {
+    // The page body already renders cat.<slug> / cat.<slug>.desc, which are
+    // translated in all nine locales; the metadata was still reading the raw
+    // English strings off the category record, so every locale shipped an
+    // English <title> and description.
+    const slug = loaderData?.category.slug;
+    const name = slug
+      ? translateStoreSsr(`cat.${slug}`, loaderData?.category.title ?? "")
+      : translateStoreSsr("store.seo.categoryFallback", "Category");
+    const desc = slug
+      ? translateStoreSsr(`cat.${slug}.desc`, loaderData?.category.description ?? "")
+      : "";
+    return {
+      meta: [{ title: `${name} | VARS Aquaculture` }, { name: "description", content: desc }],
+    };
+  },
   component: CategoryPage,
 });
 
