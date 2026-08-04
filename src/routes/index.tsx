@@ -23,6 +23,7 @@ import { useI18n } from "@/context/I18nContext";
 import salmonEggs from "@/assets/salmon-eggs.jpg";
 import artemia from "@/assets/artemia-in-spoon.jpg";
 import chlorella from "@/assets/chlorella.jpg";
+import sv12ProductImg from "@/assets/products/super-fresh-chlorella-sv12.png";
 import heroFarm from "@/assets/hero-farm.jpg";
 import reviveDecap from "@/assets/products/revive-artemia-decap.png";
 
@@ -423,7 +424,7 @@ function Index() {
             />
             <div className="aspect-[4/3] overflow-hidden bg-muted">
               <img
-                src={chlorella}
+                src={sv12ProductImg}
                 alt={t("home.top.card3.title")}
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
