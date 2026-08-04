@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { i18nBootstrapScript, serverI18nPayload } from "@/lib/i18n-dict";
+import { getCurrentLocale } from "@/lib/utils/locale";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
@@ -162,6 +163,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     const i18nPayload = serverI18nPayload();
     const contentPath = getContentPath();
     const pathSuffix = contentPath === "/" ? "" : contentPath;
+    // getContentPath() strips the locale prefix, so pathSuffix alone points at
+    // the ENGLISH URL. Canonical and og:url must be self-referencing: pointing
+    // every localized page at the English one tells Google the translations
+    // are duplicates, which makes it ignore the hreflang set on this same page
+    // and drop all eight non-English locales from the index.
+    const activeLang = getCurrentLocale();
+    const localePrefix = activeLang === "en" ? "" : `/${activeLang}`;
+    const selfUrl = `${SITE_URL}${localePrefix}${pathSuffix}`;
     const pageMeta = getRootPageSeo(contentPath);
     const isPrivate =
       /^(\/account(?:\/|$)|\/panel(?:\/|$)|\/cart$|\/login$|\/register$|\/shop\/checkout$)/.test(
@@ -212,7 +221,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           property: "og:locale:alternate",
           content: localeMap[l],
         })),
-        { property: "og:url", content: `${SITE_URL}${pathSuffix}` },
+        { property: "og:url", content: selfUrl },
         { property: "og:image", content: OG_IMAGE },
         { property: "og:image:alt", content: "VARS Aquaculture" },
         { name: "twitter:card", content: "summary_large_image" },
@@ -237,7 +246,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap",
         },
-        { rel: "canonical", href: `${SITE_URL}${pathSuffix}` },
+        { rel: "canonical", href: selfUrl },
         ...ALTERNATE_LANGS.map((l) => ({
           rel: "alternate",
           hrefLang: l,
