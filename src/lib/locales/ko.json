@@ -2096,5 +2096,18 @@
   "product.oyster.metrics.2.label": "PUFA",
   "product.oyster.metrics.2.value": "0.3 g",
   "product.oyster.metrics.3.label": "MUFA",
-  "product.oyster.metrics.3.value": "0.2 g"
+  "product.oyster.metrics.3.value": "0.2 g",
+  "product.fish-meal.longDescription.0": "어분은 현대 양식 사료에서 가장 중요한 단백질원 중 하나입니다. 연어과 어류, 도미, 농어, 새우 사료에 완전한 아미노산 조성과 필수지방산, 소화율이 높은 무기질을 공급합니다.",
+  "product.fish-meal.longDescription.1": "VARS 어분은 자연산 표층 어종과 가공 부산물을 원료로 엄격한 품질 관리 하에 생산되어, 전 세계 사료 배합 담당자에게 로트 간 일관된 성능을 제공합니다.",
+  "product.vital-wheat-gluten.longDescription.0": "VARS Aquaculture는 밀 글루텐을 유럽과 캐나다의 최상급 생산자로부터 조달하며, 압출 양식 사료에서 높은 단백질 농도와 우수한 기능적 성능을 확보하도록 가공합니다.",
+  "product.potato-protein-meal.longDescription.0": "감자 단백질 분말은 아미노산의 완전성을 보존하는 정밀 추출 및 건조 공정을 통해 비유전자변형 유럽산 감자로 생산됩니다.",
+  "product.potato-protein-meal.longDescription.1": "광범위한 시험 데이터에 따르면 어분의 최대 20%를 감자 단백질 분말로 대체해도 최적의 성장률과 사료효율(FCR)이 유지되며 사료 비용은 절감됩니다.",
+  "product.atlantic-salmon-egg.longDescription.0": "엄격한 부화장 및 방역 기준 하에 생산된 엄선 수정란으로 신뢰할 수 있는 연어 생산 주기를 구축하십시오.",
+  "product.atlantic-salmon-egg.longDescription.1": "대서양연어의 생활 주기를 일관성과 확신을 가지고 시작하십시오. 당사의 알은 엄격한 방역 프로토콜 하에 관리되는 인증된 무병 친어에서 조달됩니다.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.0": "껍질 함량 0%, 경량 불순물 0%, 중량 불순물 0%, 수분은 4~5%로 관리된 조건에서 가공됩니다.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.1": "높은 단백질 및 에너지 가치가 자어의 빠른 성장과 우수한 생존 성능을 뒷받침합니다. 또한 세균 오염과 미부화 내구란 축적에 따른 자어 사육 시스템의 위험을 줄입니다.",
+  "product.artemia.longDescription.0": "CPG(그램당 내구란 수)는 아르테미아의 크기와 속에 따라 달라지며 그 자체로는 품질 지표가 아닙니다. 품질은 부화율과 생성된 노플리우스의 영양가 및 생물량으로 결정됩니다.",
+  "product.artemia.longDescription.1": "당사는 85% 이상의 안정적인 부화율로 우수한 제품 품질과 일관성을 보장합니다. 매년 당사의 두 호수에서 습중량 기준 약 700톤의 아르테미아와 400톤의 건조 내구란 및 가공 아르테미아를 수확합니다.",
+  "product.mediterranean-sea-bass.longDescription.0": "수출 우수성을 위해 ASC 및 GlobalG.A.P 프로토콜을 준수하는 국제 기준.",
+  "product.mediterranean-sea-bass.longDescription.1": "연속 생산 주기를 통해 글로벌 도매 시장에 연 52주 공급을 보장하며, EMEA 및 북미 시장으로의 정기 신선 배송에 최적화된 물류를 운영합니다."
 }

@@ -2096,5 +2096,18 @@
   "product.oyster.metrics.2.label": "PUFA",
   "product.oyster.metrics.2.value": "0.3 g",
   "product.oyster.metrics.3.label": "MUFA",
-  "product.oyster.metrics.3.value": "0.2 g"
+  "product.oyster.metrics.3.value": "0.2 g",
+  "product.fish-meal.longDescription.0": "鱼粉是现代水产饲料中最重要的蛋白质来源之一。它为鲑鳟、鲷鱼、鲈鱼及虾类日粮提供完整的氨基酸组成、必需脂肪酸和高消化率矿物质。",
+  "product.fish-meal.longDescription.1": "VARS 鱼粉在严格的质量控制下，以野生捕捞的中上层鱼类及加工副产物为原料生产，为全球饲料配方师提供批次间稳定的性能表现。",
+  "product.vital-wheat-gluten.longDescription.0": "VARS Aquaculture 的小麦面筋粉采购自欧洲与加拿大的优质生产商，并经加工处理，以确保在膨化水产饲料中具备高蛋白浓度与优异的功能性表现。",
+  "product.potato-protein-meal.longDescription.0": "马铃薯蛋白粉以非转基因欧洲马铃薯为原料，通过精密的提取与干燥工艺制成，可保持氨基酸的完整性。",
+  "product.potato-protein-meal.longDescription.1": "大量试验数据表明，以马铃薯蛋白粉替代最高 20% 的鱼粉，可在降低日粮成本的同时保持最佳生长速度与饲料转化率（FCR）。",
+  "product.atlantic-salmon-egg.longDescription.0": "以在严格育苗与生物安全标准下生产的精选受精卵，构建可靠的鲑鱼生产周期。",
+  "product.atlantic-salmon-egg.longDescription.1": "以稳定与信心开启大西洋鲑的生命周期。我们的鱼卵源自在严格生物安全规程下饲养、经认证的无病亲鱼。",
+  "product.decapsulated-dry-artemia-cysts.longDescription.0": "在受控条件下加工，卵壳含量 0%、轻质杂质 0%、重质杂质 0%，水分控制在 4-5%。",
+  "product.decapsulated-dry-artemia-cysts.longDescription.1": "高蛋白与高能值支持仔鱼快速生长和优异存活表现，并降低育苗系统中细菌污染及未孵化卵积聚所带来的风险。",
+  "product.artemia.longDescription.0": "CPG（每克卵数）随丰年虫的规格与属别而变化，本身并非质量指标。质量由孵化率以及所得无节幼体的营养价值与生物量决定。",
+  "product.artemia.longDescription.1": "我们以不低于 85% 的稳定孵化率保证卓越的产品质量与一致性。每年从我们的两处湖泊中采收约 700 吨湿丰年虫，以及 400 吨干卵与加工丰年虫。",
+  "product.mediterranean-sea-bass.longDescription.0": "符合 ASC 与 GlobalG.A.P 规范的国际标准，确保出口品质。",
+  "product.mediterranean-sea-bass.longDescription.1": "连续生产周期确保面向全球批发市场的 52 周供应，并通过优化物流实现向欧非中东与北美市场的定期鲜品配送。"
 }

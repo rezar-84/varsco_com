@@ -2096,5 +2096,18 @@
   "product.oyster.metrics.2.label": "PUFA",
   "product.oyster.metrics.2.value": "0.3 g",
   "product.oyster.metrics.3.label": "MUFA",
-  "product.oyster.metrics.3.value": "0.2 g"
+  "product.oyster.metrics.3.value": "0.2 g",
+  "product.fish-meal.longDescription.0": "フィッシュミールは現代の養殖飼料において最も重要なタンパク質源のひとつです。サケ科魚類、マダイ、スズキ、エビの飼料に、完全なアミノ酸組成、必須脂肪酸、消化性の高いミネラルを供給します。",
+  "product.fish-meal.longDescription.1": "VARSのフィッシュミールは、天然漁獲の浮魚類および加工残さを原料に、厳格な品質管理のもとで製造され、世界中の飼料設計者にロット間で安定した性能をご提供します。",
+  "product.vital-wheat-gluten.longDescription.0": "VARS Aquacultureでは、小麦グルテンを欧州およびカナダの一流生産者から調達し、エクストルーダー加工の養殖飼料において高いタンパク質濃度と優れた機能性を確保できるよう加工しています。",
+  "product.potato-protein-meal.longDescription.0": "ポテトプロテインミールは、非遺伝子組換えの欧州産ばれいしょを原料に、アミノ酸の完全性を保つ精密な抽出・乾燥工程によって製造されます。",
+  "product.potato-protein-meal.longDescription.1": "広範な試験データから、魚粉の最大20%をポテトプロテインミールに置き換えても、最適な成長率と飼料効率(FCR)が維持され、同時に飼料コストを低減できることが示されています。",
+  "product.atlantic-salmon-egg.longDescription.0": "厳格なふ化場基準とバイオセキュリティ基準のもとで生産された、厳選受精卵により、信頼性の高いサーモン生産サイクルを構築いただけます。",
+  "product.atlantic-salmon-egg.longDescription.1": "アトランティックサーモンのライフサイクルを、安定性と確信をもって開始いただけます。当社の卵は、厳格なバイオセキュリティ手順のもとで管理された認証済みの無病親魚に由来します。",
+  "product.decapsulated-dry-artemia-cysts.longDescription.0": "殻含有率0%、軽量夾雑物0%、重量夾雑物0%、水分は4〜5%に管理された条件下で加工されています。",
+  "product.decapsulated-dry-artemia-cysts.longDescription.1": "高いタンパク質およびエネルギー価が、仔魚の急速な成長と高い生残性能を支えます。また、細菌汚染や未孵化卵の蓄積に伴う仔魚飼育系のリスクを低減します。",
+  "product.artemia.longDescription.0": "CPG(1グラムあたりの耐久卵数)はアルテミアのサイズと属によって異なり、それ自体は品質指標ではありません。品質は孵化率、および得られるノープリウスの栄養価とバイオマスによって決まります。",
+  "product.artemia.longDescription.1": "当社は85%以上の安定した孵化率により、優れた製品品質と均一性をお約束します。毎年、当社の二つの湖から湿重量で約700トンのアルテミア、乾燥耐久卵および加工アルテミアで400トンが採取されています。",
+  "product.mediterranean-sea-bass.longDescription.0": "輸出における卓越性のため、ASCおよびGlobalG.A.Pの手順に適合した国際規格に準拠しています。",
+  "product.mediterranean-sea-bass.longDescription.1": "連続生産サイクルにより、世界の卸売市場に向けて52週間の供給を確保し、EMEAおよび北米市場への定期的な生鮮配送に最適化した物流を整えています。"
 }

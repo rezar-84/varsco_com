@@ -2096,5 +2096,18 @@
   "product.oyster.metrics.2.label": "PUFA",
   "product.oyster.metrics.2.value": "0.3 g",
   "product.oyster.metrics.3.label": "MUFA",
-  "product.oyster.metrics.3.value": "0.2 g"
+  "product.oyster.metrics.3.value": "0.2 g",
+  "product.fish-meal.longDescription.0": "La harina de pescado es una de las fuentes proteicas más importantes de los piensos acuícolas modernos. Aporta un perfil completo de aminoácidos, ácidos grasos esenciales y minerales altamente digestibles para dietas de salmónidos, dorada, lubina y camarón.",
+  "product.fish-meal.longDescription.1": "La harina de pescado de VARS se produce bajo estricto control de calidad a partir de especies pelágicas de captura salvaje y recortes, ofreciendo un rendimiento constante entre lotes a los formuladores de todo el mundo.",
+  "product.vital-wheat-gluten.longDescription.0": "En VARS Aquaculture, nuestro gluten de trigo procede de productores europeos y canadienses de primer nivel y se procesa para garantizar una alta concentración proteica y un rendimiento funcional superior en piensos acuícolas extruidos.",
+  "product.potato-protein-meal.longDescription.0": "La harina de proteína de patata se fabrica a partir de patatas europeas sin OMG mediante procesos precisos de extracción y secado que preservan la integridad de los aminoácidos.",
+  "product.potato-protein-meal.longDescription.1": "Numerosos datos de ensayo demuestran que sustituir hasta un 20 % de la harina de pescado por harina de proteína de patata mantiene tasas de crecimiento y de conversión alimenticia (FCR) óptimas, reduciendo a la vez el coste de la dieta.",
+  "product.atlantic-salmon-egg.longDescription.0": "Construya un ciclo de producción de salmón fiable con huevas fecundadas cuidadosamente seleccionadas y producidas bajo estrictas normas de criadero y bioseguridad.",
+  "product.atlantic-salmon-egg.longDescription.1": "Inicie el ciclo de vida de su salmón atlántico con constancia y confianza. Nuestras huevas proceden de reproductores certificados y libres de enfermedades mantenidos bajo estrictos protocolos de bioseguridad.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.0": "Procesado en condiciones controladas con 0 % de cáscara, 0 % de impurezas ligeras, 0 % de impurezas pesadas y humedad controlada al 4-5 %.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.1": "Su elevado valor proteico y energético favorece un crecimiento larvario rápido y una alta supervivencia. Reduce los riesgos asociados a la contaminación bacteriana y a la acumulación de quistes sin eclosionar en los sistemas larvarios.",
+  "product.artemia.longDescription.0": "El CPG (número de quistes por gramo) varía según el tamaño y el género de la artemia y no es por sí solo un indicador de calidad. La calidad la definen la tasa de eclosión y el valor nutricional y la biomasa de los nauplios obtenidos.",
+  "product.artemia.longDescription.1": "Garantizamos una calidad y constancia superiores con una tasa de eclosión estable de al menos el 85 %. Cada año se cosechan de nuestros dos lagos unas 700 toneladas de artemia húmeda y 400 toneladas de quistes secos y artemia procesada.",
+  "product.mediterranean-sea-bass.longDescription.0": "Normas internacionales conformes con los protocolos ASC y GlobalG.A.P para la excelencia exportadora.",
+  "product.mediterranean-sea-bass.longDescription.1": "Los ciclos de producción continuos garantizan disponibilidad durante 52 semanas para la venta mayorista global, con una logística optimizada para entregas regulares en fresco en los mercados EMEA y norteamericano."
 }

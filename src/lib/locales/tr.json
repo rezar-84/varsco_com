@@ -2096,5 +2096,18 @@
   "product.oyster.metrics.2.label": "PUFA",
   "product.oyster.metrics.2.value": "0.3 g",
   "product.oyster.metrics.3.label": "MUFA",
-  "product.oyster.metrics.3.value": "0.2 g"
+  "product.oyster.metrics.3.value": "0.2 g",
+  "product.fish-meal.longDescription.0": "Balık unu, modern su ürünleri yemlerinin en önemli protein kaynaklarından biridir. Salmonidler, çipura, levrek ve karides diyetleri için eksiksiz bir amino asit profili, esansiyel yağ asitleri ve yüksek sindirilebilirlikte mineraller sağlar.",
+  "product.fish-meal.longDescription.1": "VARS balık unu, doğadan avlanan pelajik türlerden ve kırpıntılardan sıkı kalite kontrolü altında üretilir ve dünya genelindeki yem formülatörlerine partiden partiye tutarlı performans sunar.",
+  "product.vital-wheat-gluten.longDescription.0": "VARS Aquaculture olarak buğday glutenimizi birinci sınıf Avrupalı ve Kanadalı üreticilerden tedarik ediyor; ekstrüde su ürünleri yemlerinde yüksek protein konsantrasyonu ve üstün fonksiyonel performans sağlayacak şekilde işliyoruz.",
+  "product.potato-protein-meal.longDescription.0": "Patates proteini unu, amino asit bütünlüğünü koruyan hassas ekstraksiyon ve kurutma süreçleriyle GDO'suz Avrupa patateslerinden üretilir.",
+  "product.potato-protein-meal.longDescription.1": "Kapsamlı deneme verileri, balık ununun %20'sine kadarının patates proteini unuyla ikame edilmesinin optimum büyüme oranlarını ve yem dönüşüm oranlarını (FCR) koruduğunu, aynı zamanda diyet maliyetlerini düşürdüğünü göstermektedir.",
+  "product.atlantic-salmon-egg.longDescription.0": "Sıkı kuluçkahane ve biyogüvenlik standartları altında üretilen, özenle seçilmiş döllenmiş yumurtalarla güvenilir bir somon üretim döngüsü kurun.",
+  "product.atlantic-salmon-egg.longDescription.1": "Atlantik somonu yaşam döngünüze tutarlılık ve güvenle başlayın. Yumurtalarımız, sıkı biyogüvenlik protokolleri altında tutulan sertifikalı ve hastalıktan ari anaç sürülerinden temin edilir.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.0": "%0 kabuk içeriği, %0 hafif safsızlık, %0 ağır safsızlık ve %4-5 aralığında kontrol edilen nem ile kontrollü koşullarda işlenir.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.1": "Yüksek protein ve enerji değeri, hızlı larva büyümesini ve güçlü hayatta kalma performansını destekler. Larva sistemlerinde bakteriyel kontaminasyon ve açılmamış kist birikimiyle ilişkili riskleri azaltır.",
+  "product.artemia.longDescription.0": "CPG (gram başına kist sayısı) Artemia'nın boyutuna ve cinsine göre değişir ve tek başına bir kalite göstergesi değildir. Kaliteyi belirleyen, açılım oranı ile elde edilen naupliilerin besin değeri ve biyokütlesidir.",
+  "product.artemia.longDescription.1": "En az %85'lik kararlı bir açılım oranıyla üstün ürün kalitesi ve tutarlılık garanti ediyoruz. Her yıl iki gölümüzden yaklaşık 700 ton yaş Artemia ile 400 ton kuru kist ve işlenmiş Artemia hasat edilmektedir.",
+  "product.mediterranean-sea-bass.longDescription.0": "İhracatta mükemmellik için ASC ve GlobalG.A.P protokollerine uygun uluslararası standartlar.",
+  "product.mediterranean-sea-bass.longDescription.1": "Kesintisiz üretim döngüleri, küresel toptan satış için 52 hafta boyunca ulaşılabilirlik sağlar; EMEA ve Kuzey Amerika pazarlarına düzenli taze teslimatlar için lojistik optimize edilmiştir."
 }

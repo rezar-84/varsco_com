@@ -760,8 +760,10 @@ function ProductDetail() {
 
           <TabsContent value="desc">
             <div className="glass-card rounded-2xl mt-4 p-6 border border-border/80 space-y-4 text-xs leading-relaxed text-navy/80">
-              <p className="font-medium text-sm leading-relaxed text-navy">{product.description}</p>
-              {product.longDescription?.map((p, i) => (
+              <p className="font-medium text-sm leading-relaxed text-navy">
+                {tp("description", product.description)}
+              </p>
+              {tpArray("longDescription", product.longDescription ?? []).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </div>

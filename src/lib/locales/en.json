@@ -2096,5 +2096,18 @@
   "product.oyster.metrics.2.label": "PUFA",
   "product.oyster.metrics.2.value": "0.3 g",
   "product.oyster.metrics.3.label": "MUFA",
-  "product.oyster.metrics.3.value": "0.2 g"
+  "product.oyster.metrics.3.value": "0.2 g",
+  "product.fish-meal.longDescription.0": "Fish Meal is one of the most important protein sources in modern aquafeed. It delivers a full amino-acid profile, essential fatty acids and highly digestible minerals for salmonids, sea bream, sea bass and shrimp diets.",
+  "product.fish-meal.longDescription.1": "VARS fish meal is produced under strict quality control from wild-caught pelagic species and trimmings, offering consistent batch-to-batch performance for feed formulators worldwide.",
+  "product.vital-wheat-gluten.longDescription.0": "At VARS Aquaculture, our wheat gluten is sourced from premium European and Canadian producers and processed to ensure high protein concentration and superior functional performance in extruded aquafeed.",
+  "product.potato-protein-meal.longDescription.0": "Potato Protein Meal is manufactured from non-GMO European potatoes through precise extraction and drying processes that preserve amino acid integrity.",
+  "product.potato-protein-meal.longDescription.1": "Extensive trial data demonstrates that replacing up to 20% of fish meal with Potato Protein Meal maintains optimal growth rates and feed conversion ratios (FCR) while reducing diet costs.",
+  "product.atlantic-salmon-egg.longDescription.0": "Build a reliable salmon production cycle with carefully selected fertilized eggs produced under strict hatchery and biosecurity standards.",
+  "product.atlantic-salmon-egg.longDescription.1": "Start your Atlantic salmon lifecycle with consistency and confidence. Our eggs are sourced from certified, disease-free broodstock maintained under stringent biosecurity protocols.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.0": "Processed under controlled conditions with 0% shell content, 0% light impurities, 0% heavy impurities and moisture controlled at 4–5%.",
+  "product.decapsulated-dry-artemia-cysts.longDescription.1": "High protein and energy value supports rapid larval growth and strong survival performance. Reduces risks associated with bacterial contamination and unhatched cyst accumulation in larval systems.",
+  "product.artemia.longDescription.0": "CPG (Number of Cyst per Gram) varies with size and genus of Artemia and is not a quality indicator on its own. Quality is defined by Hatching Rate and by the nutritional value and biomass of the resulting nauplii.",
+  "product.artemia.longDescription.1": "We guarantee superior product quality and consistency with a stable hatching rate of at least 85%. Every year, about 700 tons of wet Artemia and 400 tons of dry cyst and processed Artemia are harvested from our two lakes.",
+  "product.mediterranean-sea-bass.longDescription.0": "International standards compliant with ASC and GlobalG.A.P protocols for export excellence.",
+  "product.mediterranean-sea-bass.longDescription.1": "Continuous production cycles ensure 52-week availability for global wholesale, with optimized logistics for regular fresh deliveries across the EMEA and North American markets."
 }
