@@ -42,7 +42,12 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      // data-[state=inactive]:hidden only matters when a caller passes
+      // forceMount: Radix normally unmounts inactive panels, which keeps their
+      // content out of the SSR markup entirely. Pages that want every panel
+      // server-rendered (for indexable content) opt in with forceMount, and
+      // this rule keeps the inactive ones visually hidden.
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=inactive]:hidden",
       className,
     )}
     {...props}

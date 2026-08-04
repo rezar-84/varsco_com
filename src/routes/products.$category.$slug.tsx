@@ -492,7 +492,7 @@ function ProductDetail() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="specs" className="mt-6">
+          <TabsContent forceMount value="specs" className="mt-6">
             <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-4">
               <h3 className="font-display text-lg font-bold text-navy">
                 {t("productDetail.specs.heading")}
@@ -512,7 +512,7 @@ function ProductDetail() {
           </TabsContent>
 
           {product.category === "seafood" && product.metrics?.length > 0 && (
-            <TabsContent value="nutrition" className="mt-6">
+            <TabsContent forceMount value="nutrition" className="mt-6">
               <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-4">
                 <h3 className="font-display text-lg font-bold text-navy">
                   {t("productDetail.nutrition.heading")}
@@ -538,7 +538,7 @@ function ProductDetail() {
           )}
 
           {PRODUCT_DETAILED_TABLES[product.slug] && (
-            <TabsContent value="composition" className="mt-6">
+            <TabsContent forceMount value="composition" className="mt-6">
               <div className="space-y-6">
                 {PRODUCT_DETAILED_TABLES[product.slug].map((table, tIdx) => (
                   <div
@@ -578,7 +578,7 @@ function ProductDetail() {
           )}
 
           {(product.slug === "artemia" || product.slug === "decapsulated-dry-artemia-cysts") && (
-            <TabsContent value="hatching-protocol" className="mt-6">
+            <TabsContent forceMount value="hatching-protocol" className="mt-6">
               <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-6">
                 <div className="flex items-center justify-between border-b border-border/60 pb-4">
                   <div>
@@ -613,7 +613,7 @@ function ProductDetail() {
           )}
 
           {product.culinaryInfo && (
-            <TabsContent value="culinary" className="mt-6">
+            <TabsContent forceMount value="culinary" className="mt-6">
               <div className="space-y-6">
                 {/* Why Choose Section */}
                 <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-4">
@@ -707,7 +707,7 @@ function ProductDetail() {
             </TabsContent>
           )}
 
-          <TabsContent value="apps" className="mt-6">
+          <TabsContent forceMount value="apps" className="mt-6">
             <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-4">
               <h3 className="font-display text-lg font-bold text-navy">
                 {t("productDetail.applications.heading")}
@@ -726,7 +726,7 @@ function ProductDetail() {
             </div>
           </TabsContent>
 
-          <TabsContent value="storage">
+          <TabsContent forceMount value="storage">
             <div className="glass-card rounded-2xl mt-4 p-6 border border-border/80 text-xs leading-relaxed text-navy/80 space-y-4">
               <p className="font-semibold text-navy">{tp("storage", product.storage)}</p>
               <div className="grid sm:grid-cols-3 gap-3 pt-2">
@@ -758,7 +758,7 @@ function ProductDetail() {
             </div>
           </TabsContent>
 
-          <TabsContent value="desc">
+          <TabsContent forceMount value="desc">
             <div className="glass-card rounded-2xl mt-4 p-6 border border-border/80 space-y-4 text-xs leading-relaxed text-navy/80">
               <p className="font-medium text-sm leading-relaxed text-navy">
                 {tp("description", product.description)}
@@ -789,20 +789,39 @@ function ProductDetail() {
             </div>
 
             <Accordion type="single" collapsible className="w-full space-y-3">
-              {(PRODUCT_FAQS[product.slug] || DEFAULT_FAQS).map((item, i) => (
-                <AccordionItem
-                  key={i}
-                  value={`faq-${i}`}
-                  className="glass-card rounded-xl px-5 border border-border/80"
-                >
-                  <AccordionTrigger className="text-left font-display text-sm font-semibold text-navy hover:no-underline py-4">
-                    {item.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-xs text-muted-foreground leading-relaxed pb-4">
-                    {item.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
+              {(() => {
+                // Custom FAQs are keyed per product; the shared fallback set
+                // uses its own namespace so one translation serves every
+                // product that falls back to it.
+                const custom = PRODUCT_FAQS[product.slug];
+                const list = custom ?? DEFAULT_FAQS;
+                const qKey = (i: number) =>
+                  custom
+                    ? `product.${product.slug}.faq.${i}.q`
+                    : `productDetail.faq.default.${i}.q`;
+                const aKey = (i: number) =>
+                  custom
+                    ? `product.${product.slug}.faq.${i}.a`
+                    : `productDetail.faq.default.${i}.a`;
+                const tk = (key: string, fallback: string) => {
+                  const res = t(key);
+                  return res === key ? fallback : res;
+                };
+                return list.map((item, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`faq-${i}`}
+                    className="glass-card rounded-xl px-5 border border-border/80"
+                  >
+                    <AccordionTrigger className="text-left font-display text-sm font-semibold text-navy hover:no-underline py-4">
+                      {tk(qKey(i), item.q)}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-xs text-muted-foreground leading-relaxed pb-4">
+                      {tk(aKey(i), item.a)}
+                    </AccordionContent>
+                  </AccordionItem>
+                ));
+              })()}
             </Accordion>
           </div>
 
