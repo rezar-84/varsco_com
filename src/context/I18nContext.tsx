@@ -1,16 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { LangCode } from "@/lib/types";
 import { useLocation } from "@tanstack/react-router";
-
-import en from "@/lib/locales/en.json";
-import tr from "@/lib/locales/tr.json";
-import ar from "@/lib/locales/ar.json";
-import ru from "@/lib/locales/ru.json";
-import de from "@/lib/locales/de.json";
-import ja from "@/lib/locales/ja.json";
-import ko from "@/lib/locales/ko.json";
-import zh from "@/lib/locales/zh.json";
-import es from "@/lib/locales/es.json";
+import { activeDict } from "@/lib/i18n-dict";
 
 export interface LanguageInfo {
   code: LangCode;
@@ -32,18 +23,22 @@ export const LANGUAGES: LanguageInfo[] = [
   { code: "es", label: "ES", nativeName: "Español", flag: "🇪🇸", dir: "ltr" },
 ];
 
-type Dict = Record<string, string>;
-
-const DICTS: Record<LangCode, Dict> = {
-  en,
-  tr,
-  ar,
-  ru,
-  de,
-  ja,
-  ko,
-  zh,
-  es,
+/**
+ * Locale codes only. The dictionaries themselves are no longer imported here:
+ * doing so pulled all nine (~1.3 MB) into the shared client chunk. The active
+ * one is resolved per request on the server and inlined into the HTML — see
+ * src/lib/i18n-dict.ts.
+ */
+const DICTS: Record<LangCode, true> = {
+  en: true,
+  tr: true,
+  ar: true,
+  ru: true,
+  de: true,
+  ja: true,
+  ko: true,
+  zh: true,
+  es: true,
 };
 
 interface I18nContextValue {
@@ -58,7 +53,10 @@ interface I18nContextValue {
 const I18nContext = createContext<I18nContextValue | null>(null);
 const STORAGE_KEY = "vars.lang";
 
-export function detectLangFromUrl(pathname: string, search: string | Record<string, any>): LangCode {
+export function detectLangFromUrl(
+  pathname: string,
+  search: string | Record<string, any>,
+): LangCode {
   let qLang: LangCode | null = null;
   if (typeof search === "string") {
     const params = new URLSearchParams(search);
@@ -66,7 +64,7 @@ export function detectLangFromUrl(pathname: string, search: string | Record<stri
   } else if (search && typeof search === "object") {
     qLang = search.lang as LangCode | null;
   }
-  
+
   if (qLang && DICTS[qLang]) return qLang;
 
   const pathParts = pathname.split("/").filter(Boolean);
@@ -116,7 +114,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   // Keep state in sync with route location changes reactively (e.g. when clicking regular links)
   useEffect(() => {
-    const currentPath = typeof window !== "undefined" ? window.location.pathname : location.pathname;
+    const currentPath =
+      typeof window !== "undefined" ? window.location.pathname : location.pathname;
     const currentSearch = typeof window !== "undefined" ? window.location.search : location.search;
     const urlLang = detectLangFromUrl(currentPath, currentSearch);
     if (urlLang !== lang) {
@@ -157,9 +156,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       const newPath = `${prefix}${restOfPath === "/" ? "" : restOfPath}` || "/";
 
       if (window.location.pathname !== newPath) {
-        setLangState(preferred);
-        window.history.replaceState(null, "", newPath);
-        window.dispatchEvent(new PopStateEvent("popstate"));
+        // Full navigation, not replaceState: the translation dictionary is
+        // supplied per request by the server (see lib/i18n-dict.ts), so a
+        // history-only locale change would leave the previous locale's
+        // dictionary in place and render the new locale in the old language.
+        window.location.replace(newPath);
       }
     }
   }, []);
@@ -194,15 +195,17 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       const newPath = `${prefix}${restOfPath === "/" ? "" : restOfPath}` || "/";
 
       if (window.location.pathname !== newPath) {
-        window.history.pushState(null, "", newPath);
-        window.dispatchEvent(new PopStateEvent("popstate"));
+        // See the note above: switching locale must re-request the page so the
+        // server inlines the target locale's dictionary.
+        window.location.assign(newPath);
       }
     }
   };
 
-  const t = (key: string): string => {
-    return DICTS[lang]?.[key] ?? DICTS.en?.[key] ?? key;
-  };
+  // activeDict() is pre-merged over English server-side, so a key missing from
+  // the target locale already carries the English string — same result as the
+  // previous DICTS[lang] ?? DICTS.en chain, without shipping nine dictionaries.
+  const t = (key: string): string => activeDict()[key] ?? key;
 
   const currentLanguage = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
 

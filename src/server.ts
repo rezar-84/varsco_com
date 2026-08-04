@@ -4,6 +4,20 @@ import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 import { validateCors, checkRateLimit } from "./lib/api/middleware";
 import { resolveLegacyRedirect } from "./lib/legacy-redirects";
+import type { Dict } from "./lib/i18n-dict";
+
+// The nine locale dictionaries are imported HERE, in the nitro server entry,
+// precisely because this file is never part of the client build. Importing
+// them from I18nContext instead put all ~1.3 MB into the shared browser chunk.
+import enDict from "./lib/locales/en.json";
+import trDict from "./lib/locales/tr.json";
+import arDict from "./lib/locales/ar.json";
+import ruDict from "./lib/locales/ru.json";
+import deDict from "./lib/locales/de.json";
+import jaDict from "./lib/locales/ja.json";
+import koDict from "./lib/locales/ko.json";
+import zhDict from "./lib/locales/zh.json";
+import esDict from "./lib/locales/es.json";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -48,7 +62,39 @@ function isH3SwallowedErrorBody(body: string): boolean {
 
 import { AsyncLocalStorage } from "node:async_hooks";
 
-const serverStorage = new AsyncLocalStorage<{ lang: string; path: string }>();
+const serverStorage = new AsyncLocalStorage<{
+  lang: string;
+  path: string;
+  i18n: { lang: string; dict: Dict };
+}>();
+
+const ALL_DICTS: Record<string, Dict> = {
+  en: enDict,
+  tr: trDict,
+  ar: arDict,
+  ru: ruDict,
+  de: deDict,
+  ja: jaDict,
+  ko: koDict,
+  zh: zhDict,
+  es: esDict,
+};
+
+/**
+ * One dictionary per request, pre-merged over English so the client needs no
+ * fallback chain — a missing key in the target locale is already filled with
+ * the English string, matching the old DICTS[lang] ?? DICTS.en behaviour.
+ * Cached per locale: the merge is pure and the inputs are static imports.
+ */
+const mergedCache = new Map<string, Dict>();
+function mergedDict(lang: string): Dict {
+  const cached = mergedCache.get(lang);
+  if (cached) return cached;
+  const target = ALL_DICTS[lang] ?? ALL_DICTS.en;
+  const merged = lang === "en" ? { ...ALL_DICTS.en } : { ...ALL_DICTS.en, ...target };
+  mergedCache.set(lang, merged);
+  return merged;
+}
 
 /** Public URL prefixes. Mirrors VALID_LANGS in src/lib/utils/locale.ts. */
 const SUPPORTED_LOCALES = ["tr", "ar", "de", "ru", "ja", "ko", "en", "zh", "es"];
@@ -176,8 +222,9 @@ export default {
       }
 
       const handler = await getServerEntry();
-      const response = await serverStorage.run({ lang, path }, () =>
-        handler.fetch(rewrittenRequest, env, ctx),
+      const response = await serverStorage.run(
+        { lang, path, i18n: { lang, dict: mergedDict(lang) } },
+        () => handler.fetch(rewrittenRequest, env, ctx),
       );
       if (requestUrl.pathname === "/web" || requestUrl.pathname.startsWith("/web/")) {
         response.headers.set("X-Robots-Tag", "noindex, nofollow");

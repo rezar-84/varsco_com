@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { i18nBootstrapScript, serverI18nPayload } from "@/lib/i18n-dict";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
@@ -158,6 +159,7 @@ function getContentPath(): string {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => {
+    const i18nPayload = serverI18nPayload();
     const contentPath = getContentPath();
     const pathSuffix = contentPath === "/" ? "" : contentPath;
     const pageMeta = getRootPageSeo(contentPath);
@@ -244,6 +246,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { rel: "alternate", hrefLang: "x-default", href: `${SITE_URL}${pathSuffix}` },
       ],
       scripts: [
+        // Hands the active locale's dictionary to the browser. On the server
+        // this reads the per-request merged dict; on the client it returns
+        // undefined and emits nothing, because the SSR-rendered script has
+        // already populated window during hydration. This is what lets the
+        // locale JSON stay out of the client bundle entirely.
+        ...(i18nPayload ? [{ children: i18nBootstrapScript(i18nPayload) }] : []),
         {
           type: "application/ld+json",
           children: JSON.stringify(organizationSchema),

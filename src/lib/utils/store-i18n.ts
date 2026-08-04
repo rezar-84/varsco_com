@@ -1,17 +1,8 @@
 import { useMemo } from "react";
 import type { LangCode } from "@/lib/types";
 import { getCurrentLocale } from "@/lib/utils/locale";
+import { activeDict } from "@/lib/i18n-dict";
 import { useI18n } from "@/context/I18nContext";
-
-import en from "@/lib/locales/en.json";
-import tr from "@/lib/locales/tr.json";
-import ar from "@/lib/locales/ar.json";
-import ru from "@/lib/locales/ru.json";
-import de from "@/lib/locales/de.json";
-import ja from "@/lib/locales/ja.json";
-import ko from "@/lib/locales/ko.json";
-import zh from "@/lib/locales/zh.json";
-import es from "@/lib/locales/es.json";
 
 /**
  * Localization for the Odoo-backed /shop catalog.
@@ -26,17 +17,6 @@ import es from "@/lib/locales/es.json";
  * the locale JSON, the same way the /products portfolio already handles them
  * via ProductCard's tp() helper.
  */
-const DICTS: Record<LangCode, Record<string, string>> = {
-  en,
-  tr,
-  ar,
-  ru,
-  de,
-  ja,
-  ko,
-  zh,
-  es,
-};
 
 /**
  * Stable lookup key for an Odoo record, derived from its English name.
@@ -85,7 +65,11 @@ export function decodeEntities(value: string): string {
  * with no locale entries still renders (in English) instead of breaking.
  */
 export function translateStore(lang: LangCode, key: string, fallback: string): string {
-  const hit = DICTS[lang]?.[key] ?? DICTS.en?.[key];
+  // `lang` is retained for call-site clarity but the dictionary is already the
+  // active locale's, resolved per request on the server (see i18n-dict.ts) and
+  // pre-merged over English.
+  void lang;
+  const hit = activeDict()[key];
   if (hit) return hit;
   return decodeEntities(fallback ?? "");
 }
