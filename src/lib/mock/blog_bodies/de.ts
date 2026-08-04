@@ -1,3 +1,5 @@
+import salmonEggScotlandImg from "@/assets/blog/salmon-egg-scotlond.webp";
+import seaImg from "@/assets/blog/unsplash_KMn4VEeEPR8_sea.webp";
 /**
  * German article bodies, keyed by post slug.
  *
@@ -647,4 +649,138 @@ Das Wichtigste in Kürze
 - Aquafauna. "Premium [Artemia-Zysten](/products/live-feed-aquaculture/artemia)." [aquafauna.com](http://aquafauna.com)
 - ResearchGate. "Best practice of hatching [Artemia cysts](/products/live-feed-aquaculture/artemia)." [researchgate.net](http://researchgate.net)
 - Pubs.ext.vt.edu. "Hatching Artemia." [Virginia Tech Extension](http://pubs.ext.vt.edu)`,
+
+  "unlocking-the-power-of-dried-artemia-feed-in-modern-aquaculture-4": `In der sich rasch wandelnden Aquakultur ist Futterinnovation einer der entscheidenden Faktoren für den Erfolg einer Brutanlage. Unter den bewährtesten Optionen der Larvenernährung behauptet Artemia (Salinenkrebs) weiterhin ihre führende Stellung. Inzwischen wenden sich Brutanlagenleitungen und Fachleute der Aquakultur jedoch einer klügeren Alternative zu: dem trockenen Artemia-Futter.
+
+Dieses wegweisende Produkt bietet modernen Brutanlagen einen hohen Nährwert, verbesserte Biosicherheit und größere Effizienz. Wenn Sie die Leistung Ihrer Brutanlage steigern möchten, ist es längst keine Option mehr, trockenes Artemia-Futter zu verstehen und einzusetzen — es ist notwendig.
+
+Was ist trockenes Artemia-Futter?
+
+Trockenes Artemia-Futter, also dehydrierte [Artemia-Zysten](/products/live-feed-aquaculture/artemia), sind Artemia-Eier, die einen Trocknungsprozess durchlaufen haben, um Nährwert und Schlupffähigkeit zu bewahren. Anders als gefrorene oder feuchte Artemia sind diese Produkte leicht, einfach zu lagern und liefern verlässliche Ergebnisse, ohne dass bei Bedarf geschlüpft werden muss.
+
+Bei VARS bieten wir hochwertige [Artemia-Zysten](/products/live-feed-aquaculture/artemia) unter unserer Produktlinie Revive Artemia-Zysten an — entwickelt für Brutanlagen, die Verlässlichkeit, Nachhaltigkeit und Leistung in den Vordergrund stellen.
+
+Die wesentlichen Vorteile von trockenem Artemia-Futter
+
+### 1. Hochwertiges Nährstoffprofil
+
+Artemia ist von Natur aus reich an:
+
+Essenziellen AminosäurenOmega-3-Fettsäuren (EPA und DHA)Chitin und Enzymen, die Verdauung und Immunabwehr unterstützen
+
+Damit eignet sie sich hervorragend als Erstfutter für Fischlarven und [Garnelen](/products/seafood/shrimp) und erleichtert den Übergang zu Rationen späterer Stadien.
+
+### 2. Lange Haltbarkeit und Lagerstabilität
+
+Anders als lebende oder feuchte Artemia, die geschlüpft oder gekühlt gelagert werden müssen, lässt sich trockenes Artemia-Futter monatelang kühl und trocken aufbewahren — das spart Platz, Zeit und Kosten.
+
+### 3. Bessere Futterverwertung und Wachstum
+
+Dank höherer Verdaulichkeit liefert trockene Artemia bessere Futterverwertungsraten (FCR) und trägt so zu schnellerem Wachstum und geringerer Sterblichkeit bei.
+
+### 4. Erhöhte Biosicherheit
+
+Trockene Artemia durchläuft Sterilisationsschritte, die das Risiko der Einschleppung von Krankheiten und Parasiten verringern — ein wichtiges Merkmal für biosichere Brutanlagen.
+
+Warum Brutanlagen weltweit umsteigen
+
+Von der Türkei bis nach Südkorea setzen Brutanlagen in intensiv betriebenen Umgebungen auf trockenes Artemia-Futter als entscheidende Verbesserung. In Ländern, in denen das Management von Lebendfutter aufgrund von Klima, Logistik oder Infrastruktur schwierig ist, bietet trockene Artemia eine anpassungsfähige und verlässliche Lösung.
+
+Bei VARS erstreckt sich unsere weltweite Reichweite über:
+
+Türkei und MittelmeerraumNaher OstenSüdkorea (insbesondere in der Olivenflunder-Zucht)Wachsende Nachfrage in Asien und Nordafrika
+
+Für optimale Ergebnisse mit Mikroalgen kombinieren
+
+Die Kombination von Artemia mit funktionellen Mikroalgenprodukten erschließt zusätzliche Leistung. Unser Emerald [Chlorella-Pulver](/products/live-feed-aquaculture/emerald-chlorella-powder) ist die ideale Ergänzung zu trockener Artemia und bietet:
+
+Verbesserte Färbung der LarvenHöhere ÜberlebensratenImmunstimulation durch natürliche Antioxidantien und Chlorophyll
+
+Diese Synergie ist Teil unserer biologisch angereicherten Fütterungsprogramme, die viele führende Brutanlagen heute für Versuche und die kommerzielle Skalierung nutzen.
+
+Weiterführende Informationen von VARS
+
+Revive Artemia-Zysten jetzt kaufen – Hohe Schlupfrate und zertifizierte Qualität Unser Produktportfolio – Alle Futterlösungen für die Aquakultur entdecken Lebendfutter und Zusatzstoffe – So bauen Sie eine widerstandsfähige Brutanlage auf Emerald [Chlorella-Pulver](/products/live-feed-aquaculture/emerald-chlorella-powder) – Mikroalgen für die Leistung Ihrer Brutanlage
+
+So setzen Sie trockenes Artemia-Futter in Ihrer Brutanlage ein
+
+Vor Gebrauch hydratisieren (optional): 15-20 Minuten in Salzwasser einweichen.Direkt streuen: Bei älteren Larven kann trockene Artemia trocken verfüttert oder mit anderen Futterkomponenten gemischt werden.Mit Zusätzen mischen: Für Darmgesundheit und Stressresistenz mit Probiotika oder Mikroalgen kombinieren.
+
+Jede Brutanlage hat eigene Anforderungen — sprechen Sie uns für individuelle Fütterungsprotokolle oder eine fachliche Beratung an.
+
+Bereit, Ihre Larvenüberlebensraten zu verbessern?
+
+VARS Aquaculture unterstützt das Wachstum von Brutanlagen mit hochwertigen, nachhaltigen Lösungen.
+
+Wenn Sie einen verlässlichen Lieferanten für trockenes Artemia-Futter und weitere biologisch angereicherte Aquakulturprodukte suchen:
+
+Individuelles Angebot oder Beratung anfragen
+
+Revive Artemia-Zysten ansehen
+
+Unsere Produktbroschüre herunterladen (PDF)
+
+Abschließende Gedanken
+
+Die Wahl der richtigen Futterstrategie kann die Leistung Ihrer Brutanlage verändern. Trockenes Artemia-Futter bietet eine praktische, wirksame und skalierbare Alternative zu herkömmlichem Lebendfutter — ohne Abstriche bei Ernährung oder Überlebensraten. Da die Nachfrage nach nachhaltiger Aquakultur weltweit wächst, ist der Einsatz von Produkten wie trockenem Artemia-Futter ein Schritt in eine gesündere und wirtschaftlichere Zukunft.
+
+## Quellen
+Revive Artemia-Zysten – VARS-Produktseite
+
+
+Emerald [Chlorella-Pulver](/products/live-feed-aquaculture/emerald-chlorella-powder) – VARS-Produktseite
+
+
+FAO. "Live Feeds in Aquaculture," https://www.fao.org
+
+
+Blugen Korea – Partner für Lebendfutterlösungen
+
+
+Wissenschaftliche Arbeiten zu Nährwert und Schlupfqualität von Artemia-Zysten (z. B. ScienceDirect, Aquaculture Reports)`,
+
+  "fertilized-salmon-eggs-where-every-salmon-farming-journey-begins-13": `Wer eine Lachsbrutanlage in Norwegen, Schottland oder Chile betritt, sieht das Herzstück der Aquakultur bei der Arbeit. In Reihen von Bruttrögen ruhen Millionen befruchteter [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) unter sorgfältig überwachten Bedingungen. Jedes einzelne Ei markiert den Beginn eines langen Weges, an dessen Ende Monate später ein marktfertiger Lachs steht.
+
+Bei VARS Aquaculture sind wir überzeugt: Der Erfolg in der Lachszucht entscheidet sich, bevor der erste Fisch ins offene Wasser gelangt. Er beginnt mit der Qualität der Eier.
+
+![Bebrütung befruchteter Lachseier](${salmonEggScotlandImg})
+
+
+Warum befruchtete [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) entscheidend sind
+
+Befruchtete [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) sind nicht einfach ein Rohstoff. Sie sind das Fundament jedes Brutanlagenzyklus. Eine Charge kräftiger, gut gezüchteter Eier führt zu gesünderen Jungfischen, gleichmäßigem Wachstum und geringeren Verlusten. Eine schwächere Charge kann Rückschläge verursachen, die die gesamte Jahresproduktion beeinträchtigen.
+
+Betriebe weltweit wissen, dass die Sicherung verlässlicher, biosicherer Eier zu ihren wichtigsten Entscheidungen zählt. Sie wirkt sich unmittelbar auf Überlebensraten, Planbarkeit der Ernte und Wirtschaftlichkeit aus.
+
+Erkenntnisse aus Brutanlagen weltweit
+
+In Nordeuropa bestellen Brutanlagenleitungen die Eier mehrere Monate im Voraus, damit sie mit den Smolt-Umsetzterminen und optimalen Meerwasserbedingungen zusammenfallen. In Chile verlassen sich Betriebe auf importierte Eier, die lange Flüge und strenge Grenzkontrollen überstehen müssen. In Asien laufen Zuchtprogramme, um Merkmale wie Futtereffizienz und Krankheitsresistenz zu verbessern.
+
+So unterschiedlich die Herausforderungen je Region auch sind — die Erkenntnis bleibt dieselbe: Ohne kräftige befruchtete Eier gibt es keine Lachsindustrie.
+
+Was hochwertige [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) auszeichnet
+
+Fragt man Betriebe, worauf sie am meisten Wert legen, fallen stets drei Begriffe: Überleben, Leistung und Verlässlichkeit. Deshalb sind unsere befruchteten [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg):
+
+Aus Elterntieren erzeugt, die nach genetischer Stärke, Wachstum und Robustheit ausgewählt wurden Unter strengen Kühlkettenbedingungen von der Anlage bis zur Brutanlage transportiertMit vollständiger Zertifizierung und Rückverfolgbarkeit geliefert 
+Im Takt der Produktionszyklen der Brutanlage bereitgestellt
+
+Vom Ei bis zur Ernte: Vertrauen aufbauen
+
+Ein Betrieb von den Färöern brachte es so auf den Punkt: „Wenn die Eier gut sind, wird alles Weitere leichter." Die frühen Stadien bestimmen den Rhythmus des gesamten Betriebs. Mit verlässlichen Eiern lassen sich Zyklen sicher planen, Schwankungen verringern und langfristige Produktionsziele erreichen.
+
+Bei VARS Aquaculture betrachten wir befruchtete [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) nicht nur als Produkt, sondern als ersten Schritt einer Partnerschaft mit jeder Brutanlage, mit der wir arbeiten.
+
+Nachhaltige Lachszucht unterstützen
+
+Nachhaltigkeit steht im Zentrum der Zukunft der Aquakultur. Die von uns gelieferten befruchteten [Lachseier](/products/hatchery-solutions/atlantic-salmon-egg) stammen aus Elterntierbeständen, die unter verantwortungsvollem Management und mit strenger Beachtung von Umweltstandards und Rückverfolgbarkeit gehalten werden. Kräftigere, gesündere Eier bedeuten geringere Sterblichkeit, weniger Futterverluste und einen kleineren ökologischen Fußabdruck.
+
+![Nachhaltige Lachsaquakultur](${seaImg})
+
+
+Jeder Lachs, der von Tokio bis Istanbul auf den Markt kommt, beginnt als befruchtetes Ei — und die Wahl des Lieferanten prägt nicht nur den nächsten Schlupf, sondern den Erfolg künftiger Ernten.
+
+Brutanlagen, die mit VARS Aquaculture arbeiten, entscheiden sich für mehr als Eier. Sie entscheiden sich für Verlässlichkeit, technische Unterstützung und einen Partner, der in ihren langfristigen Erfolg investiert.
+
+Sprechen Sie VARS Aquaculture an, um Ihren nächsten Brutanlagenzyklus mit befruchteten [Lachseiern](/products/hatchery-solutions/atlantic-salmon-egg) zu planen, auf die Sie sich verlassen können.`,
 };
