@@ -11,6 +11,11 @@ export function ProductCard({ product }: { product: Product }) {
     const res = t(key);
     return res === key ? defaultValue : res;
   };
+  // Same key scheme the detail route uses (product.<slug>.<field>.<idx>[.label|.value]),
+  // so a tag or metric reads identically on the card and on the detail page.
+  const tpTag = (idx: number, fallback: string) => tp(`tags.${idx}`, fallback);
+  const tpMetric = (idx: number, part: "label" | "value", fallback: string) =>
+    tp(`metrics.${idx}.${part}`, fallback);
 
   return (
     <div className="group relative glass-card rounded-3xl flex flex-col overflow-hidden transition-all duration-300 hover:border-primary/60 hover:shadow-2xl bg-background border border-border/80">
@@ -78,14 +83,16 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Metrics Bar */}
         {product.metrics && product.metrics.length > 0 && (
           <div className="grid grid-cols-2 gap-2 pt-1">
-            {product.metrics.slice(0, 2).map((m) => (
+            {product.metrics.slice(0, 2).map((m, mi) => (
               <div
                 key={m.label}
                 className="p-2 rounded-xl bg-surface-alt/80 border border-border/60 text-center"
               >
-                <div className="font-display text-xs font-bold text-navy">{m.value}</div>
+                <div className="font-display text-xs font-bold text-navy">
+                  {tpMetric(mi, "value", m.value)}
+                </div>
                 <div className="text-[9px] text-muted-foreground font-semibold truncate">
-                  {m.label}
+                  {tpMetric(mi, "label", m.label)}
                 </div>
               </div>
             ))}
@@ -94,12 +101,12 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Tag Badges */}
         <div className="flex flex-wrap gap-1.5 pt-1">
-          {product.tags.slice(0, 2).map((t) => (
+          {product.tags.slice(0, 2).map((t, ti) => (
             <span
               key={t}
               className="rounded-lg bg-navy/5 px-2.5 py-0.5 text-[10px] font-extrabold text-navy/90 border border-navy/10"
             >
-              #{t}
+              #{tpTag(ti, t)}
             </span>
           ))}
         </div>

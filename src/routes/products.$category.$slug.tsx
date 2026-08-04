@@ -346,7 +346,7 @@ function ProductDetail() {
           <div className="space-y-6">
             <div>
               <div className="flex flex-wrap gap-1.5 mb-2">
-                {product.tags.map((t) => (
+                {tpArray("tags", product.tags).map((t) => (
                   <span
                     key={t}
                     className="rounded-lg bg-teal/20 px-2.5 py-1 text-xs font-bold text-navy border border-teal/40"
