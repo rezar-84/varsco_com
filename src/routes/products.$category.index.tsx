@@ -20,12 +20,12 @@ export const Route = createFileRoute("/products/$category/")({
     // translated in all nine locales; the metadata was still reading the raw
     // English strings off the category record, so every locale shipped an
     // English <title> and description.
-    const slug = loaderData?.category.slug;
+    const slug = loaderData?.category?.slug;
     const name = slug
-      ? translateStoreSsr(`cat.${slug}`, loaderData?.category.title ?? "")
+      ? translateStoreSsr(`cat.${slug}`, loaderData?.category?.title ?? "")
       : translateStoreSsr("store.seo.categoryFallback", "Category");
     const desc = slug
-      ? translateStoreSsr(`cat.${slug}.desc`, loaderData?.category.description ?? "")
+      ? translateStoreSsr(`cat.${slug}.desc`, loaderData?.category?.description ?? "")
       : "";
     return {
       meta: [{ title: `${name} | VARS Aquaculture` }, { name: "description", content: desc }],
