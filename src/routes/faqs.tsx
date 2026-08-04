@@ -54,7 +54,9 @@ function FAQs() {
               <AccordionTrigger className="text-left font-display text-lg text-navy">
                 {item.q}
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">{item.a}</AccordionContent>
+              <AccordionContent forceMount className="text-muted-foreground">
+                {item.a}
+              </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

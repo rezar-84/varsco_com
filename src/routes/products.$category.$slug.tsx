@@ -816,7 +816,10 @@ function ProductDetail() {
                     <AccordionTrigger className="text-left font-display text-sm font-semibold text-navy hover:no-underline py-4">
                       {tk(qKey(i), item.q)}
                     </AccordionTrigger>
-                    <AccordionContent className="text-xs text-muted-foreground leading-relaxed pb-4">
+                    <AccordionContent
+                      forceMount
+                      className="text-xs text-muted-foreground leading-relaxed pb-4"
+                    >
                       {tk(aKey(i), item.a)}
                     </AccordionContent>
                   </AccordionItem>
