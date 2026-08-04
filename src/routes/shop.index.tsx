@@ -29,6 +29,7 @@ import { useI18n } from "@/context/I18nContext";
 import { loadStoreProducts } from "@/lib/api/store-data";
 import { formatPrice } from "@/lib/utils/price";
 import type { CatalogItemSummary } from "@/lib/api/types";
+import { useStoreT, translateStoreSsr } from "@/lib/utils/store-i18n";
 
 type SortOption = "featured" | "name-asc" | "price-asc" | "price-desc";
 type ViewMode = "grid" | "list";
@@ -42,11 +43,13 @@ export const Route = createFileRoute("/shop/")({
   },
   head: () => ({
     meta: [
-      { title: "Store — VARS Aquaculture B2B" },
+      { title: translateStoreSsr("store.seo.indexTitle", "Store — VARS Aquaculture B2B") },
       {
         name: "description",
-        content:
+        content: translateStoreSsr(
+          "store.seo.indexDescription",
           "Order certified aquaculture feed, hatchery inputs, and Mediterranean seafood directly online with live pricing and stock.",
+        ),
       },
     ],
   }),
@@ -67,6 +70,7 @@ function currencyOf(products: CatalogItemSummary[]): string {
 
 function ShopIndex() {
   const { t } = useI18n();
+  const st = useStoreT();
   const { products, placeholder } = Route.useLoaderData();
   const [query, setQuery] = useState("");
   const [selectedCats, setSelectedCats] = useState<Set<string>>(new Set());
@@ -83,10 +87,11 @@ function ShopIndex() {
   const categories = useMemo(() => {
     const map = new Map<string, { slug: string; name: string }>();
     products.forEach((p) => {
-      if (p.category) map.set(p.category.slug, { slug: p.category.slug, name: p.category.name });
+      if (p.category)
+        map.set(p.category.slug, { slug: p.category.slug, name: st.category(p.category.name) });
     });
     return Array.from(map.values());
-  }, [products]);
+  }, [products, st]);
 
   const toggleCategory = (slug: string) => {
     setSelectedCats((prev) => {
@@ -117,7 +122,17 @@ function ShopIndex() {
       const matchesCat =
         selectedCats.size === 0 || (p.category && selectedCats.has(p.category.slug));
       const q = query.toLowerCase().trim();
-      const matchesQuery = !q || `${p.name} ${p.summary}`.toLowerCase().includes(q);
+      // Match the localized copy as well as the English payload, so a search
+      // typed in the visitor's own language actually hits.
+      const haystack = [
+        p.name,
+        p.summary,
+        st.product(p.name, "name", p.name),
+        st.product(p.name, "summary", p.summary),
+      ]
+        .join(" ")
+        .toLowerCase();
+      const matchesQuery = !q || haystack.includes(q);
       const matchesStock = !inStockOnly || Boolean(p.purchase?.available);
       const amount = p.purchase?.amount;
       const matchesPrice =
@@ -131,7 +146,11 @@ function ShopIndex() {
     const priceOf = (p: CatalogItemSummary) => p.purchase?.amount ?? Number.POSITIVE_INFINITY;
     switch (sortBy) {
       case "name-asc":
-        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        sorted.sort((a, b) =>
+          st
+            .product(a.name, "name", a.name)
+            .localeCompare(st.product(b.name, "name", b.name), st.lang),
+        );
         break;
       case "price-asc":
         sorted.sort((a, b) => priceOf(a) - priceOf(b));
@@ -143,7 +162,7 @@ function ShopIndex() {
         break;
     }
     return sorted;
-  }, [products, selectedCats, query, inStockOnly, sortBy, hasPriceFilter, priceRange]);
+  }, [products, selectedCats, query, inStockOnly, sortBy, hasPriceFilter, priceRange, st]);
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
 

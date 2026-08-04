@@ -10,6 +10,7 @@ import { StarRating } from "@/components/StarRating";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/context/I18nContext";
 import { formatPrice } from "@/lib/utils/price";
+import { useStoreT } from "@/lib/utils/store-i18n";
 
 export function StoreProductCard({
   product,
@@ -22,7 +23,13 @@ export function StoreProductCard({
   const { user } = useAuth();
   const { isWishlisted, toggle } = useWishlist();
   const { t } = useI18n();
+  const st = useStoreT();
   const [added, setAdded] = useState(false);
+  // Odoo serves the whole catalog in English regardless of locale, so every
+  // Odoo-sourced label goes through the store translator (see store-i18n.ts).
+  const name = st.product(product.name, "name", product.name);
+  const summary = st.product(product.name, "summary", product.summary);
+  const categoryName = product.category ? st.category(product.category.name) : "";
   const price = formatPrice(product.purchase);
   const canAddToCart = Boolean(product.purchase?.available);
   const productId = product.purchase?.product_id;
@@ -46,13 +53,13 @@ export function StoreProductCard({
           {product.primary_media?.url ? (
             <img
               src={product.primary_media.url}
-              alt={product.primary_media.alt || product.name}
+              alt={product.primary_media.alt || name}
               loading="lazy"
               className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
             <div className="flex h-full items-center justify-center text-3xl font-display font-bold text-navy/10">
-              {product.name.slice(0, 2)}
+              {name.slice(0, 2)}
             </div>
           )}
           {product.ribbon && (
@@ -60,7 +67,7 @@ export function StoreProductCard({
               className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider shadow-md"
               style={{ backgroundColor: product.ribbon.bg_color, color: product.ribbon.text_color }}
             >
-              {product.ribbon.name}
+              {st.ribbon(product.ribbon.name)}
             </span>
           )}
         </Link>
@@ -74,12 +81,12 @@ export function StoreProductCard({
                   params={{ slug: product.category.slug }}
                   className="text-[10px] font-extrabold uppercase tracking-wider text-primary hover:underline"
                 >
-                  {product.category.name}
+                  {categoryName}
                 </Link>
               )}
               <h3 className="font-display text-lg font-bold text-navy group-hover:text-primary transition-colors leading-snug truncate">
                 <Link to="/shop/$slug" params={{ slug: product.slug }}>
-                  {product.name}
+                  {name}
                 </Link>
               </h3>
               {Boolean(product.rating_count) && (
@@ -129,9 +136,7 @@ export function StoreProductCard({
             </div>
           </div>
 
-          <p className="text-xs text-navy/80 leading-relaxed line-clamp-2 font-normal">
-            {product.summary}
-          </p>
+          <p className="text-xs text-navy/80 leading-relaxed line-clamp-2 font-normal">{summary}</p>
 
           {product.tags && product.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
@@ -140,7 +145,7 @@ export function StoreProductCard({
                   key={tag}
                   className="rounded-lg bg-navy/5 px-2 py-0.5 text-[10px] font-extrabold text-navy/90 border border-navy/10"
                 >
-                  #{tag}
+                  #{st.tag(tag)}
                 </span>
               ))}
             </div>
@@ -213,13 +218,13 @@ export function StoreProductCard({
         {product.primary_media?.url ? (
           <img
             src={product.primary_media.url}
-            alt={product.primary_media.alt || product.name}
+            alt={product.primary_media.alt || name}
             loading="lazy"
             className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center text-4xl font-display font-bold text-navy/10">
-            {product.name.slice(0, 2)}
+            {name.slice(0, 2)}
           </div>
         )}
       </Link>
@@ -230,7 +235,7 @@ export function StoreProductCard({
             className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider shadow-md"
             style={{ backgroundColor: product.ribbon.bg_color, color: product.ribbon.text_color }}
           >
-            {product.ribbon.name}
+            {st.ribbon(product.ribbon.name)}
           </span>
         )}
         {product.category && (
@@ -239,7 +244,7 @@ export function StoreProductCard({
             params={{ slug: product.category.slug }}
             className="px-3 py-1 rounded-full bg-navy/90 text-white text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border border-white/10 shadow-sm hover:bg-navy transition-colors"
           >
-            {product.category.name}
+            {categoryName}
           </Link>
         )}
       </div>
@@ -283,7 +288,7 @@ export function StoreProductCard({
         <div>
           <h3 className="font-display text-lg font-bold text-navy group-hover:text-primary transition-colors leading-snug">
             <Link to="/shop/$slug" params={{ slug: product.slug }}>
-              {product.name}
+              {name}
             </Link>
           </h3>
           {Boolean(product.rating_count) && (
@@ -297,7 +302,7 @@ export function StoreProductCard({
         </div>
 
         <p className="flex-1 text-xs text-navy/80 leading-relaxed line-clamp-2 font-normal">
-          {product.summary}
+          {summary}
         </p>
 
         {product.tags && product.tags.length > 0 && (
@@ -307,7 +312,7 @@ export function StoreProductCard({
                 key={tag}
                 className="rounded-lg bg-navy/5 px-2 py-0.5 text-[10px] font-extrabold text-navy/90 border border-navy/10"
               >
-                #{tag}
+                #{st.tag(tag)}
               </span>
             ))}
           </div>

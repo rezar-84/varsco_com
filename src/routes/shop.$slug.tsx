@@ -11,6 +11,7 @@ import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
 import { loadStoreProduct, loadStoreProducts, loadProductReviews } from "@/lib/api/store-data";
+import { getStoreT, useStoreT, translateStoreSsr } from "@/lib/utils/store-i18n";
 import { formatPrice } from "@/lib/utils/price";
 import { cn } from "@/lib/utils";
 import type { CatalogItemSummary, ProductReview } from "@/lib/api/types";
@@ -52,14 +53,21 @@ export const Route = createFileRoute("/shop/$slug")({
   },
   head: ({ loaderData }) => {
     const product = loaderData?.product;
+    // head() runs outside React, so it uses the non-hook translator. Both read
+    // the same locale JSON, keeping the <title>/JSON-LD in step with the body.
+    const st = getStoreT();
+    const name = product ? st.product(product.name, "name", product.name) : "";
+    const summary = product ? st.product(product.name, "summary", product.summary) : "";
+    const categoryName = product?.category ? st.category(product.category.name) : "";
     const productSchema = product
       ? {
           "@context": "https://schema.org/",
           "@type": "Product",
-          name: product.name,
+          name,
           image: product.media?.map((m) => m.url) ?? [],
-          description: product.description_html?.replace(/<[^>]*>/g, "") ?? product.summary,
-          ...(product.category ? { category: product.category.name } : {}),
+          description: summary,
+          inLanguage: st.lang,
+          ...(product.category ? { category: categoryName } : {}),
           brand: { "@type": "Brand", name: "VARS Aquaculture" },
           ...(product.purchase
             ? {
@@ -77,12 +85,16 @@ export const Route = createFileRoute("/shop/$slug")({
         }
       : null;
 
+    const title = `${name || translateStoreSsr("store.seo.productFallback", "Product")}${translateStoreSsr(
+      "store.seo.titleSuffix",
+      " — VARS Store",
+    )}`;
     return {
       meta: [
-        { title: `${product?.name ?? "Product"} — VARS Store` },
-        { name: "description", content: product?.summary ?? "" },
-        { property: "og:title", content: product?.name ?? "" },
-        { property: "og:description", content: product?.summary ?? "" },
+        { title },
+        { name: "description", content: summary },
+        { property: "og:title", content: title },
+        { property: "og:description", content: summary },
       ],
       scripts: productSchema
         ? [{ type: "application/ld+json", children: JSON.stringify(productSchema) }]
@@ -94,6 +106,7 @@ export const Route = createFileRoute("/shop/$slug")({
 
 function ShopProductDetail() {
   const { t } = useI18n();
+  const st = useStoreT();
   const { product, unavailable, related, reviews } = Route.useLoaderData();
   const { add, openDrawer } = useStoreCart();
   const { user } = useAuth();
@@ -125,6 +138,10 @@ function ShopProductDetail() {
   const wishlisted = productId ? isWishlisted(productId) : false;
   const media = product.media ?? [];
   const activeImage = media[activeImageIndex] ?? media[0];
+  // Odoo serves this payload in English for every locale (see store-i18n.ts).
+  const name = st.product(product.name, "name", product.name);
+  const summary = st.product(product.name, "summary", product.summary);
+  const categoryName = product.category ? st.category(product.category.name) : "";
 
   return (
     <Section>
@@ -140,12 +157,12 @@ function ShopProductDetail() {
               params={{ slug: product.category.slug }}
               className="hover:text-primary transition-colors"
             >
-              {product.category.name}
+              {categoryName}
             </Link>
           </>
         )}
         <ChevronRight className="h-3.5 w-3.5" />
-        <span className="text-navy">{product.name}</span>
+        <span className="text-navy">{name}</span>
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2">
@@ -159,19 +176,17 @@ function ShopProductDetail() {
                   color: product.ribbon.text_color,
                 }}
               >
-                {product.ribbon.name}
+                {st.ribbon(product.ribbon.name)}
               </span>
             )}
             {activeImage?.url ? (
               <img
                 src={activeImage.url}
-                alt={activeImage.alt || product.name}
+                alt={activeImage.alt || name}
                 className="h-full w-full object-contain"
               />
             ) : (
-              <div className="text-6xl font-display font-bold text-navy/10">
-                {product.name.slice(0, 2)}
-              </div>
+              <div className="text-6xl font-display font-bold text-navy/10">{name.slice(0, 2)}</div>
             )}
           </div>
 
@@ -188,12 +203,12 @@ function ShopProductDetail() {
                       ? "border-primary"
                       : "border-border/60 hover:border-border",
                   )}
-                  aria-label={item.alt || `${product.name} ${index + 1}`}
+                  aria-label={item.alt || `${name} ${index + 1}`}
                   aria-current={index === activeImageIndex}
                 >
                   <img
                     src={item.url}
-                    alt={item.alt || product.name}
+                    alt={item.alt || name}
                     className="h-full w-full object-contain"
                   />
                 </button>
@@ -210,10 +225,10 @@ function ShopProductDetail() {
                 params={{ slug: product.category.slug }}
                 className="text-xs font-bold uppercase tracking-wider text-primary hover:underline"
               >
-                {product.category.name}
+                {categoryName}
               </Link>
             )}
-            <h1 className="font-display text-3xl font-bold text-navy mt-1">{product.name}</h1>
+            <h1 className="font-display text-3xl font-bold text-navy mt-1">{name}</h1>
             {Boolean(product.rating_count) && (
               <div className="mt-1.5 flex items-center gap-2">
                 <StarRating value={product.rating_avg ?? 0} />
@@ -223,7 +238,7 @@ function ShopProductDetail() {
                 </span>
               </div>
             )}
-            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{product.summary}</p>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{summary}</p>
             {product.tags && product.tags.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {product.tags.map((tag) => (
@@ -231,7 +246,7 @@ function ShopProductDetail() {
                     key={tag}
                     className="rounded-lg bg-navy/5 px-2.5 py-1 text-[10px] font-extrabold text-navy/90 border border-navy/10"
                   >
-                    #{tag}
+                    #{st.tag(tag)}
                   </span>
                 ))}
               </div>
@@ -326,18 +341,19 @@ function ShopProductDetail() {
               </h3>
               {product.specification_groups.map((group, gi) => (
                 <div key={gi} className="space-y-2">
-                  {group.heading && (
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                      {group.heading}
-                    </h4>
-                  )}
+                  {/* group.heading is deliberately not rendered: Odoo's shop
+                      controller hardcodes it to the English literal
+                      "Specifications" for its single group, which duplicated
+                      the translated <h3> above it in every locale. If the
+                      backend ever emits real multi-group headings they'll need
+                      their own store.* keys. */}
                   <dl className="grid grid-cols-2 gap-2 text-sm">
                     {group.items.map((item, ii) => (
                       <div
                         key={ii}
                         className="flex justify-between border-b border-border/40 py-1.5"
                       >
-                        <dt className="text-muted-foreground">{item.label}</dt>
+                        <dt className="text-muted-foreground">{st.attribute(item.label)}</dt>
                         <dd className="font-semibold text-navy">{item.value}</dd>
                       </div>
                     ))}

@@ -3,7 +3,12 @@
  * Mirrors the API specification in doc/odoo_api_spec.md
  */
 
-export type LocaleCode = "en" | "tr" | "ar" | "de" | "ja" | "ko" | "ru";
+/**
+ * Must stay in sync with LangCode / VALID_LANGS (src/lib/utils/locale.ts):
+ * getCurrentLocale() can return any of the nine site locales and its result is
+ * passed straight to these endpoints, so a narrower union here is a type lie.
+ */
+export type LocaleCode = "en" | "tr" | "ar" | "de" | "ja" | "ko" | "ru" | "zh" | "es";
 
 export interface ResponseMeta {
   locale: LocaleCode;

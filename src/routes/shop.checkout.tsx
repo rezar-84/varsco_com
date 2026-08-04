@@ -15,6 +15,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
 import { formatPrice } from "@/lib/utils/price";
 import type { Address } from "@/lib/api/types";
+import { useStoreT } from "@/lib/utils/store-i18n";
 
 const DEFAULT_ADDRESS_VALUE = "default";
 
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/shop/checkout")({
 function ShopCheckoutPage() {
   const { t } = useI18n();
   const { items, updateQty, remove, submitOrder } = useStoreCart();
+  const st = useStoreT();
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -160,13 +162,15 @@ function ShopCheckoutPage() {
                                 {item.image && (
                                   <img
                                     src={item.image}
-                                    alt={item.name}
+                                    alt={st.product(item.name, "name", item.name)}
                                     className="h-full w-full object-cover"
                                   />
                                 )}
                               </div>
                               <div>
-                                <div className="font-bold text-sm text-navy">{item.name}</div>
+                                <div className="font-bold text-sm text-navy">
+                                  {st.product(item.name, "name", item.name)}
+                                </div>
                                 {price && (
                                   <div className="text-[11px] text-muted-foreground">{price}</div>
                                 )}

@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useI18n } from "@/context/I18nContext";
 import { formatPrice } from "@/lib/utils/price";
+import { useStoreT } from "@/lib/utils/store-i18n";
 
 export function StoreCartDrawer() {
   const { items, isOpen, closeDrawer, updateQty, remove } = useStoreCart();
   const { t } = useI18n();
+  const st = useStoreT();
   const router = useRouter();
 
   return (
@@ -37,12 +39,14 @@ export function StoreCartDrawer() {
                   {item.image && (
                     <img
                       src={item.image}
-                      alt={item.name}
+                      alt={st.product(item.name, "name", item.name)}
                       className="h-14 w-14 object-cover rounded-lg border"
                     />
                   )}
                   <div className="flex-1">
-                    <h4 className="font-semibold text-sm text-navy">{item.name}</h4>
+                    <h4 className="font-semibold text-sm text-navy">
+                      {st.product(item.name, "name", item.name)}
+                    </h4>
                     {price && <span className="text-xs text-muted-foreground">{price}</span>}
                   </div>
                   <div className="flex items-center gap-2">

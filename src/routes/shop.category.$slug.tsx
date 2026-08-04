@@ -4,6 +4,7 @@ import { Section, PageHero } from "@/components/layout/Page";
 import { StoreProductCard } from "@/components/StoreProductCard";
 import { useI18n } from "@/context/I18nContext";
 import { loadStoreProducts } from "@/lib/api/store-data";
+import { getStoreT, useStoreT, translateStoreSsr } from "@/lib/utils/store-i18n";
 
 export const Route = createFileRoute("/shop/category/$slug")({
   loader: async ({ params }) => {
@@ -22,25 +23,42 @@ export const Route = createFileRoute("/shop/category/$slug")({
       placeholder: false,
     };
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.categoryName ?? "Category"} — VARS Store` },
-      {
-        name: "description",
-        content: `Order ${loaderData?.categoryName ?? ""} online from VARS Aquaculture.`,
-      },
-    ],
-  }),
+  head: ({ loaderData }) => {
+    // categoryName arrives from Odoo in English for every locale, so translate
+    // it here too — otherwise the <title> disagrees with the visible heading.
+    const raw = loaderData?.categoryName ?? "";
+    const name = raw
+      ? getStoreT().category(raw)
+      : translateStoreSsr("store.seo.categoryFallback", "Category");
+    return {
+      meta: [
+        { title: `${name}${translateStoreSsr("store.seo.titleSuffix", " — VARS Store")}` },
+        {
+          name: "description",
+          content: translateStoreSsr(
+            "store.seo.categoryDescription",
+            "Order {category} online from VARS Aquaculture.",
+          ).replace("{category}", name),
+        },
+      ],
+    };
+  },
   component: ShopCategoryPage,
 });
 
 function ShopCategoryPage() {
   const { t } = useI18n();
+  const st = useStoreT();
   const { products, categoryName } = Route.useLoaderData();
+  const localizedCategory = categoryName ? st.category(categoryName) : categoryName;
 
   return (
     <>
-      <PageHero eyebrow={t("store.category.breadcrumbShop")} title={categoryName} variant="navy">
+      <PageHero
+        eyebrow={t("store.category.breadcrumbShop")}
+        title={localizedCategory}
+        variant="navy"
+      >
         <Link
           to="/shop"
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-mint hover:underline"

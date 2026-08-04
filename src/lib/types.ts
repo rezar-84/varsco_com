@@ -103,6 +103,19 @@ export interface BlogPost {
   date: string;
   readMinutes: number;
   image?: string;
+  translations?: Partial<
+    Record<
+      LangCode,
+      {
+        title: string;
+        excerpt: string;
+        /** Optional: a locale may have its title/excerpt translated before the
+         *  full article body. getLocalizedPost() falls back to the English body. */
+        body?: string;
+        category?: string;
+      }
+    >
+  >;
 }
 
 export type LangCode = "en" | "tr" | "ar" | "de" | "ja" | "ko" | "ru" | "zh" | "es";
