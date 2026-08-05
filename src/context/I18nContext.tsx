@@ -133,37 +133,15 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     }
   }, [lang]);
 
-  useEffect(() => {
-    // On client mount, check if we need to redirect due to preferred language (e.g. from localStorage)
-    const preferred = detectLangFromLocation();
-    const urlLang = detectLangFromUrl(window.location.pathname, window.location.search);
-
-    if (preferred !== urlLang) {
-      const prefix = preferred === "en" ? "" : `/${preferred}`;
-      const parts = window.location.pathname.split("/").filter(Boolean);
-      let restOfPath = "";
-      if (parts.length > 0) {
-        const firstPart = parts[0].toLowerCase();
-        if (DICTS[firstPart as LangCode]) {
-          restOfPath = "/" + parts.slice(1).join("/");
-        } else {
-          restOfPath = "/" + parts.join("/");
-        }
-      } else {
-        restOfPath = "/";
-      }
-
-      const newPath = `${prefix}${restOfPath === "/" ? "" : restOfPath}` || "/";
-
-      if (window.location.pathname !== newPath) {
-        // Full navigation, not replaceState: the translation dictionary is
-        // supplied per request by the server (see lib/i18n-dict.ts), so a
-        // history-only locale change would leave the previous locale's
-        // dictionary in place and render the new locale in the old language.
-        window.location.replace(newPath);
-      }
-    }
-  }, []);
+  // No post-hydration locale redirect.
+  //
+  // This used to read localStorage and navigator.language on mount and bounce
+  // the user to another locale. Two problems: redirecting on browser language
+  // alone is contrary to Google's guidance and left an English speaker with a
+  // non-English browser unable to reach the English pages; and since the
+  // dictionary now arrives with the document, the bounce cost a second full
+  // page load. Locale preference is resolved server-side from the vars.lang
+  // cookie instead — see src/server.ts.
 
   const setLang = (l: LangCode) => {
     if (!DICTS[l]) return;
@@ -171,6 +149,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem(STORAGE_KEY, l);
+        // Also a cookie: the server reads this to serve the preferred locale
+        // on the first request, which avoids the post-hydration redirect and
+        // the extra full page load it caused.
+        document.cookie = `${STORAGE_KEY}=${l}; path=/; max-age=31536000; samesite=lax`;
       } catch {
         /* ignore */
       }

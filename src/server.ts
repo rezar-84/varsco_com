@@ -155,6 +155,49 @@ export default {
         });
       }
 
+      // ?lang=xx renders that locale but leaves the URL unprefixed, producing a
+      // second URL for the same content whose canonical points at the English
+      // page. Redirect it into the real locale path instead.
+      const queryLang = requestUrl.searchParams.get("lang")?.toLowerCase();
+      if (queryLang && SUPPORTED_LOCALES.includes(queryLang) && !supportedLocale) {
+        const destination = new URL(
+          `${queryLang === "en" ? "" : `/${queryLang}`}${requestUrl.pathname}`.replace(
+            /\/+$/,
+            "",
+          ) || "/",
+          requestUrl.origin,
+        );
+        destination.search = requestUrl.search;
+        destination.searchParams.delete("lang");
+        return new Response(null, {
+          status: 301,
+          headers: { Location: destination.toString(), "Cache-Control": "public, max-age=86400" },
+        });
+      }
+
+      // Honour an explicit language choice, made by the visitor via the
+      // switcher and stored in vars.lang, before rendering. Deliberately NOT
+      // based on Accept-Language: auto-redirecting on browser language is
+      // contrary to Google's guidance and would stop an English speaker with a
+      // non-English browser from reaching the English pages at all. Crawlers
+      // send no cookie and therefore always get the URL they asked for.
+      if (!supportedLocale && request.method === "GET") {
+        const cookieLang = /(?:^|;\s*)vars\.lang=([a-z]{2})(?:;|$)/.exec(
+          request.headers.get("cookie") ?? "",
+        )?.[1];
+        if (cookieLang && cookieLang !== "en" && SUPPORTED_LOCALES.includes(cookieLang)) {
+          const destination = new URL(
+            `/${cookieLang}${requestUrl.pathname}`.replace(/\/+$/, "") || `/${cookieLang}`,
+            requestUrl.origin,
+          );
+          destination.search = requestUrl.search;
+          return new Response(null, {
+            status: 302,
+            headers: { Location: destination.toString(), Vary: "Cookie" },
+          });
+        }
+      }
+
       // /en is not a canonical public prefix: English is the default locale.
       // Also normalize uppercase locale spellings before routing.
       if (supportedLocale && rawLocale === "en") {

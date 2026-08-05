@@ -249,7 +249,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { rel: "canonical", href: selfUrl },
         ...ALTERNATE_LANGS.map((l) => ({
           rel: "alternate",
-          hrefLang: l,
+          // The URL prefix stays "zh", but hreflang needs a script subtag:
+          // bare "zh" does not tell Google whether the page is Simplified or
+          // Traditional. This content is Simplified.
+          hrefLang: l === "zh" ? "zh-Hans" : l,
           href: `${SITE_URL}${l === "en" ? "" : "/" + l}${pathSuffix}`,
         })),
         { rel: "alternate", hrefLang: "x-default", href: `${SITE_URL}${pathSuffix}` },
