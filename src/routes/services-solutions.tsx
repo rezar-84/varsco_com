@@ -20,8 +20,10 @@ import {
   Layers,
   Cpu,
   HeartHandshake,
+  Waves,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -81,69 +83,34 @@ function ServicesPage() {
     }
   };
 
-  const INVESTOR_ROADMAP = [
+  // Four engagement modes, matching how a buyer self-identifies: they are
+  // starting from nothing, they want someone to run it, they are producing but
+  // underperforming, or they need supply. Replaces the previous
+  // investor/producer split, which had no home for managed operations.
+  const MODES = [
     {
-      step: "01",
-      title: t("solutions.roadmap.item1.title"),
-      desc: t("solutions.roadmap.item1.desc"),
+      key: "build",
+      icon: Compass,
+      accent: "mint" as const,
+      items: [1, 2, 3, 4, 5],
     },
     {
-      step: "02",
-      title: t("solutions.roadmap.item2.title"),
-      desc: t("solutions.roadmap.item2.desc"),
+      key: "run",
+      icon: Waves,
+      accent: "teal" as const,
+      items: [1, 2, 3, 4, 5, 6, 7, 8],
     },
     {
-      step: "03",
-      title: t("solutions.roadmap.item3.title"),
-      desc: t("solutions.roadmap.item3.desc"),
+      key: "improve",
+      icon: Wrench,
+      accent: "teal" as const,
+      items: [1, 2, 3, 4],
     },
     {
-      step: "04",
-      title: t("solutions.roadmap.item4.title"),
-      desc: t("solutions.roadmap.item4.desc"),
-    },
-    {
-      step: "05",
-      title: t("solutions.roadmap.item5.title"),
-      desc: t("solutions.roadmap.item5.desc"),
-    },
-  ];
-
-  const TROUBLESHOOTING_SERVICES = [
-    {
-      title: t("solutions.troubleshooting.item1.title"),
-      desc: t("solutions.troubleshooting.item1.desc"),
-    },
-    {
-      title: t("solutions.troubleshooting.item2.title"),
-      desc: t("solutions.troubleshooting.item2.desc"),
-    },
-    {
-      title: t("solutions.troubleshooting.item3.title"),
-      desc: t("solutions.troubleshooting.item3.desc"),
-    },
-    {
-      title: t("solutions.troubleshooting.item4.title"),
-      desc: t("solutions.troubleshooting.item4.desc"),
-    },
-  ];
-
-  const NETWORK_PILLARS = [
-    {
-      title: t("solutions.network.item1.title"),
-      desc: t("solutions.network.item1.desc"),
-    },
-    {
-      title: t("solutions.network.item2.title"),
-      desc: t("solutions.network.item2.desc"),
-    },
-    {
-      title: t("solutions.network.item3.title"),
-      desc: t("solutions.network.item3.desc"),
-    },
-    {
-      title: t("solutions.network.item4.title"),
-      desc: t("solutions.network.item4.desc"),
+      key: "source",
+      icon: Network,
+      accent: "mint" as const,
+      items: [1, 2, 3, 4],
     },
   ];
 
@@ -198,104 +165,92 @@ function ServicesPage() {
         <AnimatedRasDiagram />
       </Section>
 
-      {/* Turn-Key Investor Roadmap (0 to 1) */}
+      {/* Four engagement modes */}
       <Section>
-        <div className="space-y-10 max-w-5xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint/15 text-navy text-xs font-bold uppercase tracking-widest">
-              <Compass className="h-3.5 w-3.5 text-mint" /> {t("solutions.roadmap.badge")}
-            </div>
-            <h2 className="font-display text-3xl font-bold text-navy">
-              {t("solutions.roadmap.title")}
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {t("solutions.roadmap.description")}
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {INVESTOR_ROADMAP.map((item) => (
-              <div
-                key={item.step}
-                className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm flex flex-col md:flex-row md:items-center gap-6"
-              >
-                <div className="font-display text-4xl font-bold text-mint shrink-0">
-                  {item.step}
-                </div>
-                <div className="space-y-1">
-                  <h3 className="font-display text-lg font-bold text-navy">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
+          <h2 className="font-display text-3xl font-bold text-navy">
+            {t("solutions.modes.heading")}
+          </h2>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {t("solutions.modes.description")}
+          </p>
         </div>
       </Section>
 
-      {/* Operational Troubleshooting (For Existing Operators) */}
-      <Section className="bg-surface-alt/60 py-16 border-y border-border/60">
-        <div className="space-y-10 max-w-5xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/20 text-navy text-xs font-bold uppercase tracking-widest">
-              <Wrench className="h-3.5 w-3.5 text-primary" /> {t("solutions.troubleshooting.badge")}
-            </div>
-            <h2 className="font-display text-3xl font-bold text-navy">
-              {t("solutions.troubleshooting.title")}
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {t("solutions.troubleshooting.description")}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {TROUBLESHOOTING_SERVICES.map((t) => (
-              <div
-                key={t.title}
-                className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-2"
-              >
-                <h3 className="font-display text-lg font-bold text-navy flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0" /> {t.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{t.desc}</p>
+      {MODES.map((mode, mi) => {
+        const Icon = mode.icon;
+        const shaded = mi % 2 === 1;
+        return (
+          <Section
+            key={mode.key}
+            id={`mode-${mode.key}`}
+            className={shaded ? "bg-surface-alt/60 py-16 border-y border-border/60" : undefined}
+          >
+            <div className="space-y-10 max-w-5xl mx-auto">
+              <div className="text-center max-w-3xl mx-auto space-y-3">
+                <div
+                  className={cn(
+                    "inline-flex items-center gap-2 px-3 py-1 rounded-full text-navy text-xs font-bold uppercase tracking-widest",
+                    mode.accent === "mint" ? "bg-mint/15" : "bg-teal/20",
+                  )}
+                >
+                  <Icon
+                    className={cn(
+                      "h-3.5 w-3.5",
+                      mode.accent === "mint" ? "text-mint" : "text-primary",
+                    )}
+                  />{" "}
+                  {t(`solutions.mode.${mode.key}.badge`)}
+                </div>
+                <h2 className="font-display text-3xl font-bold text-navy">
+                  {t(`solutions.mode.${mode.key}.title`)}
+                </h2>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {t(`solutions.mode.${mode.key}.description`)}
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </Section>
 
-      {/* Global Supplier & Procurement Network */}
-      <Section>
-        <div className="space-y-10 max-w-5xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint/15 text-navy text-xs font-bold uppercase tracking-widest">
-              <Network className="h-3.5 w-3.5 text-mint" /> {t("solutions.network.badge")}
-            </div>
-            <h2 className="font-display text-3xl font-bold text-navy">
-              {t("solutions.network.title")}
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {t("solutions.network.description")}
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-6">
-            {NETWORK_PILLARS.map((np) => (
-              <div
-                key={np.title}
-                className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-2"
-              >
-                <h3 className="font-display text-base font-bold text-navy flex items-center gap-2">
-                  <Building2 className="h-4 w-4 text-primary shrink-0" /> {np.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{np.desc}</p>
+              <div className="grid md:grid-cols-2 gap-6">
+                {mode.items.map((n) => (
+                  <div
+                    key={n}
+                    className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-2"
+                  >
+                    <h3 className="font-display text-base font-bold text-navy flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-mint shrink-0" />{" "}
+                      {t(`solutions.mode.${mode.key}.item${n}.title`)}
+                    </h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {t(`solutions.mode.${mode.key}.item${n}.desc`)}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          </Section>
+        );
+      })}
+
+      {/* Mid-page CTA: previously the only conversion point was the form at the
+          very bottom, after four full sections of scrolling. */}
+      <Section className="py-12">
+        <div className="glass-card rounded-3xl border border-primary/25 bg-gradient-to-r from-teal/10 via-background to-mint/10 p-8 md:p-10 max-w-4xl mx-auto text-center space-y-4">
+          <h2 className="font-display text-2xl font-bold text-navy">
+            {t("solutions.midcta.title")}
+          </h2>
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            {t("solutions.midcta.description")}
+          </p>
+          <Button asChild size="lg" className="rounded-xl font-bold">
+            <a href="#advisory-form">
+              {t("solutions.midcta.button")} <ArrowRight className="ms-1 h-4 w-4" />
+            </a>
+          </Button>
         </div>
       </Section>
 
       {/* Consultation Inquiry Form */}
-      <Section className="bg-surface-alt/40 py-16 border-t border-border/60">
+      <Section id="advisory-form" className="bg-surface-alt/40 py-16 border-t border-border/60">
         <div className="grid gap-10 lg:grid-cols-[1fr,380px] max-w-5xl mx-auto">
           <div className="glass-card rounded-2xl p-8 border border-border/80 bg-background shadow-md space-y-6">
             <div>
@@ -372,14 +327,10 @@ function ServicesPage() {
                   disabled={busy}
                   className="mt-1.5 h-11 w-full rounded-xl border border-input bg-background px-3 text-sm font-medium text-navy shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  <option value="new-investor">{t("solutions.form.option.newInvestor")}</option>
-                  <option value="troubleshooting">
-                    {t("solutions.form.option.troubleshooting")}
-                  </option>
-                  <option value="procurement">{t("solutions.form.option.procurement")}</option>
-                  <option value="export-compliance">
-                    {t("solutions.form.option.exportCompliance")}
-                  </option>
+                  <option value="build">{t("solutions.form.option.build")}</option>
+                  <option value="run">{t("solutions.form.option.run")}</option>
+                  <option value="improve">{t("solutions.form.option.improve")}</option>
+                  <option value="source">{t("solutions.form.option.source")}</option>
                 </select>
               </div>
 
