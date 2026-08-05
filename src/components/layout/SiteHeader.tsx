@@ -25,16 +25,12 @@ import {
   LogOut,
   Check,
   Compass,
-  Wrench,
   BookOpen,
-  Fish,
-  Truck,
-  Layers,
-  Award,
   Newspaper,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { SOLUTION_MODES } from "@/lib/solution-modes";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -745,7 +741,8 @@ export function SiteHeader() {
               <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-teal via-mint to-primary" />
 
               <div className="grid grid-cols-2 gap-8">
-                {/* Column 1: Advisory & Consulting */}
+                {/* Column 1: the four engagement modes, mirroring the section
+                    order on /services-solutions and deep-linking to each. */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2.5 pb-2.5 border-b border-border/80">
                     <div className="p-1.5 rounded-lg bg-teal/10 text-teal shrink-0">
@@ -761,34 +758,27 @@ export function SiteHeader() {
                     </div>
                   </div>
 
-                  <div className="space-y-2 text-xs">
-                    <Link
-                      to="/services-solutions"
-                      onClick={closeNow}
-                      className="group block rounded-xl p-3 transition-all hover:bg-surface-alt/90 border-l-2 border-transparent hover:border-mint"
-                    >
-                      <div className="font-bold text-navy group-hover:text-primary flex items-center justify-between">
-                        <span>{t("nav.turnkeyJourney")}</span>
-                        <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
-                      </div>
-                      <p className="text-muted-foreground text-[11px] mt-1 leading-relaxed">
-                        {t("nav.turnkeyJourney.desc")}
-                      </p>
-                    </Link>
-
-                    <Link
-                      to="/services-solutions"
-                      onClick={closeNow}
-                      className="group block rounded-xl p-3 transition-all hover:bg-surface-alt/90 border-l-2 border-transparent hover:border-mint"
-                    >
-                      <div className="font-bold text-navy group-hover:text-primary flex items-center justify-between">
-                        <span>{t("nav.opsTrouble")}</span>
-                        <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
-                      </div>
-                      <p className="text-muted-foreground text-[11px] mt-1 leading-relaxed">
-                        {t("nav.opsTrouble.desc")}
-                      </p>
-                    </Link>
+                  <div className="space-y-1.5 text-xs">
+                    {SOLUTION_MODES.map((mode) => (
+                      <Link
+                        key={mode.key}
+                        to="/services-solutions"
+                        hash={`mode-${mode.key}`}
+                        onClick={closeNow}
+                        className="group block rounded-xl p-3 transition-all hover:bg-surface-alt/90 border-l-2 border-transparent hover:border-mint"
+                      >
+                        <div className="font-bold text-navy group-hover:text-primary flex items-center justify-between gap-2">
+                          <span className="inline-flex items-center gap-2">
+                            <mode.icon className="h-3.5 w-3.5 text-teal shrink-0" />
+                            {t(`solutions.mode.${mode.key}.title`)}
+                          </span>
+                          <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary shrink-0" />
+                        </div>
+                        <p className="text-muted-foreground text-[11px] mt-1 leading-relaxed">
+                          {t(`solutions.mode.${mode.key}.navDesc`)}
+                        </p>
+                      </Link>
+                    ))}
                   </div>
                 </div>
 
@@ -1106,20 +1096,18 @@ export function SiteHeader() {
 
               {mobileSolutionsOpen && (
                 <div className="pl-4 space-y-1">
-                  <Link
-                    to="/services-solutions"
-                    onClick={() => setMobileOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-xs font-bold text-navy hover:bg-surface-alt"
-                  >
-                    {t("nav.turnkeyJourney")}
-                  </Link>
-                  <Link
-                    to="/services-solutions"
-                    onClick={() => setMobileOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-xs font-bold text-navy hover:bg-surface-alt"
-                  >
-                    {t("nav.opsTrouble")}
-                  </Link>
+                  {SOLUTION_MODES.map((mode) => (
+                    <Link
+                      key={mode.key}
+                      to="/services-solutions"
+                      hash={`mode-${mode.key}`}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-bold text-navy hover:bg-surface-alt"
+                    >
+                      <mode.icon className="h-3.5 w-3.5 text-teal shrink-0" />
+                      {t(`solutions.mode.${mode.key}.title`)}
+                    </Link>
+                  ))}
                   <Link
                     to="/seafood-export"
                     onClick={() => setMobileOpen(false)}

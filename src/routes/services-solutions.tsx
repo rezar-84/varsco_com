@@ -6,9 +6,7 @@ import { AnimatedRasDiagram } from "@/components/visuals/AnimatedRasDiagram";
 import {
   Award,
   Users,
-  Network,
   Rocket,
-  Wrench,
   ShieldCheck,
   Building2,
   TrendingUp,
@@ -16,14 +14,13 @@ import {
   ArrowRight,
   MessageCircle,
   Clock,
-  Compass,
   Layers,
   Cpu,
   HeartHandshake,
-  Waves,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { SOLUTION_MODES } from "@/lib/solution-modes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -87,32 +84,8 @@ function ServicesPage() {
   // starting from nothing, they want someone to run it, they are producing but
   // underperforming, or they need supply. Replaces the previous
   // investor/producer split, which had no home for managed operations.
-  const MODES = [
-    {
-      key: "build",
-      icon: Compass,
-      accent: "mint" as const,
-      items: [1, 2, 3, 4, 5],
-    },
-    {
-      key: "run",
-      icon: Waves,
-      accent: "teal" as const,
-      items: [1, 2, 3, 4, 5, 6, 7, 8],
-    },
-    {
-      key: "improve",
-      icon: Wrench,
-      accent: "teal" as const,
-      items: [1, 2, 3, 4],
-    },
-    {
-      key: "source",
-      icon: Network,
-      accent: "mint" as const,
-      items: [1, 2, 3, 4],
-    },
-  ];
+  // Shared with the header mega menu — see src/lib/solution-modes.ts.
+  const MODES = SOLUTION_MODES;
 
   return (
     <>
