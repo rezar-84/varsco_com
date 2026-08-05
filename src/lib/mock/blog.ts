@@ -919,7 +919,7 @@ Summary of Key Benefits
 
 BenefitImpact on AquaculturePalatabilityIncreased feed uptake → better growthUtilizationReduction in waste → improved FCRManufacturingLower cost, simpler equipment → flexibilityNutrient ConservationHigher vitamin and enzyme retention
 
-📍 Why Choose Moist Pellets?
+Why Choose Moist Pellets?
 
 Moist pellets offer a compelling combination of operational ease and biological performance:
 
@@ -1293,7 +1293,7 @@ Join Us at BEXCO!
 
 We invite all industry professionals, aquaculture specialists, and business leaders to visit our booth at BEXCO in Busan. Whether you are a distributor, fish farmer, or a business looking for reliable aquaculture solutions, VARS is ready to meet your needs and explore potential collaborations.
 
-📍 Event: BEXCO Fair, Busan, South Korea
+ Event: BEXCO Fair, Busan, South Korea
 
 `,
     author: "Reza R.",

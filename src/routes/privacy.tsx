@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Mail, Phone } from "lucide-react";
 import { LegalPage } from "@/components/layout/Page";
 import { useI18n } from "@/context/I18nContext";
 import { getCurrentLocale } from "@/lib/utils/locale";
@@ -54,12 +55,12 @@ function CorporateDetailsTr() {
       </p>
       <p>İsmet Kaptan Mah., Şair Eşref Blv. No:6 D:304/B, Konak, İzmir, 35210, Türkiye</p>
       <p>Vergi Kimlik No: 9240533729 | MERSİS: 0924053372900001</p>
-      <p>
-        📧 E-posta:{" "}
+      <p className="inline-flex flex-wrap items-center gap-1.5">
+        <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /> E-posta:{" "}
         <a href="mailto:privacy@varsco.com" className="text-primary font-bold">
           privacy@varsco.com
         </a>{" "}
-        | 📞 Tel: +90 232 290 57 56
+        | <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /> Tel: +90 232 290 57 56
       </p>
     </div>
   );
@@ -304,12 +305,12 @@ function PrivacyEn() {
         </p>
         <p>İsmet Kaptan Mah., Şair Eşref Blv. No:6 D:304/B, Konak, İzmir, 35210, Türkiye</p>
         <p>Tax ID: 9240533729 | MERSIS: 0924053372900001</p>
-        <p>
-          📧 Email:{" "}
+        <p className="inline-flex flex-wrap items-center gap-1.5">
+          <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /> Email:{" "}
           <a href="mailto:privacy@varsco.com" className="text-primary font-bold">
             privacy@varsco.com
           </a>{" "}
-          | 📞 Tel: +90 232 290 57 56
+          | <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /> Tel: +90 232 290 57 56
         </p>
       </div>
     </LegalPage>

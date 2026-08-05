@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, Globe, Check, ArrowRight, ShieldCheck } from "lucide-react";
+import { Mail, Phone, MapPin, Globe, Check, ArrowRight, ShieldCheck, Lock } from "lucide-react";
 import { useI18n } from "@/context/I18nContext";
 import { VarsLogo } from "./VarsLogo";
 import { Button } from "@/components/ui/button";
@@ -213,8 +213,9 @@ export function SiteFooter() {
                         : "bg-white/10 text-white/80 hover:bg-white/20"
                     }`}
                   >
-                    <span>{l.flag}</span>
-                    <span>{l.label}</span>
+                    <span lang={l.code} dir={l.dir}>
+                      {l.nativeName}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -259,7 +260,9 @@ export function SiteFooter() {
               loading="lazy"
             />
             <div className="text-[9px] font-mono text-mint/80 flex items-center gap-1.5">
-              <span>🔒 256-Bit SSL Encrypted</span>
+              <span className="inline-flex items-center gap-1">
+                <Lock className="h-2.5 w-2.5" aria-hidden="true" /> 256-Bit SSL Encrypted
+              </span>
               <span>•</span>
               <span>{t("footer.paymentInfra")}</span>
             </div>

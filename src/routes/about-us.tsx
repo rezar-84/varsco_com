@@ -9,6 +9,10 @@ import {
   TrendingUp,
   PackageCheck,
   BrainCircuit,
+  ShieldCheck,
+  Leaf,
+  Gauge,
+  Handshake,
 } from "lucide-react";
 import heroFarm from "@/assets/hero-farm.jpg";
 import seabass from "@/assets/seabass.jpg";
@@ -300,8 +304,8 @@ function AboutPage() {
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <div className="card-flat p-6 space-y-3 bg-background border border-border/80 rounded-2xl">
-            <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-lg">
-              🛡️
+            <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+              <ShieldCheck className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="font-display text-base font-bold text-navy">
               {t("about.values.biosecurity.title")}
@@ -312,8 +316,8 @@ function AboutPage() {
           </div>
 
           <div className="card-flat p-6 space-y-3 bg-background border border-border/80 rounded-2xl">
-            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-lg">
-              🌿
+            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+              <Leaf className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="font-display text-base font-bold text-navy">
               {t("about.values.sustainability.title")}
@@ -324,8 +328,8 @@ function AboutPage() {
           </div>
 
           <div className="card-flat p-6 space-y-3 bg-background border border-border/80 rounded-2xl">
-            <div className="h-10 w-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-lg">
-              ⚡
+            <div className="h-10 w-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+              <Gauge className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="font-display text-base font-bold text-navy">
               {t("about.values.precision.title")}
@@ -336,8 +340,8 @@ function AboutPage() {
           </div>
 
           <div className="card-flat p-6 space-y-3 bg-background border border-border/80 rounded-2xl">
-            <div className="h-10 w-10 rounded-xl bg-sky-500/10 text-sky-600 flex items-center justify-center font-bold text-lg">
-              🤝
+            <div className="h-10 w-10 rounded-xl bg-sky-500/10 text-sky-600 flex items-center justify-center">
+              <Handshake className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="font-display text-base font-bold text-navy">
               {t("about.values.partnership.title")}

@@ -49,7 +49,7 @@ Le esperamos en BEXCO
 
 Invitamos a todos los profesionales del sector, especialistas en acuicultura y responsables empresariales a visitar nuestro estand en BEXCO, en Busan. Ya sea usted distribuidor, acuicultor o una empresa que busca soluciones acuícolas fiables, VARS está preparada para atender sus necesidades y explorar posibles colaboraciones.
 
-📍 Evento: Feria BEXCO, Busan, Corea del Sur`,
+Evento: Feria BEXCO, Busan, Corea del Sur`,
 
   "our-journey-in-aquaculture-from-vision-to-industry-leader-in-live-feed-solutions-11": `De una visión biotecnológica a la innovación sectorial
 
@@ -102,7 +102,7 @@ Resumen de las principales ventajas
 
 VentajaEfecto en la acuiculturaPalatabilidadMayor ingesta → mejor crecimientoAprovechamientoMenos desperdicio → mejor conversión alimenticiaFabricaciónMenor coste, equipos más sencillos → flexibilidadConservación de nutrientesMayor retención de vitaminas y enzimas
 
-📍 ¿Por qué elegir pélets húmedos?
+¿Por qué elegir pélets húmedos?
 
 Los pélets húmedos combinan de forma convincente sencillez operativa y rendimiento biológico:
 

@@ -5,7 +5,6 @@ import { useI18n } from "@/context/I18nContext";
 type RegionNode = {
   id: string;
   name: string;
-  flag: string;
   x: number; // SVG % x
   y: number; // SVG % y
   transitAir: string;
@@ -22,7 +21,6 @@ export function InteractiveSupplyMap() {
     {
       id: "turkey",
       name: t("supplyMap.region.turkey.name"),
-      flag: "🇹🇷",
       x: 48,
       y: 35,
       transitAir: t("supplyMap.region.turkey.transitAir"),
@@ -34,7 +32,6 @@ export function InteractiveSupplyMap() {
     {
       id: "dubai",
       name: t("supplyMap.region.dubai.name"),
-      flag: "🇦🇪",
       x: 72,
       y: 54,
       transitAir: t("supplyMap.region.dubai.transitAir"),
@@ -46,7 +43,6 @@ export function InteractiveSupplyMap() {
     {
       id: "ksa",
       name: t("supplyMap.region.ksa.name"),
-      flag: "🇸🇦",
       x: 64,
       y: 58,
       transitAir: t("supplyMap.region.ksa.transitAir"),
@@ -58,7 +54,6 @@ export function InteractiveSupplyMap() {
     {
       id: "oman",
       name: t("supplyMap.region.oman.name"),
-      flag: "🇴🇲",
       x: 75,
       y: 64,
       transitAir: t("supplyMap.region.oman.transitAir"),
@@ -70,7 +65,6 @@ export function InteractiveSupplyMap() {
     {
       id: "qatar",
       name: t("supplyMap.region.qatar.name"),
-      flag: "🇶🇦",
       x: 69,
       y: 53,
       transitAir: t("supplyMap.region.qatar.transitAir"),
@@ -82,7 +76,6 @@ export function InteractiveSupplyMap() {
     {
       id: "europe",
       name: t("supplyMap.region.europe.name"),
-      flag: "🇪🇺",
       x: 28,
       y: 28,
       transitAir: t("supplyMap.region.europe.transitAir"),
@@ -119,7 +112,6 @@ export function InteractiveSupplyMap() {
                   : "bg-surface-alt text-navy hover:bg-muted"
               }`}
             >
-              <span className="mr-1.5">{r.flag}</span>
               {r.id.toUpperCase()}
             </button>
           ))}
@@ -199,7 +191,7 @@ export function InteractiveSupplyMap() {
                     fill={isSelected ? "#ffffff" : "rgba(255,255,255,0.7)"}
                     textAnchor="middle"
                   >
-                    {r.flag} {r.id === "turkey" ? "İZMİR" : r.id.toUpperCase()}
+                    {r.id === "turkey" ? "İZMİR" : r.id.toUpperCase()}
                   </text>
                 </g>
               );
@@ -210,7 +202,9 @@ export function InteractiveSupplyMap() {
         {/* Selected Region Logistics Details Box */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-3xl">{selected.flag}</span>
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <MapPin className="h-5 w-5" aria-hidden="true" />
+            </span>
             <div>
               <h4 className="font-display text-xl font-bold text-navy">{selected.name}</h4>
               <span className="text-xs text-mint font-bold uppercase tracking-wider">

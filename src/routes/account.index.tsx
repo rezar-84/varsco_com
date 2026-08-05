@@ -66,7 +66,7 @@ function Dashboard() {
     <div className="space-y-8 animate-fade-in">
       <div>
         <h1 className="font-display text-4xl font-black tracking-tight text-navy">
-          {t("account.dashboard.welcome") || "Welcome back"}, {user?.name} <span className="animate-wave inline-block">👋</span>
+          {t("account.dashboard.welcome") || "Welcome back"}, {user?.name}
         </h1>
         <p className="mt-2 text-muted-foreground text-sm max-w-xl font-medium">
           {t("account.dashboard.subtitle") || "Manage your aquaculture orders, active shipments, customs clearance documentation, and company profile."}

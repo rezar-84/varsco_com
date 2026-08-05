@@ -7,20 +7,31 @@ export interface LanguageInfo {
   code: LangCode;
   label: string;
   nativeName: string;
-  flag: string;
   dir: "ltr" | "rtl";
 }
 
+/**
+ * No flag field: the switcher used emoji flags, and emoji are not part of this
+ * site's icon system (lucide throughout). Country flags are also the wrong
+ * signifier for a language — the UK flag excluded every other English market,
+ * and the Saudi flag stood in for Arabic across Egypt, Morocco and the Gulf
+ * alike.
+ *
+ * The switcher now renders the ISO code plus `nativeName`, which is what a
+ * speaker actually recognises. If flags are ever wanted back they must be SVG
+ * assets rather than emoji — that path is also the one Persian needs, since
+ * Unicode has no Lion and Sun code point (see doc/persian_locale_plan.md).
+ */
 export const LANGUAGES: LanguageInfo[] = [
-  { code: "en", label: "EN", nativeName: "English", flag: "🇬🇧", dir: "ltr" },
-  { code: "tr", label: "TR", nativeName: "Türkçe", flag: "🇹🇷", dir: "ltr" },
-  { code: "ar", label: "AR", nativeName: "العربية", flag: "🇸🇦", dir: "rtl" },
-  { code: "de", label: "DE", nativeName: "Deutsch", flag: "🇩🇪", dir: "ltr" },
-  { code: "ru", label: "RU", nativeName: "Русский", flag: "🇷🇺", dir: "ltr" },
-  { code: "ja", label: "JA", nativeName: "日本語", flag: "🇯🇵", dir: "ltr" },
-  { code: "ko", label: "KO", nativeName: "한국어", flag: "🇰🇷", dir: "ltr" },
-  { code: "zh", label: "ZH", nativeName: "简体中文", flag: "🇨🇳", dir: "ltr" },
-  { code: "es", label: "ES", nativeName: "Español", flag: "🇪🇸", dir: "ltr" },
+  { code: "en", label: "EN", nativeName: "English", dir: "ltr" },
+  { code: "tr", label: "TR", nativeName: "Türkçe", dir: "ltr" },
+  { code: "ar", label: "AR", nativeName: "العربية", dir: "rtl" },
+  { code: "de", label: "DE", nativeName: "Deutsch", dir: "ltr" },
+  { code: "ru", label: "RU", nativeName: "Русский", dir: "ltr" },
+  { code: "ja", label: "JA", nativeName: "日本語", dir: "ltr" },
+  { code: "ko", label: "KO", nativeName: "한국어", dir: "ltr" },
+  { code: "zh", label: "ZH", nativeName: "简体中文", dir: "ltr" },
+  { code: "es", label: "ES", nativeName: "Español", dir: "ltr" },
 ];
 
 /**

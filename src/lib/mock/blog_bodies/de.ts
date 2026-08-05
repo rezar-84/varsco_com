@@ -57,7 +57,7 @@ Besuchen Sie uns auf der BEXCO
 
 Wir laden alle Branchenfachleute, Aquakulturspezialisten und Unternehmensverantwortlichen ein, unseren Stand auf der BEXCO in Busan zu besuchen. Ob Distributor, Aquakulturbetrieb oder Unternehmen auf der Suche nach verlässlichen Aquakulturlösungen — VARS steht bereit, Ihren Anforderungen gerecht zu werden und mögliche Kooperationen auszuloten.
 
-📍 Veranstaltung: BEXCO-Messe, Busan, Südkorea`,
+Veranstaltung: BEXCO-Messe, Busan, Südkorea`,
 
   "our-journey-in-aquaculture-from-vision-to-industry-leader-in-live-feed-solutions-11": `Von einer biotechnologischen Vision zur Brancheninnovation
 
@@ -110,7 +110,7 @@ Zusammenfassung der wesentlichen Vorteile
 
 VorteilAuswirkung auf die AquakulturSchmackhaftigkeitHöhere Futteraufnahme → besseres WachstumVerwertungWeniger Verluste → verbesserte FutterverwertungHerstellungGeringere Kosten, einfachere Ausrüstung → FlexibilitätNährstofferhaltHöhere Vitamin- und Enzymrückhaltung
 
-📍 Warum Feuchtpellets?
+Warum Feuchtpellets?
 
 Feuchtpellets verbinden überzeugend betriebliche Einfachheit mit biologischer Leistung:
 

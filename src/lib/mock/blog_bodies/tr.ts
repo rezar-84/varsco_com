@@ -62,7 +62,7 @@ BEXCO'da Bize Katılın!
 
 Tüm sektör profesyonellerini, su ürünleri yetiştiriciliği uzmanlarını ve iş dünyası liderlerini Busan'daki BEXCO'da standımızı ziyaret etmeye davet ediyoruz. İster distribütör, ister balık yetiştiricisi olun, ister güvenilir su ürünleri yetiştiriciliği çözümleri arayan bir işletme olun, VARS ihtiyaçlarınızı karşılamaya ve olası iş birliklerini değerlendirmeye hazırdır.
 
-📍 Etkinlik: BEXCO Fuarı, Busan, Güney Kore`,
+Etkinlik: BEXCO Fuarı, Busan, Güney Kore`,
 
   "our-journey-in-aquaculture-from-vision-to-industry-leader-in-live-feed-solutions-11": `Biyoteknoloji Vizyonundan Sektörel Yeniliğe
 
@@ -115,7 +115,7 @@ Temel Faydaların Özeti
 
 FaydaSu Ürünleri Yetiştiriciliğine EtkisiLezzetlilikArtan yem alımı → daha iyi büyümeDeğerlendirilmeFirede azalma → iyileşen yem dönüşüm oranı (FCR)ÜretimDaha düşük maliyet, daha basit ekipman → esneklikBesin KorunumuDaha yüksek vitamin ve enzim muhafazası
 
-📍 Neden Nemli Pelet?
+Neden Nemli Pelet?
 
 Nemli peletler, operasyonel kolaylık ile biyolojik performansı ikna edici bir biçimde bir araya getirir:
 

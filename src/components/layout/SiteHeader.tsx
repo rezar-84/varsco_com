@@ -14,6 +14,7 @@ import {
   ArrowRight,
   ShieldCheck,
   Globe2,
+  Languages,
   BrainCircuit,
   Phone,
   Mail,
@@ -258,13 +259,13 @@ export function SiteHeader() {
             {/* Language Selector Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="inline-flex items-center gap-1.5 rounded bg-white/10 px-2 py-0.5 text-xs font-semibold text-white hover:bg-white/20 transition-colors">
-                <span>{languages.find((l) => l.code === lang)?.flag}</span>
+                <Languages className="h-3 w-3" aria-hidden="true" />
                 <span>{lang.toUpperCase()}</span>
                 <ChevronDown className="h-3 w-3" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
-                className="w-36 p-1 bg-navy text-white border-white/20 shadow-xl"
+                className="w-48 p-1 bg-navy text-white border-white/20 shadow-xl"
               >
                 {languages.map((l) => (
                   <DropdownMenuItem
@@ -272,9 +273,9 @@ export function SiteHeader() {
                     onClick={() => setLang(l.code as any)}
                     className="flex items-center justify-between px-2.5 py-1.5 text-xs font-semibold text-white/90 hover:bg-white/10 cursor-pointer rounded"
                   >
-                    <span className="flex items-center gap-2">
-                      <span>{l.flag}</span>
-                      <span>{l.label}</span>
+                    <span className="flex items-center gap-2" lang={l.code} dir={l.dir}>
+                      <span className="w-6 shrink-0 text-white/50 tabular-nums">{l.label}</span>
+                      <span>{l.nativeName}</span>
                     </span>
                     {lang === l.code && <Check className="h-3.5 w-3.5 text-mint" />}
                   </DropdownMenuItem>
@@ -1031,8 +1032,9 @@ export function SiteHeader() {
                         : "bg-surface-alt text-navy hover:bg-muted",
                     )}
                   >
-                    <span>{l.flag}</span>
-                    <span>{l.label}</span>
+                    <span lang={l.code} dir={l.dir}>
+                      {l.nativeName}
+                    </span>
                   </button>
                 ))}
               </div>

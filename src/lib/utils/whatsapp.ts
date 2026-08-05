@@ -20,20 +20,20 @@ export function createWhatsAppUrl(params: WhatsAppMessageParams): string {
     return `https://wa.me/${phone}?text=${encodeURIComponent(params.customMessage)}`;
   }
 
-  let text = `👋 Hello VARS Aquaculture Export Sales Team,\n\n`;
+  let text = `Hello VARS Aquaculture Export Sales Team,\n\n`;
 
   if (params.productTitle) {
     text += `I would like to request an urgent B2B quote & availability for:\n`;
-    text += `📦 *Product*: ${params.productTitle}`;
+    text += `*Product*: ${params.productTitle}`;
     if (params.latinName) {
       text += ` (_${params.latinName}_)`;
     }
     text += `\n`;
     if (params.categoryTitle) {
-      text += `🏷️ *Category*: ${params.categoryTitle}\n`;
+      text += `*Category*: ${params.categoryTitle}\n`;
     }
     if (params.pageUrl) {
-      text += `🔗 *Reference*: ${params.pageUrl}\n`;
+      text += `*Reference*: ${params.pageUrl}\n`;
     }
     text += `\nPlease provide CIF pricing, MOQ, and earliest shipping availability to my location.`;
   } else if (params.cartItems && params.cartItems.length > 0) {

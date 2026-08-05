@@ -52,7 +52,8 @@ export function FloatingQuoteCTA() {
                 <ShieldCheck className="h-3 w-3" /> {t("cta.certified")}
               </span>
             </div>
-            <p className="text-[11px] text-white/70 truncate">⚡ {t("cta.responseTime")}</p>
+            {/* The Zap icon in the adjacent badge already carries the speed cue. */}
+            <p className="text-[11px] text-white/70 truncate">{t("cta.responseTime")}</p>
           </div>
         </div>
 

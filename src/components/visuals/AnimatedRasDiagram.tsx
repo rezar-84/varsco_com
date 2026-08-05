@@ -368,7 +368,7 @@ export function AnimatedRasDiagram() {
               fontSize="10"
               fontWeight="bold"
             >
-              ⚡ CONTINUOUS CLOSED-LOOP RECIRCULATION • 98% WATER RECOVERED
+              CONTINUOUS CLOSED-LOOP RECIRCULATION • 98% WATER RECOVERED
             </text>
           </svg>
         </div>
