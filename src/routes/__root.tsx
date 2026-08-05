@@ -17,7 +17,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { StoreCartProvider } from "@/context/StoreCartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
-import { I18nProvider } from "@/context/I18nContext";
+import { I18nProvider, LANGUAGES } from "@/context/I18nContext";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { getLocalizedPageMeta } from "@/lib/utils/seo";
 import type { SeoPage } from "@/lib/utils/seo";
@@ -278,8 +278,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const lang = getServerLang();
   return (
-    <html lang={getServerLang()}>
+    <html lang={lang} dir={getServerDir(lang)}>
       <head>
         <HeadContent />
       </head>
@@ -295,6 +296,21 @@ function getServerLang() {
   const storage = (globalThis as unknown as Record<string, unknown>).serverStorage as
     { getStore: () => { lang?: string } | undefined } | undefined;
   return storage?.getStore()?.lang ?? "en";
+}
+
+/**
+ * Text direction for the server-rendered <html>.
+ *
+ * I18nContext sets documentElement.dir in an effect, which only runs after
+ * hydration — so Arabic pages were served as LTR and flipped once JS landed.
+ * Crawlers and no-JS clients never saw RTL at all. Emitting it here means the
+ * very first painted frame is already correct; the effect then agrees with it.
+ *
+ * Read from LANGUAGES rather than a second list, so a new RTL locale (Persian
+ * is planned) is right by construction.
+ */
+function getServerDir(lang: string): "ltr" | "rtl" {
+  return LANGUAGES.find((l) => l.code === lang)?.dir ?? "ltr";
 }
 
 function RootComponent() {
