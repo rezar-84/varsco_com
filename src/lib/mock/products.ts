@@ -1050,8 +1050,13 @@ export const PRODUCTS: Product[] = [
             label: "Fins",
             value:
               "Attached or trimmed, to order. Korean buyers typically ask for fins on; it is your choice.",
+            choices: ["Attached", "Trimmed"],
           },
-          { label: "Seasoning", value: "Plain, or lightly salted on request." },
+          {
+            label: "Seasoning",
+            value: "Plain, or lightly salted on request.",
+            choices: ["Plain", "Lightly salted"],
+          },
         ],
         notes:
           "Two fillets come from one fish, so piece weight follows harvest size: our largest grade, a 2.0 – 2.5 kg live fish, yields the 500 – 600 g/pc band.",

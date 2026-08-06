@@ -37,8 +37,16 @@ export interface ProductExportForm {
   summary: string;
   /** Weight bands. Numeric — never translated, same rule as sizeGroups.weight. */
   sizes?: string[];
-  /** Buyer-selectable processing choices (fins on/off, plain or salted). */
-  options?: { label: string; value: string }[];
+  /**
+   * Buyer-selectable processing choices (fins on/off, plain or salted).
+   *
+   * `value` is the prose the product page shows. `choices` is the same option
+   * expressed as the discrete answers a buyer actually picks from, which is
+   * what the quote form needs — it cannot turn "Attached or trimmed, to order"
+   * into a dropdown on its own. Options without `choices` are informational
+   * (viability windows, worked examples) and the form skips them.
+   */
+  options?: { label: string; value: string; choices?: string[] }[];
   notes?: string;
 }
 

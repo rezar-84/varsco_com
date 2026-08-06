@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useMemo, type ReactNode } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useI18n } from "@/context/I18nContext";
 import { PRODUCTS, CATEGORIES } from "@/lib/mock/products";
+import { CountrySelect } from "@/components/ui/country-select";
 import type { Product } from "@/lib/types";
 import {
   ShieldCheck,
@@ -50,7 +51,7 @@ interface Props {
 }
 
 export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [selectedSlug, setSelectedSlug] = useState<string>(initialProductSlug || "");
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(
@@ -59,6 +60,9 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
 
   // Dynamic Custom Specs Fields
   const [customSpecs, setCustomSpecs] = useState<Record<string, string>>({});
+  // Which export format the buyer picked. Drives the size bands and processing
+  // options below it, so it resets whenever the product changes.
+  const [exportFormKey, setExportFormKey] = useState<string>("");
 
   useEffect(() => {
     if (initialProductSlug) {
@@ -66,11 +70,13 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
       if (prod) {
         setSelectedSlug(prod.slug);
         setSelectedProduct(prod);
+        setExportFormKey("");
       }
     }
   }, [initialProductSlug]);
 
   const handleProductChange = (slug: string) => {
+    setExportFormKey("");
     setSelectedSlug(slug);
     const prod = PRODUCTS.find((p) => p.slug === slug);
     setSelectedProduct(prod);
@@ -132,11 +138,33 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
   const isFeedAdditive = selectedProduct?.category === "feed-additives";
   const isShrimp = !!selectedProduct && SHRIMP_SLUGS.includes(selectedProduct.slug);
   const isOtherSeafood = !!selectedProduct && OTHER_SEAFOOD_SLUGS.includes(selectedProduct.slug);
-  // All whole/fillet finfish (sea bass, sea bream, trout, amberjack, olive flounder,
-  // brown meagre) share the same "Whole Round / D&G / Dressed / Fillets" formats,
-  // so they're grouped as one segment instead of branching per species.
+  // Whole/fillet finfish without published export formats (sea bass, sea bream,
+  // trout, amberjack, brown meagre) share one "Whole Round / D&G / Dressed /
+  // Fillets" segment rather than branching per species.
+  //
+  // Products that publish export formats (olive flounder today) get a form
+  // driven by that data instead of the generic finfish pair of free-text boxes.
+  // A buyer quoting live fish and a buyer quoting frozen fillet are answering
+  // different questions, and "Portion & Cut Specification" asked neither well.
+  const exportForms = selectedProduct?.exportForms ?? [];
+  const hasExportForms = exportForms.length > 0;
+  const activeFormIndex = exportForms.findIndex((f) => f.key === exportFormKey);
+  const activeForm = activeFormIndex >= 0 ? exportForms[activeFormIndex] : undefined;
+
   const isFinfish =
-    !!selectedProduct && selectedProduct.category === "seafood" && !isShrimp && !isOtherSeafood;
+    !!selectedProduct &&
+    selectedProduct.category === "seafood" &&
+    !isShrimp &&
+    !isOtherSeafood &&
+    !hasExportForms;
+
+  /** Export-format strings follow the same override convention as the product page. */
+  const tf = (index: number, field: string, fallback: string): string => {
+    if (!selectedProduct) return fallback;
+    const key = `product.${selectedProduct.slug}.exportForm.${index}.${field}`;
+    const res = t(key);
+    return res === key ? fallback : res;
+  };
 
   // Real packaging/format spec for the selected product, used as placeholder text
   // so the form always reflects what that exact product actually ships in.
@@ -144,6 +172,21 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
     selectedProduct?.specifications.find((s) =>
       s.label.toLowerCase().includes(labelIncludes.toLowerCase()),
     )?.value;
+
+  // Incoterms describe how goods move. A general inquiry or a hatchery design
+  // consultation has no goods yet, so asking a buyer to pick CIF/FOB/EXW before
+  // they have told us what they want is noise they have to answer anyway.
+  const showShipping = !!selectedProduct;
+
+  // Numbering is computed, not baked into the strings, so dropping the shipping
+  // step renumbers the rest instead of leaving a gap at 02.
+  const stepKeys = [
+    "quoteForm.step1",
+    ...(showShipping ? ["quoteForm.step2"] : []),
+    "quoteForm.step3",
+  ];
+  const stepLabel = (key: string) =>
+    `${String(stepKeys.indexOf(key) + 1).padStart(2, "0")}. ${t(key)}`;
 
   const submitBtn = (
     <Button
@@ -185,7 +228,7 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
           htmlFor="productSelect"
           className="font-bold text-navy text-xs uppercase tracking-wider flex items-center justify-between"
         >
-          <span>{t("quoteForm.step1")}</span>
+          <span>{stepLabel("quoteForm.step1")}</span>
           <span className="text-[11px] font-normal text-muted-foreground">
             {t("quoteForm.required")}
           </span>
@@ -380,7 +423,165 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
             </div>
           )}
 
-          {/* Type D: Finfish — sea bass, sea bream, trout, amberjack, olive flounder, brown meagre */}
+          {/* Type D1: products that publish export formats (olive flounder).
+              Format first, because everything under it depends on the answer —
+              a live fish has no fillet cut and a frozen fillet has no
+              viability window. */}
+          {hasExportForms && (
+            <div className="space-y-3 text-xs">
+              <div>
+                <Label className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.exportFormat.label")}
+                </Label>
+                <div className="mt-1.5 grid gap-2 sm:grid-cols-3">
+                  {exportForms.map((form, i) => (
+                    <label
+                      key={form.key}
+                      className={`flex cursor-pointer items-center gap-2 rounded-xl border p-2.5 transition-colors ${
+                        exportFormKey === form.key
+                          ? "border-primary bg-primary/5"
+                          : "border-border/80 hover:bg-surface-alt"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="exportFormat"
+                        value={form.key}
+                        checked={exportFormKey === form.key}
+                        onChange={() => {
+                          setExportFormKey(form.key);
+                          // Bands and options belong to the format that was
+                          // just replaced; carrying them over would quote a
+                          // fillet weight against a live fish.
+                          const { sizeBand: _s, ...rest } = customSpecs;
+                          const kept = Object.fromEntries(
+                            Object.entries(rest).filter(([k]) => !k.startsWith("option")),
+                          );
+                          setCustomSpecs({ ...kept, exportFormat: tf(i, "name", form.name) });
+                        }}
+                        className="text-primary"
+                      />
+                      <span className="font-bold text-navy">{tf(i, "name", form.name)}</span>
+                    </label>
+                  ))}
+                </div>
+                {activeForm && (
+                  <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
+                    {tf(activeFormIndex, "summary", activeForm.summary)}
+                  </p>
+                )}
+              </div>
+
+              {activeForm && (
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {/* Real published bands, so nobody asks for a weight we do
+                      not harvest and then has to be talked back down. */}
+                  {activeForm.sizes && activeForm.sizes.length > 0 && (
+                    <div>
+                      <Label htmlFor="sizeBand" className="text-[11px] font-bold text-navy">
+                        {t("quoteForm.sizeBand.label")}
+                      </Label>
+                      <select
+                        id="sizeBand"
+                        value={customSpecs.sizeBand ?? ""}
+                        onChange={(e) =>
+                          setCustomSpecs({ ...customSpecs, sizeBand: e.target.value })
+                        }
+                        className="mt-1 h-9 w-full rounded-md border border-border/80 bg-background px-2 text-xs font-semibold text-navy focus:border-primary focus:outline-none"
+                      >
+                        <option value="">{t("quoteForm.sizeBand.any")}</option>
+                        {activeForm.sizes.map((size) => (
+                          <option key={size} value={size}>
+                            {size}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {/* Only options with discrete answers become fields. The rest
+                      (viability windows, worked examples) are guidance and
+                      appear as the note below. */}
+                  {activeForm.options
+                    ?.map((opt, oi) => ({ opt, oi }))
+                    .filter(({ opt }) => opt.choices && opt.choices.length > 0)
+                    .map(({ opt, oi }) => {
+                      const label = tf(activeFormIndex, `option.${oi}.label`, opt.label);
+                      const field = `option${oi}`;
+                      return (
+                        <div key={opt.label}>
+                          <Label htmlFor={field} className="text-[11px] font-bold text-navy">
+                            {label}
+                          </Label>
+                          <select
+                            id={field}
+                            value={customSpecs[field] ?? ""}
+                            onChange={(e) =>
+                              setCustomSpecs({
+                                ...customSpecs,
+                                [field]: e.target.value ? `${label}: ${e.target.value}` : "",
+                              })
+                            }
+                            className="mt-1 h-9 w-full rounded-md border border-border/80 bg-background px-2 text-xs font-semibold text-navy focus:border-primary focus:outline-none"
+                          >
+                            <option value="">{t("quoteForm.option.noPreference")}</option>
+                            {opt.choices!.map((choice, ci) => (
+                              <option
+                                key={choice}
+                                value={tf(activeFormIndex, `option.${oi}.choice.${ci}`, choice)}
+                              >
+                                {tf(activeFormIndex, `option.${oi}.choice.${ci}`, choice)}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      );
+                    })}
+
+                  <div>
+                    <Label htmlFor="gccDestination" className="text-[11px] font-bold text-navy">
+                      {t("quoteForm.destinationLabel")}
+                    </Label>
+                    <Input
+                      id="gccDestination"
+                      placeholder={t("quoteForm.destinationPlaceholder")}
+                      value={customSpecs.gccDestination ?? ""}
+                      onChange={(e) =>
+                        setCustomSpecs({ ...customSpecs, gccDestination: e.target.value })
+                      }
+                      className="bg-background h-9 text-xs"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="orderVolume" className="text-[11px] font-bold text-navy">
+                      {t("quoteForm.orderVolume.label")}
+                    </Label>
+                    <Input
+                      id="orderVolume"
+                      placeholder={t("quoteForm.orderVolume.placeholder")}
+                      value={customSpecs.orderVolume ?? ""}
+                      onChange={(e) =>
+                        setCustomSpecs({ ...customSpecs, orderVolume: e.target.value })
+                      }
+                      className="bg-background h-9 text-xs"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* The format's own caveat, verbatim from the product page — the
+                  live viability window is the one a buyer must read before
+                  committing to a corridor. */}
+              {activeForm?.notes && (
+                <p className="rounded-lg border border-border/60 bg-background p-2.5 text-[11px] leading-relaxed text-muted-foreground">
+                  {tf(activeFormIndex, "notes", activeForm.notes)}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Type D: Finfish — sea bass, sea bream, trout, amberjack, brown meagre */}
           {isFinfish && (
             <div className="grid gap-3 sm:grid-cols-2 text-xs">
               <div>
@@ -479,52 +680,39 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
         </div>
       )}
 
-      {/* INCOTERM PREFERENCE & SAMPLE OPTION */}
-      <div className="p-4 rounded-2xl bg-background border border-border/80 space-y-3">
-        <Label className="font-bold text-navy text-xs uppercase tracking-wider block">
-          {t("quoteForm.step2")}
-        </Label>
-        <div className="grid gap-3 sm:grid-cols-3 text-xs">
-          <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
-            <input
-              type="radio"
-              name="incoterm"
-              value="CIF"
-              defaultChecked
-              className="text-primary"
-            />
-            <span className="font-bold text-navy">{t("quoteForm.incoterm.cif")}</span>
-          </label>
-          <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
-            <input type="radio" name="incoterm" value="FOB" className="text-primary" />
-            <span className="font-bold text-navy">{t("quoteForm.incoterm.fob")}</span>
-          </label>
-          <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
-            <input type="radio" name="incoterm" value="EXW" className="text-primary" />
-            <span className="font-bold text-navy">{t("quoteForm.incoterm.exw")}</span>
-          </label>
+      {/* INCOTERM PREFERENCE — only when there are goods to move. */}
+      {showShipping && (
+        <div className="p-4 rounded-2xl bg-background border border-border/80 space-y-3">
+          <Label className="font-bold text-navy text-xs uppercase tracking-wider block">
+            {stepLabel("quoteForm.step2")}
+          </Label>
+          <div className="grid gap-3 sm:grid-cols-3 text-xs">
+            <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
+              <input
+                type="radio"
+                name="incoterm"
+                value="CIF"
+                defaultChecked
+                className="text-primary"
+              />
+              <span className="font-bold text-navy">{t("quoteForm.incoterm.cif")}</span>
+            </label>
+            <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
+              <input type="radio" name="incoterm" value="FOB" className="text-primary" />
+              <span className="font-bold text-navy">{t("quoteForm.incoterm.fob")}</span>
+            </label>
+            <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
+              <input type="radio" name="incoterm" value="EXW" className="text-primary" />
+              <span className="font-bold text-navy">{t("quoteForm.incoterm.exw")}</span>
+            </label>
+          </div>
         </div>
-
-        <label className="flex items-center gap-2.5 text-xs text-navy font-semibold pt-1">
-          <input
-            type="checkbox"
-            name="requestSample"
-            onChange={(e) =>
-              setCustomSpecs({
-                ...customSpecs,
-                sampleRequested: e.target.checked ? "Yes (Include 500g Test Batch)" : "No",
-              })
-            }
-            className="rounded border-border text-primary focus:ring-primary h-4 w-4"
-          />
-          <span>{t("quoteForm.sampleTrial")}</span>
-        </label>
-      </div>
+      )}
 
       {/* STANDARD CONTACT INFORMATION FIELDS */}
       <div className="space-y-3">
         <Label className="font-bold text-navy text-xs uppercase tracking-wider block">
-          {t("quoteForm.step3")}
+          {stepLabel("quoteForm.step3")}
         </Label>
         <div className="grid gap-3 sm:grid-cols-2">
           <Field label={t("quote.name")} name="name" error={errors.name} required />
@@ -534,7 +722,17 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
           <Field label={t("quote.email")} name="email" type="email" error={errors.email} required />
           <Field label={t("quote.phone")} name="phone" error={errors.phone} required />
         </div>
-        <Field label={t("quote.country")} name="country" error={errors.country} />
+        <CountrySelect
+          name="country"
+          label={t("quote.country")}
+          placeholder={t("quote.countryPlaceholder")}
+          searchPlaceholder={t("quote.countrySearch")}
+          emptyLabel={t("quote.countryEmpty")}
+          mainGroupLabel={t("quote.countryGroup.main")}
+          allGroupLabel={t("quote.countryGroup.all")}
+          lang={lang}
+          error={errors.country}
+        />
       </div>
 
       <div>
