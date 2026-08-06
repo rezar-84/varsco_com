@@ -173,18 +173,9 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
       s.label.toLowerCase().includes(labelIncludes.toLowerCase()),
     )?.value;
 
-  // Incoterms describe how goods move. A general inquiry or a hatchery design
-  // consultation has no goods yet, so asking a buyer to pick CIF/FOB/EXW before
-  // they have told us what they want is noise they have to answer anyway.
-  const showShipping = !!selectedProduct;
-
-  // Numbering is computed, not baked into the strings, so dropping the shipping
-  // step renumbers the rest instead of leaving a gap at 02.
-  const stepKeys = [
-    "quoteForm.step1",
-    ...(showShipping ? ["quoteForm.step2"] : []),
-    "quoteForm.step3",
-  ];
+  // Numbering is computed, not baked into the strings, so the labels stay
+  // correct if a step is added or dropped later.
+  const stepKeys = ["quoteForm.step1", "quoteForm.step3"];
   const stepLabel = (key: string) =>
     `${String(stepKeys.indexOf(key) + 1).padStart(2, "0")}. ${t(key)}`;
 
@@ -677,35 +668,6 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
               </div>
             </div>
           )}
-        </div>
-      )}
-
-      {/* INCOTERM PREFERENCE — only when there are goods to move. */}
-      {showShipping && (
-        <div className="p-4 rounded-2xl bg-background border border-border/80 space-y-3">
-          <Label className="font-bold text-navy text-xs uppercase tracking-wider block">
-            {stepLabel("quoteForm.step2")}
-          </Label>
-          <div className="grid gap-3 sm:grid-cols-3 text-xs">
-            <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
-              <input
-                type="radio"
-                name="incoterm"
-                value="CIF"
-                defaultChecked
-                className="text-primary"
-              />
-              <span className="font-bold text-navy">{t("quoteForm.incoterm.cif")}</span>
-            </label>
-            <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
-              <input type="radio" name="incoterm" value="FOB" className="text-primary" />
-              <span className="font-bold text-navy">{t("quoteForm.incoterm.fob")}</span>
-            </label>
-            <label className="flex items-center gap-2 rounded-xl border border-border/80 p-2.5 cursor-pointer hover:bg-surface-alt transition-colors">
-              <input type="radio" name="incoterm" value="EXW" className="text-primary" />
-              <span className="font-bold text-navy">{t("quoteForm.incoterm.exw")}</span>
-            </label>
-          </div>
         </div>
       )}
 
