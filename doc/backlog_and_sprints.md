@@ -17,7 +17,7 @@ This document details the backlog of tasks and sprint plans mapped against the S
 | **Sprint 6** | Phase 7     | E-commerce catalog, product specification rendering, client cart | **Completed** |
 | **Sprint 7** | Phase 8     | Cart checkouts, draft order creator, Iyzico/Stripe payments      | Partial       |
 | **Sprint 8** | Phase 9     | Full SEO crawls, Core Web Vitals audit, and cutover              | Partial       |
-| **Sprint 9** | Phase 10    | Lead intelligence, consent, and decoupled visitor tracking       | **Next**      |
+| **Sprint 9** | Phase 10    | Lead intelligence, consent, tracking, and Telegram alerts        | **Next**      |
 | **Sprint 10**| Phase 10    | Locale completion and accessibility remediation                  | Planned       |
 
 ---
@@ -127,6 +127,44 @@ otherwise have collected.
 - [ ] Point `blog.index.tsx` at the new endpoint and drop the CRM stopgap.
 - [ ] Retention policy for `website.track` — decide and document how long raw
       pageview rows are kept before aggregation.
+
+#### Telegram lead alerts
+
+Sales currently learns about a web enquiry by opening Odoo. The notification
+work already exists as a separate monorepo —
+`/home/rubuntu/Projects/midvex_o_notification_foundry`, holding
+`midvex_o_notification_foundry` (channels, accounts, templates, rules, queue,
+retry cron, delivery logs) and `midvex_o_notification_telegram` (a
+`sendMessage` adapter with its own tests). Neither is written for VARS; both
+are generic and model-driven.
+
+**This needs no code in `varsco_content_api`.** The foundry's architecture doc
+is explicit that `midvex.notification.message._trigger_event` is the entry
+point a `base.automation` server action calls. So a `crm.lead` alert is
+configuration, not development: an automation rule on create, plus a
+`midvex.notification.rule` (`model_id` = `crm.lead`, `trigger` = `on_create`,
+`trigger_domain` to select only web leads) pointing at a template and the
+Telegram channel.
+
+**It depends on Stage B being deployed first.** The value of the alert is the
+mapped fields — without commit `9f542c3` live on `erp.varsco.com`, every
+message would read "Web inquiry — {name}" with no product, source, country or
+campaign to show. Deploy order matters here.
+
+- [ ] Install and configure both addons on `erp.varsco.com`. The bot token is a
+      credential — it belongs in Odoo config, never in a repository (the
+      foundry's own `AGENTS.md` states this).
+- [ ] Link the sales users' Telegram accounts through the foundry's link-code
+      flow (`midvex.notification.recipient`, `pending` -> `linked`).
+- [ ] Author a `crm.lead` template rendering what Stage B now populates:
+      subject line, `partner_name`, `source_id`, `country_id`, `campaign_id`,
+      and a deep link to the lead in Odoo.
+- [ ] Scope `trigger_domain` to web-submitted leads only, so manually entered
+      and imported leads do not page the team. Newsletter signups drop out of
+      this automatically once they move to `mailing.contact` above; until then
+      they need excluding explicitly by topic.
+- [ ] Decide the audience — a shared sales group or named users — and whether
+      alerts are per-lead or digested. Per-lead is right at current volume.
 
 ### Sprint 10 — Locale Completion & Accessibility Remediation
 
