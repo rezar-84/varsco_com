@@ -1347,7 +1347,6 @@ const PRODUCT_DETAILED_TABLES: Record<string, TableCategory[]> = {
         { col1: "Crude Fat", col2: "12.0%" },
         { col1: "Cysts Per Gram (CPG)", col2: "210,000" },
         { col1: "Guaranteed Hatching Rate", col2: "Min 85%" },
-        { col1: "Harvest Lakes Origin", col2: "VARS Salt Lakes (700t wet / 400t dry annual)" },
       ],
     },
     {

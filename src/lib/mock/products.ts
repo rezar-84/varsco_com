@@ -503,7 +503,7 @@ export const PRODUCTS: Product[] = [
       "Revive Artemia Cysts offer high hatch-out efficiency, long shelf life and nutritional consistency for larval-stage fish and shrimp. Backed by global performance data and used by hatcheries across Türkiye, South Korea and the Middle East, this product delivers proven results without cold-chain limitations. The same easy-to-hatch cysts are a trusted staple for public aquariums, pet shops, fish breeders and reef tank hobbyists worldwide.",
     longDescription: [
       "CPG (Number of Cyst per Gram) varies with size and genus of Artemia and is not a quality indicator on its own. Quality is defined by Hatching Rate and by the nutritional value and biomass of the resulting nauplii.",
-      "We guarantee superior product quality and consistency with a stable hatching rate of at least 85%. Every year, about 700 tons of wet Artemia and 400 tons of dry cyst and processed Artemia are harvested from our two lakes.",
+      "We guarantee superior product quality and consistency, with a stable hatching rate of at least 85% verified on every batch before dispatch.",
     ],
     metrics: [
       { label: "Hatching Rate", value: "85%" },
@@ -515,8 +515,6 @@ export const PRODUCTS: Product[] = [
       { label: "Product Form", value: "Dry Artemia Cyst" },
       { label: "Guaranteed Hatch Rate", value: "≥ 85%" },
       { label: "Packaging", value: "100 g / 200 g / 425 g vacuum cans · bulk" },
-      { label: "Origin", value: "VARS-managed lakes" },
-      { label: "Annual Harvest", value: "~700 t wet · ~400 t dry / processed" },
     ],
     applications: [
       "Marine finfish larvae (sea bass, sea bream, grouper)",
@@ -537,7 +535,6 @@ export const PRODUCTS: Product[] = [
       "brine shrimp eggs",
       "Revive Artemia",
       "85% hatch rate Artemia",
-      "Great Salt Lake Artemia",
       "hatching Artemia cysts",
       "larval live feed",
       "aquarium artemia cysts",
