@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "Exportación de Olive Flounder",
   "nav.oliveFlounder.desc": "Filetes congelados, fresco eviscerado y vivo, con documentación de exportación.",
-  "footer.oliveFlounder": "Exportación de Olive Flounder"
+  "footer.oliveFlounder": "Exportación de Olive Flounder",
+  "notFound.eyebrow": "Página no encontrada",
+  "notFound.title": "Esta se nos ha escapado",
+  "notFound.description": "La página que buscaba se ha movido o ya no existe. Si ha seguido un enlace antiguo, los productos siguientes son la coincidencia más próxima que hemos encontrado.",
+  "notFound.cta.catalogue": "Ver el catálogo",
+  "notFound.cta.quote": "Solicitar cotización",
+  "notFound.sections": "O vaya a una sección",
+  "notFound.guess.heading": "Probablemente buscaba",
+  "notFound.featured.heading": "Nuestros productos más solicitados"
 }

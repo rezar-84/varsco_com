@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "Olivenflunder-Export",
   "nav.oliveFlounder.desc": "Tiefgefrorene Filets, frisch ausgenommen und lebend, mit Exportdokumenten.",
-  "footer.oliveFlounder": "Olivenflunder-Export"
+  "footer.oliveFlounder": "Olivenflunder-Export",
+  "notFound.eyebrow": "Seite nicht gefunden",
+  "notFound.title": "Diese Seite ist uns entwischt",
+  "notFound.description": "Die gewünschte Seite wurde verschoben oder existiert nicht mehr. Falls Sie einem alten Link gefolgt sind: Die Produkte unten sind die beste Übereinstimmung, die wir finden konnten.",
+  "notFound.cta.catalogue": "Katalog durchsuchen",
+  "notFound.cta.quote": "Angebot anfordern",
+  "notFound.sections": "Oder direkt zu einem Bereich",
+  "notFound.guess.heading": "Sie suchten vermutlich",
+  "notFound.featured.heading": "Unsere gefragtesten Produkte"
 }

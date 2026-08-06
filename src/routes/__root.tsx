@@ -20,31 +20,26 @@ import { StoreCartProvider } from "@/context/StoreCartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { I18nProvider, LANGUAGES } from "@/context/I18nContext";
 import { ConsentBanner } from "@/components/layout/ConsentBanner";
+import { NotFoundView } from "@/components/layout/NotFoundView";
 import { trackPageView, initTrackingConsentListener } from "@/lib/tracking";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { getLocalizedPageMeta } from "@/lib/utils/seo";
 import type { SeoPage } from "@/lib/utils/seo";
 
 function NotFoundComponent() {
-  return (
-    <div className="flex min-h-[60vh] items-center justify-center px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-navy">404</h1>
-        <h2 className="mt-4 text-xl font-semibold">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you are looking for does not exist or may have been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Return to home
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+  // The failed path must come from the server: NotFoundView reads
+  // window.location during SSR otherwise, which is undefined there, so every
+  // 404 rendered the generic featured list instead of guessing from the URL —
+  // the whole point of the page. serverStorage already carries the path for
+  // i18n; reuse it rather than adding a second channel.
+  return <NotFoundView pathname={getServerPath()} />;
+}
+
+function getServerPath(): string | undefined {
+  if (typeof window !== "undefined") return window.location.pathname;
+  const storage = (globalThis as unknown as Record<string, unknown>).serverStorage as
+    { getStore: () => { path?: string } | undefined } | undefined;
+  return storage?.getStore()?.path;
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {

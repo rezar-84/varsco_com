@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "牙鲆出口",
   "nav.oliveFlounder.desc": "冷冻鱼片、鲜品去内脏与活鱼，配套出口单证。",
-  "footer.oliveFlounder": "牙鲆出口"
+  "footer.oliveFlounder": "牙鲆出口",
+  "notFound.eyebrow": "页面未找到",
+  "notFound.title": "这个页面溜走了",
+  "notFound.description": "您访问的页面已移动或不再存在。如果您是通过旧链接进入的，下方产品是我们找到的最接近的结果。",
+  "notFound.cta.catalogue": "浏览产品目录",
+  "notFound.cta.quote": "请求报价",
+  "notFound.sections": "或前往某个板块",
+  "notFound.guess.heading": "您可能在找",
+  "notFound.featured.heading": "我们最受关注的产品"
 }

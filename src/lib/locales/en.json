@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "Olive Flounder Export",
   "nav.oliveFlounder.desc": "Frozen fillets, fresh gutted and live, with export documentation.",
-  "footer.oliveFlounder": "Olive Flounder Export"
+  "footer.oliveFlounder": "Olive Flounder Export",
+  "notFound.eyebrow": "Page not found",
+  "notFound.title": "This one got away",
+  "notFound.description": "The page you asked for has moved or no longer exists. If you followed an old link, the products below are the closest match we could find.",
+  "notFound.cta.catalogue": "Browse the catalogue",
+  "notFound.cta.quote": "Request a quote",
+  "notFound.sections": "Or jump to a section",
+  "notFound.guess.heading": "You were probably looking for",
+  "notFound.featured.heading": "Our most requested products"
 }

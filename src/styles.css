@@ -535,6 +535,109 @@
   }
 }
 
+/* 404 illustration.
+   The escapee's path and heading come from <animateMotion> in the SVG; these
+   handle everything around it — body wobble, the shoal drifting in place, net
+   sway, light bands and bubbles. Each has its own period so nothing pulses in
+   lockstep, which is what made the first pass look mechanical. */
+@keyframes nfWobble {
+  0%, 100% { transform: scale(1.45) rotate(0deg); }
+  25% { transform: scale(1.45) rotate(4deg); }
+  75% { transform: scale(1.45) rotate(-4deg); }
+}
+@utility animate-nf-wobble {
+  animation: nfWobble 1.1s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes nfDrift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(-5px, -4px) rotate(-2deg); }
+  66% { transform: translate(3px, 3px) rotate(2deg); }
+}
+@utility animate-nf-drift {
+  animation: nfDrift 5s ease-in-out infinite;
+}
+@utility animate-nf-drift-delayed {
+  animation: nfDrift 5s ease-in-out infinite;
+  animation-delay: 2.2s;
+}
+@utility animate-nf-drift-slow {
+  animation: nfDrift 7.5s ease-in-out infinite;
+  animation-delay: 1.1s;
+}
+
+/* The net answers the same current the fish swims in. */
+@keyframes nfSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(1.4deg); }
+}
+@utility animate-nf-sway {
+  animation: nfSway 8s ease-in-out infinite;
+}
+
+/* The tear pulses just enough to be findable without demanding attention. */
+@keyframes nfTear {
+  0%, 100% { stroke-opacity: 0.4; }
+  50% { stroke-opacity: 0.85; }
+}
+@utility animate-nf-tear {
+  animation: nfTear 3.5s ease-in-out infinite;
+}
+
+@keyframes nfBubble {
+  0% { transform: translate(0, 0) scale(0.7); opacity: 0; }
+  15% { opacity: 0.65; }
+  100% { transform: translate(-12px, -34px) scale(1); opacity: 0; }
+}
+@utility animate-nf-bubble {
+  animation: nfBubble 4.2s ease-in infinite;
+}
+@utility animate-nf-bubble-delayed {
+  animation: nfBubble 4.2s ease-in infinite;
+  animation-delay: 1.6s;
+}
+@utility animate-nf-bubble-slow {
+  animation: nfBubble 6s ease-in infinite;
+  animation-delay: 2.9s;
+}
+
+/* Light bands crossing the water. */
+@keyframes nfCaustic {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(560px); }
+}
+@utility animate-nf-caustic {
+  animation: nfCaustic 11s linear infinite;
+}
+
+@keyframes nfStrands {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(2.5deg); }
+}
+@utility animate-nf-strands {
+  animation: nfStrands 4.5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: top center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-nf-wobble,
+  .animate-nf-drift,
+  .animate-nf-drift-delayed,
+  .animate-nf-drift-slow,
+  .animate-nf-sway,
+  .animate-nf-tear,
+  .animate-nf-strands,
+  .animate-nf-bubble,
+  .animate-nf-bubble-delayed,
+  .animate-nf-bubble-slow,
+  .animate-nf-caustic {
+    animation: none;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

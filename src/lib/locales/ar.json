@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "تصدير المفلطح الزيتوني",
   "nav.oliveFlounder.desc": "فيليه مجمد وطازج منزوع الأحشاء وحي، مع مستندات التصدير.",
-  "footer.oliveFlounder": "تصدير المفلطح الزيتوني"
+  "footer.oliveFlounder": "تصدير المفلطح الزيتوني",
+  "notFound.eyebrow": "الصفحة غير موجودة",
+  "notFound.title": "هذه الصفحة أفلتت منّا",
+  "notFound.description": "الصفحة التي طلبتها نُقلت أو لم تعد موجودة. إذا وصلت عبر رابط قديم، فالمنتجات أدناه هي أقرب ما وجدناه لطلبك.",
+  "notFound.cta.catalogue": "تصفّح الكتالوج",
+  "notFound.cta.quote": "اطلب عرض سعر",
+  "notFound.sections": "أو انتقل إلى قسم",
+  "notFound.guess.heading": "غالباً كنت تبحث عن",
+  "notFound.featured.heading": "أكثر منتجاتنا طلباً"
 }

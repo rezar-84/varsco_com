@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "Japon Pisi Balığı İhracatı",
   "nav.oliveFlounder.desc": "Dondurulmuş fileto, taze iç temizlenmiş ve canlı; ihracat belgeleriyle.",
-  "footer.oliveFlounder": "Japon Pisi Balığı İhracatı"
+  "footer.oliveFlounder": "Japon Pisi Balığı İhracatı",
+  "notFound.eyebrow": "Sayfa bulunamadı",
+  "notFound.title": "Bu sayfa elimizden kaçmış",
+  "notFound.description": "Aradığınız sayfa taşınmış veya artık mevcut değil. Eski bir bağlantıdan geldiyseniz, aşağıdaki ürünler bulabildiğimiz en yakın eşleşmeler.",
+  "notFound.cta.catalogue": "Kataloğa göz atın",
+  "notFound.cta.quote": "Teklif isteyin",
+  "notFound.sections": "Veya bir bölüme geçin",
+  "notFound.guess.heading": "Muhtemelen bunları arıyordunuz",
+  "notFound.featured.heading": "En çok talep edilen ürünlerimiz"
 }

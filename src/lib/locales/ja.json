@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "ヒラメ輸出",
   "nav.oliveFlounder.desc": "冷凍フィレ、生鮮内臓処理済み、活魚。輸出書類付き。",
-  "footer.oliveFlounder": "ヒラメ輸出"
+  "footer.oliveFlounder": "ヒラメ輸出",
+  "notFound.eyebrow": "ページが見つかりません",
+  "notFound.title": "このページは見つかりませんでした",
+  "notFound.description": "お探しのページは移動したか、削除されました。古いリンクからお越しの場合は、以下が最も近い商品です。",
+  "notFound.cta.catalogue": "製品カタログを見る",
+  "notFound.cta.quote": "見積を依頼する",
+  "notFound.sections": "セクションへ移動",
+  "notFound.guess.heading": "お探しの商品はこちらでしょうか",
+  "notFound.featured.heading": "お問い合わせの多い製品"
 }

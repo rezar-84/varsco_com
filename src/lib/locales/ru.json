@@ -2465,5 +2465,13 @@
   "flounderExport.rfq.cta": "Send your requirement",
   "nav.oliveFlounder": "Экспорт оливковой камбалы",
   "nav.oliveFlounder.desc": "Замороженное филе, свежая потрошёная и живая рыба с экспортной документацией.",
-  "footer.oliveFlounder": "Экспорт оливковой камбалы"
+  "footer.oliveFlounder": "Экспорт оливковой камбалы",
+  "notFound.eyebrow": "Страница не найдена",
+  "notFound.title": "Эта страница уплыла",
+  "notFound.description": "Запрошенная страница перемещена или больше не существует. Если вы перешли по старой ссылке, товары ниже — ближайшее совпадение, которое удалось найти.",
+  "notFound.cta.catalogue": "Открыть каталог",
+  "notFound.cta.quote": "Запросить цену",
+  "notFound.sections": "Или перейдите в раздел",
+  "notFound.guess.heading": "Вероятно, вы искали",
+  "notFound.featured.heading": "Самые востребованные продукты"
 }
