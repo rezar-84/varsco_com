@@ -479,7 +479,9 @@ function ProductDetail() {
                     >
                       <Download className="h-4 w-4 text-emerald-600" />
                       <span>
-                        {product.pdfLabel ?? t("productDetail.actions.downloadDatasheet")}
+                        {product.pdfLabel
+                          ? tp("pdfLabel", product.pdfLabel)
+                          : t("productDetail.actions.downloadDatasheet")}
                       </span>
                     </a>
                   )}
