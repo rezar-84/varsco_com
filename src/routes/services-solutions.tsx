@@ -4,6 +4,7 @@ import { z } from "zod";
 import { Section } from "@/components/layout/Page";
 import heroHatchery from "@/assets/aegean-region-klcdeniz-hatchery-trials-2.webp";
 import { AnimatedRasDiagram } from "@/components/visuals/AnimatedRasDiagram";
+import { ModePattern } from "@/components/visuals/ModePattern";
 import {
   Award,
   Users,
@@ -198,53 +199,62 @@ function ServicesPage() {
         const Icon = mode.icon;
         const shaded = mi % 2 === 1;
         return (
-          <Section
+          /* Custom section rather than <Section>: the pattern layer has to be a
+             full-bleed sibling of the content container, which Section's fixed
+             inner max-w-7xl cannot give it. */
+          <section
             key={mode.key}
             id={`mode-${mode.key}`}
-            className={shaded ? "bg-surface-alt/60 py-16 border-y border-border/60" : undefined}
+            className={cn(
+              "relative isolate overflow-hidden",
+              shaded ? "bg-surface-alt/60 border-y border-border/60" : "bg-background",
+            )}
           >
-            <div className="space-y-10 max-w-5xl mx-auto">
-              <div className="text-center max-w-3xl mx-auto space-y-3">
-                <div
-                  className={cn(
-                    "inline-flex items-center gap-2 px-3 py-1 rounded-full text-navy text-xs font-bold uppercase tracking-widest",
-                    mode.accent === "mint" ? "bg-mint/15" : "bg-teal/20",
-                  )}
-                >
-                  <Icon
-                    className={cn(
-                      "h-3.5 w-3.5",
-                      mode.accent === "mint" ? "text-mint" : "text-primary",
-                    )}
-                  />{" "}
-                  {t(`solutions.mode.${mode.key}.badge`)}
-                </div>
-                <h2 className="font-display text-3xl font-bold text-navy">
-                  {t(`solutions.mode.${mode.key}.title`)}
-                </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {t(`solutions.mode.${mode.key}.description`)}
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                {mode.items.map((n) => (
+            <ModePattern kind={mode.key} accent={mode.accent} />
+            <div className="relative mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+              <div className="space-y-10 max-w-5xl mx-auto">
+                <div className="text-center max-w-3xl mx-auto space-y-3">
                   <div
-                    key={n}
-                    className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-2"
+                    className={cn(
+                      "inline-flex items-center gap-2 px-3 py-1 rounded-full text-navy text-xs font-bold uppercase tracking-widest",
+                      mode.accent === "mint" ? "bg-mint/15" : "bg-teal/20",
+                    )}
                   >
-                    <h3 className="font-display text-base font-bold text-navy flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-mint shrink-0" />{" "}
-                      {t(`solutions.mode.${mode.key}.item${n}.title`)}
-                    </h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {t(`solutions.mode.${mode.key}.item${n}.desc`)}
-                    </p>
+                    <Icon
+                      className={cn(
+                        "h-3.5 w-3.5",
+                        mode.accent === "mint" ? "text-mint-ink" : "text-primary",
+                      )}
+                    />{" "}
+                    {t(`solutions.mode.${mode.key}.badge`)}
                   </div>
-                ))}
+                  <h2 className="font-display text-3xl font-bold text-navy">
+                    {t(`solutions.mode.${mode.key}.title`)}
+                  </h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {t(`solutions.mode.${mode.key}.description`)}
+                  </p>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  {mode.items.map((n) => (
+                    <div
+                      key={n}
+                      className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-2"
+                    >
+                      <h3 className="font-display text-base font-bold text-navy flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0" />{" "}
+                        {t(`solutions.mode.${mode.key}.item${n}.title`)}
+                      </h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {t(`solutions.mode.${mode.key}.item${n}.desc`)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </Section>
+          </section>
         );
       })}
 
