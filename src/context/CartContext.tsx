@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import type { CartItem, Product, QuoteRequest } from "@/lib/types";
+import type { SubmissionContext } from "@/lib/submission-context";
 
 /**
  * Unwired from varsco_com's live UI on 2026-08-02 — kept working and intact
@@ -26,7 +27,7 @@ interface CartContextValue {
   clear: () => void;
   openDrawer: () => void;
   closeDrawer: () => void;
-  submitQuote: (data: QuoteRequest, source?: string) => Promise<void>;
+  submitQuote: (data: QuoteRequest, context: SubmissionContext) => Promise<void>;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -107,7 +108,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clear,
         openDrawer: () => setIsOpen(true),
         closeDrawer: () => setIsOpen(false),
-        submitQuote: async (data, source) => {
+        submitQuote: async (data, context) => {
           const response = await fetch("/api/quotes", {
             method: "POST",
             headers: {
@@ -115,7 +116,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
             },
             body: JSON.stringify({
               ...data,
-              source,
+              // Spread after `data` so the caller's submission context always
+              // wins: `source` used to be a free-text string and a stale one
+              // in the payload would have shadowed the real attribution.
+              ...context,
               items: items.map((i) => ({
                 productSlug: i.productSlug,
                 category: i.category,

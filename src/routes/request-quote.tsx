@@ -3,6 +3,7 @@ import { useState } from "react";
 import { PageHero, Section } from "@/components/layout/Page";
 import { QuoteForm } from "@/components/layout/QuoteForm";
 import { useI18n } from "@/context/I18nContext";
+import { buildSubmissionContext, SUBMISSION_SOURCES } from "@/lib/submission-context";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
 import {
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/request-quote")({
 });
 
 function RequestQuotePage() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { submitQuote } = useCart();
   const search = Route.useSearch();
   const [busy, setBusy] = useState(false);
@@ -154,7 +155,13 @@ function RequestQuotePage() {
                   initialProductSlug={search.product}
                   onSubmit={async (data) => {
                     setBusy(true);
-                    await submitQuote(data, "Request Quote Page");
+                    await submitQuote(
+                      data,
+                      buildSubmissionContext(SUBMISSION_SOURCES.requestQuotePage, {
+                        locale: lang,
+                        pageSection: search.product,
+                      }),
+                    );
                     setBusy(false);
                     setDone(true);
                     toast.success(t("quote.success.title"), {

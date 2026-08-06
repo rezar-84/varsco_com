@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useI18n } from "@/context/I18nContext";
+import { buildSubmissionContext, SUBMISSION_SOURCES } from "@/lib/submission-context";
 import { getLocalizedMeta } from "@/lib/utils/seo";
 
 import seaBassImgFile from "@/assets/products/seabass.png";
@@ -43,7 +44,7 @@ export const Route = createFileRoute("/horeca-seafood-middle-east")({
 });
 
 function HorecaSeafoodMiddleEast() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -68,9 +69,17 @@ function HorecaSeafoodMiddleEast() {
           company: formData.company,
           email: formData.email,
           phone: formData.phone,
+          // Destination and product interest are now real fields as well as
+          // prose, so Odoo can build a subject from them instead of the CRM
+          // team having to read the note to find out what was asked.
           message: `Destination: ${formData.destination}\nProduct interest: ${formData.productInterest}\n\n${formData.notes}`,
-          source: "HORECA Middle East Export",
+          topic: formData.productInterest,
+          country: formData.destination,
           items: [],
+          ...buildSubmissionContext(SUBMISSION_SOURCES.horeca, {
+            locale: lang,
+            pageSection: formData.productInterest,
+          }),
         }),
       });
       if (!response.ok) {

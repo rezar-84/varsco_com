@@ -10,6 +10,7 @@ import {
 import { QuoteForm } from "./QuoteForm";
 import { useCart } from "@/context/CartContext";
 import { useI18n } from "@/context/I18nContext";
+import { buildSubmissionContext, SUBMISSION_SOURCES } from "@/lib/submission-context";
 import { toast } from "sonner";
 
 interface Props {
@@ -19,7 +20,7 @@ interface Props {
 
 export function QuoteRequestDialog({ open, onOpenChange }: Props) {
   const { submitQuote, closeDrawer } = useCart();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [busy, setBusy] = useState(false);
 
   return (
@@ -33,7 +34,10 @@ export function QuoteRequestDialog({ open, onOpenChange }: Props) {
           busy={busy}
           onSubmit={async (data) => {
             setBusy(true);
-            await submitQuote(data, "Cart Quote Request");
+            await submitQuote(
+              data,
+              buildSubmissionContext(SUBMISSION_SOURCES.cart, { locale: lang }),
+            );
             setBusy(false);
             toast.success(t("quote.success.title"), { description: t("quote.success.body") });
             onOpenChange(false);

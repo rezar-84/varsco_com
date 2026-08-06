@@ -194,6 +194,16 @@ export class ContentApiClient {
   // 2. LEAD SUBMISSIONS
   // ==========================================
 
+  /**
+   * Create a CRM lead from a form submission.
+   *
+   * Snake_case beyond the original five fields because that is the convention
+   * on the Odoo side (varsco_content_api controllers/leads.py); the older
+   * fields keep their existing names so this stays backward compatible with a
+   * controller that has not been redeployed yet — unknown keys are ignored
+   * there, so a newer frontend against an older addon degrades to the previous
+   * behaviour rather than failing.
+   */
   submitLead(payload: {
     name: string;
     email: string;
@@ -202,6 +212,21 @@ export class ContentApiClient {
     message: string;
     source: string;
     cart_summary?: string;
+    country?: string;
+    /** What the enquiry is about — drives the CRM lead subject. */
+    topic?: string;
+    product_slug?: string;
+    product_title?: string;
+    custom_fields?: Record<string, string>;
+    page_path?: string;
+    page_section?: string;
+    locale?: string;
+    /** Host only, not the full referring URL. */
+    referrer_host?: string;
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
+    portal_user_id?: string;
   }): Promise<{ status: string; lead_id: number }> {
     return this.requestJson("/api/v1/leads", "POST", payload);
   }

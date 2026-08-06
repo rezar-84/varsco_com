@@ -13,6 +13,11 @@ import { QuoteForm } from "@/components/layout/QuoteForm";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useI18n } from "@/context/I18nContext";
+import {
+  buildSubmissionContext,
+  SUBMISSION_SOURCES,
+  type SubmissionSource,
+} from "@/lib/submission-context";
 
 /**
  * The quote form in a drawer over the current page.
@@ -35,15 +40,15 @@ export function QuoteDrawer({
   onOpenChange,
   productSlug,
   productTitle,
-  source = "Product Detail Drawer",
+  source = SUBMISSION_SOURCES.productDrawer,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   productSlug?: string;
   productTitle?: string;
-  source?: string;
+  source?: SubmissionSource;
 }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { submitQuote } = useCart();
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
@@ -99,7 +104,10 @@ export function QuoteDrawer({
                 onSubmit={async (data) => {
                   setBusy(true);
                   try {
-                    await submitQuote(data, source);
+                    await submitQuote(
+                      data,
+                      buildSubmissionContext(source, { locale: lang, pageSection: productSlug }),
+                    );
                     setDone(true);
                     toast.success(t("quote.success.title"), {
                       description: t("quote.success.body"),

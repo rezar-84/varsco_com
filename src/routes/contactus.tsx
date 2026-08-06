@@ -25,6 +25,7 @@ import turkeyFlagSvg from "@/assets/icons/turkey-flag.svg";
 import { odooAssetUrl } from "@/lib/odoo-asset";
 
 import { useI18n } from "@/context/I18nContext";
+import { buildSubmissionContext, SUBMISSION_SOURCES } from "@/lib/submission-context";
 import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/contactus")({
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/contactus")({
 });
 
 function Contact() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [inquiryType, setInquiryType] = useState("quote");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
@@ -89,7 +90,14 @@ function Contact() {
       const response = await fetch("/api/quotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...parsed.data, items: [], source: "Contact Us" }),
+        body: JSON.stringify({
+          ...parsed.data,
+          // inquiryType reaches Odoo as `topic` and becomes part of the
+          // lead subject; it used to be validated here and then dropped.
+          topic: parsed.data.inquiryType,
+          items: [],
+          ...buildSubmissionContext(SUBMISSION_SOURCES.contact, { locale: lang }),
+        }),
       });
       if (!response.ok) {
         const errBody = (await response.json().catch(() => ({}))) as { error?: string };

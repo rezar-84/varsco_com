@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useI18n } from "@/context/I18nContext";
+import { buildSubmissionContext, SUBMISSION_SOURCES } from "@/lib/submission-context";
 import { getLocalizedMeta } from "@/lib/utils/seo";
 
 export const Route = createFileRoute("/services-solutions")({
@@ -45,7 +46,7 @@ const schema = z.object({
 });
 
 function ServicesPage() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
 
@@ -65,7 +66,15 @@ function ServicesPage() {
       const response = await fetch("/api/quotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...parsed.data, items: [], source: "Services & Solutions" }),
+        body: JSON.stringify({
+          ...parsed.data,
+          topic: parsed.data.serviceType,
+          items: [],
+          ...buildSubmissionContext(SUBMISSION_SOURCES.servicesSolutions, {
+            locale: lang,
+            pageSection: parsed.data.serviceType,
+          }),
+        }),
       });
       if (!response.ok) {
         const errBody = (await response.json().catch(() => ({}))) as { error?: string };

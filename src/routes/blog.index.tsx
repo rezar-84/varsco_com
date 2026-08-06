@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BLOG_POSTS, getLocalizedPosts } from "@/lib/mock/blog";
 import { useI18n } from "@/context/I18nContext";
+import { buildSubmissionContext, SUBMISSION_SOURCES } from "@/lib/submission-context";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   BookOpen,
@@ -93,13 +94,18 @@ function BlogIndex() {
       const response = await fetch("/api/quotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // Stopgap: a newsletter signup is not a sales lead, but Odoo has no
+        // mailing.contact endpoint in varsco_content_api yet, so it still
+        // lands in CRM. `topic` marks it so sales can filter these out of the
+        // pipeline until the real endpoint exists (Stage C).
         body: JSON.stringify({
           name: "Newsletter Subscriber",
           company: "N/A",
           email: newsletterEmail,
           message: "Requested to subscribe to the Aqua MAG Journal newsletter.",
-          source: "Blog Newsletter Signup",
+          topic: "Newsletter subscription",
           items: [],
+          ...buildSubmissionContext(SUBMISSION_SOURCES.newsletter, { locale: lang }),
         }),
       });
       if (!response.ok) {
