@@ -19,6 +19,7 @@ export type SeoPage =
   | "faq"
   | "salmonOva"
   | "coho"
+  | "oliveFlounderExport"
   | "artemiaGuide"
   | "decapGuide"
   | "horeca"
@@ -289,6 +290,11 @@ const GENERIC_SEO: Partial<Record<SeoPage, PageMeta>> = {
     title: "Salmonid Ova Solutions | Atlantic, Coho & Trout Eggs | VARS",
     description:
       "Certified fertilized salmon and trout eggs with cold-chain logistics for hatcheries and RAS farms.",
+  },
+  oliveFlounderExport: {
+    title: "Olive Flounder Export | Frozen, Fresh & Live | VARS",
+    description:
+      "Olive Flounder (Paralichthys olivaceus) for global export — frozen fillets, fresh gutted and live, with TRACES, CoA and ASC documentation.",
   },
   coho: {
     title: "Coho Salmon Eggs | Certified Fertilized Ova | VARS",

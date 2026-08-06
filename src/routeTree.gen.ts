@@ -23,6 +23,7 @@ import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as HorecaSeafoodMiddleEastRouteImport } from './routes/horeca-seafood-middle-east'
 import { Route as KvkkDisclosureTextRouteImport } from './routes/kvkk-disclosure-text'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as OliveFlounderExportRouteImport } from './routes/olive-flounder-export'
 import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProjectsRouteImport } from './routes/projects'
@@ -142,6 +143,11 @@ const KvkkDisclosureTextRoute = KvkkDisclosureTextRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OliveFlounderExportRoute = OliveFlounderExportRouteImport.update({
+  id: '/olive-flounder-export',
+  path: '/olive-flounder-export',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanelRoute = PanelRouteImport.update({
@@ -404,6 +410,7 @@ export interface FileRoutesByFullPath {
   '/horeca-seafood-middle-east': typeof HorecaSeafoodMiddleEastRoute
   '/kvkk-disclosure-text': typeof KvkkDisclosureTextRoute
   '/login': typeof LoginRoute
+  '/olive-flounder-export': typeof OliveFlounderExportRoute
   '/panel': typeof PanelRoute
   '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
@@ -467,6 +474,7 @@ export interface FileRoutesByTo {
   '/horeca-seafood-middle-east': typeof HorecaSeafoodMiddleEastRoute
   '/kvkk-disclosure-text': typeof KvkkDisclosureTextRoute
   '/login': typeof LoginRoute
+  '/olive-flounder-export': typeof OliveFlounderExportRoute
   '/panel': typeof PanelRoute
   '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
@@ -532,6 +540,7 @@ export interface FileRoutesById {
   '/horeca-seafood-middle-east': typeof HorecaSeafoodMiddleEastRoute
   '/kvkk-disclosure-text': typeof KvkkDisclosureTextRoute
   '/login': typeof LoginRoute
+  '/olive-flounder-export': typeof OliveFlounderExportRoute
   '/panel': typeof PanelRoute
   '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
@@ -598,6 +607,7 @@ export interface FileRouteTypes {
     | '/horeca-seafood-middle-east'
     | '/kvkk-disclosure-text'
     | '/login'
+    | '/olive-flounder-export'
     | '/panel'
     | '/privacy'
     | '/projects'
@@ -661,6 +671,7 @@ export interface FileRouteTypes {
     | '/horeca-seafood-middle-east'
     | '/kvkk-disclosure-text'
     | '/login'
+    | '/olive-flounder-export'
     | '/panel'
     | '/privacy'
     | '/projects'
@@ -725,6 +736,7 @@ export interface FileRouteTypes {
     | '/horeca-seafood-middle-east'
     | '/kvkk-disclosure-text'
     | '/login'
+    | '/olive-flounder-export'
     | '/panel'
     | '/privacy'
     | '/projects'
@@ -790,6 +802,7 @@ export interface RootRouteChildren {
   HorecaSeafoodMiddleEastRoute: typeof HorecaSeafoodMiddleEastRoute
   KvkkDisclosureTextRoute: typeof KvkkDisclosureTextRoute
   LoginRoute: typeof LoginRoute
+  OliveFlounderExportRoute: typeof OliveFlounderExportRoute
   PanelRoute: typeof PanelRoute
   PrivacyRoute: typeof PrivacyRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -928,6 +941,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/olive-flounder-export': {
+      id: '/olive-flounder-export'
+      path: '/olive-flounder-export'
+      fullPath: '/olive-flounder-export'
+      preLoaderRoute: typeof OliveFlounderExportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panel': {
@@ -1349,6 +1369,7 @@ const rootRouteChildren: RootRouteChildren = {
   HorecaSeafoodMiddleEastRoute: HorecaSeafoodMiddleEastRoute,
   KvkkDisclosureTextRoute: KvkkDisclosureTextRoute,
   LoginRoute: LoginRoute,
+  OliveFlounderExportRoute: OliveFlounderExportRoute,
   PanelRoute: PanelRoute,
   PrivacyRoute: PrivacyRoute,
   ProjectsRoute: ProjectsRoute,

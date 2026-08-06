@@ -41,6 +41,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/seafood-export", changefreq: "monthly", priority: "0.8" },
           { path: "/seafood-export-from-turkey-to-europe", changefreq: "monthly", priority: "0.7" },
           { path: "/salmonid-ova-solutions", changefreq: "monthly", priority: "0.8" },
+          { path: "/olive-flounder-export", changefreq: "monthly", priority: "0.8" },
           { path: "/coho-salmon-eggs", changefreq: "monthly", priority: "0.7" },
           { path: "/aquariums-and-hobbyists", changefreq: "monthly", priority: "0.6" },
           { path: "/horeca-seafood-middle-east", changefreq: "monthly", priority: "0.7" },

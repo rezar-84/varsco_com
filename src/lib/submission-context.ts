@@ -25,6 +25,7 @@ export const SUBMISSION_SOURCES = {
   productDrawer: "product-quote-drawer",
   cart: "cart-quote",
   horeca: "horeca-middle-east",
+  oliveFlounderLanding: "olive-flounder-export",
   newsletter: "newsletter",
 } as const;
 
