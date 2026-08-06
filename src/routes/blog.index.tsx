@@ -455,7 +455,7 @@ function BlogIndex() {
         </section>
 
         {/* Journal Newsletter Subscription Block */}
-        <section className="glass-card rounded-3xl p-8 sm:p-12 border border-border/80 bg-gradient-to-r from-navy via-navy/95 to-navy/90 text-white shadow-2xl relative overflow-hidden">
+        <section className="rounded-3xl p-8 sm:p-12 border border-border/80 bg-gradient-to-r from-navy via-navy/95 to-navy/90 text-white shadow-2xl relative overflow-hidden">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint text-navy text-xs font-bold uppercase tracking-widest">
               <Mail className="h-3.5 w-3.5" /> Technical Intelligence Dispatch

@@ -1600,9 +1600,9 @@
   "home.telemetry.item2.hufa": "HUFA: 18.2 مغ/غ",
   "common.alt.flagTurkiye": "علم تركيا",
   "about.alt.aegeanHub": "مركز الاستزراع المائي في بحر إيجه",
-  "lifecycle.eyebrow": "منهجية تنفيذ ميداني من أربع مراحل",
-  "lifecycle.title": "دورة تنفيذ المشاريع تسليم مفتاح",
-  "lifecycle.badge": "منهجية مثبتة على مدى أكثر من 30 عاماً",
+  "lifecycle.eyebrow": "كيف يسير مشروع التوريد والتجربة الحقلية",
+  "lifecycle.title": "من التدقيق المرجعي إلى إنتاجية موثّقة",
+  "lifecycle.badge": "التحسين · التوريد",
   "lifecycle.step1.title": "01. التدقيق المرجعي والتشخيص المخبري",
   "lifecycle.step1.desc": "تحليل جودة المياه، وتقييم معامل التحويل الغذائي الحالي، ومقارنة كثافة الروتيفير/الأرتيميا، وفحص مسببات الأمراض.",
   "lifecycle.step2.title": "02. تصميم بروتوكولات الأعلاف وأنظمة إعادة التدوير المخصصة",
@@ -2412,5 +2412,9 @@
   "product.super-fresh-chlorella-v12.pdfLabel": "ورقة بيانات Super Fresh Chlorella SV-12 (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "كتالوج المأكولات البحرية من VARS",
   "product.olive-flounder.pdfLabel": "كتالوج المأكولات البحرية من VARS",
-  "solutions.hero.imageAlt": "فنيو VARS أثناء تجارب المفرخ في منشأة شريكة بمنطقة بحر إيجه"
+  "solutions.hero.imageAlt": "فنيو VARS أثناء تجارب المفرخ في منشأة شريكة بمنطقة بحر إيجه",
+  "lifecycle.modesLink": "اطّلع على طرق التعاون الأربع",
+  "lifecycle.nodeHint": "انقر على العقد لعرض تفاصيل كل مرحلة",
+  "lifecycle.phaseCounter": "المرحلة {n} من {total}",
+  "projects.hero.imageAlt": "فنيو VARS أثناء إجراء تجارب المفرخ في منشأة شريكة بمنطقة بحر إيجه"
 }

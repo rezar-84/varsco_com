@@ -1600,9 +1600,9 @@
   "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
   "common.alt.flagTurkiye": "튀르키예 국기",
   "about.alt.aegeanHub": "에게해 양식 거점",
-  "lifecycle.eyebrow": "4단계 현장 도입 방법론",
-  "lifecycle.title": "턴키 프로젝트 실행 라이프사이클",
-  "lifecycle.badge": "30년 이상 검증된 방법론",
+  "lifecycle.eyebrow": "공급 및 현장 시험 프로젝트의 진행 방식",
+  "lifecycle.title": "기초 진단에서 검증된 생산성까지",
+  "lifecycle.badge": "개선 · 조달",
   "lifecycle.step1.title": "01. 기초 실사 및 실험실 진단",
   "lifecycle.step1.desc": "수질 분석, 현행 사료효율 평가, 로티퍼·아르테미아 밀도 벤치마킹, 병원체 스크리닝.",
   "lifecycle.step2.title": "02. 맞춤 사료 및 순환여과식 시스템 프로토콜 설계",
@@ -2412,5 +2412,9 @@
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 데이터시트 (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "VARS 수산물 카탈로그",
   "product.olive-flounder.pdfLabel": "VARS 수산물 카탈로그",
-  "solutions.hero.imageAlt": "에게해 지역 파트너 시설에서 종묘배양 시험을 진행 중인 VARS 기술진"
+  "solutions.hero.imageAlt": "에게해 지역 파트너 시설에서 종묘배양 시험을 진행 중인 VARS 기술진",
+  "lifecycle.modesLink": "네 가지 협력 방식 보기",
+  "lifecycle.nodeHint": "노드를 클릭하면 단계별 상세 내용이 표시됩니다",
+  "lifecycle.phaseCounter": "{total}단계 중 {n}단계",
+  "projects.hero.imageAlt": "에게해 지역 파트너 시설에서 종묘배양 시험을 수행하는 VARS 기술진"
 }

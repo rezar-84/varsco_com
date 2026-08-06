@@ -1600,9 +1600,9 @@
   "home.telemetry.item2.hufa": "HUFA: 18,2 mg/g",
   "common.alt.flagTurkiye": "Bandera de Türkiye",
   "about.alt.aegeanHub": "Centro acuícola del Egeo",
-  "lifecycle.eyebrow": "Metodología de implementación en campo en 4 fases",
-  "lifecycle.title": "Ciclo de ejecución de proyectos llave en mano",
-  "lifecycle.badge": "Más de 30 años de metodología probada",
+  "lifecycle.eyebrow": "Cómo se desarrolla un proyecto de suministro y ensayo de campo",
+  "lifecycle.title": "De la auditoría inicial al rendimiento verificado",
+  "lifecycle.badge": "Mejórelo · Abastézcase",
   "lifecycle.step1.title": "01. Auditoría inicial y diagnóstico de laboratorio",
   "lifecycle.step1.desc": "Análisis de la calidad del agua, evaluación del FCR actual, comparación de densidades de rotíferos/artemia y cribado de patógenos.",
   "lifecycle.step2.title": "02. Diseño de protocolos de pienso y RAS a medida",
@@ -2412,5 +2412,9 @@
   "product.super-fresh-chlorella-v12.pdfLabel": "Ficha técnica de Super Fresh Chlorella SV-12 (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "Catálogo de productos del mar VARS",
   "product.olive-flounder.pdfLabel": "Catálogo de productos del mar VARS",
-  "solutions.hero.imageAlt": "Técnicos de VARS durante ensayos de criadero en una instalación asociada de la región del Egeo"
+  "solutions.hero.imageAlt": "Técnicos de VARS durante ensayos de criadero en una instalación asociada de la región del Egeo",
+  "lifecycle.modesLink": "Vea nuestras cuatro formas de colaborar",
+  "lifecycle.nodeHint": "Haga clic en los nodos para ver los detalles de cada fase",
+  "lifecycle.phaseCounter": "Fase {n} de {total}",
+  "projects.hero.imageAlt": "Técnicos de VARS realizando ensayos de criadero en una instalación asociada de la región del Egeo"
 }

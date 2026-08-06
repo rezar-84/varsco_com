@@ -657,7 +657,7 @@ function Index() {
         </div>
 
         {/* Shop Online CTA Banner — transactional counterpart to the browse-only catalog above */}
-        <div className="mt-6 glass-card rounded-3xl p-6 sm:p-8 border-2 border-mint/50 bg-navy text-white flex flex-wrap items-center justify-between gap-4">
+        <div className="mt-6 rounded-3xl p-6 sm:p-8 border-2 border-mint/50 bg-navy text-white shadow-lg flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-2xl bg-mint text-navy shrink-0">
               <ShoppingBag className="h-6 w-6" />

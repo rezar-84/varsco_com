@@ -1600,9 +1600,9 @@
   "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
   "common.alt.flagTurkiye": "土耳其国旗",
   "about.alt.aegeanHub": "爱琴海水产养殖中心",
-  "lifecycle.eyebrow": "四阶段现场实施方法",
-  "lifecycle.title": "交钥匙项目执行周期",
-  "lifecycle.badge": "逾 30 年验证的方法体系",
+  "lifecycle.eyebrow": "一个供应与现场试验项目如何推进",
+  "lifecycle.title": "从基线诊断到产出验证",
+  "lifecycle.badge": "提升 · 采购",
   "lifecycle.step1.title": "01. 基线审计与实验室诊断",
   "lifecycle.step1.desc": "水质分析、现行饲料系数评估、轮虫／丰年虫密度基准比对及病原体筛查。",
   "lifecycle.step2.title": "02. 定制饲料与循环水养殖方案设计",
@@ -2412,5 +2412,9 @@
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 技术数据表（PDF）",
   "product.mediterranean-sea-bream.pdfLabel": "VARS 海鲜产品目录",
   "product.olive-flounder.pdfLabel": "VARS 海鲜产品目录",
-  "solutions.hero.imageAlt": "VARS 技术人员在爱琴海地区合作场区开展育苗试验"
+  "solutions.hero.imageAlt": "VARS 技术人员在爱琴海地区合作场区开展育苗试验",
+  "lifecycle.modesLink": "查看我们的四种合作方式",
+  "lifecycle.nodeHint": "点击节点查看各阶段详情",
+  "lifecycle.phaseCounter": "第 {n} 阶段 / 共 {total} 阶段",
+  "projects.hero.imageAlt": "VARS 技术人员在爱琴海地区合作场区开展育苗试验"
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Compass, CheckCircle2, TrendingUp, ShieldCheck, ArrowRight, Activity } from "lucide-react";
 import { useI18n } from "@/context/I18nContext";
 
@@ -29,15 +30,28 @@ export function AnimatedProjectLifecycle() {
     <div className="glass-card rounded-3xl border border-border/80 bg-background shadow-xl p-6 md:p-10 space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border/60">
         <div>
-          <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center gap-1.5 mb-1">
+          {/* mint-ink, not mint: this card sits on a light surface, where mint
+              is 2.17:1 and fails WCAG AA for text. */}
+          <span className="text-xs font-bold text-mint-ink uppercase tracking-widest flex items-center gap-1.5 mb-1">
             <Activity className="h-4 w-4" /> {t("lifecycle.eyebrow")}
           </span>
           <h3 className="font-display text-2xl font-bold text-navy">{t("lifecycle.title")}</h3>
         </div>
 
-        <span className="px-3 py-1 rounded-full bg-mint/20 text-navy font-bold text-xs self-start sm:self-auto">
-          {t("lifecycle.badge")}
-        </span>
+        {/* The badge names which engagement modes this lifecycle belongs to, and
+            links back to them — it describes how one kind of project runs, not a
+            second competing "how we work" framework. */}
+        <div className="flex flex-col items-start gap-1.5 sm:items-end">
+          <span className="px-3 py-1 rounded-full bg-mint/20 text-navy font-bold text-xs">
+            {t("lifecycle.badge")}
+          </span>
+          <Link
+            to="/services-solutions"
+            className="inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:text-navy transition-colors"
+          >
+            {t("lifecycle.modesLink")} <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-12 gap-8 items-center">
@@ -125,14 +139,16 @@ export function AnimatedProjectLifecycle() {
           </svg>
 
           <div className="absolute bottom-3 left-3 text-[10px] text-mint font-bold uppercase tracking-wider">
-            Click nodes to explore phase details
+            {t("lifecycle.nodeHint")}
           </div>
         </div>
 
         {/* Step Details */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="text-xs font-bold text-mint uppercase tracking-wider">
-            Phase 0{activeStep + 1} of 04
+          <div className="text-xs font-bold text-mint-ink uppercase tracking-wider">
+            {t("lifecycle.phaseCounter")
+              .replace("{n}", String(activeStep + 1).padStart(2, "0"))
+              .replace("{total}", String(STAGES.length).padStart(2, "0"))}
           </div>
           <h4 className="font-display text-xl font-bold text-navy">
             {t(STAGES[activeStep].titleKey)}

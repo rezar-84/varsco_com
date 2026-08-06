@@ -1600,9 +1600,9 @@
   "home.telemetry.item2.hufa": "HUFA: 18,2 мг/г",
   "common.alt.flagTurkiye": "Флаг Турции",
   "about.alt.aegeanHub": "Центр аквакультуры в Эгейском регионе",
-  "lifecycle.eyebrow": "Четырёхэтапная методика внедрения на объекте",
-  "lifecycle.title": "Жизненный цикл реализации проектов «под ключ»",
-  "lifecycle.badge": "Более 30 лет проверенной методики",
+  "lifecycle.eyebrow": "Как проходит проект по поставке и полевым испытаниям",
+  "lifecycle.title": "От исходного аудита до подтверждённого результата",
+  "lifecycle.badge": "Улучшить · Закупить",
   "lifecycle.step1.title": "01. Исходный аудит и лабораторная диагностика",
   "lifecycle.step1.desc": "Анализ качества воды, оценка текущего коэффициента конверсии корма, сравнение плотности коловраток/артемии и скрининг патогенов.",
   "lifecycle.step2.title": "02. Разработка индивидуальных протоколов кормления и УЗВ",
@@ -2412,5 +2412,9 @@
   "product.super-fresh-chlorella-v12.pdfLabel": "Техническое описание Super Fresh Chlorella SV-12 (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "Каталог морепродуктов VARS",
   "product.olive-flounder.pdfLabel": "Каталог морепродуктов VARS",
-  "solutions.hero.imageAlt": "Технические специалисты VARS во время инкубаторных испытаний на партнёрском предприятии в Эгейском регионе"
+  "solutions.hero.imageAlt": "Технические специалисты VARS во время инкубаторных испытаний на партнёрском предприятии в Эгейском регионе",
+  "lifecycle.modesLink": "Посмотреть четыре формата работы",
+  "lifecycle.nodeHint": "Нажмите на узлы, чтобы увидеть детали этапа",
+  "lifecycle.phaseCounter": "Этап {n} из {total}",
+  "projects.hero.imageAlt": "Специалисты VARS проводят инкубаторные испытания на партнёрском предприятии в Эгейском регионе"
 }

@@ -1600,9 +1600,9 @@
   "home.telemetry.item2.hufa": "HUFA: 18,2 mg/g",
   "common.alt.flagTurkiye": "Türkiye bayrağı",
   "about.alt.aegeanHub": "Ege su ürünleri yetiştiriciliği merkezi",
-  "lifecycle.eyebrow": "4 Aşamalı Saha Uygulama Metodolojisi",
-  "lifecycle.title": "Anahtar Teslim Proje Yürütme Döngüsü",
-  "lifecycle.badge": "30+ Yıllık Kanıtlanmış Metodoloji",
+  "lifecycle.eyebrow": "Bir tedarik ve saha denemesi projesi nasıl yürür",
+  "lifecycle.title": "Başlangıç denetiminden doğrulanmış verime",
+  "lifecycle.badge": "İyileştirin · Tedarik Edin",
   "lifecycle.step1.title": "01. Başlangıç Denetimi ve Laboratuvar Analizleri",
   "lifecycle.step1.desc": "Su kalitesi analizi, mevcut yem dönüşüm oranı değerlendirmesi, rotifer/Artemia yoğunluğu kıyaslaması ve patojen taraması.",
   "lifecycle.step2.title": "02. Özel Yem ve RAS Protokolü Tasarımı",
@@ -2412,5 +2412,9 @@
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 Teknik Föyü (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "VARS Deniz Ürünleri Kataloğu",
   "product.olive-flounder.pdfLabel": "VARS Deniz Ürünleri Kataloğu",
-  "solutions.hero.imageAlt": "Ege Bölgesi'ndeki iş ortağı tesiste kuluçkahane denemeleri sırasında VARS teknisyenleri"
+  "solutions.hero.imageAlt": "Ege Bölgesi'ndeki iş ortağı tesiste kuluçkahane denemeleri sırasında VARS teknisyenleri",
+  "lifecycle.modesLink": "Dört çalışma biçimimizi görün",
+  "lifecycle.nodeHint": "Aşama ayrıntıları için düğümlere tıklayın",
+  "lifecycle.phaseCounter": "Aşama {n} / {total}",
+  "projects.hero.imageAlt": "Ege Bölgesi'ndeki iş ortağı tesiste kuluçkahane denemeleri yürüten VARS teknisyenleri"
 }

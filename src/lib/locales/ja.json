@@ -1600,9 +1600,9 @@
   "home.telemetry.item2.hufa": "HUFA: 18.2 mg/g",
   "common.alt.flagTurkiye": "トルコ国旗",
   "about.alt.aegeanHub": "エーゲ海の養殖拠点",
-  "lifecycle.eyebrow": "4段階の現場導入メソドロジー",
-  "lifecycle.title": "ターンキー・プロジェクト実行サイクル",
-  "lifecycle.badge": "30年以上の実績あるメソドロジー",
+  "lifecycle.eyebrow": "供給と現場試験プロジェクトの進め方",
+  "lifecycle.title": "初期診断から成果の検証まで",
+  "lifecycle.badge": "高める · 調達する",
   "lifecycle.step1.title": "01. 現状監査と検査室診断",
   "lifecycle.step1.desc": "水質分析、現行の飼料効率評価、ワムシ・アルテミア密度のベンチマーク、病原体スクリーニング。",
   "lifecycle.step2.title": "02. カスタム飼料および閉鎖循環式システム設計",
@@ -2412,5 +2412,9 @@
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 データシート（PDF）",
   "product.mediterranean-sea-bream.pdfLabel": "VARS シーフードカタログ",
   "product.olive-flounder.pdfLabel": "VARS シーフードカタログ",
-  "solutions.hero.imageAlt": "エーゲ海地域の提携施設での種苗生産試験に取り組むVARSの技術スタッフ"
+  "solutions.hero.imageAlt": "エーゲ海地域の提携施設での種苗生産試験に取り組むVARSの技術スタッフ",
+  "lifecycle.modesLink": "4つの関わり方を見る",
+  "lifecycle.nodeHint": "ノードをクリックすると各段階の詳細が表示されます",
+  "lifecycle.phaseCounter": "フェーズ {n} / {total}",
+  "projects.hero.imageAlt": "エーゲ海地域の提携施設で種苗生産試験を実施するVARSの技術スタッフ"
 }

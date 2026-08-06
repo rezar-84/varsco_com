@@ -44,6 +44,7 @@
 
   --color-navy: var(--brand-navy);
   --color-mint: var(--brand-mint);
+  --color-mint-ink: var(--brand-mint-ink);
   --color-teal: var(--brand-teal);
   --color-ink: var(--brand-ink);
   --color-surface-alt: var(--surface-alt);
@@ -72,6 +73,11 @@
   --brand-green: oklch(0.464 0.129 155.5);
   --brand-teal: oklch(0.755 0.041 190);
   --brand-mint: oklch(0.735 0.221 145);
+  /* mint is 2.17:1 on white — it fails WCAG AA (4.5:1) for text on any light
+     surface, though it is a healthy 7.4:1 on navy. mint-ink is the same hue
+     darkened to clear AA on both white (5.15:1) and surface-alt (4.73:1).
+     Use mint on dark backgrounds, mint-ink on light ones. */
+  --brand-mint-ink: oklch(0.52 0.16 145);
   --brand-ink: oklch(0.24 0.006 268);
   --surface-alt: oklch(0.972 0.006 240);
 
