@@ -4,6 +4,7 @@ import { KO_BODIES } from "./ko";
 import { JA_BODIES } from "./ja";
 import { DE_BODIES } from "./de";
 import { ES_BODIES } from "./es";
+import { RU_BODIES } from "./ru";
 
 /**
  * Translated article bodies, by locale then post slug.
@@ -19,4 +20,5 @@ export const BLOG_BODIES: Partial<Record<LangCode, Record<string, string>>> = {
   ja: JA_BODIES,
   de: DE_BODIES,
   es: ES_BODIES,
+  ru: RU_BODIES,
 };
