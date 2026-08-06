@@ -14,9 +14,11 @@ This document details the backlog of tasks and sprint plans mapped against the S
 | **Sprint 3** | Phase 4     | Zod validations, visual forms, and CRM Lead integration          | **Completed** |
 | **Sprint 4** | Phase 5     | User login, session proxy cookie setup, registration flow        | **Completed** |
 | **Sprint 5** | Phase 6     | Customer portal dashboards, order grid, and customs panel        | **Completed** |
-| **Sprint 6** | Phase 7     | E-commerce catalog, product specification rendering, client cart | Pending       |
-| **Sprint 7** | Phase 8     | Cart checkouts, draft order creator, Iyzico/Stripe payments      | Pending       |
-| **Sprint 8** | Phase 9     | Full SEO crawls, Core Web Vitals audit, and cutover              | Pending       |
+| **Sprint 6** | Phase 7     | E-commerce catalog, product specification rendering, client cart | **Completed** |
+| **Sprint 7** | Phase 8     | Cart checkouts, draft order creator, Iyzico/Stripe payments      | Partial       |
+| **Sprint 8** | Phase 9     | Full SEO crawls, Core Web Vitals audit, and cutover              | Partial       |
+| **Sprint 9** | Phase 10    | Lead intelligence, consent, and decoupled visitor tracking       | **Next**      |
+| **Sprint 10**| Phase 10    | Locale completion and accessibility remediation                  | Planned       |
 
 ---
 
@@ -85,3 +87,61 @@ This document details the backlog of tasks and sprint plans mapped against the S
 - [ ] Conduct automated E2E test runs checking form submission, user logins, and catalog filters.
 - [ ] Run Lighthouse audits and fix performance bottlenecks (e.g. image optimization, script deferring).
 - [ ] Perform DNS cutover pointing `varsco.com` (or `aquabloom.com`) to the headless frontend and `erp.` to the Odoo instance.
+
+---
+
+### Sprint 9 — Lead Intelligence, Consent & Visitor Tracking
+
+**Goal:** know who is submitting, where from, and what they looked at first —
+without breaking KVKK/GDPR.
+
+Two pieces already landed and this sprint builds directly on them: form fields
+are no longer discarded and every submission carries page/locale/UTM context
+(`src/lib/submission-context.ts`), and the Odoo controller now maps those onto
+real `crm.lead` fields with distinct subjects and working `utm.source`
+attribution (`varsco_content_api` `controllers/leads.py`).
+
+**Why Odoo's own visitor tracking is not enough here.** Odoo ships
+`website.visitor` / `website.track`, but both are populated by the `website`
+module's own request handling — they only see traffic Odoo itself serves. This
+frontend is decoupled (TanStack Start), so Odoo observes nothing but the
+server-to-server lead POST. Nothing in Odoo is broken; it is simply never in
+the request path. The fix is to have our BFF forward the events Odoo would
+otherwise have collected.
+
+- [ ] **Consent banner** — two categories only (strictly necessary / analytics).
+      Decision persisted first-party, no tracking calls until analytics is
+      accepted, and a way to withdraw. Blocks every task below it.
+- [ ] **`POST /api/v1/track`** in `varsco_content_api` — accepts batched
+      pageview events behind the same bearer-token gate as `/leads`, creating
+      or updating `website.visitor` and appending `website.track` rows.
+- [ ] **BFF beacon route** in this repo — the browser never talks to Odoo
+      directly; the server forwards, keeping the write token off the client and
+      letting us drop events when consent is absent.
+- [ ] **Visitor-to-lead linkage** — pass the visitor token on submission so
+      `leads.py` can attach the lead to its `website.visitor`, giving sales the
+      journey that preceded the enquiry.
+- [ ] **`POST /api/v1/newsletter`** — write `mailing.contact` / `mailing.list`.
+      Newsletter signups currently create real `crm.lead` rows (tagged
+      `topic: "Newsletter subscription"` so they can be filtered), which puts
+      non-leads into the sales pipeline.
+- [ ] Point `blog.index.tsx` at the new endpoint and drop the CRM stopgap.
+- [ ] Retention policy for `website.track` — decide and document how long raw
+      pageview rows are kept before aggregation.
+
+### Sprint 10 — Locale Completion & Accessibility Remediation
+
+- [ ] Translate the 18 blog article bodies into Arabic. RTL locale: verify
+      markdown tables and inline links render correctly bidirectionally rather
+      than assuming.
+- [ ] Translate the 18 blog article bodies into Chinese.
+- [ ] Triage the ~190 `text-mint` occurrences. `--brand-mint` measures 2.17:1
+      on white against WCAG AA's 4.5:1, but 7.37:1 on navy — correct on dark
+      surfaces, wrong on light ones. `--brand-mint-ink` (5.15:1 on white)
+      exists; each site needs its background judged, so this is not a
+      find-and-replace.
+- [ ] Align the response-time claims. Contact promises 4 hours, Quote 24, the
+      floating CTA one business day, and one says "Guaranteed" — needs one real
+      number from the business, applied everywhere.
+- [ ] Browser click-through of the quote drawer (open, submit, error, reopen).
+      Verified server-side only so far; the Chrome extension was unavailable.
