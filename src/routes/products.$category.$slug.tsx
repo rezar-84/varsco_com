@@ -36,6 +36,7 @@ import { getProduct, getCategory } from "@/lib/mock/products";
 import { createWhatsAppUrl } from "@/lib/utils/whatsapp";
 import type { Product, ProductCategory } from "@/lib/types";
 import { RelatedProductsWidget } from "@/components/RelatedProductsWidget";
+import { QuoteDrawer } from "@/components/layout/QuoteDrawer";
 import { useI18n } from "@/context/I18nContext";
 import { activeDict } from "@/lib/i18n-dict";
 
@@ -182,6 +183,7 @@ function ProductDetail() {
     });
   };
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
 
   // Combine product main image and gallery images into a unique list
   const allImages = [product.image, ...(product.gallery ?? [])].filter(
@@ -431,16 +433,11 @@ function ProductDetail() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button
                     size="lg"
-                    asChild
+                    onClick={() => setQuoteOpen(true)}
                     className="rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 shadow-lg shadow-primary/20 py-6 text-base"
                   >
-                    <Link
-                      to="/request-quote"
-                      search={{ product: product.slug, category: product.category }}
-                    >
-                      <ArrowRight className="mr-2 h-5 w-5" />
-                      {t("productCard.quote")}
-                    </Link>
+                    <ArrowRight className="mr-2 h-5 w-5" />
+                    {t("productCard.quote")}
                   </Button>
 
                   <a
@@ -461,6 +458,10 @@ function ProductDetail() {
 
                 {/* Tier 2: Sub-Actions Utility Bar */}
                 <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-surface-alt/70 border border-border/60 backdrop-blur-sm">
+                  {/* Kept as a real link, not a second drawer trigger: the
+                      primary CTA above opens the drawer, while this preserves a
+                      crawlable internal link to /request-quote and a path that
+                      works without JavaScript. */}
                   <Link
                     to="/request-quote"
                     search={{ product: product.slug, category: product.category }}
@@ -1029,6 +1030,13 @@ function ProductDetail() {
       </Section>
 
       <RelatedProductsWidget currentProduct={product} />
+
+      <QuoteDrawer
+        open={quoteOpen}
+        onOpenChange={setQuoteOpen}
+        productSlug={product.slug}
+        productTitle={tp("title", product.title)}
+      />
     </>
   );
 }

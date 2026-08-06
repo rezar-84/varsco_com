@@ -2416,5 +2416,9 @@
   "lifecycle.modesLink": "Vea nuestras cuatro formas de colaborar",
   "lifecycle.nodeHint": "Haga clic en los nodos para ver los detalles de cada fase",
   "lifecycle.phaseCounter": "Fase {n} de {total}",
-  "projects.hero.imageAlt": "Técnicos de VARS realizando ensayos de criadero en una instalación asociada de la región del Egeo"
+  "projects.hero.imageAlt": "Técnicos de VARS realizando ensayos de criadero en una instalación asociada de la región del Egeo",
+  "quote.drawer.forProduct": "Solicitud de cotización para",
+  "quote.drawer.close": "Cerrar",
+  "quote.drawer.fullPage": "Abrir la página completa de cotización",
+  "quote.drawer.error": "No hemos podido enviar su solicitud. Inténtelo de nuevo o contáctenos directamente."
 }

@@ -2416,5 +2416,9 @@
   "lifecycle.modesLink": "Unsere vier Formen der Zusammenarbeit ansehen",
   "lifecycle.nodeHint": "Für Phasendetails auf die Knoten klicken",
   "lifecycle.phaseCounter": "Phase {n} von {total}",
-  "projects.hero.imageAlt": "VARS-Techniker bei Brutanlagen-Versuchen in einem Partnerbetrieb in der Ägäisregion"
+  "projects.hero.imageAlt": "VARS-Techniker bei Brutanlagen-Versuchen in einem Partnerbetrieb in der Ägäisregion",
+  "quote.drawer.forProduct": "Angebotsanfrage für",
+  "quote.drawer.close": "Schließen",
+  "quote.drawer.fullPage": "Vollständige Angebotsseite öffnen",
+  "quote.drawer.error": "Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
 }

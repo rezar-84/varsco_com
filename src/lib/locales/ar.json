@@ -2416,5 +2416,9 @@
   "lifecycle.modesLink": "اطّلع على طرق التعاون الأربع",
   "lifecycle.nodeHint": "انقر على العقد لعرض تفاصيل كل مرحلة",
   "lifecycle.phaseCounter": "المرحلة {n} من {total}",
-  "projects.hero.imageAlt": "فنيو VARS أثناء إجراء تجارب المفرخ في منشأة شريكة بمنطقة بحر إيجه"
+  "projects.hero.imageAlt": "فنيو VARS أثناء إجراء تجارب المفرخ في منشأة شريكة بمنطقة بحر إيجه",
+  "quote.drawer.forProduct": "طلب عرض سعر لـ",
+  "quote.drawer.close": "إغلاق",
+  "quote.drawer.fullPage": "افتح صفحة طلب العرض الكاملة",
+  "quote.drawer.error": "تعذّر إرسال طلبك. يُرجى المحاولة مرة أخرى أو التواصل معنا مباشرة."
 }

@@ -2416,5 +2416,9 @@
   "lifecycle.modesLink": "Dört çalışma biçimimizi görün",
   "lifecycle.nodeHint": "Aşama ayrıntıları için düğümlere tıklayın",
   "lifecycle.phaseCounter": "Aşama {n} / {total}",
-  "projects.hero.imageAlt": "Ege Bölgesi'ndeki iş ortağı tesiste kuluçkahane denemeleri yürüten VARS teknisyenleri"
+  "projects.hero.imageAlt": "Ege Bölgesi'ndeki iş ortağı tesiste kuluçkahane denemeleri yürüten VARS teknisyenleri",
+  "quote.drawer.forProduct": "Teklif talebi:",
+  "quote.drawer.close": "Kapat",
+  "quote.drawer.fullPage": "Tam teklif sayfasını açın",
+  "quote.drawer.error": "Talebinizi gönderemedik. Lütfen tekrar deneyin veya bizimle doğrudan iletişime geçin."
 }

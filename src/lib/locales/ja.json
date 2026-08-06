@@ -2416,5 +2416,9 @@
   "lifecycle.modesLink": "4つの関わり方を見る",
   "lifecycle.nodeHint": "ノードをクリックすると各段階の詳細が表示されます",
   "lifecycle.phaseCounter": "フェーズ {n} / {total}",
-  "projects.hero.imageAlt": "エーゲ海地域の提携施設で種苗生産試験を実施するVARSの技術スタッフ"
+  "projects.hero.imageAlt": "エーゲ海地域の提携施設で種苗生産試験を実施するVARSの技術スタッフ",
+  "quote.drawer.forProduct": "見積依頼:",
+  "quote.drawer.close": "閉じる",
+  "quote.drawer.fullPage": "見積ページ全体を開く",
+  "quote.drawer.error": "リクエストを送信できませんでした。もう一度お試しいただくか、直接ご連絡ください。"
 }

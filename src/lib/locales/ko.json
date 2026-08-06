@@ -2416,5 +2416,9 @@
   "lifecycle.modesLink": "네 가지 협력 방식 보기",
   "lifecycle.nodeHint": "노드를 클릭하면 단계별 상세 내용이 표시됩니다",
   "lifecycle.phaseCounter": "{total}단계 중 {n}단계",
-  "projects.hero.imageAlt": "에게해 지역 파트너 시설에서 종묘배양 시험을 수행하는 VARS 기술진"
+  "projects.hero.imageAlt": "에게해 지역 파트너 시설에서 종묘배양 시험을 수행하는 VARS 기술진",
+  "quote.drawer.forProduct": "견적 요청:",
+  "quote.drawer.close": "닫기",
+  "quote.drawer.fullPage": "전체 견적 페이지 열기",
+  "quote.drawer.error": "요청을 전송하지 못했습니다. 다시 시도하시거나 직접 연락해 주십시오."
 }
