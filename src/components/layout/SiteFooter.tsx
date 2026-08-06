@@ -161,6 +161,11 @@ export function SiteFooter() {
                   {t("footer.salmonOva")}
                 </Link>
               </li>
+              <li>
+                <Link to="/olive-flounder-export" className="hover:text-white transition-colors">
+                  {t("footer.oliveFlounder")}
+                </Link>
+              </li>
             </ul>
           </div>
 

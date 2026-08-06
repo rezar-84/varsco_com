@@ -840,6 +840,20 @@ export function SiteHeader() {
                         {t("nav.salmonidOva.desc")}
                       </p>
                     </Link>
+
+                    <Link
+                      to="/olive-flounder-export"
+                      onClick={closeNow}
+                      className="group block rounded-xl p-3 transition-all hover:bg-surface-alt/90 border-l-2 border-transparent hover:border-mint"
+                    >
+                      <div className="font-bold text-navy group-hover:text-primary flex items-center justify-between">
+                        <span>{t("nav.oliveFlounder")}</span>
+                        <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                      </div>
+                      <p className="text-muted-foreground text-[11px] mt-1 leading-relaxed">
+                        {t("nav.oliveFlounder.desc")}
+                      </p>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -1135,6 +1149,13 @@ export function SiteHeader() {
                     className="block rounded-lg px-3 py-2 text-xs font-bold text-navy hover:bg-surface-alt"
                   >
                     {t("nav.salmonidOva")}
+                  </Link>
+                  <Link
+                    to="/olive-flounder-export"
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-lg px-3 py-2 text-xs font-bold text-navy hover:bg-surface-alt"
+                  >
+                    {t("nav.oliveFlounder")}
                   </Link>
                 </div>
               )}

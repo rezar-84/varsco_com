@@ -1111,7 +1111,7 @@
   "quoteForm.product.pd": "Очищенная креветка без пищевода (P&D)",
   "quoteForm.incoterm.cif": "CIF Авиа/Морской фрахт",
   "quoteForm.incoterm.fob": "FOB Порт отправления",
-  "quoteForm.incoterm.exw": "EXW Завод в Измире",
+  "quoteForm.incoterm.exw": "EXW (самовывоз с завода)",
   "quoteForm.sampleTrial": "Включить пробную партию 500 г в предварительное коммерческое предложение",
   "relatedProducts.crossSell": "Рекомендуемый ассортимент для кросс-продаж",
   "relatedProducts.viewAll": "Посмотреть все продукты",
@@ -2462,5 +2462,8 @@
   "flounderExport.rfq.item4": "Order quantity — kg, tonnes or FCL",
   "flounderExport.rfq.item5": "Order frequency, if this is a repeating requirement",
   "flounderExport.rfq.item6": "Which documents your importer requires, and your target delivery window",
-  "flounderExport.rfq.cta": "Send your requirement"
+  "flounderExport.rfq.cta": "Send your requirement",
+  "nav.oliveFlounder": "Экспорт оливковой камбалы",
+  "nav.oliveFlounder.desc": "Замороженное филе, свежая потрошёная и живая рыба с экспортной документацией.",
+  "footer.oliveFlounder": "Экспорт оливковой камбалы"
 }

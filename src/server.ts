@@ -114,6 +114,25 @@ function deLocalizeRequest(request: Request): Request {
   return request;
 }
 
+/**
+ * Origin to build redirect Locations from.
+ *
+ * TLS terminates at the proxy, so `request.url` arrives as http:// even for an
+ * https request. Using redirectOrigin(request, requestUrl) directly made every 301 point at
+ * http://, which the edge then bounced to https:// — an extra hop on every
+ * redirect. Search Console shows those as chains, and each hop is a chance to
+ * lose the referrer and a slice of link equity.
+ *
+ * Observed: https://varsco.com/ko_KR/contact 301'd to http://varsco.com/ko/contact,
+ * which 301'd again to https://. Two redirects where one would do.
+ */
+function redirectOrigin(request: Request, url: URL): string {
+  const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  const proto = forwardedProto || url.protocol.replace(":", "");
+  return `${proto}://${forwardedHost || url.host}`;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
@@ -123,6 +142,7 @@ export default {
       // canonicals, sitemap, and hreflang. Keep path and query intact.
       if (requestUrl.hostname.toLowerCase() === "www.varsco.com") {
         requestUrl.hostname = "varsco.com";
+        requestUrl.protocol = "https:";
         return new Response(null, {
           status: 301,
           headers: { Location: requestUrl.toString(), "Cache-Control": "public, max-age=86400" },
@@ -146,7 +166,7 @@ export default {
         const prefix = legacyBase === "en" ? "" : `/${legacyBase}`;
         const destination = new URL(
           `${prefix}/${rest}`.replace(/\/+$/, "") || "/",
-          requestUrl.origin,
+          redirectOrigin(request, requestUrl),
         );
         destination.search = requestUrl.search;
         return new Response(null, {
@@ -165,7 +185,7 @@ export default {
             /\/+$/,
             "",
           ) || "/",
-          requestUrl.origin,
+          redirectOrigin(request, requestUrl),
         );
         destination.search = requestUrl.search;
         destination.searchParams.delete("lang");
@@ -188,7 +208,7 @@ export default {
         if (cookieLang && cookieLang !== "en" && SUPPORTED_LOCALES.includes(cookieLang)) {
           const destination = new URL(
             `/${cookieLang}${requestUrl.pathname}`.replace(/\/+$/, "") || `/${cookieLang}`,
-            requestUrl.origin,
+            redirectOrigin(request, requestUrl),
           );
           destination.search = requestUrl.search;
           return new Response(null, {
@@ -202,7 +222,7 @@ export default {
       // Also normalize uppercase locale spellings before routing.
       if (supportedLocale && rawLocale === "en") {
         const rest = rawParts.slice(1).join("/");
-        const destination = new URL(`/${rest}`, requestUrl.origin);
+        const destination = new URL(`/${rest}`, redirectOrigin(request, requestUrl));
         destination.search = requestUrl.search;
         return new Response(null, {
           status: 301,
@@ -212,7 +232,10 @@ export default {
 
       if (rawParts[0] && rawParts[0] !== rawLocale && supportedLocale) {
         const rest = rawParts.slice(1).join("/");
-        const destination = new URL(`/${rawLocale}${rest ? `/${rest}` : ""}`, requestUrl.origin);
+        const destination = new URL(
+          `/${rawLocale}${rest ? `/${rest}` : ""}`,
+          redirectOrigin(request, requestUrl),
+        );
         destination.search = requestUrl.search;
         return new Response(null, {
           status: 301,
@@ -223,7 +246,7 @@ export default {
       // Retire high-volume legacy Odoo login URLs without exposing them to
       // search engines as application pages.
       if (requestUrl.pathname === "/web/login" || requestUrl.pathname === "/web/login/") {
-        const destination = new URL("/login", requestUrl.origin);
+        const destination = new URL("/login", redirectOrigin(request, requestUrl));
         const redirectTarget = requestUrl.searchParams.get("redirect");
         if (redirectTarget?.startsWith("/"))
           destination.searchParams.set("redirect", redirectTarget);
@@ -255,13 +278,24 @@ export default {
       }
       const path = new URL(rewrittenRequest.url).pathname;
 
-      // 3. Legacy /shop/* redirects — retired URLs indexed under the old
-      // Odoo website_sale shop, must 301 rather than 404.
+      // 3. Legacy redirects — URLs indexed under the retired Odoo (and
+      // pre-Odoo Drupal) site, which must 301 rather than 404. Sourced from
+      // the Search Console 404 drilldown; see lib/legacy-redirects.ts.
       const legacyTarget = resolveLegacyRedirect(path);
       if (legacyTarget) {
         const localePrefix = lang === "en" ? "" : `/${lang}`;
-        const destination = new URL(`${localePrefix}${legacyTarget}`, url.origin);
-        return new Response(null, { status: 301, headers: { Location: destination.toString() } });
+        const destination = new URL(
+          `${localePrefix}${legacyTarget}`,
+          redirectOrigin(request, requestUrl),
+        );
+        // Preserve the query string: campaign parameters on an old link are
+        // still worth attributing, and dropping them loses the referral data
+        // on exactly the traffic these redirects exist to rescue.
+        destination.search = requestUrl.search;
+        return new Response(null, {
+          status: 301,
+          headers: { Location: destination.toString(), "Cache-Control": "public, max-age=86400" },
+        });
       }
 
       const handler = await getServerEntry();
