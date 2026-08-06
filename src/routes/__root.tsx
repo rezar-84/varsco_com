@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -19,6 +20,7 @@ import { StoreCartProvider } from "@/context/StoreCartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { I18nProvider, LANGUAGES } from "@/context/I18nContext";
 import { ConsentBanner } from "@/components/layout/ConsentBanner";
+import { trackPageView, initTrackingConsentListener } from "@/lib/tracking";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { getLocalizedPageMeta } from "@/lib/utils/seo";
 import type { SeoPage } from "@/lib/utils/seo";
@@ -316,6 +318,16 @@ function getServerDir(lang: string): "ltr" | "rtl" {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const routerState = useRouterState({ select: (s) => s.location.pathname });
+
+  // Pageviews are recorded from here so client-side navigations count, not
+  // just full document loads. trackPageView is a no-op without consent.
+  useEffect(() => {
+    trackPageView(routerState);
+  }, [routerState]);
+
+  useEffect(() => initTrackingConsentListener(), []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>

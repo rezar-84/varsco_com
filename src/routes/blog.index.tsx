@@ -91,22 +91,10 @@ function BlogIndex() {
       return;
     }
     try {
-      const response = await fetch("/api/quotes", {
+      const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Stopgap: a newsletter signup is not a sales lead, but Odoo has no
-        // mailing.contact endpoint in varsco_content_api yet, so it still
-        // lands in CRM. `topic` marks it so sales can filter these out of the
-        // pipeline until the real endpoint exists (Stage C).
-        body: JSON.stringify({
-          name: "Newsletter Subscriber",
-          company: "N/A",
-          email: newsletterEmail,
-          message: "Requested to subscribe to the Aqua MAG Journal newsletter.",
-          topic: "Newsletter subscription",
-          items: [],
-          ...buildSubmissionContext(SUBMISSION_SOURCES.newsletter, { locale: lang }),
-        }),
+        body: JSON.stringify({ email: newsletterEmail }),
       });
       if (!response.ok) {
         const errBody = (await response.json().catch(() => ({}))) as { error?: string };

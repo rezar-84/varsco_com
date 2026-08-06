@@ -42,7 +42,9 @@ import { Route as AccountOrdersRouteImport } from './routes/account.orders'
 import { Route as AccountProfileRouteImport } from './routes/account.profile'
 import { Route as AccountWishlistRouteImport } from './routes/account.wishlist'
 import { Route as ApiHealthRouteImport } from './routes/api.health'
+import { Route as ApiNewsletterRouteImport } from './routes/api.newsletter'
 import { Route as ApiQuotesRouteImport } from './routes/api.quotes'
+import { Route as ApiTrackRouteImport } from './routes/api.track'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
@@ -239,9 +241,19 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
   path: '/api/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiNewsletterRoute = ApiNewsletterRouteImport.update({
+  id: '/api/newsletter',
+  path: '/api/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiQuotesRoute = ApiQuotesRouteImport.update({
   id: '/api/quotes',
   path: '/api/quotes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrackRoute = ApiTrackRouteImport.update({
+  id: '/api/track',
+  path: '/api/track',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -410,7 +422,9 @@ export interface FileRoutesByFullPath {
   '/account/profile': typeof AccountProfileRoute
   '/account/wishlist': typeof AccountWishlistRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/newsletter': typeof ApiNewsletterRoute
   '/api/quotes': typeof ApiQuotesRoute
+  '/api/track': typeof ApiTrackRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/checkout': typeof ShopCheckoutRoute
   '/account/': typeof AccountIndexRoute
@@ -471,7 +485,9 @@ export interface FileRoutesByTo {
   '/account/profile': typeof AccountProfileRoute
   '/account/wishlist': typeof AccountWishlistRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/newsletter': typeof ApiNewsletterRoute
   '/api/quotes': typeof ApiQuotesRoute
+  '/api/track': typeof ApiTrackRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/checkout': typeof ShopCheckoutRoute
   '/account': typeof AccountIndexRoute
@@ -534,7 +550,9 @@ export interface FileRoutesById {
   '/account/profile': typeof AccountProfileRoute
   '/account/wishlist': typeof AccountWishlistRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/newsletter': typeof ApiNewsletterRoute
   '/api/quotes': typeof ApiQuotesRoute
+  '/api/track': typeof ApiTrackRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/checkout': typeof ShopCheckoutRoute
   '/account/': typeof AccountIndexRoute
@@ -598,7 +616,9 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/account/wishlist'
     | '/api/health'
+    | '/api/newsletter'
     | '/api/quotes'
+    | '/api/track'
     | '/shop/$slug'
     | '/shop/checkout'
     | '/account/'
@@ -659,7 +679,9 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/account/wishlist'
     | '/api/health'
+    | '/api/newsletter'
     | '/api/quotes'
+    | '/api/track'
     | '/shop/$slug'
     | '/shop/checkout'
     | '/account'
@@ -721,7 +743,9 @@ export interface FileRouteTypes {
     | '/account/profile'
     | '/account/wishlist'
     | '/api/health'
+    | '/api/newsletter'
     | '/api/quotes'
+    | '/api/track'
     | '/shop/$slug'
     | '/shop/checkout'
     | '/account/'
@@ -779,7 +803,9 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiNewsletterRoute: typeof ApiNewsletterRoute
   ApiQuotesRoute: typeof ApiQuotesRoute
+  ApiTrackRoute: typeof ApiTrackRoute
   ShopSlugRoute: typeof ShopSlugRoute
   ShopCheckoutRoute: typeof ShopCheckoutRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -1037,11 +1063,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/newsletter': {
+      id: '/api/newsletter'
+      path: '/api/newsletter'
+      fullPath: '/api/newsletter'
+      preLoaderRoute: typeof ApiNewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/quotes': {
       id: '/api/quotes'
       path: '/api/quotes'
       fullPath: '/api/quotes'
       preLoaderRoute: typeof ApiQuotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/track': {
+      id: '/api/track'
+      path: '/api/track'
+      fullPath: '/api/track'
+      preLoaderRoute: typeof ApiTrackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -1322,7 +1362,9 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiHealthRoute: ApiHealthRoute,
+  ApiNewsletterRoute: ApiNewsletterRoute,
   ApiQuotesRoute: ApiQuotesRoute,
+  ApiTrackRoute: ApiTrackRoute,
   ShopSlugRoute: ShopSlugRoute,
   ShopCheckoutRoute: ShopCheckoutRoute,
   BlogIndexRoute: BlogIndexRoute,

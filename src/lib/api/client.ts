@@ -231,6 +231,30 @@ export class ContentApiClient {
     return this.requestJson("/api/v1/leads", "POST", payload);
   }
 
+  /** Subscribe an address to the newsletter list (mailing.contact). */
+  subscribeNewsletter(payload: {
+    email: string;
+    name?: string;
+    company?: string;
+  }): Promise<{ status: string; contact_id: number; already_subscribed: boolean }> {
+    return this.requestJson("/api/v1/newsletter", "POST", payload);
+  }
+
+  /**
+   * Forward a batch of pageviews for one visitor.
+   *
+   * `visitor_token` must be 32 lowercase hex characters — Odoo overloads
+   * website.visitor.access_token, treating anything else as a res.partner id.
+   */
+  trackVisit(payload: {
+    visitor_token: string;
+    lang_code?: string;
+    country_code?: string;
+    events: { url: string; at?: string }[];
+  }): Promise<{ status: string; visitor_id: number; tracked: number }> {
+    return this.requestJson("/api/v1/track", "POST", payload);
+  }
+
   // ==========================================
   // 3. USER PORTAL & AUTHENTICATION
   // ==========================================
