@@ -1,6 +1,22 @@
 import { useState } from "react";
 import { Cpu, RefreshCw, Droplets, Zap, ShieldCheck, Activity } from "lucide-react";
 
+/**
+ * The four stage-to-stage pipe runs, in flow order: rearing tank → drum filter
+ * → bio-filter → UV/ozone → degasser. Each `d` is written left-to-right so the
+ * dash animation and the travelling marker both move downstream; reversing a
+ * path here would silently reverse the water.
+ */
+const STAGE_PIPES = [
+  { id: "tank-drum", d: "M 110 160 H 170", color: "#38bdf8" },
+  { id: "drum-bio", d: "M 230 160 H 280", color: "#f59e0b" },
+  { id: "bio-uv", d: "M 340 160 H 390", color: "#10b981" },
+  { id: "uv-degas", d: "M 450 160 H 490", color: "#8b5cf6" },
+];
+
+/** Degasser back to the rearing tank — the leg that closes the loop. */
+const RETURN_PIPE = "M 490 190 V 270 H 60 V 190";
+
 export function AnimatedRasDiagram() {
   const [activeStep, setActiveStep] = useState<number>(0);
 
@@ -51,8 +67,8 @@ export function AnimatedRasDiagram() {
 
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 font-extrabold text-xs border border-emerald-500/20">
-            <RefreshCw className="h-3.5 w-3.5 animate-spin text-emerald-500" /> 98% Water
-            Recirculation Efficiency
+            <RefreshCw className="h-3.5 w-3.5 text-emerald-500" /> 98% Water Recirculation
+            Efficiency
           </span>
         </div>
       </div>
@@ -89,51 +105,69 @@ export function AnimatedRasDiagram() {
             </pattern>
             <rect width="550" height="320" fill="url(#rasGrid)" />
 
-            {/* Connecting Water Pipeline Loops */}
-            <path
-              d="M 110 160 H 170"
-              stroke="#38bdf8"
-              strokeWidth="4"
-              strokeDasharray="6 4"
-              className="animate-pulse"
-            />
-            <path
-              d="M 230 160 H 280"
-              stroke="#f59e0b"
-              strokeWidth="4"
-              strokeDasharray="6 4"
-              className="animate-pulse"
-            />
-            <path
-              d="M 340 160 H 390"
-              stroke="#10b981"
-              strokeWidth="4"
-              strokeDasharray="6 4"
-              className="animate-pulse"
-            />
-            <path
-              d="M 450 160 H 490"
-              stroke="#8b5cf6"
-              strokeWidth="4"
-              strokeDasharray="6 4"
-              className="animate-pulse"
-            />
+            {/* Pipes. Each is drawn in the direction water travels, so the
+                marching dashes read as downstream flow. */}
+            {STAGE_PIPES.map((pipe) => (
+              <path
+                key={pipe.id}
+                d={pipe.d}
+                stroke={pipe.color}
+                strokeWidth="4"
+                strokeDasharray="6 4"
+                className="animate-ras-flow"
+              />
+            ))}
 
-            {/* Recirculation Return Pipe from Degasser back to Rearing Tank */}
+            {/* Recirculation return: degasser bottom, along the floor, back up
+                into the rearing tank. This leg is the whole point of a closed
+                loop and previously carried no flow marker at all. */}
             <path
-              d="M 490 190 V 270 H 60 V 190"
+              d={RETURN_PIPE}
               stroke="#06b6d4"
               strokeWidth="3"
               strokeDasharray="8 4"
               opacity="0.6"
-              className="animate-pulse"
+              className="animate-ras-flow-return"
             />
 
-            {/* Animated Flow Particles */}
-            <circle cx="140" cy="160" r="3" fill="#38bdf8" className="animate-ping" />
-            <circle cx="255" cy="160" r="3" fill="#f59e0b" className="animate-ping" />
-            <circle cx="365" cy="160" r="3" fill="#10b981" className="animate-ping" />
-            <circle cx="470" cy="160" r="3" fill="#8b5cf6" className="animate-ping" />
+            {/* Flow markers that actually travel their pipe.
+                These were animate-ping circles pinned at fixed coordinates —
+                ping scales and fades in place, so they blinked like status
+                LEDs instead of showing water moving between stages. */}
+            {STAGE_PIPES.map((pipe) => (
+              <circle key={`${pipe.id}-marker`} r="3.5" fill={pipe.color}>
+                <animateMotion dur="1.9s" repeatCount="indefinite" path={pipe.d} />
+                <animate
+                  attributeName="opacity"
+                  values="0;1;1;0"
+                  keyTimes="0;0.15;0.85;1"
+                  dur="1.9s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            ))}
+
+            {/* Three staggered markers on the return leg: it is far longer than
+                a stage gap, so one marker would leave it empty most of the time
+                and the loop would not read as continuous. */}
+            {["0s", "1.6s", "3.2s"].map((begin) => (
+              <circle key={`return-${begin}`} r="3" fill="#06b6d4">
+                <animateMotion
+                  dur="4.8s"
+                  begin={begin}
+                  repeatCount="indefinite"
+                  path={RETURN_PIPE}
+                />
+                <animate
+                  attributeName="opacity"
+                  values="0;1;1;0"
+                  keyTimes="0;0.08;0.92;1"
+                  dur="4.8s"
+                  begin={begin}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            ))}
 
             {/* STEP 1: REARING TANK */}
             <g onClick={() => setActiveStep(0)} className="cursor-pointer group">
@@ -334,8 +368,14 @@ export function AnimatedRasDiagram() {
                 className="transition-all group-hover:brightness-125"
               />
               {/* Oxygen Bubbles */}
-              <circle cx="495" cy="150" r="2.5" fill="#67e8f9" className="animate-float" />
-              <circle cx="515" cy="140" r="3.5" fill="#22d3ee" className="animate-float-delayed" />
+              <circle cx="495" cy="160" r="2.5" fill="#67e8f9" className="animate-bubble-rise" />
+              <circle
+                cx="515"
+                cy="165"
+                r="3.5"
+                fill="#22d3ee"
+                className="animate-bubble-rise-delayed"
+              />
               <text
                 x="505"
                 y="100"

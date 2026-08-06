@@ -605,8 +605,8 @@
   "export.cta.description": "Uzmanlarımız 24 saat içinde size özel fiyatlandırma ve lojistik planı gönderecek.",
   "export.cta.button": "Başlayın",
   "solutions.hero.eyebrow": "30+ Yıllık Sektör Uzmanlığına Sahip Ekip",
-  "solutions.hero.title": "Uzman Danışmanlık, Tedarik & Teknik Danışmanlık",
-  "solutions.hero.description": "30 yılı aşkın uygulamalı saha deneyimine sahip olan VARS, teknik danışmanınız, kolaylaştırıcınız ve tedarik ortağınız olarak hareket eder. Biyogüvenlikli sistemler tasarlıyor, yem formülasyonlarını optimize ediyor, biyolojik darboğazları gideriyor ve sizi küresel üreticilerle buluşturuyoruz.",
+  "solutions.hero.title": "Kuluçkahaneleri tasarlıyor, işletiyor ve verim alamayanları düzeltiyoruz",
+  "solutions.hero.description": "Akdeniz deniz balığı kuluçkahanelerini işletme konusunda kanıtlanmış deneyim — levrek (Dicentrarchus labrax) ve çipura (Sparus aurata), anaçtan hasada. Biz bir inşaat firması değiliz: inşa ettiğiniz tesisin gerçekten üretim yapmasını sağlayan kuluçkahane uzmanlığıyız ve isterseniz tesisi işleten ekibiz. Salmonidler, canlı yem ve ekipman genelinde dünya çapında tedarik ve danışmanlık.",
   "solutions.banner.stat1.value": "30+ Yıl",
   "solutions.banner.stat1.label": "Toplu Saha Deneyimi",
   "solutions.banner.stat2.value": "10+",
@@ -2297,7 +2297,7 @@
   "solutions.mode.build.badge": "Sıfırdan başlıyorsanız",
   "solutions.mode.build.title": "Kurun",
   "solutions.mode.build.navDesc": "Fizibilite, RAS tasarımı, ekipman ve devreye alma — boş araziden ilk stoklamaya.",
-  "solutions.mode.build.description": "Sermayeniz ve arazi var; gerçekten üretim yapan bir kuluçkahaneye ihtiyacınız var. Fizibilite çalışmasından ilk ticari partiye kadar süreci biz yürütüyoruz.",
+  "solutions.mode.build.description": "Sermayeniz ve arazi var; gerçekten üretim yapan bir kuluçkahaneye ihtiyacınız var. Fizibilite çalışmasından ilk ticari partiye kadar müteahhidiniz ve ekipman tedarikçilerinizle birlikte çalışıyoruz — bir inşaat sözleşmesinin kapsamadığı biyoloji ve süreç uzmanlığını getiriyoruz.",
   "solutions.mode.build.item1.title": "Fizibilite, saha ve su değerlendirmesi",
   "solutions.mode.build.item1.desc": "Pazar analizi, tür stratejisi, saha uygunluğu ve sermayenizi bağlamadan önce projenin kurulabilir olup olmadığına karar veren su kalitesi çalışmaları.",
   "solutions.mode.build.item2.title": "Kuluçkahane ve RAS mühendislik tasarımı",
@@ -2411,5 +2411,6 @@
   "product.artemia.pdfLabel": "Artemia Kistleri Kuluçka Prosedürü (PDF)",
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 Teknik Föyü (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "VARS Deniz Ürünleri Kataloğu",
-  "product.olive-flounder.pdfLabel": "VARS Deniz Ürünleri Kataloğu"
+  "product.olive-flounder.pdfLabel": "VARS Deniz Ürünleri Kataloğu",
+  "solutions.hero.imageAlt": "Ege Bölgesi'ndeki iş ortağı tesiste kuluçkahane denemeleri sırasında VARS teknisyenleri"
 }

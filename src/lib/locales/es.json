@@ -605,8 +605,8 @@
   "export.cta.description": "Nuestros expertos le enviarán un plan de logística y precios personalizados en 24 horas.",
   "export.cta.button": "Comenzar",
   "solutions.hero.eyebrow": "Equipo de Expertos con Más de 30 Años de Experiencia en la Industria",
-  "solutions.hero.title": "Asesoramiento Experto, Abastecimiento y Consultoría Técnica",
-  "solutions.hero.description": "Aprovechando más de 30 años de experiencia práctica en el campo, VARS actúa como su consultor técnico, facilitador y socio de abastecimiento. Diseñamos sistemas bioseguros, optimizamos fórmulas de alimentos, resolvemos cuellos de botella biológicos y lo conectamos con fabricantes globales.",
+  "solutions.hero.title": "Diseñamos criaderos, los operamos y corregimos los que no rinden",
+  "solutions.hero.description": "Experiencia contrastada en la operación de criaderos mediterráneos de peces marinos — lubina (Dicentrarchus labrax) y dorada (Sparus aurata), de reproductores a cosecha. No somos una constructora: somos la experiencia de criadero que hace que lo construido produzca de verdad y, si lo desea, el equipo que lo opera después. Aprovisionamiento y asesoramiento en salmónidos, alimento vivo y equipos en todo el mundo.",
   "solutions.banner.stat1.value": "30+ Años",
   "solutions.banner.stat1.label": "Experiencia de Campo Colectiva",
   "solutions.banner.stat2.value": "10+",
@@ -2297,7 +2297,7 @@
   "solutions.mode.build.badge": "Partiendo de cero",
   "solutions.mode.build.title": "Constrúyalo",
   "solutions.mode.build.navDesc": "Viabilidad, diseño RAS, equipamiento y puesta en marcha — del terreno vacío a la primera siembra.",
-  "solutions.mode.build.description": "Dispone de capital y de un emplazamiento, y necesita un criadero que realmente produzca. Lo acompañamos desde el estudio de viabilidad hasta el primer lote comercial.",
+  "solutions.mode.build.description": "Dispone de capital y de un emplazamiento, y necesita un criadero que realmente produzca. Trabajamos junto a su constructora y sus proveedores de equipos desde el estudio de viabilidad hasta el primer lote comercial, aportando la experiencia biológica y de proceso que un contrato de obra no incluye.",
   "solutions.mode.build.item1.title": "Viabilidad, evaluación del emplazamiento y del agua",
   "solutions.mode.build.item1.desc": "Análisis de mercado, estrategia de especies, viabilidad del emplazamiento y el estudio de calidad del agua que determina si el proyecto es construible antes de comprometer capital.",
   "solutions.mode.build.item2.title": "Ingeniería de criadero y sistemas RAS",
@@ -2411,5 +2411,6 @@
   "product.artemia.pdfLabel": "Procedimiento de incubación de quistes de artemia (PDF)",
   "product.super-fresh-chlorella-v12.pdfLabel": "Ficha técnica de Super Fresh Chlorella SV-12 (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "Catálogo de productos del mar VARS",
-  "product.olive-flounder.pdfLabel": "Catálogo de productos del mar VARS"
+  "product.olive-flounder.pdfLabel": "Catálogo de productos del mar VARS",
+  "solutions.hero.imageAlt": "Técnicos de VARS durante ensayos de criadero en una instalación asociada de la región del Egeo"
 }

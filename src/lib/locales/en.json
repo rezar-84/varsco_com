@@ -605,8 +605,8 @@
   "export.cta.description": "Our experts will send tailored pricing and a logistics plan within 24 hours.",
   "export.cta.button": "Get started",
   "solutions.hero.eyebrow": "Hatchery Operations · Advisory · Sourcing",
-  "solutions.hero.title": "We build hatcheries, run them, and fix the ones that aren't performing",
-  "solutions.hero.description": "Proven running Mediterranean marine finfish hatcheries — European seabass (Dicentrarchus labrax) and gilthead seabream (Sparus aurata) — from broodstock to harvest. Sourcing and advisory across salmonids, live feed and hatchery equipment worldwide.",
+  "solutions.hero.title": "We design hatcheries, run them, and fix the ones that aren't performing",
+  "solutions.hero.description": "Proven running Mediterranean marine finfish hatcheries — European seabass (Dicentrarchus labrax) and gilthead seabream (Sparus aurata), broodstock to harvest. We are not a construction firm: we are the hatchery expertise that makes what you build actually produce, and the team that can run it afterwards. Sourcing and advisory across salmonids, live feed and equipment worldwide.",
   "solutions.banner.stat1.value": "30+ Years",
   "solutions.banner.stat1.label": "Collective Field Experience",
   "solutions.banner.stat2.value": "10+",
@@ -2297,7 +2297,7 @@
   "solutions.mode.build.badge": "Starting from zero",
   "solutions.mode.build.title": "Build it",
   "solutions.mode.build.navDesc": "Feasibility, RAS design, equipment and commissioning — from bare site to first stocking.",
-  "solutions.mode.build.description": "You have capital and a site, and need a hatchery that actually produces. We take it from feasibility study to first commercial batch.",
+  "solutions.mode.build.description": "You have capital and a site, and need a hatchery that actually produces. We work alongside your contractor and equipment suppliers from feasibility study to first commercial batch — the biology and process expertise a construction contract does not come with.",
   "solutions.mode.build.item1.title": "Feasibility, site and water assessment",
   "solutions.mode.build.item1.desc": "Market analysis, species strategy, site viability and the water-quality work that decides whether the project is buildable before you commit capital.",
   "solutions.mode.build.item2.title": "Hatchery and RAS engineering design",
@@ -2411,5 +2411,6 @@
   "product.artemia.pdfLabel": "Artemia Cysts Incubation Procedure (PDF)",
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 Datasheet (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "VARS Seafood Catalogue",
-  "product.olive-flounder.pdfLabel": "VARS Seafood Catalogue"
+  "product.olive-flounder.pdfLabel": "VARS Seafood Catalogue",
+  "solutions.hero.imageAlt": "VARS technicians during hatchery trials at a partner facility in the Aegean region"
 }

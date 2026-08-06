@@ -605,8 +605,8 @@
   "export.cta.description": "当社の専門家が、24時間以内にオーダーメイドの価格設定と物流計画をお送りします。",
   "export.cta.button": "始める",
   "solutions.hero.eyebrow": "30年以上の業界専門知識を持つ専門チーム",
-  "solutions.hero.title": "専門的アドバイザリー、ソーシング、技術コンサルティング",
-  "solutions.hero.description": "30年以上の現場経験を活かし、VARSはお客様の技術コンサルタント、ファシリテーター、ソーシングパートナーとして機能します。バイオセキュアなシステムの設計、飼料配合の最適化、生物学的なボトルネックの解決、およびグローバルメーカーとのネットワーク構築をサポートいたします。",
+  "solutions.hero.title": "種苗生産施設を設計し、運営し、成果の出ていない施設を立て直します",
+  "solutions.hero.description": "地中海産海面魚の種苗生産施設を実際に運営してきた実績 — ヨーロッパスズキ（Dicentrarchus labrax）およびヨーロッパヘダイ（Sparus aurata）を、親魚から出荷まで。当社は建設会社ではありません。建てた施設が実際に生産するようにする種苗生産の専門性であり、その後の運営を担える体制でもあります。サケ・マス類、生餌、機器の調達とアドバイザリーを世界規模で提供いたします。",
   "solutions.banner.stat1.value": "30年以上",
   "solutions.banner.stat1.label": "蓄積された現場経験",
   "solutions.banner.stat2.value": "10以上",
@@ -2297,7 +2297,7 @@
   "solutions.mode.build.badge": "ゼロからの立ち上げ",
   "solutions.mode.build.title": "つくる",
   "solutions.mode.build.navDesc": "事業性評価、閉鎖循環式(RAS)設計、機器選定、試運転まで — 更地から初回の種苗投入まで。",
-  "solutions.mode.build.description": "資金と用地はあり、実際に生産できる種苗生産施設が必要な段階です。事業性評価から初回の商業生産ロットまで一貫して担当いたします。",
+  "solutions.mode.build.description": "資金と用地はあり、実際に生産できる種苗生産施設が必要な段階です。事業性評価から初回の商業生産ロットまで、施工会社および機器サプライヤーと並走し、建設契約には含まれない生物学とプロセスの専門性をご提供いたします。",
   "solutions.mode.build.item1.title": "事業性評価、立地および水質の調査",
   "solutions.mode.build.item1.desc": "市場分析、対象魚種の戦略、立地の適性評価に加え、資金を投じる前にその計画が成立するか否かを判断する水質調査を実施いたします。",
   "solutions.mode.build.item2.title": "種苗生産施設および閉鎖循環式システムの設計",
@@ -2411,5 +2411,6 @@
   "product.artemia.pdfLabel": "アルテミア耐久卵 ふ化手順書（PDF）",
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 データシート（PDF）",
   "product.mediterranean-sea-bream.pdfLabel": "VARS シーフードカタログ",
-  "product.olive-flounder.pdfLabel": "VARS シーフードカタログ"
+  "product.olive-flounder.pdfLabel": "VARS シーフードカタログ",
+  "solutions.hero.imageAlt": "エーゲ海地域の提携施設での種苗生産試験に取り組むVARSの技術スタッフ"
 }

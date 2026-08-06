@@ -605,8 +605,8 @@
   "export.cta.description": "我们的专家将在 24 小时内发送量身定制的定价和物流计划。",
   "export.cta.button": "开始使用",
   "solutions.hero.eyebrow": "拥有 30 多年行业专业知识的专家团队",
-  "solutions.hero.title": "专家咨询、采购和技术顾问",
-  "solutions.hero.description": "凭借 30 多年的实践经验，VARS 充当您的技术顾问、协调员和采购合作伙伴。我们设计生物安全系统、优化饲料配方、解决生物瓶颈，并将您与全球制造商联系起来。",
+  "solutions.hero.title": "我们设计育苗场、运营育苗场，并让不达标的育苗场恢复产能",
+  "solutions.hero.description": "拥有实际运营地中海海水鱼育苗场的业绩 —— 欧洲海鲈（Dicentrarchus labrax）与金头鲷（Sparus aurata），自亲鱼至起捕。我们不是建筑公司：我们是让所建成的场区真正出苗的育苗专业力量，也可以是此后负责运营的团队。在鲑鳟鱼类、鲜活饵料与设备领域提供全球采购与咨询。",
   "solutions.banner.stat1.value": "30+ 年",
   "solutions.banner.stat1.label": "集体现场经验",
   "solutions.banner.stat2.value": "10+",
@@ -2297,7 +2297,7 @@
   "solutions.mode.build.badge": "从零起步",
   "solutions.mode.build.title": "建设",
   "solutions.mode.build.navDesc": "可行性研究、循环水系统设计、设备选型与调试——从空地到首次投苗。",
-  "solutions.mode.build.description": "您已具备资金与场地，需要一座真正能出苗的育苗场。我们从可行性研究一直做到首批商业化生产。",
+  "solutions.mode.build.description": "您已具备资金与场地，需要一座真正能出苗的育苗场。我们与您的施工方及设备供应商并肩工作，从可行性研究直至首批商业化生产，补上建筑合同所不包含的生物学与工艺专业能力。",
   "solutions.mode.build.item1.title": "可行性研究、场址与水源评估",
   "solutions.mode.build.item1.desc": "市场分析、养殖品种策略、场址适宜性评估，以及在您投入资金之前判断项目是否具备建设条件的水质研究。",
   "solutions.mode.build.item2.title": "育苗场与循环水系统工程设计",
@@ -2411,5 +2411,6 @@
   "product.artemia.pdfLabel": "丰年虫卵孵化操作规程（PDF）",
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 技术数据表（PDF）",
   "product.mediterranean-sea-bream.pdfLabel": "VARS 海鲜产品目录",
-  "product.olive-flounder.pdfLabel": "VARS 海鲜产品目录"
+  "product.olive-flounder.pdfLabel": "VARS 海鲜产品目录",
+  "solutions.hero.imageAlt": "VARS 技术人员在爱琴海地区合作场区开展育苗试验"
 }

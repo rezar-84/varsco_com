@@ -605,8 +605,8 @@
   "export.cta.description": "Unsere Experten senden Ihnen innerhalb von 24 Stunden maßgeschneiderte Preise und einen Logistikplan zu.",
   "export.cta.button": "Jetzt starten",
   "solutions.hero.eyebrow": "Expertenteam mit über 30 Jahren Branchenerfahrung",
-  "solutions.hero.title": "Fachberatung, Beschaffung & Technische Beratung",
-  "solutions.hero.description": "Mit über 30 Jahren praktischer Erfahrung agiert VARS als Ihr technischer Berater, Vermittler und Beschaffungspartner. Wir entwerfen biosichere Systeme, optimieren Futterformulierungen, lösen biologische Engpässe und verbinden Sie mit globalen Herstellern.",
+  "solutions.hero.title": "Wir planen Brutanlagen, betreiben sie und bringen leistungsschwache wieder auf Kurs",
+  "solutions.hero.description": "Nachgewiesene Betriebsführung mediterraner Meeresfisch-Brutanlagen — Wolfsbarsch (Dicentrarchus labrax) und Goldbrasse (Sparus aurata), von den Elterntieren bis zur Ernte. Wir sind kein Bauunternehmen: Wir sind die Brutanlagen-Kompetenz, die dafür sorgt, dass das Gebaute tatsächlich produziert — und auf Wunsch das Team, das es anschließend betreibt. Beschaffung und Beratung für Salmoniden, Lebendfutter und Ausrüstung weltweit.",
   "solutions.banner.stat1.value": "30+ Jahre",
   "solutions.banner.stat1.label": "Kollektive Praxiserfahrung",
   "solutions.banner.stat2.value": "10+",
@@ -2297,7 +2297,7 @@
   "solutions.mode.build.badge": "Start bei null",
   "solutions.mode.build.title": "Aufbauen",
   "solutions.mode.build.navDesc": "Machbarkeit, Kreislaufanlagen-Planung, Ausrüstung und Inbetriebnahme — vom leeren Standort bis zum ersten Besatz.",
-  "solutions.mode.build.description": "Sie verfügen über Kapital und einen Standort und benötigen eine Brutanlage, die tatsächlich produziert. Wir begleiten das Vorhaben von der Machbarkeitsstudie bis zur ersten kommerziellen Charge.",
+  "solutions.mode.build.description": "Sie verfügen über Kapital und einen Standort und benötigen eine Brutanlage, die tatsächlich produziert. Wir arbeiten von der Machbarkeitsstudie bis zur ersten kommerziellen Charge mit Ihrem Bauunternehmen und Ihren Ausrüstungslieferanten zusammen — und bringen die Biologie- und Prozesskompetenz ein, die ein Bauvertrag nicht enthält.",
   "solutions.mode.build.item1.title": "Machbarkeit, Standort- und Wasserbewertung",
   "solutions.mode.build.item1.desc": "Marktanalyse, Artenstrategie, Standorteignung und die wasserqualitative Untersuchung, die noch vor der Kapitalbindung entscheidet, ob das Projekt überhaupt realisierbar ist.",
   "solutions.mode.build.item2.title": "Ingenieurplanung für Brutanlage und Kreislaufanlage",
@@ -2411,5 +2411,6 @@
   "product.artemia.pdfLabel": "Inkubationsverfahren für Artemia-Zysten (PDF)",
   "product.super-fresh-chlorella-v12.pdfLabel": "Super Fresh Chlorella SV-12 Datenblatt (PDF)",
   "product.mediterranean-sea-bream.pdfLabel": "VARS Meeresfrüchte-Katalog",
-  "product.olive-flounder.pdfLabel": "VARS Meeresfrüchte-Katalog"
+  "product.olive-flounder.pdfLabel": "VARS Meeresfrüchte-Katalog",
+  "solutions.hero.imageAlt": "VARS-Techniker während Brutanlagen-Versuchen in einem Partnerbetrieb in der Ägäisregion"
 }

@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { PageHero, Section } from "@/components/layout/Page";
+import { Section } from "@/components/layout/Page";
+import heroHatchery from "@/assets/aegean-region-klcdeniz-hatchery-trials-2.webp";
 import { AnimatedRasDiagram } from "@/components/visuals/AnimatedRasDiagram";
 import {
   Award,
@@ -89,11 +90,54 @@ function ServicesPage() {
 
   return (
     <>
-      <PageHero
-        eyebrow={t("solutions.hero.eyebrow")}
-        title={t("solutions.hero.title")}
-        description={t("solutions.hero.description")}
-      />
+      {/* Custom hero rather than PageHero: this page needs a photographic
+          background, and PageHero has no image variant. The image is our own
+          hatchery trial work — evidence for the claim, not stock decoration. */}
+      <section className="relative isolate overflow-hidden bg-navy text-white">
+        <img
+          src={heroHatchery}
+          alt={t("solutions.hero.imageAlt")}
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="eager"
+          fetchPriority="high"
+        />
+        {/* Two overlays: a horizontal one that keeps the left column readable,
+            and a vertical one that seats the section into the banner below. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/92 to-navy/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/60" />
+
+        <div className="relative mx-auto max-w-7xl px-4 py-20 md:px-6 md:py-28">
+          <div className="max-w-3xl">
+            <div className="mb-4 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-mint">
+              <span className="inline-block h-[2px] w-8 bg-mint" />
+              {t("solutions.hero.eyebrow")}
+            </div>
+
+            <h1 className="font-display text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
+              {t("solutions.hero.title")}
+            </h1>
+
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/75 md:text-lg">
+              {t("solutions.hero.description")}
+            </p>
+
+            {/* Mode chips double as in-page navigation, so the four sections
+                below are reachable without scrolling the whole page. */}
+            <div className="mt-8 flex flex-wrap gap-2.5">
+              {MODES.map((mode) => (
+                <a
+                  key={mode.key}
+                  href={`#mode-${mode.key}`}
+                  className="group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3.5 py-2 text-xs font-bold text-white backdrop-blur-sm transition-colors hover:border-mint/60 hover:bg-white/20"
+                >
+                  <mode.icon className="h-3.5 w-3.5 text-mint" aria-hidden="true" />
+                  {t(`solutions.mode.${mode.key}.title`)}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Authority Banner Section */}
       <Section className="py-12 bg-navy text-white">
