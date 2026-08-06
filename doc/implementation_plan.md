@@ -9,13 +9,14 @@ This plan defines the step-by-step Software Development Lifecycle (SDLC) to buil
 ```mermaid
 graph TD
     Phase1[Phase 1: Planning & Setup - Completed] --> Phase2[Phase 2: Security & BFF Setup - Completed]
-    Phase2 --> Phase3[Phase 3: UI & i18n Setup - Pending]
+    Phase2 --> Phase3[Phase 3: UI & i18n Setup - Completed]
     Phase3 --> Phase4[Phase 4: CRM Leads & Forms - Completed]
-    Phase4 --> Phase5[Phase 5: Auth & Registration - Pending]
-    Phase5 --> Phase6[Phase 6: Portal Panels & Dashboards - Pending]
-    Phase6 --> Phase7[Phase 7: Catalog & Cart - Pending]
-    Phase7 --> Phase8[Phase 8: Checkout & Payments - Pending]
-    Phase8 --> Phase9[Phase 9: QA, SEO, & Deployment - Pending]
+    Phase4 --> Phase5[Phase 5: Auth & Registration - Completed]
+    Phase5 --> Phase6[Phase 6: Portal Panels & Dashboards - Completed]
+    Phase6 --> Phase7[Phase 7: Catalog & Cart - Partial]
+    Phase7 --> Phase8[Phase 8: Checkout & Payments - Partial]
+    Phase8 --> Phase9[Phase 9: QA, SEO, & Deployment - Partial]
+    Phase9 --> Phase10[Phase 10: Lead Intelligence & Tracking - In Progress]
 ```
 
 ### Phase 1: Planning & Setup — **Completed**
@@ -30,7 +31,7 @@ graph TD
 - Secure API credential storage using environment variables (never committed to repository). (Completed 2026-07-20)
 - Wire the CORS configurations, CSRF tokens, and rate-limiting modules on public endpoints. (Completed 2026-07-20)
 
-### Phase 3: UI & i18n Setup — _Pending_
+### Phase 3: UI & i18n Setup — **Completed**
 
 - Initialize Tailwind CSS v4 design tokens matching the corporate branding guidelines (e.g. Navy, Soft Cream, Accent Gold).
 - Build structural shell elements: `<Header />`, `<Footer />`, `<Navigation />` layout files in `src/components/`.
@@ -42,36 +43,85 @@ graph TD
 - Build the `/request-quote` and `/contactus` UI pages. (Completed 2026-07-20)
 - Connect the forms to the Astro/Start server functions, dispatching clean payloads to Odoo's CRM API write endpoint. (Completed 2026-07-20)
 
-### Phase 5: Auth & Registration Flow — _Pending_
+### Phase 5: Auth & Registration Flow — **Completed**
 
 - Implement `/login` and `/register` route endpoints.
 - Write session mapping logic inside Start server functions to proxy email/password to Odoo, capture Odoo's session cookie, and set it as an HTTP-only cookie on the customer domain.
 - Write auth hooks (`useAuth`) to manage client-side state, redirection boundaries, and token renewals.
 
-### Phase 6: Portal Panels & Dashboards — _Pending_
+### Phase 6: Portal Panels & Dashboards — **Completed**
 
 - Construct the portal navigation wrap inside `src/routes/account.tsx`.
 - Build user panels for `/account/profile` (address manager), `/account/orders` (history grid), and `/account/customs` (customs logistics documents).
 - Implement server-side loaders in TanStack Start to fetch corresponding data from Odoo portal routes using the proxied user session.
 
-### Phase 7: Catalog & Cart Integration — _Pending_
+### Phase 7: Catalog & Cart Integration — _Partial_ (customer-specific pricelist lookup not built)
 
 - Render product listing grid (`/products`) and item detail pages (`/products/$category/$slug`) using TanStack routing.
 - Implement the shopping cart state (`CartContext`) using browser storage (`localStorage`).
 - Wire real-time dynamic pricing lookups on product detail pages to support customer-tier price list checks.
 
-### Phase 8: Checkout & Payments — _Pending_
+### Phase 8: Checkout & Payments — _Partial_ (checkout route exists; payment gateways not wired)
 
 - Create the checkout form interface at `/cart`.
 - Implement the checkout server function to submit cart arrays to Odoo and generate a draft Sales Order (`sale.order`).
 - Wire third-party payment gateway SDKs/iframe sessions (e.g., Stripe, Iyzico) and configure secure payment confirmation webhooks on Odoo.
 
-### Phase 9: QA, SEO, & Deployment — _Pending_
+### Phase 9: QA, SEO, & Deployment — _Partial_ (sitemap and cutover done; E2E and Lighthouse outstanding)
 
 - Execute automated test runs (Unit, Integration, and E2E checks).
 - Run lighthouse performance scans, ensuring all Core Web Vitals targets are satisfied.
 - Audit SEO alternates, canonical anchors, sitemap indices, and robots.txt.
 - Deploy to staging, verify the complete user journey, then execute cutover.
+
+### Phase 10: Lead Intelligence, Consent & Tracking — _In Progress_
+
+Sales could see that a lead arrived but not what the buyer wanted, where they
+came from, or what they had read. Three pieces address that; the first two have
+shipped.
+
+**Submission capture (done).** `api.quotes.ts` declared a seven-key schema and
+Zod strips unknown keys, so `serviceType`, `inquiryType`, `country`,
+`productSlug` and `customFields` were collected, validated, then discarded
+before reaching Odoo. The schema now carries them plus page, section, locale,
+referrer host and UTM triplet, built by `src/lib/submission-context.ts`.
+`source` became a closed set rather than free text scattered across six call
+sites, because Odoo maps it onto `utm.source` where a typo means a silently
+unattributed lead.
+
+**CRM mapping (done, addon side).** Leads were all named
+"Web inquiry — {name}" and `source` was required but never written to the
+record. `leads.py` now builds a distinct subject and maps `source_id`,
+`medium_id`, `campaign_id`, `country_id` and `lang_id`.
+
+**Visitor tracking (frontend done, needs the addon deployed).** Odoo ships
+`website.visitor` and `website.track`, but the `website` module populates them
+from its own request handling — they only see traffic Odoo serves. A decoupled
+frontend means Odoo observes nothing but the server-to-server lead POST.
+Nothing is broken; Odoo is simply never in the request path. `/api/track`
+forwards the events it would otherwise have collected, so Odoo's existing
+views and lead linkage keep working unchanged.
+
+Design constraints worth carrying forward:
+
+- **Consent is enforced client-side.** The server cannot distinguish a
+  consented visitor from a forged claim, so the client decides. Nothing is
+  queued while consent is absent — buffering in case someone accepts later is
+  collection before consent.
+- **The browser never calls Odoo directly.** The BFF forwards, keeping the
+  write token server-side and giving us a place to drop events at the origin.
+- **Visitor tokens are 32 lowercase hex.** Odoo overloads
+  `website.visitor.access_token`: any other shape is parsed as a `res.partner`
+  id via `int()`, which raises inside a computed field and 500s the request.
+- **Deploys are asymmetric.** This repo auto-deploys from `main`; the addon is
+  deployed by hand. Frontend-ahead-of-addon must always degrade rather than
+  break — unknown lead keys are ignored, and the newsletter falls back to the
+  lead path on a 501.
+
+Remaining: link `website.visitor` to the lead it produced, and set a retention
+policy for raw `website.track` rows.
+
+---
 
 ---
 
@@ -79,7 +129,7 @@ graph TD
 
 To ensure subsequent AI coding agents can work on this codebase seamlessly:
 
-1. **No Odoo Code Development**: Do not write Python/Odoo module files inside this repository. If Odoo-side changes are required, log the requirements inside `doc/odoo_api_spec.md`. The reference addon `varsco_content_api` inside `/home/rubuntu/Projects/varsco_front` should be leveraged.
+1. **No Odoo Code Development**: Do not write Python/Odoo module files inside this repository. If Odoo-side changes are required, log the requirements inside `doc/odoo_api_spec.md`. The addon `varsco_content_api` now lives in its own repository at `/home/rubuntu/Projects/varsco_content_api` (GitHub `rezar-84/varsco_content_api`); `/home/rubuntu/Projects/Websites/varsco_odoo_staging` is a downstream sync mirror, not the source. Odoo-side work belongs in that repository, committed and deployed separately from this one.
 2. **Strict Interfaces**: Define data models and API payload shapes as clean TypeScript interfaces inside `src/lib/types.ts`.
 3. **Fail Loudly**: Reject invalid payloads at API boundaries with detailed error statuses.
 4. **Islands on Interactivity**: Use server rendering by default. Hydrate client-side React components (using `use client` directives) ONLY for interactive panels like dynamic charts, input forms, or carts.
