@@ -1029,10 +1029,76 @@ export const PRODUCTS: Product[] = [
     ],
     specifications: [
       { label: "Standards", value: "ASC & GlobalG.A.P compliant" },
+      // Origin moved out of the product title and into the specs: buyers search
+      // "olive flounder", not "Korean olive flounder", but the sourcing origin
+      // is still a fact they need before they quote.
+      { label: "Origin", value: "South Korea — certified partner farms" },
       { label: "Availability", value: "Year-round, 52-week harvest cycles" },
       { label: "SFA", value: "0.28 g" },
       { label: "Salt", value: "0.23 g" },
       { label: "Logistics", value: "EMEA & North America fresh delivery" },
+    ],
+    exportForms: [
+      {
+        key: "frozen-fillet",
+        name: "Frozen fillet",
+        summary:
+          "Skin-on fillets frozen to export grade, cut two per fish and graded by piece weight.",
+        sizes: ["400 – 500 g/pc", "500 – 600 g/pc"],
+        options: [
+          {
+            label: "Fins",
+            value:
+              "Attached or trimmed, to order. Korean buyers typically ask for fins on; it is your choice.",
+          },
+          { label: "Seasoning", value: "Plain, or lightly salted on request." },
+        ],
+        notes:
+          "Two fillets come from one fish, so piece weight follows harvest size: our largest grade, a 2.0 – 2.5 kg live fish, yields the 500 – 600 g/pc band.",
+      },
+      {
+        key: "fresh-gutted",
+        name: "Fresh gutted",
+        summary:
+          "Whole gutted fish on flake ice, air-freighted for raw-market and sashimi counters.",
+        sizes: [
+          "400 – 600 g/pc",
+          "600 – 800 g/pc",
+          "800 – 1000 g/pc",
+          "1000 – 1200 g/pc",
+          "1200 – 1500 g/pc",
+          "1500 – 2000 g/pc",
+          "2000 – 2500 g/pc",
+        ],
+        notes: "2.0 – 2.5 kg is the largest live fish we produce, which sets the top band.",
+      },
+      {
+        key: "live",
+        name: "Live",
+        summary:
+          "Packed in oxygen-filled bags or dedicated air containers for live-tank restaurants and retail.",
+        options: [
+          {
+            label: "Viability window",
+            value:
+              "24 – 30 hours door-to-door under optimal conditions. Beyond 30 hours the risk rises sharply and we will not ship it.",
+          },
+          {
+            label: "Worked example — Korea to the Gulf",
+            value:
+              "3 – 5 h packing and transfer to ICN, 9 – 10 h flight, 3 – 6 h arrival handling, customs and pickup. Roughly 18 – 24 h total, inside the safe window.",
+          },
+        ],
+        notes:
+          "Tell us the destination airport and we will confirm whether the corridor fits the window before you commit to an order.",
+      },
+    ],
+    exportDocuments: [
+      "TRACES",
+      "Certificate of Analysis (CoA)",
+      "Certificate of Origin",
+      "GlobalG.A.P",
+      "ASC",
     ],
     applications: ["Sushi & sashimi", "Fine dining HORECA", "Premium retail"],
     storage: "Hold at 0 – 2 °C on flake ice; strict cold-chain from harvest to delivery.",

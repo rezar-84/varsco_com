@@ -22,6 +22,26 @@ export interface SeafoodCulinaryInfo {
   nutritionalNumbers?: Array<{ label: string; value: string }>;
 }
 
+/**
+ * A commercial format a product ships in (frozen fillet, fresh gutted, live).
+ *
+ * Distinct from `culinaryInfo.sizeGroups`, which grades one format by weight.
+ * A format changes what is being sold — processing, packing and the logistics
+ * window all differ — so live fish carry a viability limit that a frozen
+ * fillet has no equivalent for.
+ */
+export interface ProductExportForm {
+  /** Stable key: doubles as the locale key prefix and the anchor id. */
+  key: string;
+  name: string;
+  summary: string;
+  /** Weight bands. Numeric — never translated, same rule as sizeGroups.weight. */
+  sizes?: string[];
+  /** Buyer-selectable processing choices (fins on/off, plain or salted). */
+  options?: { label: string; value: string }[];
+  notes?: string;
+}
+
 export interface Product {
   slug: string;
   category: CategorySlug;
@@ -41,6 +61,10 @@ export interface Product {
   pdfUrl?: string;
   pdfLabel?: string;
   culinaryInfo?: SeafoodCulinaryInfo;
+  /** Commercial formats this product ships in. Optional — seafood lines only. */
+  exportForms?: ProductExportForm[];
+  /** Export paperwork available on request; applies across every format. */
+  exportDocuments?: string[];
   seoKeywords?: string[];
   searchSynonyms?: string[];
   relatedProducts?: string[];

@@ -37,6 +37,21 @@ import { createWhatsAppUrl } from "@/lib/utils/whatsapp";
 import type { Product, ProductCategory } from "@/lib/types";
 import { RelatedProductsWidget } from "@/components/RelatedProductsWidget";
 import { useI18n } from "@/context/I18nContext";
+import { activeDict } from "@/lib/i18n-dict";
+
+/**
+ * Product field lookup for head(), which runs outside React so it cannot use
+ * the component-side tp() helper.
+ *
+ * Without this, head() read product.title straight from the English source in
+ * products.ts while the H1 rendered the translated key — so every localized
+ * product page shipped an English <title> over a translated heading. Reads the
+ * request's merged dictionary, the same bridge translateStoreSsr() uses for
+ * /shop.
+ */
+function tpSsr(slug: string, field: string, fallback: string): string {
+  return activeDict()[`product.${slug}.${field}`] || fallback;
+}
 
 export const Route = createFileRoute("/products/$category/$slug")({
   loader: ({ params }) => {
@@ -47,14 +62,24 @@ export const Route = createFileRoute("/products/$category/$slug")({
   },
   head: ({ loaderData }) => {
     const product = loaderData?.product;
+    // Localized title/tagline for meta, matching what the H1 actually renders.
+    const title = product ? tpSsr(product.slug, "title", product.title) : "Product";
+    const tagline = product ? tpSsr(product.slug, "tagline", product.tagline) : "";
+    const description = product
+      ? tpSsr(product.slug, "description", product.description || product.tagline)
+      : "";
     const productSchema = product
       ? {
           "@context": "https://schema.org/",
           "@type": "Product",
-          name: product.title,
-          alternateName: product.searchSynonyms ?? [],
+          name: title,
+          // The English name stays reachable as an alternate: buyers searching
+          // the international trade name should still match a localized page.
+          alternateName: [...new Set([product.title, ...(product.searchSynonyms ?? [])])].filter(
+            (n) => n !== title,
+          ),
           image: product.image ? [product.image] : [],
-          description: product.description || product.tagline,
+          description,
           keywords: (product.seoKeywords ?? []).join(", "),
           category: product.category,
           brand: {
@@ -77,11 +102,11 @@ export const Route = createFileRoute("/products/$category/$slug")({
 
     return {
       meta: [
-        { title: `${product?.title ?? "Product"} — VARS Aquaculture B2B` },
-        { name: "description", content: product?.tagline ?? "" },
+        { title: `${title} — VARS Aquaculture B2B` },
+        { name: "description", content: tagline },
         ...(keywordsMeta ? [{ name: "keywords", content: keywordsMeta }] : []),
-        { property: "og:title", content: product?.title ?? "" },
-        { property: "og:description", content: product?.tagline ?? "" },
+        { property: "og:title", content: title },
+        { property: "og:description", content: tagline },
         { property: "og:image", content: product?.image ?? "" },
       ],
       scripts: productSchema
@@ -486,6 +511,11 @@ function ProductDetail() {
                 {t("productDetail.tabs.hatchingProtocol")}
               </TabsTrigger>
             )}
+            {product.exportForms && product.exportForms.length > 0 && (
+              <TabsTrigger value="export-forms" className="rounded-lg font-bold text-xs">
+                {t("productDetail.tabs.exportForms")}
+              </TabsTrigger>
+            )}
             {product.culinaryInfo && (
               <TabsTrigger value="culinary" className="rounded-lg font-bold text-xs">
                 {t("productDetail.tabs.culinary")}
@@ -618,6 +648,95 @@ function ProductDetail() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </TabsContent>
+          )}
+
+          {product.exportForms && product.exportForms.length > 0 && (
+            <TabsContent forceMount value="export-forms" className="mt-6">
+              <div className="space-y-6">
+                {product.exportForms.map((form, fi) => (
+                  <div
+                    key={form.key}
+                    id={`format-${form.key}`}
+                    className="rounded-2xl border border-border/80 p-6 glass-card space-y-4"
+                  >
+                    <div className="space-y-1">
+                      <h3 className="font-display text-lg font-bold text-navy">
+                        {tp(`exportForm.${fi}.name`, form.name)}
+                      </h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {tp(`exportForm.${fi}.summary`, form.summary)}
+                      </p>
+                    </div>
+
+                    {/* Weight bands stay untranslated — same rule as sizeGroups.weight. */}
+                    {form.sizes && form.sizes.length > 0 && (
+                      <div className="space-y-2">
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                          {t("productDetail.exportForms.sizesHeading")}
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {form.sizes.map((size) => (
+                            <span
+                              key={size}
+                              className="rounded-lg bg-surface-alt border border-border/60 px-2.5 py-1 text-xs font-bold text-navy"
+                            >
+                              {size}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {form.options && form.options.length > 0 && (
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {form.options.map((opt, oi) => (
+                          <div
+                            key={oi}
+                            className="p-3 rounded-xl bg-surface-alt/60 border border-border/40 space-y-1"
+                          >
+                            <div className="text-xs font-bold text-navy">
+                              {tp(`exportForm.${fi}.option.${oi}.label`, opt.label)}
+                            </div>
+                            <div className="text-xs text-muted-foreground leading-relaxed">
+                              {tp(`exportForm.${fi}.option.${oi}.value`, opt.value)}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {form.notes && (
+                      <p className="text-xs text-muted-foreground leading-relaxed border-t border-border/60 pt-3">
+                        {tp(`exportForm.${fi}.notes`, form.notes)}
+                      </p>
+                    )}
+                  </div>
+                ))}
+
+                {product.exportDocuments && product.exportDocuments.length > 0 && (
+                  <div className="rounded-2xl border border-border/80 p-6 glass-card space-y-3">
+                    <h3 className="font-display text-lg font-bold text-navy">
+                      {t("productDetail.exportForms.documentsHeading")}
+                    </h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {t("productDetail.exportForms.documentsLead")}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {/* Certification names are proper nouns — not translated. */}
+                      {product.exportDocuments.map((doc) => (
+                        <span
+                          key={doc}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-mint/15 border border-mint/30 px-2.5 py-1 text-xs font-bold text-navy"
+                        >
+                          <ShieldCheck className="h-3 w-3 text-primary" aria-hidden="true" />
+                          {doc}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </TabsContent>
           )}

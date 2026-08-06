@@ -130,6 +130,42 @@ These apply to every language, before any language-specific rule below:
 
 ---
 
+## 3b. Species names are never transcreated
+
+A species name is a regulatory identifier, not marketing copy. EU catch
+labelling (Reg. 1379/2013) requires the commercial designation **and** the
+scientific name, and VARS ships against TRACES, CoA and Certificates of Origin
+— so naming a fish as a species it is not is a compliance exposure, not a
+style choice.
+
+**Rule.** Use an established native commercial designation only where one
+exists for *that exact species*. Where none exists, keep the international
+trade name and let `latinName` carry the identification. Never borrow the name
+of a different commercial species because it looks similar or sells better.
+
+**Precedent — olive flounder (*Paralichthys olivaceus*), fixed 2026-08-06.**
+Turkish read *Kore Kalkan Balığı* and Spanish *Rodaballo Coreano*. `Kalkan
+balığı` and `rodaballo` are both **turbot, *Scophthalmus maximus*** — a
+different family (Scophthalmidae vs Paralichthyidae) and a higher-priced fish,
+so the labels read as species upgrading. Resolved as:
+
+| Locale | Name | Why |
+|---|---|---|
+| tr | Japon Pisi Balığı (Olive Flounder) | `pisi` is the flounder family; Türkiye does not trade this species, so there is no official designation |
+| es | Olive Flounder | `rodaballo`, `lenguado` and `platija japonesa` all belong to other species — the EU names database assigns *platija japonesa* to *Hippoglossoides elassodon* |
+| de / ru / ar | Olivenflunder / Оливковая камбала / المفلطح الزيتوني | descriptive, no collision |
+| ja / ko / zh | ヒラメ / 광어 (넙치) / 牙鲆 | genuine established names for this exact species |
+
+Origin belongs in the specifications, not the product name: buyers search
+*olive flounder*, not *Korean olive flounder*. Keep origin variants in
+`seoKeywords`/`searchSynonyms` so the search traffic survives the rename.
+
+When a species name is uncertain, check the
+[EU commercial designations database](https://fish-commercial-names.ec.europa.eu/)
+rather than a dictionary, and record the ruling here.
+
+---
+
 ## 4. Localization Standards & Developer Hand-off Checklist
 
 Follow established web i18n standards, not ad hoc choices:
