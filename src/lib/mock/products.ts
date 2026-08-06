@@ -103,11 +103,11 @@ const oyster = { url: oysterImg };
 
 export const CATEGORIES: ProductCategory[] = [
   {
-    slug: "feed-additives",
-    title: "Additives & Raw Materials",
+    slug: "live-feed-aquaculture",
+    title: "Live Feed for Aquaculture",
     description:
-      "High-protein feed ingredients and raw materials — fish meal, vital wheat gluten and potato protein — engineered for aquaculture growth, digestibility and pellet stability.",
-    image: fishMeal.url,
+      "Artemia cysts and Chlorella microalgae — the foundation of every larval rearing programme.",
+    image: reviveCysts.url,
   },
   {
     slug: "hatchery-solutions",
@@ -117,18 +117,18 @@ export const CATEGORIES: ProductCategory[] = [
     image: salmonEggs.url,
   },
   {
-    slug: "live-feed-aquaculture",
-    title: "Live Feed for Aquaculture",
-    description:
-      "Artemia cysts and Chlorella microalgae — the foundation of every larval rearing programme.",
-    image: reviveCysts.url,
-  },
-  {
     slug: "seafood",
     title: "Seafood Export",
     description:
       "Premium Mediterranean and farmed seafood — sea bass, sea bream, amberjack, trout, flounder and more — shipped fresh from Turkey to global markets.",
     image: seaBream.url,
+  },
+  {
+    slug: "feed-additives",
+    title: "Additives & Raw Materials",
+    description:
+      "High-protein feed ingredients and raw materials — fish meal, vital wheat gluten and potato protein — engineered for aquaculture growth, digestibility and pellet stability.",
+    image: fishMeal.url,
   },
 ];
 
