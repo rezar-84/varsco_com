@@ -86,9 +86,8 @@ This document details the backlog of tasks and sprint plans mapped against the S
 - [x] Generate dynamic `sitemap.xml` containing all active storefront routes, catalog products, and blog posts.
 - [ ] Conduct automated E2E test runs checking form submission, user logins, and catalog filters.
 - [ ] Run Lighthouse audits and fix performance bottlenecks (e.g. image optimization, script deferring).
-- [ ] Perform DNS cutover pointing `varsco.com` (or `aquabloom.com`) to the headless frontend and `erp.` to the Odoo instance.
-
----
+- [x] Perform DNS cutover pointing `varsco.com` to the headless frontend and
+      `erp.varsco.com` to the Odoo instance. (Live; `www.` 301s to apex.)
 
 ### Sprint 9 — Lead Intelligence, Consent & Visitor Tracking
 
@@ -145,3 +144,29 @@ otherwise have collected.
       number from the business, applied everywhere.
 - [ ] Browser click-through of the quote drawer (open, submit, error, reopen).
       Verified server-side only so far; the Chrome extension was unavailable.
+
+---
+
+## 3. Live Environment
+
+**The site is in production at `https://varsco.com`; Odoo is at
+`https://erp.varsco.com`.** Two consequences that change how work is done from
+here:
+
+**The frontend auto-deploys from `main`.** A push is a release — verified by
+checking that this session's copy changes were already serving on the live
+site minutes after being pushed. There is no staging gate, so anything merged
+is immediately in front of buyers.
+
+**The Odoo addon does not.** `varsco_content_api` is a separate repository and
+needs deploying to `erp.varsco.com` by hand. The two therefore drift: the
+frontend can be sending fields a not-yet-updated controller ignores. That
+direction is safe by design — unknown keys are dropped, and a payload carrying
+only the original fields still creates a valid lead — but it means a frontend
+release does not imply the CRM behaviour shipped with it is live.
+
+**Verification must not create production data.** `crm.lead` rows written
+against `erp.varsco.com` are real records in the sales pipeline. Exercise the
+validation path (a deliberately invalid payload is rejected before any Odoo
+call) rather than submitting test leads; if a real end-to-end check is needed,
+agree it first and delete the row afterwards.
