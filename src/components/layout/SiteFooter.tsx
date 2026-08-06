@@ -149,6 +149,11 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link to="/glossary" className="hover:text-white transition-colors">
+                  {t("nav.glossary")}
+                </Link>
+              </li>
+              <li>
                 <Link
                   to="/regional-trade-middle-east-europe"
                   className="hover:text-white transition-colors"

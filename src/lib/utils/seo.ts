@@ -22,6 +22,7 @@ export type SeoPage =
   | "oliveFlounderExport"
   | "artemiaGuide"
   | "decapGuide"
+  | "glossary"
   | "horeca"
   | "regionalTrade"
   | "aquariums"
@@ -41,6 +42,53 @@ export type SeoPage =
  * Keeping this data here makes SSR metadata and all locale variants auditable.
  */
 const SEO_COPY: Partial<Record<SeoPage, Record<LangCode, PageMeta>>> = {
+  glossary: {
+    en: {
+      title: "Aquaculture Glossary — Live Feed, Hatchery & Export Terms | VARS",
+      description:
+        "Definitions of the aquaculture terms buyers meet in practice: Artemia and live feed, hatchery and larval rearing, salmonid ova, biosecurity, feed and seafood export.",
+    },
+    tr: {
+      title: "Su Ürünleri Sözlüğü — Canlı Yem, Kuluçkahane ve İhracat Terimleri | VARS",
+      description:
+        "Akvakültürde pratikte karşılaşılan terimlerin tanımları: Artemia ve canlı yem, kuluçkahane ve larva yetiştirme, salmon yumurtası, biyogüvenlik, yem ve su ürünleri ihracatı.",
+    },
+    de: {
+      title: "Aquakultur-Glossar — Lebendfutter, Brüterei & Exportbegriffe | VARS",
+      description:
+        "Definitionen der Aquakulturbegriffe aus der Praxis: Artemia und Lebendfutter, Brüterei und Larvenaufzucht, Salmonideneier, Biosicherheit, Futter und Meeresfrüchteexport.",
+    },
+    ar: {
+      title: "مسرد الاستزراع المائي — الغذاء الحي والمفرخات ومصطلحات التصدير | VARS",
+      description:
+        "تعريفات مصطلحات الاستزراع المائي التي يواجهها المشترون عملياً: الأرتيميا والغذاء الحي، المفرخات وتربية اليرقات، بيض السلمونيات، الأمن الحيوي، الأعلاف وتصدير المأكولات البحرية.",
+    },
+    ru: {
+      title: "Глоссарий аквакультуры — живые корма, инкубаторы и экспорт | VARS",
+      description:
+        "Определения терминов аквакультуры, с которыми покупатели сталкиваются на практике: артемия и живые корма, инкубаторы и подращивание личинок, икра лососевых, биобезопасность, корма и экспорт морепродуктов.",
+    },
+    ja: {
+      title: "養殖用語集 — 生餌・種苗生産・輸出の用語 | VARS",
+      description:
+        "実務で使われる養殖用語の解説：アルテミアと生餌、種苗生産と仔魚飼育、サケ科発眼卵、バイオセキュリティ、飼料、水産物輸出。",
+    },
+    ko: {
+      title: "양식 용어집 — 생사료·부화장·수출 용어 | VARS",
+      description:
+        "현장에서 쓰이는 양식 용어 정리: 알테미아와 생사료, 부화장과 자어 사육, 연어과 발안란, 바이오시큐리티, 사료, 수산물 수출.",
+    },
+    zh: {
+      title: "水产养殖术语表 — 活饵、育苗与出口术语 | VARS",
+      description:
+        "买家在实务中会遇到的水产养殖术语释义：丰年虫与活饵、育苗与幼体培育、鲑鳟发眼卵、生物安全、饲料及水产品出口。",
+    },
+    es: {
+      title: "Glosario de acuicultura — alimento vivo, criadero y exportación | VARS",
+      description:
+        "Definiciones de los términos de acuicultura que se encuentran en la práctica: Artemia y alimento vivo, criadero y cría larvaria, ovas de salmónidos, bioseguridad, pienso y exportación.",
+    },
+  },
   services: {
     en: {
       title: "Aquaculture Consulting, Sourcing & Export Solutions | VARS",

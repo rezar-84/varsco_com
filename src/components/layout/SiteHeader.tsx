@@ -943,6 +943,20 @@ export function SiteHeader() {
                     </Link>
 
                     <Link
+                      to="/glossary"
+                      onClick={closeNow}
+                      className="group block rounded-xl p-3 transition-all hover:bg-surface-alt/90 border-l-2 border-transparent hover:border-primary"
+                    >
+                      <div className="font-bold text-navy group-hover:text-primary flex items-center justify-between">
+                        <span>{t("nav.glossary")}</span>
+                        <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                      </div>
+                      <p className="text-muted-foreground text-[11px] mt-1 leading-relaxed">
+                        {t("nav.glossary.desc")}
+                      </p>
+                    </Link>
+
+                    <Link
                       to="/aquariums-and-hobbyists"
                       onClick={closeNow}
                       className="group block rounded-xl p-3 transition-all hover:bg-surface-alt/90 border-l-2 border-transparent hover:border-primary"
@@ -1207,6 +1221,13 @@ export function SiteHeader() {
                     className="block rounded-lg px-3 py-2 text-xs font-bold text-navy hover:bg-surface-alt"
                   >
                     {t("nav.artemiaIncubation")}
+                  </Link>
+                  <Link
+                    to="/glossary"
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-lg px-3 py-2 text-xs font-bold text-navy hover:bg-surface-alt"
+                  >
+                    {t("nav.glossary")}
                   </Link>
                   <Link
                     to="/aquariums-and-hobbyists"

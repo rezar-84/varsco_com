@@ -115,8 +115,9 @@ const LEGACY_PATHS: Record<string, string> = {
   "/events": "/about-us",
   "/jobs": "/contactus",
   "/help": "/faqs",
-  "/knowledge-base": "/blog",
-  "/glossary": "/blog",
+  // `/glossary` was mapped here too while the term reference did not exist.
+  // It is a real page now, so the redirect is gone and the URL resolves.
+  "/knowledge-base": "/glossary",
   "/delivery-policy": "/distance-sales-agreement",
   "/delivery": "/distance-sales-agreement",
 };

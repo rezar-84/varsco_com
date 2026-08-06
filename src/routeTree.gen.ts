@@ -20,6 +20,7 @@ import { Route as ContactusRouteImport } from './routes/contactus'
 import { Route as DecapsulatedArtemiaGuideRouteImport } from './routes/decapsulated-artemia-guide'
 import { Route as DistanceSalesAgreementRouteImport } from './routes/distance-sales-agreement'
 import { Route as FaqsRouteImport } from './routes/faqs'
+import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as HorecaSeafoodMiddleEastRouteImport } from './routes/horeca-seafood-middle-east'
 import { Route as KvkkDisclosureTextRouteImport } from './routes/kvkk-disclosure-text'
 import { Route as LoginRouteImport } from './routes/login'
@@ -128,6 +129,11 @@ const DistanceSalesAgreementRoute = DistanceSalesAgreementRouteImport.update({
 const FaqsRoute = FaqsRouteImport.update({
   id: '/faqs',
   path: '/faqs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryRoute = GlossaryRouteImport.update({
+  id: '/glossary',
+  path: '/glossary',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HorecaSeafoodMiddleEastRoute = HorecaSeafoodMiddleEastRouteImport.update({
@@ -407,6 +413,7 @@ export interface FileRoutesByFullPath {
   '/decapsulated-artemia-guide': typeof DecapsulatedArtemiaGuideRoute
   '/distance-sales-agreement': typeof DistanceSalesAgreementRoute
   '/faqs': typeof FaqsRoute
+  '/glossary': typeof GlossaryRoute
   '/horeca-seafood-middle-east': typeof HorecaSeafoodMiddleEastRoute
   '/kvkk-disclosure-text': typeof KvkkDisclosureTextRoute
   '/login': typeof LoginRoute
@@ -471,6 +478,7 @@ export interface FileRoutesByTo {
   '/decapsulated-artemia-guide': typeof DecapsulatedArtemiaGuideRoute
   '/distance-sales-agreement': typeof DistanceSalesAgreementRoute
   '/faqs': typeof FaqsRoute
+  '/glossary': typeof GlossaryRoute
   '/horeca-seafood-middle-east': typeof HorecaSeafoodMiddleEastRoute
   '/kvkk-disclosure-text': typeof KvkkDisclosureTextRoute
   '/login': typeof LoginRoute
@@ -537,6 +545,7 @@ export interface FileRoutesById {
   '/decapsulated-artemia-guide': typeof DecapsulatedArtemiaGuideRoute
   '/distance-sales-agreement': typeof DistanceSalesAgreementRoute
   '/faqs': typeof FaqsRoute
+  '/glossary': typeof GlossaryRoute
   '/horeca-seafood-middle-east': typeof HorecaSeafoodMiddleEastRoute
   '/kvkk-disclosure-text': typeof KvkkDisclosureTextRoute
   '/login': typeof LoginRoute
@@ -604,6 +613,7 @@ export interface FileRouteTypes {
     | '/decapsulated-artemia-guide'
     | '/distance-sales-agreement'
     | '/faqs'
+    | '/glossary'
     | '/horeca-seafood-middle-east'
     | '/kvkk-disclosure-text'
     | '/login'
@@ -668,6 +678,7 @@ export interface FileRouteTypes {
     | '/decapsulated-artemia-guide'
     | '/distance-sales-agreement'
     | '/faqs'
+    | '/glossary'
     | '/horeca-seafood-middle-east'
     | '/kvkk-disclosure-text'
     | '/login'
@@ -733,6 +744,7 @@ export interface FileRouteTypes {
     | '/decapsulated-artemia-guide'
     | '/distance-sales-agreement'
     | '/faqs'
+    | '/glossary'
     | '/horeca-seafood-middle-east'
     | '/kvkk-disclosure-text'
     | '/login'
@@ -799,6 +811,7 @@ export interface RootRouteChildren {
   DecapsulatedArtemiaGuideRoute: typeof DecapsulatedArtemiaGuideRoute
   DistanceSalesAgreementRoute: typeof DistanceSalesAgreementRoute
   FaqsRoute: typeof FaqsRoute
+  GlossaryRoute: typeof GlossaryRoute
   HorecaSeafoodMiddleEastRoute: typeof HorecaSeafoodMiddleEastRoute
   KvkkDisclosureTextRoute: typeof KvkkDisclosureTextRoute
   LoginRoute: typeof LoginRoute
@@ -920,6 +933,13 @@ declare module '@tanstack/react-router' {
       path: '/faqs'
       fullPath: '/faqs'
       preLoaderRoute: typeof FaqsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary': {
+      id: '/glossary'
+      path: '/glossary'
+      fullPath: '/glossary'
+      preLoaderRoute: typeof GlossaryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/horeca-seafood-middle-east': {
@@ -1366,6 +1386,7 @@ const rootRouteChildren: RootRouteChildren = {
   DecapsulatedArtemiaGuideRoute: DecapsulatedArtemiaGuideRoute,
   DistanceSalesAgreementRoute: DistanceSalesAgreementRoute,
   FaqsRoute: FaqsRoute,
+  GlossaryRoute: GlossaryRoute,
   HorecaSeafoodMiddleEastRoute: HorecaSeafoodMiddleEastRoute,
   KvkkDisclosureTextRoute: KvkkDisclosureTextRoute,
   LoginRoute: LoginRoute,

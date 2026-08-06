@@ -48,6 +48,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/regional-trade-middle-east-europe", changefreq: "monthly", priority: "0.6" },
           { path: "/artemia-cysts-incubation-guide", changefreq: "yearly", priority: "0.6" },
           { path: "/decapsulated-artemia-guide", changefreq: "yearly", priority: "0.6" },
+          { path: "/glossary", changefreq: "monthly", priority: "0.6" },
           { path: "/contactus", changefreq: "yearly", priority: "0.6" },
           { path: "/request-quote", changefreq: "yearly", priority: "0.7" },
           { path: "/products", changefreq: "weekly", priority: "0.9" },
