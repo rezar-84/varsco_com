@@ -118,7 +118,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           // clean first item prefix
           items[0] = items[0].replace(/^[*-]\s+/, "");
           return (
-            <ul key={blockIdx} className="list-disc pl-5 space-y-2 my-4 text-muted-foreground">
+            <ul key={blockIdx} className="list-disc ps-5 space-y-2 my-4 text-muted-foreground">
               {items.map((item, itemIdx) => (
                 <li key={itemIdx}>{renderInline(item)}</li>
               ))}
@@ -152,7 +152,9 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 key={blockIdx}
                 className="my-6 overflow-hidden rounded-2xl border border-white/20 bg-surface-alt/40 shadow-sm overflow-x-auto"
               >
-                <table className="w-full text-left border-collapse">
+                {/* text-start, not text-left: physical alignment would keep Arabic table
+                    columns left-aligned inside an rtl document. */}
+                <table className="w-full text-start border-collapse">
                   <thead>
                     <tr className="bg-navy/5 border-b border-white/20">
                       {headerCells.map((h, idx) => (
