@@ -2420,5 +2420,11 @@
   "quote.drawer.forProduct": "견적 요청:",
   "quote.drawer.close": "닫기",
   "quote.drawer.fullPage": "전체 견적 페이지 열기",
-  "quote.drawer.error": "요청을 전송하지 못했습니다. 다시 시도하시거나 직접 연락해 주십시오."
+  "quote.drawer.error": "요청을 전송하지 못했습니다. 다시 시도하시거나 직접 연락해 주십시오.",
+  "consent.aria.label": "쿠키 및 분석 동의",
+  "consent.body": "사이트 운영에 필요한 항목만 사용합니다. 동의해 주시면 페이지 개선을 위해 이용 방식도 측정하고자 합니다. 이 설정은 언제든지 변경하실 수 있습니다.",
+  "consent.accept": "분석 허용",
+  "consent.decline": "필수 항목만",
+  "consent.dismiss": "닫고 필수 항목만 허용",
+  "consent.privacyLink": "개인정보처리방침 보기"
 }

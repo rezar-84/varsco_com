@@ -2420,5 +2420,11 @@
   "quote.drawer.forProduct": "Angebotsanfrage für",
   "quote.drawer.close": "Schließen",
   "quote.drawer.fullPage": "Vollständige Angebotsseite öffnen",
-  "quote.drawer.error": "Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
+  "quote.drawer.error": "Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.",
+  "consent.aria.label": "Cookie- und Analyse-Einwilligung",
+  "consent.body": "Wir verwenden nur das, was die Website zum Funktionieren benötigt. Mit Ihrer Erlaubnis würden wir zusätzlich messen, wie die Seiten genutzt werden, um sie zu verbessern. Sie können dies jederzeit ändern.",
+  "consent.accept": "Analyse zulassen",
+  "consent.decline": "Nur notwendige",
+  "consent.dismiss": "Schließen und nur notwendige zulassen",
+  "consent.privacyLink": "Datenschutzerklärung lesen"
 }

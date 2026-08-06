@@ -14,7 +14,7 @@ This document details the backlog of tasks and sprint plans mapped against the S
 | **Sprint 3** | Phase 4     | Zod validations, visual forms, and CRM Lead integration          | **Completed** |
 | **Sprint 4** | Phase 5     | User login, session proxy cookie setup, registration flow        | **Completed** |
 | **Sprint 5** | Phase 6     | Customer portal dashboards, order grid, and customs panel        | **Completed** |
-| **Sprint 6** | Phase 7     | E-commerce catalog, product specification rendering, client cart | **Completed** |
+| **Sprint 6** | Phase 7     | E-commerce catalog, product specification rendering, client cart | Partial       |
 | **Sprint 7** | Phase 8     | Cart checkouts, draft order creator, Iyzico/Stripe payments      | Partial       |
 | **Sprint 8** | Phase 9     | Full SEO crawls, Core Web Vitals audit, and cutover              | Partial       |
 | **Sprint 9** | Phase 10    | Lead intelligence, consent, tracking, and Telegram alerts        | **Next**      |
@@ -68,11 +68,11 @@ This document details the backlog of tasks and sprint plans mapped against the S
 
 ### Sprint 6 — Store Catalog & Client Cart
 
-- [ ] Implement catalog overview (`/products`) and category grids (`/products/$category`).
-- [ ] Create product details page (`/products/$category/$slug`) rendering specs, tabs, and technical descriptions.
-- [ ] Set up `CartContext` using React State + `localStorage` to manage client-side items.
-- [ ] Create a dynamic client query to look up real-time prices and stock availability on details pages when logged in (checking customer-specific Odoo price lists).
-- [ ] Build the `/cart` page with quantity adjustment controls and quote checkout routes.
+- [x] Implement catalog overview (`/products`) and category grids (`/products/$category`).
+- [x] Create product details page (`/products/$category/$slug`) rendering specs, tabs, and technical descriptions.
+- [x] Set up `CartContext` using React State + `localStorage` to manage client-side items.
+- [ ] Create a dynamic client query to look up real-time prices and stock availability on details pages when logged in (checking customer-specific Odoo price lists). **Not built** — no pricelist call exists in the product route or API client; this is the one item keeping Sprint 6 open.
+- [x] Build the `/cart` page with quantity adjustment controls and quote checkout routes.
 
 ### Sprint 7 — E-Commerce Checkouts & Payments
 

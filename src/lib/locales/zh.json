@@ -2420,5 +2420,11 @@
   "quote.drawer.forProduct": "询价商品：",
   "quote.drawer.close": "关闭",
   "quote.drawer.fullPage": "打开完整询价页面",
-  "quote.drawer.error": "未能发送您的请求。请重试或直接与我们联系。"
+  "quote.drawer.error": "未能发送您的请求。请重试或直接与我们联系。",
+  "consent.aria.label": "Cookie 与分析同意",
+  "consent.body": "我们仅使用网站运行所必需的内容。若您同意，我们还希望统计页面的使用情况以便加以改进。您可以随时更改此设置。",
+  "consent.accept": "允许分析",
+  "consent.decline": "仅必要项",
+  "consent.dismiss": "关闭并仅允许必要项",
+  "consent.privacyLink": "查看隐私政策"
 }

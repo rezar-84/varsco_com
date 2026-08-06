@@ -2420,5 +2420,11 @@
   "quote.drawer.forProduct": "見積依頼:",
   "quote.drawer.close": "閉じる",
   "quote.drawer.fullPage": "見積ページ全体を開く",
-  "quote.drawer.error": "リクエストを送信できませんでした。もう一度お試しいただくか、直接ご連絡ください。"
+  "quote.drawer.error": "リクエストを送信できませんでした。もう一度お試しいただくか、直接ご連絡ください。",
+  "consent.aria.label": "Cookieおよび解析に関する同意",
+  "consent.body": "サイトの動作に必要なもののみを使用しています。ご同意いただける場合は、ページの改善のために利用状況も測定いたします。この設定はいつでも変更できます。",
+  "consent.accept": "解析を許可",
+  "consent.decline": "必要なもののみ",
+  "consent.dismiss": "閉じて必要なもののみ許可",
+  "consent.privacyLink": "プライバシーポリシーを見る"
 }

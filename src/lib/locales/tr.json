@@ -2420,5 +2420,11 @@
   "quote.drawer.forProduct": "Teklif talebi:",
   "quote.drawer.close": "Kapat",
   "quote.drawer.fullPage": "Tam teklif sayfasını açın",
-  "quote.drawer.error": "Talebinizi gönderemedik. Lütfen tekrar deneyin veya bizimle doğrudan iletişime geçin."
+  "quote.drawer.error": "Talebinizi gönderemedik. Lütfen tekrar deneyin veya bizimle doğrudan iletişime geçin.",
+  "consent.aria.label": "Çerez ve analiz onayı",
+  "consent.body": "Yalnızca sitenin çalışması için gerekli olanları kullanıyoruz. İzin verirseniz, sayfaları geliştirebilmek için nasıl kullanıldıklarını da ölçmek isteriz. Bu tercihi istediğiniz zaman değiştirebilirsiniz.",
+  "consent.accept": "Analize izin ver",
+  "consent.decline": "Yalnızca gerekli",
+  "consent.dismiss": "Kapat ve yalnızca gerekli olanlara izin ver",
+  "consent.privacyLink": "Gizlilik politikamızı okuyun"
 }

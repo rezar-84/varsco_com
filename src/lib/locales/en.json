@@ -2420,5 +2420,11 @@
   "quote.drawer.forProduct": "Quote request for",
   "quote.drawer.close": "Close",
   "quote.drawer.fullPage": "Open the full quote page",
-  "quote.drawer.error": "We could not send your request. Please try again or contact us directly."
+  "quote.drawer.error": "We could not send your request. Please try again or contact us directly.",
+  "consent.aria.label": "Cookie and analytics consent",
+  "consent.body": "We use only what the site needs to work. With your permission we would also measure how pages are used, so we can improve them. You can change this at any time.",
+  "consent.accept": "Allow analytics",
+  "consent.decline": "Necessary only",
+  "consent.dismiss": "Dismiss and allow only necessary",
+  "consent.privacyLink": "Read our privacy policy"
 }

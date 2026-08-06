@@ -2420,5 +2420,11 @@
   "quote.drawer.forProduct": "Solicitud de cotización para",
   "quote.drawer.close": "Cerrar",
   "quote.drawer.fullPage": "Abrir la página completa de cotización",
-  "quote.drawer.error": "No hemos podido enviar su solicitud. Inténtelo de nuevo o contáctenos directamente."
+  "quote.drawer.error": "No hemos podido enviar su solicitud. Inténtelo de nuevo o contáctenos directamente.",
+  "consent.aria.label": "Consentimiento de cookies y analítica",
+  "consent.body": "Utilizamos solo lo que el sitio necesita para funcionar. Con su permiso, mediríamos además cómo se usan las páginas para poder mejorarlas. Puede cambiarlo en cualquier momento.",
+  "consent.accept": "Permitir analítica",
+  "consent.decline": "Solo lo necesario",
+  "consent.dismiss": "Cerrar y permitir solo lo necesario",
+  "consent.privacyLink": "Lea nuestra política de privacidad"
 }

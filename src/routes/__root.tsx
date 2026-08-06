@@ -18,6 +18,7 @@ import { CartProvider } from "@/context/CartContext";
 import { StoreCartProvider } from "@/context/StoreCartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { I18nProvider, LANGUAGES } from "@/context/I18nContext";
+import { ConsentBanner } from "@/components/layout/ConsentBanner";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { getLocalizedPageMeta } from "@/lib/utils/seo";
 import type { SeoPage } from "@/lib/utils/seo";
@@ -325,6 +326,7 @@ function RootComponent() {
                 <SiteShell>
                   <Outlet />
                 </SiteShell>
+                <ConsentBanner />
               </WishlistProvider>
             </StoreCartProvider>
           </CartProvider>
