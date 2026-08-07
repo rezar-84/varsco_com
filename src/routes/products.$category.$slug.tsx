@@ -36,6 +36,7 @@ import { getProduct, getCategory } from "@/lib/mock/products";
 import { createWhatsAppUrl } from "@/lib/utils/whatsapp";
 import type { Product, ProductCategory } from "@/lib/types";
 import { RelatedProductsWidget } from "@/components/RelatedProductsWidget";
+import { GlossaryTermsBlock } from "@/components/GlossaryTermsBlock";
 import { QuoteDrawer } from "@/components/layout/QuoteDrawer";
 import { useI18n } from "@/context/I18nContext";
 import { activeDict } from "@/lib/i18n-dict";
@@ -907,6 +908,13 @@ function ProductDetail() {
               {tpArray("longDescription", product.longDescription ?? []).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
+              <GlossaryTermsBlock
+                headingKey="glossary.mentions.headingProduct"
+                text={[
+                  tp("description", product.description),
+                  ...tpArray("longDescription", product.longDescription ?? []),
+                ].join(" ")}
+              />
             </div>
           </TabsContent>
         </Tabs>

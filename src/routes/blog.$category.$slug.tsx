@@ -19,6 +19,7 @@ import { PRODUCTS } from "@/lib/mock/products";
 import { ProductCard } from "@/components/ProductCard";
 import { useI18n } from "@/context/I18nContext";
 import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
+import { GlossaryTermsBlock } from "@/components/GlossaryTermsBlock";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -323,6 +324,8 @@ function Article() {
               <MarkdownRenderer content={post.body} />
             </article>
 
+            <GlossaryTermsBlock text={post.body} />
+
             {/* Custom Inbound CTA Block */}
             {getCtaBlock()}
 
@@ -451,11 +454,9 @@ function Article() {
                   post.slug.includes("seafood") ||
                   post.slug.includes("middle-east")
                 ) {
-                  return [
-                    "mediterranean-sea-bass",
-                    "mediterranean-sea-bream",
-                    "meagre",
-                  ].includes(p.slug);
+                  return ["mediterranean-sea-bass", "mediterranean-sea-bream", "meagre"].includes(
+                    p.slug,
+                  );
                 }
                 return false;
               });

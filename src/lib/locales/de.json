@@ -2530,6 +2530,9 @@
   "glossary.category.health": "Gesundheit, Biosicherheit & Zertifizierung",
   "glossary.category.feed": "Futter & Ernährung",
   "glossary.category.export": "Meeresfrüchteexport & Handel",
+  "glossary.mentions.heading": "Begriffe in diesem Artikel",
+  "glossary.mentions.headingProduct": "Begriffe auf dieser Seite",
+  "glossary.mentions.cta": "Zum vollständigen Glossar",
   "nav.glossary": "Aquakultur-Glossar",
   "nav.glossary.desc": "Begriffe zu Lebendfutter, Brüterei, Eiern und Export."
 }

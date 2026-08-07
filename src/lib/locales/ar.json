@@ -2530,6 +2530,9 @@
   "glossary.category.health": "الصحة والأمن الحيوي والاعتماد",
   "glossary.category.feed": "الأعلاف والتغذية",
   "glossary.category.export": "تصدير المأكولات البحرية والتجارة",
+  "glossary.mentions.heading": "المصطلحات الواردة في هذا المقال",
+  "glossary.mentions.headingProduct": "المصطلحات الواردة في هذه الصفحة",
+  "glossary.mentions.cta": "تصفح المسرد كاملاً",
   "nav.glossary": "مسرد الاستزراع المائي",
   "nav.glossary.desc": "مصطلحات الغذاء الحي والمفرخات والبيض والتصدير."
 }

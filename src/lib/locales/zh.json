@@ -2530,6 +2530,9 @@
   "glossary.category.health": "卫生、生物安全与认证",
   "glossary.category.feed": "饲料与营养",
   "glossary.category.export": "水产品出口与贸易",
+  "glossary.mentions.heading": "本文涉及的术语",
+  "glossary.mentions.headingProduct": "本页涉及的术语",
+  "glossary.mentions.cta": "浏览完整术语表",
   "nav.glossary": "水产养殖术语表",
   "nav.glossary.desc": "活饵、育苗、发眼卵与出口术语释义。"
 }

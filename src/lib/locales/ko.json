@@ -2530,6 +2530,9 @@
   "glossary.category.health": "위생·바이오시큐리티·인증",
   "glossary.category.feed": "사료와 영양",
   "glossary.category.export": "수산물 수출과 무역",
+  "glossary.mentions.heading": "이 글에 나오는 용어",
+  "glossary.mentions.headingProduct": "이 페이지에 나오는 용어",
+  "glossary.mentions.cta": "전체 용어집 보기",
   "nav.glossary": "양식 용어집",
   "nav.glossary.desc": "생사료·부화장·발안란·수출 용어 정리."
 }

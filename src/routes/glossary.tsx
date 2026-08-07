@@ -1,10 +1,12 @@
-import { useCallback, useMemo, useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useCallback, useMemo } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { z } from "zod";
 import { PageHero, Section } from "@/components/layout/Page";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BookOpen, Link2, Search, MessageCircle } from "lucide-react";
 import { useI18n } from "@/context/I18nContext";
+import { activeDict, activeDictLang } from "@/lib/i18n-dict";
 import { getLocalizedMeta } from "@/lib/utils/seo";
 import {
   GLOSSARY,
@@ -13,15 +15,85 @@ import {
   type GlossaryTerm,
 } from "@/lib/mock/glossary";
 
+/** Same source blog.$category.$slug.tsx uses for absolute URLs in its schema. */
+const SITE_URL = import.meta.env.VITE_SITE_URL || "https://varsco.com";
+
+/**
+ * Filter state lives in the URL so a filtered view can be linked, bookmarked
+ * and crawled. Both are optional — a bare /glossary is the unfiltered set.
+ */
+const glossarySearchSchema = z.object({
+  q: z.string().trim().max(80).optional(),
+  cat: z.enum(["live-feed", "hatchery", "salmonid", "health", "feed", "export"]).optional(),
+});
+
+/**
+ * DefinedTermSet for the whole glossary.
+ *
+ * Built in head(), which runs outside React, so definitions are read through
+ * activeDict() — the same SSR bridge products.$category.$slug.tsx uses — and
+ * the schema carries the active locale rather than always English.
+ *
+ * Worth being straight about the payoff: there is no Google rich result for
+ * DefinedTermSet. This buys entity clarity and makes the definitions legible
+ * to answer engines; it will not change how the page looks in search.
+ */
+function glossarySchema() {
+  const dict = activeDict();
+  const lang = activeDictLang() ?? "en";
+  const tr = (slug: string, field: "term" | "definition", fallback: string) =>
+    dict[`glossary.term.${slug}.${field}`] || fallback;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${SITE_URL}/glossary`,
+    name: dict["glossary.hero.title"] || "Aquaculture Glossary",
+    description: dict["glossary.hero.description"] || undefined,
+    inLanguage: lang,
+    hasDefinedTerm: GLOSSARY.map((e) => ({
+      "@type": "DefinedTerm",
+      "@id": `${SITE_URL}/glossary#${e.slug}`,
+      name: tr(e.slug, "term", e.term),
+      ...(e.abbr ? { alternateName: e.abbr } : {}),
+      description: tr(e.slug, "definition", e.definition),
+      inDefinedTermSet: `${SITE_URL}/glossary`,
+    })),
+  };
+}
+
 export const Route = createFileRoute("/glossary")({
-  head: () => ({ meta: getLocalizedMeta("glossary") }),
+  validateSearch: (search) => glossarySearchSchema.parse(search),
+  head: () => ({
+    meta: getLocalizedMeta("glossary"),
+    scripts: [
+      {
+        // Stable id so client-side navigation replaces this block instead of
+        // appending a second copy alongside the previous route's schema.
+        id: "ld-glossary",
+        type: "application/ld+json",
+        children: JSON.stringify(glossarySchema()),
+      },
+    ],
+  }),
   component: GlossaryPage,
 });
 
 function GlossaryPage() {
   const { t } = useI18n();
-  const [query, setQuery] = useState("");
-  const [activeCat, setActiveCat] = useState<GlossaryCategoryKey | "all">("all");
+  const { q, cat } = Route.useSearch();
+  const navigate = useNavigate({ from: "/glossary" });
+
+  const query = q ?? "";
+  const activeCat: GlossaryCategoryKey | "all" = cat ?? "all";
+
+  // `replace` so typing does not fill the back button with one entry per
+  // keystroke; the shareable URL is the point, not the history trail.
+  const setQuery = (next: string) =>
+    navigate({ search: (s) => ({ ...s, q: next || undefined }), replace: true });
+
+  const setActiveCat = (next: GlossaryCategoryKey | "all") =>
+    navigate({ search: (s) => ({ ...s, cat: next === "all" ? undefined : next }), replace: true });
 
   /**
    * Entries fall back to the English source when a locale carries no override,
@@ -61,6 +133,24 @@ function GlossaryPage() {
     matches.some((e) => e.category === c.key),
   );
 
+  // First entry at each initial, in the order the results actually render, so
+  // a letter jump always lands on something.
+  const letters = useMemo(() => {
+    const seen = new Map<string, string>();
+    for (const cat of visibleCategories) {
+      const inCat = matches
+        .filter((e) => e.category === cat.key)
+        .sort((a, b) => tg(a, "term").localeCompare(tg(b, "term")));
+      for (const e of inCat) {
+        const letter = tg(e, "term").charAt(0).toLocaleUpperCase();
+        if (!seen.has(letter)) seen.set(letter, e.slug);
+      }
+    }
+    return [...seen.entries()]
+      .map(([letter, slug]) => ({ letter, slug }))
+      .sort((a, b) => a.letter.localeCompare(b.letter));
+  }, [matches, visibleCategories, tg]);
+
   return (
     <>
       <PageHero
@@ -69,9 +159,11 @@ function GlossaryPage() {
         description={t("glossary.hero.description")}
       />
 
-      <Section>
-        {/* Filter bar */}
-        <div className="space-y-5">
+      {/* Filter bar. Sticky so the category and letter jumps stay reachable
+          while scrolling 88 entries, which is the point at which a flat list
+          stops being navigable. */}
+      <div className="sticky top-0 z-30 border-b border-border/80 bg-background/95 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl space-y-3 px-4 py-4 md:px-6">
           <div className="relative max-w-xl">
             <Search className="pointer-events-none absolute start-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -79,7 +171,7 @@ function GlossaryPage() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("glossary.searchPlaceholder")}
               aria-label={t("glossary.searchPlaceholder")}
-              className="h-12 ps-10 bg-background text-sm"
+              className="h-11 ps-10 bg-background text-sm"
             />
           </div>
 
@@ -98,8 +190,26 @@ function GlossaryPage() {
               />
             ))}
           </div>
-        </div>
 
+          {/* Letters present in the current result set only — offering a jump
+              to a letter with nothing behind it is worse than omitting it. */}
+          {letters.length > 1 && (
+            <div className="flex flex-wrap gap-1 pt-0.5">
+              {letters.map(({ letter, slug }) => (
+                <a
+                  key={letter}
+                  href={`#${slug}`}
+                  className="rounded px-1.5 py-0.5 text-[11px] font-bold text-muted-foreground transition-colors hover:bg-surface-alt hover:text-primary"
+                >
+                  {letter}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <Section>
         {/* Results */}
         {matches.length === 0 ? (
           <p className="mt-12 text-sm text-muted-foreground">

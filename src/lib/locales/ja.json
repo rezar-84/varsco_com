@@ -2530,6 +2530,9 @@
   "glossary.category.health": "衛生・バイオセキュリティ・認証",
   "glossary.category.feed": "飼料と栄養",
   "glossary.category.export": "水産物輸出と貿易",
+  "glossary.mentions.heading": "この記事で使われている用語",
+  "glossary.mentions.headingProduct": "このページで使われている用語",
+  "glossary.mentions.cta": "用語集をすべて見る",
   "nav.glossary": "養殖用語集",
   "nav.glossary.desc": "生餌・種苗生産・発眼卵・輸出の用語解説。"
 }

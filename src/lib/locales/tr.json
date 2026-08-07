@@ -2530,6 +2530,9 @@
   "glossary.category.health": "Sağlık, Biyogüvenlik ve Sertifikasyon",
   "glossary.category.feed": "Yem ve Beslenme",
   "glossary.category.export": "Su Ürünleri İhracatı ve Ticaret",
+  "glossary.mentions.heading": "Bu yazıda geçen terimler",
+  "glossary.mentions.headingProduct": "Bu sayfadaki terimler",
+  "glossary.mentions.cta": "Sözlüğün tamamına göz atın",
   "nav.glossary": "Su Ürünleri Sözlüğü",
   "nav.glossary.desc": "Canlı yem, kuluçkahane, yumurta ve ihracat terimleri."
 }

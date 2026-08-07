@@ -2530,6 +2530,9 @@
   "glossary.category.health": "Sanidad, bioseguridad y certificación",
   "glossary.category.feed": "Pienso y nutrición",
   "glossary.category.export": "Exportación y comercio de producto",
+  "glossary.mentions.heading": "Términos de este artículo",
+  "glossary.mentions.headingProduct": "Términos de esta página",
+  "glossary.mentions.cta": "Ver el glosario completo",
   "nav.glossary": "Glosario de acuicultura",
   "nav.glossary.desc": "Términos de alimento vivo, criadero, ovas y exportación."
 }

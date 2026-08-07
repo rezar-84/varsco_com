@@ -2530,6 +2530,9 @@
   "glossary.category.health": "Здоровье, биобезопасность и сертификация",
   "glossary.category.feed": "Корма и питание",
   "glossary.category.export": "Экспорт морепродуктов и торговля",
+  "glossary.mentions.heading": "Термины в этой статье",
+  "glossary.mentions.headingProduct": "Термины на этой странице",
+  "glossary.mentions.cta": "Открыть полный глоссарий",
   "nav.glossary": "Глоссарий аквакультуры",
   "nav.glossary.desc": "Термины по живым кормам, инкубаторам, икре и экспорту."
 }

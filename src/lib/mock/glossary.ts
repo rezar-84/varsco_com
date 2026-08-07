@@ -813,3 +813,61 @@ export const getGlossaryByCategory = (key: GlossaryCategoryKey): GlossaryTerm[] 
 
 export const getGlossaryTerm = (slug: string): GlossaryTerm | undefined =>
   GLOSSARY.find((g) => g.slug === slug);
+
+/**
+ * Entries whose term is an ordinary English word before it is a piece of
+ * jargon. Matching these against running prose produces links off the back of
+ * "ash content", "fry the fillet" or "grading the copy" — noise that makes the
+ * whole block look automated, which is exactly what stops people trusting it.
+ * They stay in the glossary; they are just never auto-detected.
+ */
+const AMBIGUOUS = new Set([
+  "ash",
+  "fry",
+  "binder",
+  "fillet",
+  "dressed",
+  "grading",
+  "salinity",
+  "hatchery",
+  "attractant",
+  "palatability",
+  "quarantine",
+  "traceability",
+  "enrichment",
+  "spawning",
+  "proximity",
+]);
+
+/** Word-boundary safe, and escaped so a term like "D&G" cannot break the pattern. */
+const boundaryRe = (needle: string) =>
+  new RegExp(
+    `(^|[^\\p{L}\\p{N}])${needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=$|[^\\p{L}\\p{N}])`,
+    "iu",
+  );
+
+/**
+ * Glossary entries genuinely mentioned in a piece of copy.
+ *
+ * Deliberately detection-only: the caller renders a "terms in this article"
+ * block beside the text rather than rewriting it. MarkdownRenderer is a
+ * hand-rolled parser, and teaching it to inject links while avoiding existing
+ * links, headings and code would cost far more than this block is worth.
+ *
+ * Capped because the value here is a signpost to a handful of relevant
+ * definitions, not an index of everything the page happens to say.
+ */
+export function findGlossaryMentions(text: string, limit = 6): GlossaryTerm[] {
+  if (!text) return [];
+  const hits: GlossaryTerm[] = [];
+
+  for (const entry of GLOSSARY) {
+    if (AMBIGUOUS.has(entry.slug)) continue;
+    // The abbreviation is checked too: an article is far likelier to write
+    // "HUFA" than "Highly Unsaturated Fatty Acids".
+    const candidates = [entry.term, entry.abbr].filter((c): c is string => !!c && c.length > 2);
+    if (candidates.some((c) => boundaryRe(c).test(text))) hits.push(entry);
+  }
+
+  return hits.slice(0, limit);
+}

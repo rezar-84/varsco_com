@@ -2530,6 +2530,9 @@
   "glossary.category.health": "Health, Biosecurity & Certification",
   "glossary.category.feed": "Feed & Nutrition",
   "glossary.category.export": "Seafood Export & Trade",
+  "glossary.mentions.heading": "Terms in this article",
+  "glossary.mentions.headingProduct": "Terms on this page",
+  "glossary.mentions.cta": "Browse the full glossary",
   "nav.glossary": "Aquaculture Glossary",
   "nav.glossary.desc": "Live feed, hatchery, ova and export terms, defined."
 }
