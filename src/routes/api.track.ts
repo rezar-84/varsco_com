@@ -32,6 +32,25 @@ const trackSchema = z.object({
     .max(50),
 });
 
+/**
+ * Visitor country, taken from Cloudflare's edge rather than the browser.
+ *
+ * Read here and never accepted from the client: a self-reported country is
+ * unverifiable, and this value ends up in a CRM report people make decisions
+ * from. Same trust model as the `cf-connecting-ip` read in src/server.ts —
+ * both depend on the proxy staying enabled (orange cloud), which DEPLOYMENT.md
+ * already requires for rate limiting to work at all.
+ *
+ * Cloudflare sends `XX` when it cannot resolve a country and `T1` for Tor exit
+ * nodes. Both are placeholders, not ISO codes, so they are dropped rather than
+ * written into the report as if they were real countries.
+ */
+function resolveCountry(request: Request): string | undefined {
+  const raw = request.headers.get("cf-ipcountry")?.trim().toUpperCase();
+  if (!raw || raw === "XX" || raw === "T1" || !/^[A-Z]{2}$/.test(raw)) return undefined;
+  return raw;
+}
+
 export const Route = createFileRoute("/api/track")({
   server: {
     handlers: {
@@ -54,6 +73,7 @@ export const Route = createFileRoute("/api/track")({
           await apiClient.trackVisit({
             visitor_token: validated.data.visitorToken,
             lang_code: validated.data.langCode,
+            country_code: resolveCountry(request),
             events: validated.data.events,
           });
 

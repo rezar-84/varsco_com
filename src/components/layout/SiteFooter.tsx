@@ -4,6 +4,7 @@ import { useI18n } from "@/context/I18nContext";
 import { VarsLogo } from "./VarsLogo";
 import { Button } from "@/components/ui/button";
 import { odooAssetUrl } from "@/lib/odoo-asset";
+import { clearConsent } from "@/lib/consent";
 
 export function SiteFooter() {
   const { t, languages, lang, setLang, currentLanguage } = useI18n();
@@ -194,6 +195,20 @@ export function SiteFooter() {
                 <Link to="/kvkk-disclosure-text" className="hover:text-white transition-colors">
                   {t("footer.kvkk")}
                 </Link>
+              </li>
+              <li>
+                {/* Withdrawal has to be as easy as consenting, under both KVKK
+                    and GDPR — and the banner already tells visitors they can
+                    change their mind at any time. Clearing the stored decision
+                    fires CONSENT_EVENT, which brings the banner back and drops
+                    the visitor token, so no extra state is needed here. */}
+                <button
+                  type="button"
+                  onClick={() => clearConsent()}
+                  className="hover:text-white transition-colors text-start"
+                >
+                  {t("footer.cookiePreferences")}
+                </button>
               </li>
               <li>
                 <Link to="/distance-sales-agreement" className="hover:text-white transition-colors">

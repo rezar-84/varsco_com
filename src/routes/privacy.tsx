@@ -267,11 +267,23 @@ function PrivacyEn() {
         </li>
       </ul>
 
-      <h2>5. Cookies</h2>
+      <h2>5. Cookies and Analytics</h2>
       <p>
-        We use essential and analytics cookies to optimize user experience, store language
-        preferences, and analyze site performance. You can adjust cookie settings via your browser
-        preferences.
+        We store only what the site needs to function — your language choice, session and cart —
+        which requires no consent and cannot be declined while you use the site.
+      </p>
+      <p>
+        Analytics is separate and runs only if you allow it. Nothing is collected before you choose,
+        and declining is the default. When enabled, we record the pages you visit, the language the
+        site is displayed in, the country your connection resolves to, and a randomly generated
+        identifier that lets us count one visitor's pages as a single visit. That identifier is not
+        linked to your name or email, and we do not track you across other websites.
+      </p>
+      <p>
+        Your choice is stored in your browser, not in a cookie, so browser cookie settings do not
+        control it. To change or withdraw it at any time, use the{" "}
+        <strong>Cookie preferences</strong> link in the footer of any page. Withdrawing takes effect
+        immediately and also deletes the identifier described above.
       </p>
 
       <h2>6. Your Rights</h2>
