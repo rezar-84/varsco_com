@@ -31,7 +31,13 @@ export interface QuoteFormData {
   message: string;
 }
 
-const buildSchema = (t: (k: string) => string) =>
+/**
+ * `requireQuantity` is on whenever a product is selected. Volume is the first
+ * thing sales needs in order to price anything, and no branch of this form used
+ * to ask for it — so quotes arrived without the one number that makes them
+ * actionable. A general enquiry has no product to quantify, so it stays exempt.
+ */
+const buildSchema = (t: (k: string) => string, requireQuantity: boolean) =>
   z.object({
     // min(2) matches /api/quotes. At min(1) a single character passed here and
     // was rejected server-side, so the buyer got a failure with no field marked.
@@ -41,6 +47,9 @@ const buildSchema = (t: (k: string) => string) =>
     phone: z.string().trim().min(6, t("quote.err.phone")).max(30, t("quote.err.max")),
     country: z.string().trim().max(80).optional().default(""),
     productSlug: z.string().optional().default(""),
+    quantity: requireQuantity
+      ? z.string().trim().min(1, t("quote.err.quantity")).max(80, t("quote.err.max"))
+      : z.string().trim().max(80).optional().default(""),
     message: z.string().trim().max(1000).optional().default(""),
     consent: z.literal("on", { message: t("quote.err.consent") }),
   });
@@ -92,7 +101,7 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
     return res === key ? product[field] : res;
   };
 
-  const schema = buildSchema(t);
+  const schema = buildSchema(t, !!selectedProduct);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,18 +116,22 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
     }
 
     setErrors({});
-    const { consent: _c, ...data } = parsed.data;
+    const { consent: _c, quantity, ...data } = parsed.data;
 
-    // Combine custom category-specific requirements into the submission
+    // Quantity travels with the other custom specs so Odoo renders it as a
+    // labelled field, and leads the summary line because it is the first thing
+    // read when the lead is triaged.
+    const specs = quantity ? { quantity, ...customSpecs } : customSpecs;
+
     const finalData: QuoteFormData = {
       ...data,
       productSlug: selectedSlug,
       productTitle: selectedProduct?.title || "General Inquiry",
-      customFields: customSpecs,
-      message: `${selectedProduct ? `[PRODUCT REQUEST: ${tp(selectedProduct, "title")}] ` : ""}${data.message}${
-        Object.keys(customSpecs).length > 0
-          ? `\n\nCustom Specs: ${JSON.stringify(customSpecs)}`
-          : ""
+      customFields: specs,
+      message: `${selectedProduct ? `[PRODUCT REQUEST: ${tp(selectedProduct, "title")}] ` : ""}${
+        quantity ? `[QTY: ${quantity}] ` : ""
+      }${data.message}${
+        Object.keys(specs).length > 0 ? `\n\nCustom Specs: ${JSON.stringify(specs)}` : ""
       }`,
     };
 
@@ -288,9 +301,65 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
             </span>
           </div>
 
+          {/* Quantity sits above the per-category fields because it applies to
+              every product and is the one answer a quote cannot be priced
+              without. Required whenever a product is selected. */}
+          <div className="text-xs">
+            <Label htmlFor="quantity" className="text-[11px] font-bold text-navy">
+              {t("quoteForm.quantityLabel")} <span className="text-primary">*</span>
+            </Label>
+            <Input
+              id="quantity"
+              name="quantity"
+              required
+              aria-invalid={!!errors.quantity}
+              placeholder={
+                isSalmonOva
+                  ? t("quoteForm.quantityPlaceholder.ova")
+                  : t("quoteForm.quantityPlaceholder.generic")
+              }
+              className="bg-background h-9 text-xs"
+            />
+            {errors.quantity && (
+              <p className="mt-1 flex items-center gap-1 text-[10px] font-semibold text-destructive">
+                <AlertCircle className="h-3 w-3" /> {errors.quantity}
+              </p>
+            )}
+          </div>
+
           {/* Type A: Salmon Ova Parameters */}
           {isSalmonOva && (
             <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div>
+                <Label htmlFor="eyedStage" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.eyedStageLabel")}
+                </Label>
+                <Input
+                  id="eyedStage"
+                  placeholder={t("quoteForm.eyedStagePlaceholder")}
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, eyedStage: e.target.value })}
+                  className="bg-background h-9 text-xs"
+                />
+              </div>
+              <div>
+                <Label htmlFor="orderPurpose" className="text-[11px] font-bold text-navy">
+                  {t("quoteForm.purposeLabel")}
+                </Label>
+                {/* Commercial grow-out, a research trial and "something else"
+                    carry different volumes, certification needs and lead times,
+                    so this changes how the enquiry is handled. */}
+                <select
+                  id="orderPurpose"
+                  value={customSpecs.orderPurpose ?? ""}
+                  onChange={(e) => setCustomSpecs({ ...customSpecs, orderPurpose: e.target.value })}
+                  className="mt-0.5 h-9 w-full rounded-md border border-input bg-background px-3 text-xs"
+                >
+                  <option value="">{t("quoteForm.purpose.unset")}</option>
+                  <option value="farming">{t("quoteForm.purpose.farming")}</option>
+                  <option value="research">{t("quoteForm.purpose.research")}</option>
+                  <option value="other">{t("quoteForm.purpose.other")}</option>
+                </select>
+              </div>
               <div>
                 <Label htmlFor="deliveryWeek" className="text-[11px] font-bold text-navy">
                   Target Delivery Week / Month
