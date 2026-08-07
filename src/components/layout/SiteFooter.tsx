@@ -45,9 +45,9 @@ export function SiteFooter() {
 
           {/* Column 2: Company Links */}
           <div>
-            <h4 className="font-display text-xs font-bold uppercase tracking-widest text-mint mb-4">
+            <h2 className="font-display text-xs font-bold uppercase tracking-widest text-mint mb-4">
               {t("footer.company")}
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm text-white/75">
               <li>
                 <Link to="/about-us" className="hover:text-white transition-colors">
@@ -78,9 +78,9 @@ export function SiteFooter() {
 
           {/* Column 3: Product Categories */}
           <div>
-            <h4 className="font-display text-xs font-bold uppercase tracking-widest text-mint mb-4">
+            <h2 className="font-display text-xs font-bold uppercase tracking-widest text-mint mb-4">
               {t("footer.products")}
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm text-white/75">
               <li>
                 <Link
@@ -177,9 +177,9 @@ export function SiteFooter() {
 
           {/* Column 4: Legal & Language */}
           <div>
-            <h4 className="font-display text-xs font-bold uppercase tracking-widest text-mint mb-4">
+            <h2 className="font-display text-xs font-bold uppercase tracking-widest text-mint mb-4">
               {t("footer.legal")}
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm text-white/75 mb-6">
               <li>
                 <Link to="/privacy" className="hover:text-white transition-colors">
@@ -251,7 +251,7 @@ export function SiteFooter() {
         {/* Quick B2B Quote Banner */}
         <div className="mt-12 rounded-2xl bg-white/5 p-6 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h5 className="font-display text-base font-bold text-white">{t("home.cta.title")}</h5>
+            <p className="font-display text-base font-bold text-white">{t("home.cta.title")}</p>
             <p className="text-xs text-white/70 mt-1">{t("home.cta.body")}</p>
           </div>
           <Button asChild className="bg-mint text-navy font-bold hover:bg-mint/90 shrink-0">
@@ -270,7 +270,7 @@ export function SiteFooter() {
               © {new Date().getFullYear()} VARS Su Ürünleri İth. İhc. San. ve Tic. Ltd. Şti.{" "}
               {t("footer.rights")}
             </div>
-            <div className="text-[10px] text-white/40">
+            <div className="text-[10px] text-white/70">
               Registered Address: İsmet Kaptan Mah., Şair Eşref Blv. No:6 D:304/B, Konak, İzmir,
               Türkiye • Tax ID: 9240533729
             </div>

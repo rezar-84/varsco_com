@@ -5,7 +5,7 @@ export function AnimatedSalmonOvaCycle() {
     <div className="glass-card rounded-3xl border border-border/80 bg-background shadow-xl p-6 md:p-8 space-y-6">
       <div className="flex items-center justify-between pb-4 border-b border-border/60">
         <div>
-          <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center gap-1.5 mb-1">
+          <span className="text-xs font-bold text-mint-ink uppercase tracking-widest flex items-center gap-1.5 mb-1">
             <ShieldCheck className="h-4 w-4" /> Eyed-Egg Embryogenesis Vector
           </span>
           <h3 className="font-display text-xl font-bold text-navy">

@@ -33,11 +33,14 @@ export function ProductCard({ product }: { product: Product }) {
         params={{ category: product.category, slug: product.slug }}
         className="relative block aspect-[4/3] overflow-hidden bg-surface-alt/80 p-3 flex items-center justify-center"
       >
-        {product.image ? (
+        {product.thumbnail || product.image ? (
           <img
-            src={product.image}
+            src={product.thumbnail ?? product.image}
             alt={tp("title", product.title)}
             loading="lazy"
+            decoding="async"
+            width={800}
+            height={600}
             className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
           />
         ) : (

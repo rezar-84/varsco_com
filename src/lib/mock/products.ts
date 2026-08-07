@@ -3,15 +3,19 @@ import { odooAssetUrl, odooDirectUrl } from "../odoo-asset";
 
 // Product image assets (Locally hosted authentic VARS photography & 3D packaging)
 import reviveDecapImg from "@/assets/products/revive-artemia-decap.png";
+import reviveDecapThumb from "@/assets/products/thumbnails/revive-artemia-decap_4x3_lg.webp";
 import reviveDecapOpenImg from "@/assets/products/revive-artemia-decap-open.jpg";
 
 import reviveCysts2kgImg from "@/assets/products/revive-artemia-cysts-2kg.png";
+import reviveCystsThumb from "@/assets/products/thumbnails/revive-artemia-cysts-2kg_4x3_lg.webp";
 import reviveCystsOpenImg from "@/assets/products/revive-artemia-cysts-open.jpg";
 
 import sv12ProductImg from "@/assets/products/super-fresh-chlorella-sv12.png";
+import sv12ProductThumb from "@/assets/products/thumbnails/super-fresh-chlorella-sv12_4x3_lg.webp";
 import sv12HighResImg from "@/assets/products/sv12-high-res.jpg";
 
 import emeraldChlorellaImg from "@/assets/products/emerald-chlorella-powder.png";
+import emeraldChlorellaThumb from "@/assets/products/thumbnails/emerald-chlorella-powder_4x3_lg.webp";
 import emeraldChlorellaOpenedImg from "@/assets/products/emerald-chlorella-opened.png";
 
 import salmonEggsScaleImg from "@/assets/products/atlantic-salmon-eggs-scale.jpg";
@@ -31,10 +35,22 @@ import shrimpFrozenBlockImg from "@/assets/products/shrimp-frozen-block-02.jpg";
 import shrimpFrozenCartonsImg from "@/assets/products/shrimp-frozen-cartons-03.jpg";
 import oysterImg from "@/assets/products/oyster.webp";
 
-const reviveDecap = { url: reviveDecapImg, gallery: [reviveDecapOpenImg] };
-const reviveCysts = { url: reviveCysts2kgImg, gallery: [reviveCystsOpenImg] };
-const sv12 = { url: sv12ProductImg, gallery: [sv12HighResImg] };
-const emeraldChlorella = { url: emeraldChlorellaImg, gallery: [emeraldChlorellaOpenedImg] };
+const reviveDecap = {
+  url: reviveDecapImg,
+  thumbnail: reviveDecapThumb,
+  gallery: [reviveDecapOpenImg],
+};
+const reviveCysts = {
+  url: reviveCysts2kgImg,
+  thumbnail: reviveCystsThumb,
+  gallery: [reviveCystsOpenImg],
+};
+const sv12 = { url: sv12ProductImg, thumbnail: sv12ProductThumb, gallery: [sv12HighResImg] };
+const emeraldChlorella = {
+  url: emeraldChlorellaImg,
+  thumbnail: emeraldChlorellaThumb,
+  gallery: [emeraldChlorellaOpenedImg],
+};
 
 // Salmon eggs requested default image URL
 const salmonEggs = {
@@ -111,7 +127,7 @@ export const CATEGORIES: ProductCategory[] = [
     title: "Live Feed for Aquaculture",
     description:
       "Artemia cysts and Chlorella microalgae — the foundation of every larval rearing programme.",
-    image: reviveCysts.url,
+    image: reviveCysts.thumbnail,
   },
   {
     slug: "hatchery-solutions",
@@ -466,6 +482,7 @@ export const PRODUCTS: Product[] = [
     ],
     storage: "Store in a cool, dry place. Reseal cans after use to preserve moisture control.",
     image: reviveDecap.url,
+    thumbnail: reviveDecap.thumbnail,
     gallery: reviveDecap.gallery,
     relatedProducts: ["artemia", "emerald-chlorella-powder", "super-fresh-chlorella-v12"],
     seoKeywords: [
@@ -529,6 +546,7 @@ export const PRODUCTS: Product[] = [
     ],
     storage: "Store below 4 °C. Vacuum-sealed cans remain viable for up to 36 months.",
     image: reviveCysts.url,
+    thumbnail: reviveCysts.thumbnail,
     gallery: reviveCysts.gallery,
     pdfUrl: odooAssetUrl(
       "/web/content/12514?unique=24692c2e204e6066d0f586050b3232512eef996c&download=true&access_token=574dfe3e-ca12-4943-884d-45a1fa2396ea",
@@ -594,6 +612,7 @@ export const PRODUCTS: Product[] = [
     storage:
       "Store below 8 °C after opening. Keep in sealed packaging away from light and moisture.",
     image: emeraldChlorella.url,
+    thumbnail: emeraldChlorella.thumbnail,
     gallery: emeraldChlorella.gallery,
     seoKeywords: [
       "emerald chlorella powder",
@@ -644,6 +663,7 @@ export const PRODUCTS: Product[] = [
     storage:
       "Refrigerated 2–6 °C, keep away from direct light. Use as directed for continuous rotifer culture.",
     image: sv12.url,
+    thumbnail: sv12.thumbnail,
     gallery: sv12.gallery,
     pdfUrl: odooAssetUrl(
       "/web/content/12196?unique=5277fa90217f35f33cb218e8be14e6eaf5099a9e&download=true&access_token=6519fa24-e835-4945-865c-2dadb4e8cba0",

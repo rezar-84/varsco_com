@@ -103,7 +103,7 @@ export function WhatsAppWidget() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="group relative flex items-center gap-2.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-3 text-white shadow-xl shadow-emerald-600/30 hover:scale-105 active:scale-95 transition-all duration-200"
-        aria-label="Toggle WhatsApp Export Chat"
+        aria-label={t("whatsapp.b2bQuote")}
       >
         <span className="relative flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />

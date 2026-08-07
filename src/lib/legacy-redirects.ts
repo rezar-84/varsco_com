@@ -34,6 +34,7 @@ export const LEGACY_SHOP_SLUGS: Record<string, string> = {
   "sv-12-20": "/products/live-feed-aquaculture/super-fresh-chlorella-v12",
   "v12-20": "/products/live-feed-aquaculture/super-fresh-chlorella-v12",
   "sv12-20-lit-case": "/products/live-feed-aquaculture/super-fresh-chlorella-v12",
+  "super-fresh-chlorella-sv-12": "/products/live-feed-aquaculture/super-fresh-chlorella-v12",
   "superfrisch-chlorella-sv-12-20-lit": "/products/live-feed-aquaculture/super-fresh-chlorella-v12",
   // Chlorella powder, English/German/Turkish spellings.
   emerald: "/products/live-feed-aquaculture/emerald-chlorella-powder",

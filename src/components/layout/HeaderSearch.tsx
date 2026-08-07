@@ -136,7 +136,7 @@ export function HeaderSearch({ className }: { className?: string }) {
                       )}
                     >
                       <img
-                        src={p.image}
+                        src={p.thumbnail ?? p.image}
                         alt=""
                         className="h-10 w-10 shrink-0 rounded object-cover"
                         loading="lazy"

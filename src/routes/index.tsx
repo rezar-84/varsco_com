@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ArrowRight,
   Fish,
@@ -23,9 +23,9 @@ import { useI18n } from "@/context/I18nContext";
 import salmonEggs from "@/assets/salmon-eggs.jpg";
 import artemia from "@/assets/artemia-in-spoon.jpg";
 import chlorella from "@/assets/chlorella.jpg";
-import sv12ProductImg from "@/assets/products/super-fresh-chlorella-sv12.png";
+import sv12ProductImg from "@/assets/products/thumbnails/super-fresh-chlorella-sv12_4x3_lg.webp";
 import heroFarm from "@/assets/hero-farm.jpg";
-import reviveDecap from "@/assets/products/revive-artemia-decap.png";
+import reviveDecap from "@/assets/products/thumbnails/revive-artemia-decap_4x3_lg.webp";
 
 const HERO_SLIDES = [
   {
@@ -93,13 +93,6 @@ function Index() {
   const { t } = useI18n();
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentHeroIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
-
   const SEGMENTS = [
     { icon: Egg, label: t("home.seg.hatchery") },
     { icon: Fish, label: t("home.seg.livefeed") },
@@ -128,31 +121,31 @@ function Index() {
   return (
     <>
       <section className="relative overflow-hidden bg-navy text-white">
-        {HERO_SLIDES.map((img, idx) => (
-          <img
-            key={img.src}
-            src={img.src}
-            alt={img.alt}
-            className={`absolute inset-0 h-full w-full object-cover transition-all duration-1000 ease-in-out ${
-              idx === currentHeroIndex
-                ? "opacity-65 scale-100 pointer-events-auto"
-                : "opacity-0 scale-105 pointer-events-none"
-            }`}
-            width={1920}
-            height={1080}
-          />
-        ))}
+        <img
+          key={HERO_SLIDES[currentHeroIndex].src}
+          src={HERO_SLIDES[currentHeroIndex].src}
+          alt={HERO_SLIDES[currentHeroIndex].alt}
+          className="absolute inset-0 h-full w-full object-cover opacity-65"
+          width={1920}
+          height={1080}
+          fetchPriority={currentHeroIndex === 0 ? "high" : "auto"}
+          decoding={currentHeroIndex === 0 ? "sync" : "async"}
+        />
         {/* Navigation dots for the hero slider */}
         <div className="absolute bottom-24 left-1/2 z-10 flex -translate-x-1/2 gap-2.5 md:left-[8%] md:translate-x-0 md:bottom-28">
           {HERO_SLIDES.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentHeroIndex(idx)}
-              className={`h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
-                idx === currentHeroIndex ? "w-8 bg-mint" : "w-2.5 bg-white/30 hover:bg-white/50"
-              }`}
+              className="flex h-6 min-w-6 items-center justify-center rounded-full cursor-pointer"
               aria-label={`Go to slide ${idx + 1}`}
-            />
+            >
+              <span
+                className={`block h-2.5 rounded-full transition-all duration-500 ${
+                  idx === currentHeroIndex ? "w-8 bg-mint" : "w-2.5 bg-white/30"
+                }`}
+              />
+            </button>
           ))}
         </div>
         {/* Gradients to ensure text readability while keeping the image clear */}
@@ -337,6 +330,9 @@ function Index() {
                 src={artemia}
                 alt={t("home.top.card1.title")}
                 loading="lazy"
+                decoding="async"
+                width={800}
+                height={600}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
@@ -351,7 +347,7 @@ function Index() {
                 {t("home.top.card1.tagline")}
               </p>
               <div className="relative z-10 mt-4 flex items-center justify-between border-t border-border/40 pt-3">
-                <span className="text-[11px] font-semibold text-teal">
+                <span className="text-[11px] font-semibold text-primary">
                   {t("home.top.card1.tag")}
                 </span>
                 <Link
@@ -382,6 +378,9 @@ function Index() {
                 src={reviveDecap}
                 alt={t("home.top.card2.title")}
                 loading="lazy"
+                decoding="async"
+                width={800}
+                height={600}
                 className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
               />
             </div>
@@ -396,7 +395,7 @@ function Index() {
                 {t("home.top.card2.tagline")}
               </p>
               <div className="relative z-10 mt-4 flex items-center justify-between border-t border-border/40 pt-3">
-                <span className="text-[11px] font-semibold text-teal">
+                <span className="text-[11px] font-semibold text-primary">
                   {t("home.top.card2.tag")}
                 </span>
                 <Link
@@ -427,6 +426,9 @@ function Index() {
                 src={sv12ProductImg}
                 alt={t("home.top.card3.title")}
                 loading="lazy"
+                decoding="async"
+                width={800}
+                height={600}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
@@ -441,7 +443,7 @@ function Index() {
                 {t("home.top.card3.tagline")}
               </p>
               <div className="relative z-10 mt-4 flex items-center justify-between border-t border-border/40 pt-3">
-                <span className="text-[11px] font-semibold text-teal">
+                <span className="text-[11px] font-semibold text-primary">
                   {t("home.top.card3.tag")}
                 </span>
                 <Link
@@ -469,6 +471,9 @@ function Index() {
                 src={salmonEggs}
                 alt={t("home.top.card4.title")}
                 loading="lazy"
+                decoding="async"
+                width={800}
+                height={600}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
@@ -483,7 +488,7 @@ function Index() {
                 {t("home.top.card4.tagline")}
               </p>
               <div className="relative z-10 mt-4 flex items-center justify-between border-t border-border/40 pt-3">
-                <span className="text-[11px] font-semibold text-teal">
+                <span className="text-[11px] font-semibold text-primary">
                   {t("home.top.card4.tag")}
                 </span>
                 <Link
@@ -539,7 +544,7 @@ function Index() {
       {/* Customer logos */}
       <section className="border-b bg-surface-alt py-12">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <p className="mb-8 text-center text-xs font-bold uppercase tracking-[0.2em] text-navy/40">
+          <p className="mb-8 text-center text-xs font-bold uppercase tracking-[0.2em] text-navy/70">
             {t("home.customers.title")}
           </p>
           <div className="grid grid-cols-2 items-center justify-items-center gap-6 sm:grid-cols-4 lg:grid-cols-8">
@@ -697,7 +702,7 @@ function Index() {
           {WHY_US.map((f) => (
             <div key={f.title} className="card-flat p-6">
               <f.icon className="h-6 w-6 text-primary" />
-              <h4 className="mt-4 font-display text-lg font-semibold text-navy">{f.title}</h4>
+              <h3 className="mt-4 font-display text-lg font-semibold text-navy">{f.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{f.body}</p>
             </div>
           ))}

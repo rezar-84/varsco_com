@@ -65,6 +65,8 @@ export interface Product {
   applications: string[];
   storage: string;
   image?: string;
+  /** Optimized card/menu image. Keep `image` for the full product-detail view. */
+  thumbnail?: string;
   gallery?: string[];
   pdfUrl?: string;
   pdfLabel?: string;

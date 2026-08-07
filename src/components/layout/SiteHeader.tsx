@@ -649,73 +649,74 @@ export function SiteHeader() {
                   </li>
                 </ul>
 
-                {(() => {
-                  const activeSlug = activeCat ?? CATEGORIES[0].slug;
-                  const cat = CATEGORIES.find((c) => c.slug === activeSlug) ?? CATEGORIES[0];
-                  const products = PRODUCTS.filter((p) => p.category === cat.slug).slice(0, 6);
-                  return (
-                    <div key={cat.slug} className="p-6">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0">
-                          <p className="font-display text-xs font-bold uppercase tracking-[0.14em] text-primary">
-                            {t("nav.products")}
-                          </p>
-                          <h3 className="mt-1 font-display text-2xl font-bold text-navy">
-                            {t(`cat.${cat.slug}`)}
-                          </h3>
-                          <p className="mt-1 line-clamp-2 max-w-lg text-xs leading-relaxed text-muted-foreground">
-                            {t(`cat.${cat.slug}.desc`) === `cat.${cat.slug}.desc`
-                              ? cat.description
-                              : t(`cat.${cat.slug}.desc`)}
-                          </p>
-                        </div>
-                        <Link
-                          to="/products/$category"
-                          params={{ category: cat.slug }}
-                          onClick={closeNow}
-                          className="shrink-0 inline-flex items-center gap-1 rounded-lg border border-border/80 bg-background px-3.5 py-2 text-xs font-bold text-navy transition-all hover:border-primary/50 hover:text-primary hover:shadow-sm"
-                        >
-                          {t("export.products.viewAll")} <ArrowRight className="h-3.5 w-3.5" />
-                        </Link>
-                      </div>
-
-                      <div className="mt-6 grid grid-cols-3 gap-3">
-                        {products.map((p) => (
+                {megaOpen &&
+                  (() => {
+                    const activeSlug = activeCat ?? CATEGORIES[0].slug;
+                    const cat = CATEGORIES.find((c) => c.slug === activeSlug) ?? CATEGORIES[0];
+                    const products = PRODUCTS.filter((p) => p.category === cat.slug).slice(0, 6);
+                    return (
+                      <div key={cat.slug} className="p-6">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="min-w-0">
+                            <p className="font-display text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                              {t("nav.products")}
+                            </p>
+                            <h3 className="mt-1 font-display text-2xl font-bold text-navy">
+                              {t(`cat.${cat.slug}`)}
+                            </h3>
+                            <p className="mt-1 line-clamp-2 max-w-lg text-xs leading-relaxed text-muted-foreground">
+                              {t(`cat.${cat.slug}.desc`) === `cat.${cat.slug}.desc`
+                                ? cat.description
+                                : t(`cat.${cat.slug}.desc`)}
+                            </p>
+                          </div>
                           <Link
-                            key={p.slug}
-                            to="/products/$category/$slug"
-                            params={{ category: cat.slug, slug: p.slug }}
+                            to="/products/$category"
+                            params={{ category: cat.slug }}
                             onClick={closeNow}
-                            className="group flex items-center gap-3 rounded-xl border border-transparent p-2.5 transition-all hover:border-border/80 hover:bg-surface-alt/70 hover:shadow-sm"
+                            className="shrink-0 inline-flex items-center gap-1 rounded-lg border border-border/80 bg-background px-3.5 py-2 text-xs font-bold text-navy transition-all hover:border-primary/50 hover:text-primary hover:shadow-sm"
                           >
-                            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-surface-alt ring-1 ring-border/50">
-                              {p.image ? (
-                                <img
-                                  src={p.image}
-                                  alt=""
-                                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                  loading="lazy"
-                                />
-                              ) : null}
-                            </div>
-                            <div className="min-w-0">
-                              <div className="truncate text-xs font-bold text-navy group-hover:text-primary">
-                                {t(`product.${p.slug}.title`) === `product.${p.slug}.title`
-                                  ? p.title
-                                  : t(`product.${p.slug}.title`)}
-                              </div>
-                              {p.latinName ? (
-                                <div className="truncate text-[11px] italic text-muted-foreground">
-                                  {p.latinName}
-                                </div>
-                              ) : null}
-                            </div>
+                            {t("export.products.viewAll")} <ArrowRight className="h-3.5 w-3.5" />
                           </Link>
-                        ))}
+                        </div>
+
+                        <div className="mt-6 grid grid-cols-3 gap-3">
+                          {products.map((p) => (
+                            <Link
+                              key={p.slug}
+                              to="/products/$category/$slug"
+                              params={{ category: cat.slug, slug: p.slug }}
+                              onClick={closeNow}
+                              className="group flex items-center gap-3 rounded-xl border border-transparent p-2.5 transition-all hover:border-border/80 hover:bg-surface-alt/70 hover:shadow-sm"
+                            >
+                              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-surface-alt ring-1 ring-border/50">
+                                {p.thumbnail || p.image ? (
+                                  <img
+                                    src={p.thumbnail ?? p.image}
+                                    alt=""
+                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    loading="lazy"
+                                  />
+                                ) : null}
+                              </div>
+                              <div className="min-w-0">
+                                <div className="truncate text-xs font-bold text-navy group-hover:text-primary">
+                                  {t(`product.${p.slug}.title`) === `product.${p.slug}.title`
+                                    ? p.title
+                                    : t(`product.${p.slug}.title`)}
+                                </div>
+                                {p.latinName ? (
+                                  <div className="truncate text-[11px] italic text-muted-foreground">
+                                    {p.latinName}
+                                  </div>
+                                ) : null}
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })()}
+                    );
+                  })()}
               </div>
             </div>
           </div>
