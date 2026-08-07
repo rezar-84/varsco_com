@@ -232,46 +232,47 @@ const SEO_COPY: Partial<Record<SeoPage, Record<LangCode, PageMeta>>> = {
     en: {
       title: "Seafood Export from Türkiye to Europe | VARS",
       description:
-        "EU-ready sea bass, sea bream and trout exports from İzmir with TRACES documentation, cold-chain logistics and customs support.",
+        "Fresh and frozen sea bass, sea bream, meagre and amberjack exported from Türkiye to the EU, with veterinary certification, batch traceability and cold-chain logistics.",
     },
     tr: {
       title: "Türkiye'den Avrupa'ya Su Ürünleri İhracatı | VARS",
       description:
-        "İzmir'den Avrupa'ya TRACES belgeleri, soğuk zincir lojistiği ve gümrük desteğiyle levrek, çipura ve alabalık ihracatı.",
+        "Türkiye'den AB'ye taze ve dondurulmuş levrek, çipura, eşkina ve akya ihracatı; veteriner sertifikasyonu, parti izlenebilirliği ve soğuk zincir lojistiğiyle.",
     },
     de: {
       title: "Meeresfrüchteexport aus der Türkei nach Europa | VARS",
       description:
-        "EU-konformer Export von Wolfsbarsch, Dorade und Forelle aus İzmir mit TRACES, Kühlkette und Zollunterstützung.",
+        "Wolfsbarsch, Dorade, Umberfisch und Bernsteinmakrele frisch und gefroren aus der Türkei in die EU — mit Veterinärbescheinigung, Chargenrückverfolgbarkeit und Kühlkette.",
     },
     ar: {
       title: "تصدير المأكولات البحرية من تركيا إلى أوروبا | VARS",
       description:
-        "تصدير القاروص والدنيس والتراوت من إزمير إلى أوروبا مع وثائق TRACES وسلسلة تبريد ودعم جمركي.",
+        "تصدير القاروص والدنيس والشيرن والزيتية طازجة ومجمدة من تركيا إلى الاتحاد الأوروبي، مع الشهادات البيطرية وتتبع الدفعات وسلسلة التبريد.",
     },
     ru: {
       title: "Экспорт морепродуктов из Турции в Европу | VARS",
       description:
-        "Экспорт сибаса, дорадо и форели из Измира в ЕС с документами TRACES, холодовой цепью и таможенной поддержкой.",
+        "Экспорт охлаждённых и замороженных сибаса, дорадо, умбрины и лакедры из Турции в ЕС с ветеринарной сертификацией, прослеживаемостью партий и холодовой цепью.",
     },
     ja: {
       title: "トルコから欧州への水産物輸出 | VARS",
       description:
-        "TRACES書類、コールドチェーン、通関支援を備え、イズミルから欧州へスズキ、タイ、マスを輸出します。",
+        "トルコからEUへ、スズキ・タイ・イシモチ・カンパチを生鮮および冷凍で輸出。衛生証明、ロット単位のトレーサビリティ、コールドチェーンに対応します。",
     },
     ko: {
       title: "튀르키예에서 유럽으로 수산물 수출 | VARS",
       description:
-        "TRACES 서류, 콜드체인 및 통관 지원을 통해 이즈미르에서 유럽으로 농어·도미·송어를 수출합니다.",
+        "튀르키예에서 EU로 농어, 도미, 민어, 부시리를 신선·냉동으로 수출합니다. 수의 증명, 배치 추적성, 콜드체인을 갖췄습니다.",
     },
     zh: {
       title: "从土耳其向欧洲出口海鲜 | VARS",
-      description: "从伊兹密尔向欧洲出口鲈鱼、鲷鱼和鳟鱼，提供TRACES文件、冷链物流和清关支持。",
+      description:
+        "从土耳其向欧盟出口冰鲜与冷冻的鲈鱼、鲷鱼、石首鱼及琥珀鱼，配套兽医证书、批次可追溯与冷链物流。",
     },
     es: {
       title: "Exportación de marisco de Türkiye a Europa | VARS",
       description:
-        "Exportación de lubina, dorada y trucha desde Esmirna con documentación TRACES, cadena de frío y apoyo aduanero.",
+        "Exportación de lubina, dorada, corvina y pez limón, frescos y congelados, de Türkiye a la UE, con certificación veterinaria, trazabilidad por lote y cadena de frío.",
     },
   },
   contact: {
