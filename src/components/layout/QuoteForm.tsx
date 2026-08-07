@@ -33,8 +33,10 @@ export interface QuoteFormData {
 
 const buildSchema = (t: (k: string) => string) =>
   z.object({
-    name: z.string().trim().min(1, t("quote.err.name")).max(100, t("quote.err.max")),
-    company: z.string().trim().min(1, t("quote.err.company")).max(120, t("quote.err.max")),
+    // min(2) matches /api/quotes. At min(1) a single character passed here and
+    // was rejected server-side, so the buyer got a failure with no field marked.
+    name: z.string().trim().min(2, t("quote.err.name")).max(100, t("quote.err.max")),
+    company: z.string().trim().min(2, t("quote.err.company")).max(120, t("quote.err.max")),
     email: z.string().trim().email(t("quote.err.email")).max(200, t("quote.err.max")),
     phone: z.string().trim().min(6, t("quote.err.phone")).max(30, t("quote.err.max")),
     country: z.string().trim().max(80).optional().default(""),

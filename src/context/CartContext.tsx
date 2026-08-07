@@ -133,7 +133,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
               error?: string;
               message?: string;
             };
-            throw new Error(errBody.message || "Failed to submit quote request");
+            // `message` is only worth showing on a 4xx, where it carries
+            // something the buyer can act on. On a 5xx it is raw exception
+            // text ("fetch failed"). Same rule as the other lead forms.
+            const human = response.status < 500 ? errBody.message : undefined;
+            throw new Error(human || "Failed to submit quote request");
           }
           clear();
         },

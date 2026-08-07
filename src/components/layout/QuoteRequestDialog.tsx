@@ -34,14 +34,21 @@ export function QuoteRequestDialog({ open, onOpenChange }: Props) {
           busy={busy}
           onSubmit={async (data) => {
             setBusy(true);
-            await submitQuote(
-              data,
-              buildSubmissionContext(SUBMISSION_SOURCES.cart, { locale: lang }),
-            );
-            setBusy(false);
-            toast.success(t("quote.success.title"), { description: t("quote.success.body") });
-            onOpenChange(false);
-            closeDrawer();
+            // Without the catch, a rejected submit left the dialog stuck on
+            // "Submitting…" with no error. Mirrors QuoteDrawer.
+            try {
+              await submitQuote(
+                data,
+                buildSubmissionContext(SUBMISSION_SOURCES.cart, { locale: lang }),
+              );
+              toast.success(t("quote.success.title"), { description: t("quote.success.body") });
+              onOpenChange(false);
+              closeDrawer();
+            } catch (err) {
+              toast.error(err instanceof Error ? err.message : t("quote.drawer.error"));
+            } finally {
+              setBusy(false);
+            }
           }}
           Footer={({ children }) => <DialogFooter>{children}</DialogFooter>}
         />

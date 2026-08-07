@@ -155,18 +155,26 @@ function RequestQuotePage() {
                   initialProductSlug={search.product}
                   onSubmit={async (data) => {
                     setBusy(true);
-                    await submitQuote(
-                      data,
-                      buildSubmissionContext(SUBMISSION_SOURCES.requestQuotePage, {
-                        locale: lang,
-                        pageSection: search.product,
-                      }),
-                    );
-                    setBusy(false);
-                    setDone(true);
-                    toast.success(t("quote.success.title"), {
-                      description: t("quote.success.body"),
-                    });
+                    // Without the catch, a rejected submit skipped setBusy(false)
+                    // and left the button disabled on "Submitting…" forever, with
+                    // nothing shown to explain it. Mirrors QuoteDrawer.
+                    try {
+                      await submitQuote(
+                        data,
+                        buildSubmissionContext(SUBMISSION_SOURCES.requestQuotePage, {
+                          locale: lang,
+                          pageSection: search.product,
+                        }),
+                      );
+                      setDone(true);
+                      toast.success(t("quote.success.title"), {
+                        description: t("quote.success.body"),
+                      });
+                    } catch (err) {
+                      toast.error(err instanceof Error ? err.message : t("quote.drawer.error"));
+                    } finally {
+                      setBusy(false);
+                    }
                   }}
                 />
               )}

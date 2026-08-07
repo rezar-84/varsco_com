@@ -17,7 +17,12 @@ const quoteRequestSchema = z.object({
   email: z.string().email("Invalid email address"),
   company: z.string().min(2, "Company must be at least 2 characters"),
   phone: z.string().optional().default(""),
-  message: z.string().min(5, "Message must be at least 5 characters"),
+  // Optional on purpose. A buyer who picked a product, chose their formats and
+  // gave full contact details has already said what they want; demanding prose
+  // on top of that rejected the most common enquiry of all — someone who fills
+  // the form in and leaves the free-text box alone. When it is blank the lead
+  // gets a subject composed from what they did tell us, below.
+  message: z.string().trim().max(1000).optional().default(""),
   country: z.string().trim().max(80).optional(),
 
   // What the buyer is asking about. Kept as separate fields rather than
@@ -80,7 +85,18 @@ export const Route = createFileRoute("/api/quotes")({
           }
 
           const d = validated.data;
-          const { name, email, company, phone, message, source, items } = d;
+          const { name, email, company, phone, source, items } = d;
+
+          // An empty box is not an empty enquiry. Rather than send Odoo a blank
+          // description, describe the request from the fields the buyer did
+          // fill in, so the CRM lead still reads as something actionable.
+          const message =
+            d.message ||
+            (d.productTitle
+              ? `Quote request: ${d.productTitle}`
+              : d.topic
+                ? `Enquiry: ${d.topic}`
+                : `General enquiry — ${company}`);
 
           // 3. Format cart items into a summary text block for CRM Lead description
           let cartSummary = "";
