@@ -75,7 +75,11 @@ const oliveFlounder = {
   gallery: [oliveFlounderImg],
 };
 
-const brownMeagre = {
+// NEEDS A PHOTO CHECK: the catalogue entry described Argyrosomus regius but was
+// named Sciaena umbra throughout, and this asset is still filed under
+// `brown_meagre` on the Odoo side. Nobody has confirmed which fish it actually
+// shows. Verify before this page is promoted.
+const meagre = {
   url: odooAssetUrl(
     "/web/image/8933-f0ca00b6/customized_d678439dec7544b2a9dca505d6cf86fb_brown_meagre_edited_72d89622-98a2-4f05-8dbd-6ba6dea548f9.webp",
   ),
@@ -1117,15 +1121,15 @@ export const PRODUCTS: Product[] = [
     searchSynonyms: ["olive flounder", "hirame", "flounder", "flatfish", "korean flounder"],
   },
   {
-    slug: "brown-meagre",
+    slug: "meagre",
     category: "seafood",
-    title: "Brown Meagre",
-    latinName: "Sciaena umbra",
+    title: "Meagre",
+    latinName: "Argyrosomus regius",
     tagline:
       "Mild sweet flavor, tender white flesh — high-protein, low-fat Mediterranean species from certified farms.",
     tags: ["ASC · GlobalG.A.P", "High protein · low fat", "Fine dining"],
     description:
-      "The Brown Meagre (Sciaena umbra) is a prized Mediterranean species known for its mild, sweet flavor and tender, white flesh. Popular with chefs and seafood enthusiasts, it offers a high-protein, low-fat profile. At VARS Aquaculture we source Brown Meagre from certified Mediterranean farms, ensuring year-round availability, sustainable practices and export-grade freshness.",
+      "Meagre (Argyrosomus regius) is a prized Mediterranean species known for its mild, sweet flavor and firm white flesh. Popular with chefs and seafood buyers alike, it offers a high-protein, low-fat profile. At VARS Aquaculture we source Meagre from certified Mediterranean farms, ensuring year-round availability, sustainable practices and export-grade freshness.",
     highlights: [
       "Prized Mediterranean species with mild, sweet flavor",
       "High-protein, low-fat nutritional profile",
@@ -1139,7 +1143,7 @@ export const PRODUCTS: Product[] = [
       { label: "PUFA", value: "0.68 g" },
     ],
     seoKeywords: [
-      "VARS Brown Meagre",
+      "VARS Meagre",
       "Argyrosomus regius",
       "Corvina wholesale",
       "stone bass export",
@@ -1163,9 +1167,9 @@ export const PRODUCTS: Product[] = [
     ],
     applications: ["Fine dining HORECA", "Premium retail", "Export wholesale"],
     storage: "Store on flake ice at 0 – 2 °C.",
-    image: brownMeagre.url,
+    image: meagre.url,
     culinaryInfo: {
-      whyChooseTitle: "Why Choose VARS Brown Meagre?",
+      whyChooseTitle: "Why Choose VARS Meagre?",
       whyChoosePoints: [
         {
           title: "Essential Fatty Acids",

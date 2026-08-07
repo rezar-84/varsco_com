@@ -31,7 +31,7 @@ export const Route = createFileRoute("/seafood-export-from-turkey-to-europe")({
 const SPECIES = [
   { category: "seafood", slug: "mediterranean-sea-bass" },
   { category: "seafood", slug: "mediterranean-sea-bream" },
-  { category: "seafood", slug: "brown-meagre" },
+  { category: "seafood", slug: "meagre" },
   { category: "seafood", slug: "amberjack" },
 ] as const;
 

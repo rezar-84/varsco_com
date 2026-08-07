@@ -1142,10 +1142,10 @@ const PRODUCT_FAQS: Record<string, Array<{ q: string; a: string }>> = {
       a: "Yes, all sea bream are cultured in open-sea cages with pristine water exchange, certified compliant with ASC and GlobalG.A.P export standards.",
     },
   ],
-  "brown-meagre": [
+  meagre: [
     {
-      q: "What is the flavor and culinary profile of VARS Brown Meagre (Sciaena umbra)?",
-      a: "Brown Meagre offers a mild, sweet flavor and firm white flesh with low fat and high protein content (18g/100g), ideal for whole fish grilling, salt-crust roasting, and fine dining fillets.",
+      q: "What is the flavor and culinary profile of VARS Meagre (Argyrosomus regius)?",
+      a: "Meagre offers a mild, sweet flavor and firm white flesh with low fat and high protein content (18g/100g), ideal for whole fish grilling, salt-crust roasting, and fine dining fillets.",
     },
   ],
   amberjack: [

@@ -160,6 +160,28 @@ Origin belongs in the specifications, not the product name: buyers search
 *olive flounder*, not *Korean olive flounder*. Keep origin variants in
 `seoKeywords`/`searchSynonyms` so the search traffic survives the rename.
 
+**Precedent — meagre (*Argyrosomus regius*), fixed 2026-08-07.** The catalogue
+sold *A. regius* but named it **Brown Meagre / *Sciaena umbra*** in every
+locale — a different species in the same family, smaller and of lower
+commercial value. Turkish read *Eşkina (Kaya Levreği)*, which is precisely
+*S. umbra*; the correct Turkish for *A. regius* is **Sarıağız**, and it is the
+one actually farmed in Aegean cages. The `seoKeywords` had listed *Argyrosomus
+regius* and *Corvina wholesale* all along, so the error was in the display
+names, not in what the business sells. The slug `brown-meagre` was itself a
+species claim and now 301s to `/products/seafood/meagre`.
+
+| Locale | Name | Why |
+|---|---|---|
+| en | Meagre | Established designation for *A. regius* |
+| tr | Sarıağız | Verified; *Eşkina* is *S. umbra*, a separate traded species |
+| es | Corvina | EU designation for *A. regius*; *Corvina Negra* was *S. umbra* |
+| de | Adlerfisch | Standard German usage; *Meerrabe* was *S. umbra* |
+| ru / ar / ja / ko / zh | Meagre (*Argyrosomus regius*) | No designation confirmed for this exact species — international trade name retained per the rule above, pending a native-market check |
+
+Lesson worth keeping: "brown meagre" and "meagre" differ by one adjective and
+by a whole species. Where two commercial names sit that close, verify against
+the EU database before either is written down.
+
 When a species name is uncertain, check the
 [EU commercial designations database](https://fish-commercial-names.ec.europa.eu/)
 rather than a dictionary, and record the ruling here.

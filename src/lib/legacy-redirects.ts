@@ -97,6 +97,10 @@ const LEGACY_PATHS: Record<string, string> = {
   "/mediterranean-sea-bream": "/products/seafood/mediterranean-sea-bream",
   // Renamed product slug.
   "/products/live-feed-aquaculture/artemia-cyst": "/products/live-feed-aquaculture/artemia",
+  // Corrected species: the catalogue described Argyrosomus regius but was
+  // named and labelled as Sciaena umbra, a different fish. The old slug is a
+  // species claim too, so it redirects rather than resolving.
+  "/products/seafood/brown-meagre": "/products/seafood/meagre",
 
   // Export landing pages under their former names.
   "/global-fish-seafood-export-from-turkey": "/seafood-export",

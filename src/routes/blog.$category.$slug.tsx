@@ -454,7 +454,7 @@ function Article() {
                   return [
                     "mediterranean-sea-bass",
                     "mediterranean-sea-bream",
-                    "brown-meagre",
+                    "meagre",
                   ].includes(p.slug);
                 }
                 return false;
