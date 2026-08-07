@@ -55,6 +55,13 @@ internal `3000/tcp`, per Dokploy's expectations).
     working end-to-end.
   - `VITE_SITE_URL` — production site origin (`https://varsco.com`), used by
     `sitemap.xml.ts`.
+  - `VITE_GTM_ID` — Google Tag Manager container (`GTM-T6SVGHT5`). **Build-time only.**
+    `VITE_`-prefixed values are inlined into the client bundle by Vite at build; this one
+    is never read at runtime, so setting it only as a Dokploy *runtime* variable produces
+    a bundle with no container id, no tag, and no error to tell you. It must be present
+    as a build argument. Leave it unset anywhere that should stay out of production
+    analytics — with no value `src/lib/gtm.ts` is inert, which is how staging and dev
+    stay clean by default rather than by remembering to disable something.
   - `ALLOWED_ORIGINS` — CORS allowlist for server API routes.
   - `SESSION_SECRET` — listed in `.env.example` but currently unused anywhere in `src/`;
     `api.auth.login.ts` passes Odoo's `session_id` straight through in the cookie with no

@@ -22,6 +22,7 @@ import { I18nProvider, LANGUAGES } from "@/context/I18nContext";
 import { ConsentBanner } from "@/components/layout/ConsentBanner";
 import { NotFoundView } from "@/components/layout/NotFoundView";
 import { trackPageView, initTrackingConsentListener } from "@/lib/tracking";
+import { loadGtm, pushPageView, initGtmConsentListener } from "@/lib/gtm";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { getLocalizedPageMeta } from "@/lib/utils/seo";
 import type { SeoPage } from "@/lib/utils/seo";
@@ -316,12 +317,21 @@ function RootComponent() {
   const routerState = useRouterState({ select: (s) => s.location.pathname });
 
   // Pageviews are recorded from here so client-side navigations count, not
-  // just full document loads. trackPageView is a no-op without consent.
+  // just full document loads. Both are no-ops without consent.
   useEffect(() => {
     trackPageView(routerState);
+    pushPageView(routerState);
   }, [routerState]);
 
   useEffect(() => initTrackingConsentListener(), []);
+
+  // GTM is injected from here rather than head().scripts: emitting it server
+  // side would contact Google for every visitor regardless of consent. Calling
+  // loadGtm on mount picks up a visitor who consented on an earlier visit.
+  useEffect(() => {
+    loadGtm();
+    return initGtmConsentListener();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
