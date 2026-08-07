@@ -83,8 +83,14 @@ function HorecaSeafoodMiddleEast() {
         }),
       });
       if (!response.ok) {
-        const errBody = (await response.json().catch(() => ({}))) as { error?: string };
-        throw new Error(errBody.error || t("horeca.form.toast.errorDesc"));
+        // See services-solutions.tsx: never surface `error`, and trust
+        // `message` only on a 4xx.
+        const errBody = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+        };
+        const human = response.status < 500 ? errBody.message : undefined;
+        throw new Error(human || t("horeca.form.toast.errorDesc"));
       }
       toast.success(t("horeca.form.toast.title"), {
         description: t("horeca.form.toast.desc"),

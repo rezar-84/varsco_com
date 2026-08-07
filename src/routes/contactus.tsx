@@ -64,7 +64,11 @@ function Contact() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    // Captured before the first await — see services-solutions.tsx: React
+    // clears `currentTarget` once the handler returns, so resetting through it
+    // after the fetch throws and reports an error on a successful submission.
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
     data.inquiryType = inquiryType;
 
     const schema = z.object({
@@ -100,13 +104,19 @@ function Contact() {
         }),
       });
       if (!response.ok) {
-        const errBody = (await response.json().catch(() => ({}))) as { error?: string };
-        throw new Error(errBody.error || t("contact.toast.submitError"));
+        // See services-solutions.tsx: never surface `error`, and trust
+        // `message` only on a 4xx.
+        const errBody = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+        };
+        const human = response.status < 500 ? errBody.message : undefined;
+        throw new Error(human || t("contact.toast.submitError"));
       }
       toast.success(t("contact.toast.successTitle"), {
         description: t("contact.toast.successDesc"),
       });
-      e.currentTarget.reset();
+      form.reset();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : t("contact.toast.genericError"));
     } finally {

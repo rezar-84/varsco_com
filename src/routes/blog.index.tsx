@@ -97,8 +97,14 @@ function BlogIndex() {
         body: JSON.stringify({ email: newsletterEmail }),
       });
       if (!response.ok) {
-        const errBody = (await response.json().catch(() => ({}))) as { error?: string };
-        throw new Error(errBody.error || "Failed to subscribe. Please try again.");
+        // See services-solutions.tsx: never surface `error`, and trust
+        // `message` only on a 4xx.
+        const errBody = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+        };
+        const human = response.status < 500 ? errBody.message : undefined;
+        throw new Error(human || "Failed to subscribe. Please try again.");
       }
       toast.success("Subscribed to Aqua MAG Journal", {
         description: "You will receive quarterly technical intelligence digests and PDF reports.",

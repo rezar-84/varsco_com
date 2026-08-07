@@ -52,7 +52,12 @@ function ServicesPage() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    // Captured before the first await: React clears `currentTarget` once the
+    // handler returns, so reaching for it after the fetch throws and the
+    // failure lands in the catch below — reporting an error on a submission
+    // that actually succeeded.
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
     const parsed = schema.safeParse(data);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
@@ -77,13 +82,22 @@ function ServicesPage() {
         }),
       });
       if (!response.ok) {
-        const errBody = (await response.json().catch(() => ({}))) as { error?: string };
-        throw new Error(errBody.error || t("solutions.form.error.submitFailed"));
+        // `error` is the machine slug and is always set on a failure, so
+        // surfacing it buries the translated copy and shows the buyer
+        // "server_error". `message` is only worth showing on a 4xx — it
+        // carries things the buyer can act on, like the rate-limit wait —
+        // whereas on a 5xx it is raw exception text ("fetch failed").
+        const errBody = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+        };
+        const human = response.status < 500 ? errBody.message : undefined;
+        throw new Error(human || t("solutions.form.error.submitFailed"));
       }
       toast.success(t("solutions.form.toast.successTitle"), {
         description: t("solutions.form.toast.successDescription"),
       });
-      e.currentTarget.reset();
+      form.reset();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : t("solutions.form.error.generic"));
     } finally {
