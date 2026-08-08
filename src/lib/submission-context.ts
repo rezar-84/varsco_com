@@ -9,9 +9,12 @@
  *
  * Everything here is first-party and derived from the page the user is already
  * on. No cookies are set and no third party is contacted, so this needs no
- * consent gate — unlike the visitor-journey tracking planned separately (see
- * doc/backlog_and_sprints.md).
+ * consent gate. The one exception is `visitorToken`, which is only ever
+ * present for a visitor who accepted analytics — it is read, never created,
+ * here (see readVisitorToken in lib/tracking.ts).
  */
+
+import { readVisitorToken } from "@/lib/tracking";
 
 /**
  * Which form produced the lead. A closed set rather than free text: the Odoo
@@ -48,6 +51,12 @@ export interface SubmissionContext {
   utmCampaign?: string;
   /** Portal account id, when the submitter is signed in. */
   portalUserId?: string;
+  /**
+   * Anonymous visitor token, present only for a visitor who accepted
+   * analytics. Lets Odoo attach the lead to the website.visitor whose
+   * pageviews we already hold, so sales sees the journey that led here.
+   */
+  visitorToken?: string;
 }
 
 /** UTM keys we forward. Anything else in the query string is ignored. */
@@ -110,5 +119,6 @@ export function buildSubmissionContext(
     referrer: onClient && document.referrer ? document.referrer : undefined,
     ...readUtm(),
     portalUserId: extra.portalUserId,
+    visitorToken: readVisitorToken() ?? undefined,
   };
 }

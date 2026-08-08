@@ -44,6 +44,15 @@ const quoteRequestSchema = z.object({
   utmMedium: z.string().trim().max(120).optional(),
   utmCampaign: z.string().trim().max(120).optional(),
   portalUserId: z.string().trim().max(64).optional(),
+  // Shape-checked, not merely length-bounded: Odoo overloads
+  // website.visitor.access_token and parses anything that is not 32 hex
+  // characters as a res.partner id, which raises inside a computed field.
+  // A malformed token is dropped here rather than 500ing the lead.
+  visitorToken: z
+    .string()
+    .regex(/^[0-9a-f]{32}$/)
+    .optional()
+    .catch(undefined),
 
   items: z
     .array(
@@ -153,6 +162,7 @@ export const Route = createFileRoute("/api/quotes")({
             utm_medium: d.utmMedium,
             utm_campaign: d.utmCampaign,
             portal_user_id: d.portalUserId,
+            visitor_token: d.visitorToken,
           });
 
           return new Response(

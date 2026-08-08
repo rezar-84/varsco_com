@@ -227,6 +227,12 @@ export class ContentApiClient {
     utm_medium?: string;
     utm_campaign?: string;
     portal_user_id?: string;
+    /**
+     * 32 lowercase hex characters, same constraint as trackVisit — links the
+     * lead to the website.visitor its pageviews were recorded under. Only
+     * present when the buyer accepted analytics.
+     */
+    visitor_token?: string;
   }): Promise<{ status: string; lead_id: number }> {
     return this.requestJson("/api/v1/leads", "POST", payload);
   }

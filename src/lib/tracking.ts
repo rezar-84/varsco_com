@@ -53,6 +53,26 @@ function getVisitorToken(): string | null {
   }
 }
 
+/**
+ * The existing visitor token, or null — for attaching a form submission to the
+ * journey that preceded it.
+ *
+ * Read-only on purpose. Unlike getVisitorToken it never mints one: submitting a
+ * form is not consent to be tracked, and a token created at submission time
+ * would correlate with nothing anyway, since no pageview was ever recorded
+ * under it. Absent consent this returns null and the lead simply arrives
+ * unlinked, exactly as it did before.
+ */
+export function readVisitorToken(): string | null {
+  if (typeof window === "undefined" || !analyticsAllowed()) return null;
+  try {
+    const existing = localStorage.getItem(TOKEN_KEY);
+    return existing && /^[0-9a-f]{32}$/.test(existing) ? existing : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Forget the visitor entirely. Called when consent is withdrawn. */
 export function clearVisitorToken(): void {
   queue = [];
