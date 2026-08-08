@@ -89,7 +89,7 @@ function DecapsulatedArtemiaGuide() {
         <div className="grid gap-12 lg:grid-cols-12 items-center">
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint/15 text-navy text-xs font-bold uppercase tracking-widest">
-              <FlaskConical className="h-3.5 w-3.5 text-mint" /> {t("guideDecap.intro.badge")}
+              <FlaskConical className="h-3.5 w-3.5 text-mint-ink" /> {t("guideDecap.intro.badge")}
             </div>
 
             <h2 className="font-display text-3xl font-bold text-navy leading-tight md:text-4xl">
@@ -156,7 +156,7 @@ function DecapsulatedArtemiaGuide() {
 
             <div className="glass-card rounded-2xl p-6 border border-border/80 shadow-xl bg-background space-y-4">
               <h3 className="font-display text-lg font-bold text-navy flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-mint" /> {t("guideDecap.metrics.title")}
+                <ShieldCheck className="h-5 w-5 text-mint-ink" /> {t("guideDecap.metrics.title")}
               </h3>
 
               <div className="grid grid-cols-2 gap-3 pt-2">
@@ -172,7 +172,7 @@ function DecapsulatedArtemiaGuide() {
                   <div className="text-[10px] font-bold uppercase text-muted-foreground">
                     {t("guideDecap.metrics.lipids.label")}
                   </div>
-                  <div className="text-xl font-bold text-mint mt-1">
+                  <div className="text-xl font-bold text-mint-ink mt-1">
                     {t("guideDecap.metrics.lipids.value")}
                   </div>
                 </div>
@@ -251,7 +251,7 @@ function DecapsulatedArtemiaGuide() {
                 className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-2"
               >
                 <h3 className="font-display text-lg font-bold text-navy flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-mint" /> {seg.title}
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink" /> {seg.title}
                 </h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">{seg.desc}</p>
               </div>

@@ -70,7 +70,7 @@ function CohoSalmonEggsPage() {
         <div className="grid gap-12 lg:grid-cols-12 items-center">
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint/15 text-navy text-xs font-bold uppercase tracking-widest">
-              <ShieldCheck className="h-3.5 w-3.5 text-mint" /> {t("cohoSalmon.badge")}
+              <ShieldCheck className="h-3.5 w-3.5 text-mint-ink" /> {t("cohoSalmon.badge")}
             </div>
 
             <h2 className="font-display text-3xl font-bold text-navy leading-tight md:text-4xl">
@@ -129,7 +129,7 @@ function CohoSalmonEggsPage() {
                 {ADVANTAGES.map((adv) => (
                   <div key={adv.title} className="space-y-0.5 text-xs">
                     <div className="font-bold text-navy flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-mint shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0" />
                       <span>{adv.title}</span>
                     </div>
                     <p className="text-muted-foreground pl-5 leading-normal">{adv.desc}</p>

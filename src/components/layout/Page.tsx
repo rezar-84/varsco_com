@@ -164,7 +164,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
                     >
                       <span className="truncate">{h.text}</span>
                       <ChevronRight
-                        className={`h-3 w-3 shrink-0 transition-transform ${activeId === h.id ? "text-mint" : "opacity-0 group-hover:opacity-100"}`}
+                        className={`h-3 w-3 shrink-0 transition-transform ${activeId === h.id ? "text-mint-ink" : "opacity-0 group-hover:opacity-100"}`}
                       />
                     </a>
                   ))}

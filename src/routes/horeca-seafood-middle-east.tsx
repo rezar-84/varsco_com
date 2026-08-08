@@ -312,7 +312,7 @@ function HorecaSeafoodMiddleEast() {
                   className="glass-card rounded-2xl p-5 border border-border/80 bg-background shadow-sm space-y-2"
                 >
                   <div className="h-10 w-10 rounded-xl bg-mint/20 flex items-center justify-center text-navy font-bold mb-3">
-                    <Icon className="h-5 w-5 text-mint" />
+                    <Icon className="h-5 w-5 text-mint-ink" />
                   </div>
                   <h3 className="font-display text-base font-bold text-navy">{adv.title}</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">{adv.desc}</p>
@@ -341,15 +341,15 @@ function HorecaSeafoodMiddleEast() {
 
               <div className="space-y-3 pt-4 border-t border-border text-xs text-navy font-semibold">
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0" />
                   <span>{t("horeca.form.bullet1")}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0" />
                   <span>{t("horeca.form.bullet2")}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0" />
                   <span>{t("horeca.form.bullet3")}</span>
                 </div>
               </div>

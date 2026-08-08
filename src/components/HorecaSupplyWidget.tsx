@@ -56,8 +56,8 @@ export function HorecaSupplyWidget() {
     <div className="glass-card rounded-3xl border border-border/80 bg-background shadow-xl p-6 md:p-8 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border/60">
         <div>
-          <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center gap-1.5 mb-1">
-            <Plane className="h-4 w-4 text-mint" /> Direct Middle East HORECA Supply
+          <span className="text-xs font-bold text-mint-ink uppercase tracking-widest flex items-center gap-1.5 mb-1">
+            <Plane className="h-4 w-4 text-mint-ink" /> Direct Middle East HORECA Supply
           </span>
           <h3 className="font-display text-2xl font-bold text-navy">
             GCC Air Freight & Cold-Chain Logistics
@@ -91,7 +91,7 @@ export function HorecaSupplyWidget() {
               >
                 <span className="flex items-center gap-2">
                   <MapPin
-                    className={`h-4 w-4 ${selectedCity === c.id ? "text-mint" : "text-primary"}`}
+                    className={`h-4 w-4 ${selectedCity === c.id ? "text-mint-ink" : "text-primary"}`}
                   />
                   <span>{c.name}</span>
                 </span>
@@ -106,7 +106,7 @@ export function HorecaSupplyWidget() {
         {/* Selected Hub Live Details */}
         <div className="lg:col-span-7 glass-card rounded-2xl p-6 border border-border/80 bg-surface-alt/50 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-mint uppercase tracking-wider flex items-center gap-1">
+            <span className="text-xs font-bold text-mint-ink uppercase tracking-wider flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" /> {t("horeca.flightSchedule")}
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-mint/20 text-navy font-bold text-[11px]">

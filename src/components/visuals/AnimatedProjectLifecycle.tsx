@@ -138,7 +138,7 @@ export function AnimatedProjectLifecycle() {
             </g>
           </svg>
 
-          <div className="absolute bottom-3 left-3 text-[10px] text-mint font-bold uppercase tracking-wider">
+          <div className="absolute bottom-3 left-3 text-[10px] text-mint-ink font-bold uppercase tracking-wider">
             {t("lifecycle.nodeHint")}
           </div>
         </div>

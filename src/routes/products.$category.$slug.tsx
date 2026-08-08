@@ -421,7 +421,7 @@ function ProductDetail() {
 
             <div className="rounded-2xl bg-background p-5 border border-border/80 shadow-sm space-y-4">
               <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span className="flex items-center gap-1.5 text-mint font-bold">
+                <span className="flex items-center gap-1.5 text-mint-ink font-bold">
                   <ShieldCheck className="h-4 w-4" /> {t("productDetail.badges.labCertified")}
                 </span>
                 <span className="flex items-center gap-1 font-semibold text-navy">
@@ -986,7 +986,7 @@ function ProductDetail() {
                   <div className="absolute top-0 right-0 transform translate-x-4 -translate-y-4 h-32 w-32 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
 
                   <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
-                    <BookOpen className="h-4 w-4 text-mint" />
+                    <BookOpen className="h-4 w-4 text-mint-ink" />
                     <span>{widget.badge}</span>
                   </div>
 

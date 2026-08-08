@@ -93,7 +93,7 @@ export function InteractiveSupplyMap() {
     <div className="glass-card rounded-3xl border border-border/80 bg-background shadow-xl overflow-hidden p-6 md:p-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-border/60">
         <div>
-          <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center gap-1.5 mb-1">
+          <span className="text-xs font-bold text-mint-ink uppercase tracking-widest flex items-center gap-1.5 mb-1">
             <MapPin className="h-4 w-4" /> Global & Regional Supply Lines
           </span>
           <h3 className="font-display text-2xl font-bold text-navy">
@@ -207,7 +207,7 @@ export function InteractiveSupplyMap() {
             </span>
             <div>
               <h4 className="font-display text-xl font-bold text-navy">{selected.name}</h4>
-              <span className="text-xs text-mint font-bold uppercase tracking-wider">
+              <span className="text-xs text-mint-ink font-bold uppercase tracking-wider">
                 {t("supplyMap.activeCorridor")}
               </span>
             </div>
@@ -225,7 +225,7 @@ export function InteractiveSupplyMap() {
 
             <div className="flex items-center justify-between p-2.5 rounded-xl bg-surface-alt border border-border/60">
               <span className="flex items-center gap-2 text-navy font-semibold">
-                <Ship className="h-4 w-4 text-mint" /> {t("supplyMap.oceanReefer")}
+                <Ship className="h-4 w-4 text-mint-ink" /> {t("supplyMap.oceanReefer")}
               </span>
               <span className="font-bold text-navy">{selected.transitSea}</span>
             </div>

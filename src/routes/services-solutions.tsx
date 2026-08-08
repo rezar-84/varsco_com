@@ -412,7 +412,7 @@ function ServicesPage() {
 
           <aside className="glass-card rounded-2xl p-6 border border-border/80 shadow-md bg-background h-fit space-y-6">
             <h3 className="font-display text-lg font-bold text-navy flex items-center gap-2">
-              <HeartHandshake className="h-5 w-5 text-mint" /> {t("solutions.aside.title")}
+              <HeartHandshake className="h-5 w-5 text-mint-ink" /> {t("solutions.aside.title")}
             </h3>
 
             <div className="space-y-4 text-xs text-muted-foreground leading-relaxed">

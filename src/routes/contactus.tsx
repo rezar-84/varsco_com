@@ -249,7 +249,7 @@ function Contact() {
                   >
                     <div className="font-bold text-xs leading-tight">{type.label}</div>
                     <div
-                      className={`text-[10px] mt-1 ${inquiryType === type.id ? "text-mint font-medium" : "text-muted-foreground"}`}
+                      className={`text-[10px] mt-1 ${inquiryType === type.id ? "text-mint-ink font-medium" : "text-muted-foreground"}`}
                     >
                       {type.desc}
                     </div>

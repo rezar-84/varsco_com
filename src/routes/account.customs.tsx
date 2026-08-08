@@ -136,7 +136,7 @@ function Customs() {
                     d.type === "Invoice"
                       ? "bg-primary/10 text-primary border-primary/20"
                       : d.type === "Certificate"
-                        ? "bg-mint/10 text-mint border-mint/20"
+                        ? "bg-mint/10 text-mint-ink border-mint/20"
                         : "bg-teal/10 text-teal border-teal/20",
                   )}
                 >

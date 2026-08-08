@@ -52,7 +52,7 @@ function RequestQuotePage() {
         {/* Top Trust & SLA Banner */}
         <div className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="glass-card flex items-center gap-3.5 rounded-2xl p-4 border border-border/80 bg-background/80 shadow-sm">
-            <div className="rounded-xl bg-mint/15 p-2.5 text-mint shrink-0">
+            <div className="rounded-xl bg-mint/15 p-2.5 text-mint-ink shrink-0">
               <Clock className="h-5 w-5" />
             </div>
             <div>
@@ -110,7 +110,7 @@ function RequestQuotePage() {
 
               {done ? (
                 <div className="py-12 text-center space-y-6">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-mint/20 text-mint animate-bounce">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-mint/20 text-mint-ink animate-bounce">
                     <CheckCircle2 className="h-10 w-10" />
                   </div>
                   <div className="space-y-2">
@@ -124,7 +124,7 @@ function RequestQuotePage() {
 
                   <div className="mx-auto max-w-sm rounded-2xl bg-surface-alt p-4 border border-border/80 space-y-3 text-xs text-left">
                     <div className="font-bold text-navy flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-mint" /> {t("quote.next.title")}
+                      <Clock className="h-4 w-4 text-mint-ink" /> {t("quote.next.title")}
                     </div>
                     <ul className="space-y-2 text-muted-foreground text-[11px]">
                       <li className="flex items-center gap-2">
@@ -241,28 +241,28 @@ function RequestQuotePage() {
 
               <ul className="space-y-3 text-xs text-navy/90 font-medium">
                 <li className="flex gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0 mt-0.5" />
                   <span>
                     <strong className="text-navy">{t("quote.why.item1Title")}</strong>{" "}
                     {t("quote.why.item1Body")}
                   </span>
                 </li>
                 <li className="flex gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0 mt-0.5" />
                   <span>
                     <strong className="text-navy">{t("quote.why.item2Title")}</strong>{" "}
                     {t("quote.why.item2Body")}
                   </span>
                 </li>
                 <li className="flex gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0 mt-0.5" />
                   <span>
                     <strong className="text-navy">{t("quote.why.item3Title")}</strong>{" "}
                     {t("quote.why.item3Body")}
                   </span>
                 </li>
                 <li className="flex gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-mint shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-mint-ink shrink-0 mt-0.5" />
                   <span>
                     <strong className="text-navy">{t("quote.why.item4Title")}</strong>{" "}
                     {t("quote.why.item4Body")}

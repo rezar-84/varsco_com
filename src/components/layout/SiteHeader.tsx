@@ -787,7 +787,7 @@ export function SiteHeader() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-2.5 pb-2.5 border-b border-border/80">
                     <div className="p-1.5 rounded-lg bg-mint/15 text-navy font-bold shrink-0">
-                      <Globe2 className="h-4 w-4 text-mint" />
+                      <Globe2 className="h-4 w-4 text-mint-ink" />
                     </div>
                     <div>
                       <h3 className="font-display text-xs font-bold uppercase tracking-wider text-navy">
@@ -862,7 +862,7 @@ export function SiteHeader() {
               {/* Bottom Consultation Banner */}
               <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between bg-surface-alt/60 rounded-2xl p-3.5">
                 <div className="flex items-center gap-2.5 text-xs font-bold text-navy">
-                  <BrainCircuit className="h-4 w-4 text-mint shrink-0" />
+                  <BrainCircuit className="h-4 w-4 text-mint-ink shrink-0" />
                   <span>{t("nav.planningConsult")}</span>
                 </div>
                 <Link
@@ -977,7 +977,7 @@ export function SiteHeader() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-2.5 pb-2.5 border-b border-border/80">
                     <div className="p-1.5 rounded-lg bg-mint/15 text-navy font-bold shrink-0">
-                      <Newspaper className="h-4 w-4 text-mint" />
+                      <Newspaper className="h-4 w-4 text-mint-ink" />
                     </div>
                     <div>
                       <h3 className="font-display text-xs font-bold uppercase tracking-wider text-navy">

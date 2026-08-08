@@ -224,7 +224,7 @@ function EUExportPage() {
           <div className="lg:col-span-7">
             <div className="glass-card space-y-3 rounded-2xl border border-border/80 bg-background p-6 shadow-md">
               <h3 className="flex items-center gap-2 font-display text-lg font-bold text-navy">
-                <ShieldCheck className="h-5 w-5 text-mint" />{" "}
+                <ShieldCheck className="h-5 w-5 text-mint-ink" />{" "}
                 {t("exportEurope.compliance.listTitle")}
               </h3>
               {compliance.map((c) => (
@@ -262,7 +262,7 @@ function EUExportPage() {
             <ul className="space-y-3">
               {(["proximity", "infrastructure", "production", "partner"] as const).map((k) => (
                 <li key={k} className="flex items-start gap-3 rounded-xl bg-background p-4 text-sm">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-mint" />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-mint-ink" />
                   <div>
                     <span className="font-bold text-navy">
                       {t(`exportEurope.whyTurkey.${k}.title`)}:{" "}

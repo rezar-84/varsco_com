@@ -212,7 +212,7 @@ export function CartPage() {
                   <span className="text-muted-foreground">
                     {t("cartPage.summary.responseGuarantee")}
                   </span>
-                  <span className="font-bold text-mint flex items-center gap-1">
+                  <span className="font-bold text-mint-ink flex items-center gap-1">
                     <Zap className="h-3.5 w-3.5" /> {t("cartPage.summary.responseTime")}
                   </span>
                 </div>
@@ -247,7 +247,7 @@ export function CartPage() {
 
               <div className="rounded-xl bg-surface-alt p-3.5 border border-border/60 text-[11px] text-muted-foreground space-y-1.5">
                 <div className="font-bold text-navy flex items-center gap-1.5">
-                  <ShieldCheck className="h-4 w-4 text-mint shrink-0" />
+                  <ShieldCheck className="h-4 w-4 text-mint-ink shrink-0" />
                   {t("cartPage.guarantee.title")}
                 </div>
                 <p>{t("cartPage.guarantee.description")}</p>

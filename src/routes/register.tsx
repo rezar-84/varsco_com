@@ -96,7 +96,7 @@ function Register() {
         <div className="glass-card rounded-2xl p-8 sm:p-12 shadow-2xl border border-white/80 bg-background/95">
           <div className="text-center max-w-xl mx-auto mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3">
-              <ShieldCheck className="h-3.5 w-3.5 text-mint" /> {t("auth.register.badge")}
+              <ShieldCheck className="h-3.5 w-3.5 text-mint-ink" /> {t("auth.register.badge")}
             </div>
             <h1 className="font-display text-3xl font-bold text-navy">
               {t("auth.register.heading")}

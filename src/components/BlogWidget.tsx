@@ -33,7 +33,7 @@ export function BlogWidget({
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-border/60">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/20 text-navy text-xs font-bold uppercase tracking-widest mb-2">
-            <BookOpen className="h-3.5 w-3.5 text-mint" /> {eyebrow}
+            <BookOpen className="h-3.5 w-3.5 text-mint-ink" /> {eyebrow}
           </div>
           <h2 className="font-display text-2xl font-bold text-navy md:text-3xl">{title}</h2>
         </div>

@@ -89,7 +89,7 @@ function Login() {
         {/* Left Side: Brand Benefits Overview */}
         <div className="lg:col-span-6 space-y-6 hidden lg:block pr-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint/15 text-navy text-xs font-bold uppercase tracking-widest">
-            <ShieldCheck className="h-3.5 w-3.5 text-mint" /> {t("auth.login.badge")}
+            <ShieldCheck className="h-3.5 w-3.5 text-mint-ink" /> {t("auth.login.badge")}
           </div>
 
           <h1 className="font-display text-4xl font-bold text-navy leading-tight">

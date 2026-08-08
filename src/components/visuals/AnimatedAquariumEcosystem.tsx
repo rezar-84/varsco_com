@@ -5,7 +5,7 @@ export function AnimatedAquariumEcosystem() {
     <div className="glass-card rounded-3xl border border-border/80 bg-background shadow-xl p-6 md:p-8 space-y-6">
       <div className="flex items-center justify-between pb-4 border-b border-border/60">
         <div>
-          <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center gap-1.5 mb-1">
+          <span className="text-xs font-bold text-mint-ink uppercase tracking-widest flex items-center gap-1.5 mb-1">
             <Fish className="h-4 w-4" /> Aquarium & Reef Ecosystem Vector
           </span>
           <h3 className="font-display text-xl font-bold text-navy">
@@ -95,13 +95,13 @@ export function AnimatedAquariumEcosystem() {
 
         {/* Stage Labels */}
         <div className="absolute top-2 left-4 right-4 grid grid-cols-3 gap-2 text-center">
-          <span className="text-[9px] font-bold uppercase tracking-wider text-mint">Microalgae</span>
+          <span className="text-[9px] font-bold uppercase tracking-wider text-mint-ink">Microalgae</span>
           <span className="text-[9px] font-bold uppercase tracking-wider text-amber-400">Live Feed</span>
           <span className="text-[9px] font-bold uppercase tracking-wider text-sky-300">Fish &amp; Coral</span>
         </div>
 
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] text-white/80 font-semibold bg-navy/80 p-2 rounded-xl backdrop-blur-md">
-          <span className="flex items-center gap-1 text-mint">
+          <span className="flex items-center gap-1 text-mint-ink">
             <Droplets className="h-3.5 w-3.5" /> High Reef Polyp Extension
           </span>
           <span>Zero Tank Water Clouding</span>

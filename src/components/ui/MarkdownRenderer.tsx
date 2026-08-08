@@ -29,7 +29,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             <Link
               key={idx}
               to={href}
-              className="font-semibold text-mint underline decoration-mint/40 underline-offset-2 hover:decoration-mint"
+              className="font-semibold text-mint-ink underline decoration-mint-ink/40 underline-offset-2 hover:decoration-mint-ink"
             >
               {label}
             </Link>
@@ -41,7 +41,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-mint underline decoration-mint/40 underline-offset-2 hover:decoration-mint"
+            className="font-semibold text-mint-ink underline decoration-mint-ink/40 underline-offset-2 hover:decoration-mint-ink"
           >
             {label}
           </a>

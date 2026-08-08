@@ -106,7 +106,7 @@ function ArtemiaIncubationGuide() {
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="font-display text-base font-bold text-navy">{p.title}</h3>
-                  <div className="text-sm font-bold text-mint">{p.target}</div>
+                  <div className="text-sm font-bold text-mint-ink">{p.target}</div>
                   <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
                 </div>
               );
@@ -131,7 +131,7 @@ function ArtemiaIncubationGuide() {
                 key={s.step}
                 className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm flex items-start gap-4"
               >
-                <div className="font-display text-3xl font-bold text-mint shrink-0">{s.step}</div>
+                <div className="font-display text-3xl font-bold text-mint-ink shrink-0">{s.step}</div>
                 <div>
                   <h3 className="font-display text-base font-bold text-navy">{s.title}</h3>
                   <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{s.desc}</p>

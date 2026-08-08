@@ -86,7 +86,7 @@ function AquariumsAndHobbyistsPage() {
               >
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-xl bg-teal/20 text-navy flex items-center justify-center font-bold shrink-0">
-                    <Icon className="h-6 w-6 text-mint" />
+                    <Icon className="h-6 w-6 text-mint-ink" />
                   </div>
                   <h2 className="font-display text-xl font-bold text-navy">{s.title}</h2>
                 </div>

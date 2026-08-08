@@ -44,7 +44,7 @@ export function AnimatedSalmonOvaCycle() {
 
           <div className="p-3 rounded-xl bg-surface-alt border border-border/60 space-y-1">
             <div className="font-bold text-navy flex items-center gap-1.5">
-              <Plane className="h-4 w-4 text-mint" /> Insulated Container Validation
+              <Plane className="h-4 w-4 text-mint-ink" /> Insulated Container Validation
             </div>
             <p className="text-muted-foreground">
               Dispatched with real-time temperature logger sensors.

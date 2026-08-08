@@ -29,7 +29,7 @@ function RegionalTradePage() {
           <div className="grid md:grid-cols-3 gap-6 pt-4">
             <div className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-3">
               <div className="h-10 w-10 rounded-xl bg-teal/20 text-navy flex items-center justify-center font-bold">
-                <Globe2 className="h-5 w-5 text-mint" />
+                <Globe2 className="h-5 w-5 text-mint-ink" />
               </div>
               <h3 className="font-display text-lg font-bold text-navy">
                 {t("regionalTrade.card1.title")}
@@ -53,7 +53,7 @@ function RegionalTradePage() {
 
             <div className="glass-card rounded-2xl p-6 border border-border/80 bg-background shadow-sm space-y-3">
               <div className="h-10 w-10 rounded-xl bg-teal/20 text-navy flex items-center justify-center font-bold">
-                <ShieldCheck className="h-5 w-5 text-mint" />
+                <ShieldCheck className="h-5 w-5 text-mint-ink" />
               </div>
               <h3 className="font-display text-lg font-bold text-navy">
                 {t("regionalTrade.card3.title")}

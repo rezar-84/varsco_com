@@ -213,7 +213,7 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
       {/* Step Indicator Header */}
       <div className="flex items-center justify-between border-b border-border/80 pb-4">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-mint">
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-mint-ink">
             B2B Commercial RFQ
           </span>
           <h3 className="font-display text-lg font-bold text-navy">
@@ -294,7 +294,7 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
         <div className="p-4 rounded-2xl bg-surface-alt/70 border border-border/80 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs font-bold text-navy uppercase tracking-wider">
-              <Sliders className="h-4 w-4 text-mint" /> Technical & Delivery Parameters
+              <Sliders className="h-4 w-4 text-mint-ink" /> Technical & Delivery Parameters
             </div>
             <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
               Customized Form
@@ -376,7 +376,7 @@ export function QuoteForm({ busy, initialProductSlug, onSubmit, Footer }: Props)
                   htmlFor="requiredCertifications"
                   className="text-[11px] font-bold text-navy flex items-center gap-1.5"
                 >
-                  <ShieldCheck className="h-3.5 w-3.5 text-mint" />
+                  <ShieldCheck className="h-3.5 w-3.5 text-mint-ink" />
                   {t("quoteForm.certificationsLabel")}
                 </Label>
                 <Input

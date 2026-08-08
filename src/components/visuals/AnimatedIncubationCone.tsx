@@ -5,7 +5,7 @@ export function AnimatedIncubationCone() {
     <div className="glass-card rounded-3xl border border-border/80 bg-background shadow-xl p-6 md:p-8 space-y-6">
       <div className="flex items-center justify-between pb-4 border-b border-border/60">
         <div>
-          <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center gap-1.5 mb-1">
+          <span className="text-xs font-bold text-mint-ink uppercase tracking-widest flex items-center gap-1.5 mb-1">
             <Wind className="h-4 w-4" /> Conical Reactor Vector
           </span>
           <h3 className="font-display text-xl font-bold text-navy">
@@ -54,7 +54,7 @@ export function AnimatedIncubationCone() {
 
           <div className="p-3 rounded-xl bg-surface-alt border border-border/60 space-y-1">
             <div className="font-bold text-navy flex items-center gap-1.5">
-              <Thermometer className="h-4 w-4 text-mint" /> 28 – 30 °C Constant Temperature
+              <Thermometer className="h-4 w-4 text-mint-ink" /> 28 – 30 °C Constant Temperature
             </div>
             <p className="text-muted-foreground">
               Ensures synchronized 20–24 hr hatch-out velocity.

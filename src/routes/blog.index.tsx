@@ -189,14 +189,14 @@ function BlogIndex() {
                     <Flame className="h-3.5 w-3.5 fill-current" /> Featured Cover Story
                   </div>
                   <div className="absolute bottom-4 left-4 right-4 text-white space-y-2">
-                    <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-mint">
+                    <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-mint-ink">
                       <span>{featuredPost.category}</span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3.5 w-3.5" /> {featuredPost.readMinutes} min read
                       </span>
                     </div>
-                    <h2 className="font-display text-2xl sm:text-3xl font-bold leading-tight group-hover:text-mint transition-colors">
+                    <h2 className="font-display text-2xl sm:text-3xl font-bold leading-tight group-hover:text-mint-ink transition-colors">
                       {featuredPost.title}
                     </h2>
                   </div>
@@ -237,7 +237,7 @@ function BlogIndex() {
             <div className="lg:col-span-4 glass-card rounded-3xl p-6 border border-border/80 bg-surface-alt/50 shadow-md flex flex-col justify-between space-y-6">
               <div>
                 <div className="flex items-center gap-2 pb-4 border-b border-border/60">
-                  <Award className="h-5 w-5 text-mint" />
+                  <Award className="h-5 w-5 text-mint-ink" />
                   <h3 className="font-display text-lg font-bold text-navy">
                     Editor's Picks & Briefs
                   </h3>

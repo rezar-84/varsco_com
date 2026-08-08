@@ -139,7 +139,7 @@ function SalmonidOvaHubPage() {
                     <span className="text-muted-foreground font-semibold">
                       Hatching Efficiency:
                     </span>
-                    <span className="font-bold text-mint">{ova.hatchRate}</span>
+                    <span className="font-bold text-mint-ink">{ova.hatchRate}</span>
                   </div>
 
                   <Button

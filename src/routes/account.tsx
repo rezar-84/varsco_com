@@ -65,7 +65,7 @@ function AccountLayout() {
     <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:grid-cols-[260px,1fr] md:px-6 md:py-12">
       <aside className="glass-card rounded-2xl h-fit p-3 border border-border/80 shadow-md">
         <div className="border-b border-border/60 px-3 py-3.5">
-          <div className="text-xs uppercase tracking-widest font-bold text-mint">
+          <div className="text-xs uppercase tracking-widest font-bold text-mint-ink">
             {t("account.nav.partnerPortal")}
           </div>
           <div className="font-display text-lg font-bold text-navy truncate mt-0.5">

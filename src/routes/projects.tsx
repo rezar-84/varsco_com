@@ -403,7 +403,7 @@ function Projects() {
           {/* Client Endorsements Section (Hidden until endorsements are confirmed)
         <section className="space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold text-mint uppercase tracking-widest flex items-center justify-center gap-1.5">
+            <span className="text-xs font-bold text-mint-ink uppercase tracking-widest flex items-center justify-center gap-1.5">
               <Users className="h-4 w-4" /> {t("projects.testimonials.eyebrow")}
             </span>
             <h2 className="font-display text-3xl font-bold text-navy">

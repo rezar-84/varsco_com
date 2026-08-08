@@ -114,7 +114,7 @@ function ShopCheckoutPage() {
           </div>
         ) : result?.ok ? (
           <div className="glass-card rounded-2xl p-12 text-center max-w-xl mx-auto border border-border/80 shadow-md space-y-4">
-            <ShieldCheck className="h-12 w-12 text-mint mx-auto" />
+            <ShieldCheck className="h-12 w-12 text-mint-ink mx-auto" />
             <h3 className="font-display text-xl font-bold text-navy">
               {t("store.checkout.success.title")}
             </h3>

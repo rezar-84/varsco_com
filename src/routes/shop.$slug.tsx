@@ -329,7 +329,7 @@ function ShopProductDetail() {
             </p>
           )}
           {product.purchase?.show_qty && product.purchase.qty_available > 0 && (
-            <p className="text-xs font-semibold text-mint">
+            <p className="text-xs font-semibold text-mint-ink">
               {product.purchase.qty_available} {t("store.detail.qtyAvailableSuffix")}
             </p>
           )}
@@ -483,7 +483,7 @@ function ReviewsSection({
               </Button>
             </div>
           ) : submitted ? (
-            <p className="text-sm text-mint font-semibold">{t("store.reviews.form.thankYou")}</p>
+            <p className="text-sm text-mint-ink font-semibold">{t("store.reviews.form.thankYou")}</p>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
               <div>

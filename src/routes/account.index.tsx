@@ -86,7 +86,7 @@ function Dashboard() {
             label: t("account.dashboard.completedOrders") || "Completed Orders", 
             value: completedOrdersCount, 
             icon: Package,
-            color: "text-mint bg-mint/10 border-mint/20",
+            color: "text-mint-ink bg-mint/10 border-mint/20",
           },
           { 
             label: t("account.dashboard.pendingDocuments") || "Pending Documents", 
