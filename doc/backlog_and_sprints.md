@@ -160,13 +160,28 @@ retry cron, delivery logs) and `midvex_o_notification_telegram` (a
 `sendMessage` adapter with its own tests). Neither is written for VARS; both
 are generic and model-driven.
 
-**This needs no code in `varsco_content_api`.** The foundry's architecture doc
-is explicit that `midvex.notification.message._trigger_event` is the entry
-point a `base.automation` server action calls. So a `crm.lead` alert is
-configuration, not development: an automation rule on create, plus a
-`midvex.notification.rule` (`model_id` = `crm.lead`, `trigger` = `on_create`,
-`trigger_domain` to select only web leads) pointing at a template and the
-Telegram channel.
+**This needs no code in `varsco_content_api`.** Verified against the source
+(2026-08-08), not just the architecture doc: the repo now lives at
+`~/Projects/midvex_o_notification_foundry/addons/`, and
+`models/notification.py:290` defines
+`_trigger_event(model_name, record, event_code)`, which a `base.automation`
+server action calls. So a `crm.lead` alert is configuration, not development.
+
+`midvex.notification.rule` takes exactly these fields (`notification.py:184`):
+
+| field | value for this rule |
+| --- | --- |
+| `model_id` | `crm.lead` |
+| `trigger` | `on_create` (the other option is `on_write`) |
+| `trigger_domain` | domain selecting web leads only — see the scoping task below |
+| `template_id` | the `crm.lead` template, required |
+| `channel_ids` | the Telegram channel, required (M2M) |
+| `audience_group_ids` / `audience_user_ids` | a sales group or named users |
+
+**Blocked, not merely unstarted:** every remaining step runs against
+`erp.varsco.com` and needs admin access plus the bot token, which is a
+credential and must be entered in Odoo config rather than committed anywhere.
+None of it can be done from this repo.
 
 **It depends on Stage B being deployed first.** The value of the alert is the
 mapped fields — without commit `9f542c3` live on `erp.varsco.com`, every

@@ -258,7 +258,7 @@ npx tsc --noEmit
 npm run dev
 ```
 
-To test against a real Odoo backend (see `~/Development/odoo19-dev/AGENTS.md` for the full recipe and known pitfalls):
+To test against a real Odoo backend (see `~/Development/odoo19-dev/AGENTS.md` for the full recipe and known pitfalls) — **note the addon has since moved to `~/Projects/varsco_content_api`, and is no longer symlinked into `custom-addons`**:
 
 ```bash
 cd ~/Development/odoo19-dev
@@ -268,3 +268,106 @@ curl -X POST http://localhost:PORT/api/quotes -H "Content-Type: application/json
   -d '{"name":"Test","email":"t@example.com","company":"Co","message":"hello there","items":[]}'
 ```
 
+
+---
+
+## 2026-08-08 — Response-Time Claims, Visitor-to-Lead Linkage, Contrast, Retention
+
+This entry also closes a ~2-week documentation gap: the sessions between
+2026-07-25 and today (analytics/consent gate, GTM, glossary, quote-form
+fixes, catalogue corrections, Lighthouse pass) are recorded only in the git
+log. Read `git log 7234297..HEAD` for those; this entry covers today only.
+
+### 1. What was completed
+
+- **Response-time claims aligned** (`4c939c0`). The site made three promises
+  at once: "Guaranteed response within 4 hours" (Contact, HORECA), "within
+  24 hours" (~12 places), "one business day" (quote page). The business
+  confirmed **one business day**, so all 171 affected values across 9 locale
+  files now say that, using each language's own idiom lifted from the
+  existing `quote.subtitle`/`cta.responseTime` strings rather than a fresh
+  translation of the English.
+  - A second cluster surfaced only on the second pass, because the locale
+    values were worded differently from the English and the first grep
+    missed them — including a quote banner titled **"24-Hour SLA
+    Guarantee"**, the most explicit promise on the site. If you grep for
+    copy claims, grep the translations too, not just `en.json`.
+  - `contactus.tsx` carried the response-guarantee paragraph as hardcoded
+    English, so it both stated the 4-hour claim and never translated; it now
+    reads the key it was duplicating.
+  - "Guaranteed" is gone from time-bound claims. The "Response Guarantee"
+    heading stays — committing to answer is real; the hour count was not.
+    Non-SLA uses of "24 hours" (air-freight transit, incubation windows,
+    hatch rate) are deliberately untouched.
+  - `cartPage.summary.within24Hours` renamed to `cartPage.summary.responseTime`.
+
+- **Visitor-to-lead linkage** (`80f563e` here, `97d5c77` in the addon).
+  Tracking had been recording pageviews and leads had been arriving with
+  page/locale/UTM context, but nothing joined them. `buildSubmissionContext`
+  now carries the visitor token, so every form already spreading that context
+  picks it up with no per-form change; `leads.py` attaches the lead through
+  `crm.lead.visitor_ids` (the field `website_crm` itself uses).
+  - `readVisitorToken` **reads and never mints**. Filling in a form is not
+    consent to be tracked, and a token created at submission time would link
+    the lead to a visitor with zero pageviews — worse than no link.
+  - Guarded on `website_crm` being installed, since it is not a dependency
+    of this addon. Token shape is re-validated server-side because Odoo
+    parses a non-hex `access_token` as a `res.partner` id.
+  - Caught mid-implementation: `VISITOR_TOKEN_RE` was not in scope in
+    `leads.py` and would have raised `NameError` on every submission. It now
+    lives in `base.py`, shared by both controllers.
+
+- **Contrast pass on `text-mint`** (`7118696`). 69 of 189 occurrences were on
+  light surfaces at 2.17:1 against WCAG AA's 4.5:1, and now use
+  `text-mint-ink` (5.15:1 on white, 4.73:1 on surface-alt). Each occurrence
+  was resolved to its nearest **opaque** ancestor — a `bg-mint/15` badge in a
+  navy hero is still on navy and keeps mint; the same badge in a plain
+  `Section` is not. Ten cases the markup could not answer were read by hand
+  (`glass-card` is `rgba(255,255,255,0.75)` = light; `glass-panel-dark` is
+  navy). `Page.tsx` is deliberately untouched — its ternary is what picks
+  mint for the navy variant.
+
+- **Retention policy decided and documented** (`f47aebb`). No code needed:
+  Odoo's `website` daily cron already deletes partner-less visitors idle
+  beyond `website.visitor.live.days` (default **60**), and `website.track`
+  cascades. **But `website_crm` excludes visitors with `lead_ids` from that
+  cron**, so the linkage above converts a 60-day record into one kept as long
+  as the lead. Defensible, but a real choice — the backlog now asks the
+  business to confirm it.
+  - Found while writing this: the **Turkish** privacy §5 was still the
+    pre-consent-banner text, telling readers to change their choice via
+    browser cookie settings — the exact false claim fixed in English in
+    `bbd1285` and missed in Turkish. Corrected; KVKK is the Turkish-law
+    obligation, so that was the more consequential copy of the two.
+
+### 2. Not done / blocked
+
+1. **Nothing is pushed.** `git push` fails with `Permission denied
+   (publickey)`. An RSA key is loaded and `SSH_AUTH_SOCK` is set, but GitHub
+   rejects it, so it is not the key on the account — same failure recorded in
+   the 2026-07-23 entry. Four commits wait here, one in the addon repo.
+2. **The addon's new tests have never been run.** Three were added for the
+   linkage (the link, an unknown token that must not mint a visitor, a
+   malformed token that must still produce a lead) and compile-check clean,
+   but Postgres was not running and **`varsco_content_api` is no longer
+   symlinked into `~/Development/odoo19-dev/custom-addons`** — presumably
+   lost when the repo moved out of `varsco_front` to `~/Projects/`. Re-link
+   before trusting any local Odoo run.
+3. **The addon still needs hand-deploying** to `erp.varsco.com`. Until then
+   the frontend sends `visitor_token` and the live controller ignores it —
+   safe by design, but the linkage does not exist in CRM yet.
+4. **Telegram alerts are blocked, not merely unstarted** — every step needs
+   erp admin access and the bot token. The approach was verified against the
+   source today and the exact `midvex.notification.rule` field values are now
+   in the backlog.
+5. Unchanged from before: Chinese blog bodies (`blog_bodies/zh.ts` absent),
+   pricelist lookup, checkout page, payments, and the fact that there is
+   **no test framework in this repo at all**.
+
+### 3. Verification Commands
+
+```bash
+npx tsc --noEmit
+npx vite build
+npm run dev
+```
