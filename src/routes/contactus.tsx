@@ -484,8 +484,7 @@ function Contact() {
                 <ShieldCheck className="h-4 w-4" /> {t("contact.responseGuarantee")}
               </div>
               <p className="text-xs text-white/80 leading-relaxed font-medium">
-                Every inquiry submitted via our portal creates a priority lead in our Odoo CRM
-                platform and is assigned to a senior sales engineer within 4 hours.
+                {t("contact.responseGuaranteeDesc")}
               </p>
             </div>
           </aside>

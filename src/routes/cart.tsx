@@ -213,7 +213,7 @@ export function CartPage() {
                     {t("cartPage.summary.responseGuarantee")}
                   </span>
                   <span className="font-bold text-mint flex items-center gap-1">
-                    <Zap className="h-3.5 w-3.5" /> {t("cartPage.summary.within24Hours")}
+                    <Zap className="h-3.5 w-3.5" /> {t("cartPage.summary.responseTime")}
                   </span>
                 </div>
               </div>
