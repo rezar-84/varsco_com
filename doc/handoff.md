@@ -340,6 +340,31 @@ log. Read `git log 7234297..HEAD` for those; this entry covers today only.
     `bbd1285` and missed in Turkish. Corrected; KVKK is the Turkish-law
     obligation, so that was the more consequential copy of the two.
 
+- **Quote drawer verified in a real browser — the first time in this
+  project.** Every prior session recorded the Chrome extension failing with
+  "Frame with ID 0 is showing error page"; it worked today. Note the tab can
+  report `chrome://newtab/` for a few seconds after `navigate` returns, which
+  looks exactly like the old failure — take a second reading before concluding
+  the extension is broken.
+  - Opened from `/olive-flounder-export`, all four states pass: **open**
+    renders correctly; **empty submit** scrolls to and focuses the required
+    Quantity field (the `a1d523a` behaviour); **failed submit** shows "Failed
+    to submit quote request" and *keeps the entered values* so the buyer can
+    retry; **close + reopen** resets to an empty form. No console errors.
+  - Exercised against local Odoo (`127.0.0.1:8070`) which was down, so the
+    failure path was real and **no production `crm.lead` was created**. Per
+    the Live Environment note, never point this check at `erp.varsco.com`.
+  - Two things that look like bugs and are not: the drawer's product
+    thumbnail renders as alt text because the image is an Odoo-hosted asset
+    and local Odoo is down (`erp.varsco.com` serves it 200/image/webp); and
+    the green "CERTIFIED PRODUCT SELECTED" is `text-primary`, which is
+    `--brand-green` in `:root` and only `--brand-mint` under `.dark` — so it
+    is not a repeat of the contrast problem. Checked rather than assumed.
+  - Also confirmed live: the new `text-mint-ink` renders legibly on the
+    drawer's white surface, and `/request-quote` now shows "ONE BUSINESS DAY
+    SLA / Proforma response within one business day" where the "24-Hour SLA
+    Guarantee" banner used to be.
+
 ### 2. Not done / blocked
 
 1. **Nothing is pushed.** `git push` fails with `Permission denied
