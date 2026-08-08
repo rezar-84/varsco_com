@@ -125,8 +125,30 @@ otherwise have collected.
       `topic: "Newsletter subscription"` so they can be filtered), which puts
       non-leads into the sales pipeline.
 - [ ] Point `blog.index.tsx` at the new endpoint and drop the CRM stopgap.
-- [ ] Retention policy for `website.track` — decide and document how long raw
-      pageview rows are kept before aggregation.
+- [x] Retention policy for `website.track` — decided: adopt Odoo's own default
+      rather than invent a second mechanism. See below.
+
+#### Retention: what actually happens
+
+Odoo enforces this already and no code was needed. `website`'s daily cron
+`_cron_unlink_old_visitors` deletes any `website.visitor` with no partner whose
+`last_connection_datetime` is older than `website.visitor.live.days`
+(**default 60**), and `website.track.visitor_id` is `ondelete="cascade"`, so the
+pageviews go with the visitor. To change the window, set that config parameter —
+do not add a competing cron.
+
+**The lead linkage changes this, and it is the part worth knowing.**
+`website_crm` overrides `_inactive_visitors_domain` to add `lead_ids = False`,
+so *a visitor attached to a lead is never vacuumed*. Linking a submission to its
+journey therefore converts a 60-day record into one kept as long as the lead.
+That is defensible — it is part of the enquiry record, under the same basis as
+the lead itself — but it is a deliberate choice, not a side effect to discover
+later. The privacy policy now states both windows in English and Turkish.
+
+- [ ] Confirm with the business that indefinite retention of lead-linked
+      journeys is the intent, and whether a cap (e.g. purge with the lead on
+      close + N months) should be added. Requires an override of
+      `_inactive_visitors_domain` if so.
 
 #### Telegram lead alerts
 

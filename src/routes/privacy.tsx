@@ -152,11 +152,29 @@ function PrivacyTr() {
         </li>
       </ul>
 
-      <h2>5. Çerezler</h2>
+      <h2>5. Çerezler ve Analitik</h2>
       <p>
-        Kullanıcı deneyimini iyileştirmek, dil tercihlerini saklamak ve site performansını analiz
-        etmek amacıyla zorunlu ve analitik çerezler kullanıyoruz. Çerez ayarlarınızı tarayıcı
-        tercihleriniz üzerinden değiştirebilirsiniz.
+        Yalnızca sitenin çalışması için gerekli olanları saklıyoruz — dil tercihiniz, oturumunuz ve
+        sepetiniz. Bunlar rıza gerektirmez ve siteyi kullandığınız sürece reddedilemez.
+      </p>
+      <p>
+        Analitik bundan ayrıdır ve yalnızca izin vermeniz hâlinde çalışır. Siz seçim yapmadan önce
+        hiçbir veri toplanmaz; varsayılan olan reddetmektir. Etkinleştirildiğinde ziyaret ettiğiniz
+        sayfaları, sitenin görüntülendiği dili, bağlantınızın çözümlendiği ülkeyi ve bir
+        ziyaretçinin sayfalarını tek bir ziyaret olarak saymamızı sağlayan rastgele oluşturulmuş bir
+        tanımlayıcıyı kaydediyoruz. Bu tanımlayıcı adınıza veya e-posta adresinize bağlı değildir ve
+        sizi başka web sitelerinde takip etmiyoruz.
+      </p>
+      <p>
+        Tercihiniz çerezde değil tarayıcınızda saklanır; bu nedenle tarayıcının çerez ayarları bu
+        tercihi kontrol etmez. Dilediğiniz zaman değiştirmek veya geri çekmek için herhangi bir
+        sayfanın altbilgisindeki <strong>Çerez tercihleri</strong> bağlantısını kullanın. Geri çekme
+        işlemi derhal yürürlüğe girer ve yukarıda açıklanan tanımlayıcıyı da siler.
+      </p>
+      <p>
+        Analitik kayıtları 60 günlük hareketsizliğin ardından otomatik olarak silinir. Analitik
+        açıkken bize bir talep gönderirseniz, görüntülediğiniz sayfalar o talebe eklenir ve talep
+        kaydının bir parçası olarak, talebi sakladığımız süre boyunca saklanır.
       </p>
 
       <h2>6. Haklarınız</h2>
@@ -284,6 +302,12 @@ function PrivacyEn() {
         control it. To change or withdraw it at any time, use the{" "}
         <strong>Cookie preferences</strong> link in the footer of any page. Withdrawing takes effect
         immediately and also deletes the identifier described above.
+      </p>
+      <p>
+        Analytics records are deleted automatically after 60 days of inactivity. If you send us an
+        enquiry while analytics is enabled, the pages you viewed are attached to that enquiry and
+        are then kept for as long as we keep the enquiry itself, as part of our record of your
+        request.
       </p>
 
       <h2>6. Your Rights</h2>
